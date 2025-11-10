@@ -28,7 +28,7 @@ SupplyChain Copilot bridges this gap with a unified **AI-powered assistant** tha
 ## 🖥️ User Interface Preview
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Flcookie/supplychain-copilot/assets/ui_screenshot.png" width="90%" alt="SupplyChain Copilot Streamlit UI Preview">
+  <img src="https://github.com/Flcookie/supplychain-copilot/blob/main/assets/ui_screenshot.png" width="90%" alt="SupplyChain Copilot Streamlit UI Preview">
 </p>
 
 > **Figure:** Streamlit-based enterprise dashboard integrating Chat + KPI + Policy + RAG sources.  
