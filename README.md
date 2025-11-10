@@ -10,6 +10,31 @@
 ---
 
 ## 🌐 Overview
+---
+
+## 🏢 Business Context & Problem Statement
+
+In large manufacturing and retail enterprises, **supply chain teams face fragmented data silos**:
+- Policy documents stored in shared drives or SharePoint.
+- KPI dashboards buried in BI tools.
+- Risk assessments manually compiled from spreadsheets.
+
+This project addresses a common pain point:
+> "How can supply chain professionals instantly retrieve policies, compare supplier KPIs, and analyze potential risks — all in one conversational interface?"
+
+SupplyChain Copilot bridges this gap with a unified **AI-powered assistant** that understands both structured and unstructured enterprise data.
+
+
+## 🖥️ User Interface Preview
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Flcookie/supplychain-copilot/main/assets/ui_screenshot.png" width="90%" alt="SupplyChain Copilot Streamlit UI Preview">
+</p>
+
+> **Figure:** Streamlit-based enterprise dashboard integrating Chat + KPI + Policy + RAG sources.  
+> Displays intent detection (Policy / KPI / Scenario), structured query results, and document citations in a unified conversational interface.
+
+---
 
 **SupplyChain Copilot** is an enterprise-grade AI assistant integrating **policy documents**, **supplier performance data**, and **risk simulations** into one intelligent system.
 It allows supply chain teams to **query KPIs**, **retrieve policies**, and **perform risk scenario analysis** in **natural language**.
@@ -106,6 +131,18 @@ uv run python -m ingestion.build_vectorstore
 # Launch Streamlit UI
 uv run streamlit run app/ui.py
 ```
+
+---
+
+## 💡 Key Innovations
+
+| Feature | Description |
+|----------|-------------|
+| **Hybrid Reasoning** | Combines RAG for unstructured document retrieval with SQL for structured KPI data. |
+| **LangGraph Workflow** | Modular orchestration framework connecting Policy, KPI, and Scenario nodes. |
+| **Explainable Answers** | Each response cites retrieved documents or executed SQL queries for transparency. |
+| **Enterprise UI** | Streamlit-based dashboard showing intents, KPIs, and contextual citations. |
+| **Scalable Integration** | Designed for integration with ERP and BI systems (PostgreSQL, SAP HANA, Snowflake). |
 
 ---
 
