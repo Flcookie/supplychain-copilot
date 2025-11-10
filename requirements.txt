@@ -1,0 +1,14 @@
+langchain
+langchain-core
+langchain-openai
+langchain-pinecone
+langchain-chroma
+langchain-community
+langgraph
+pinecone-client
+streamlit
+openai
+pydantic
+python-dotenv
+sqlalchemy
+tqdm

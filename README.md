@@ -35,7 +35,12 @@ SupplyChain Copilot bridges this gap with a unified **AI-powered assistant** tha
 > Displays intent detection (Policy / KPI / Scenario), structured query results, and document citations in a unified conversational interface.
 
 ---
+## 🚀 Live Demo
 
+Try it here: [supplychain-copilot.streamlit.app](https://supplychain-copilot.streamlit.app/)
+
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://supplychain-copilot.streamlit.app/)
+---
 **SupplyChain Copilot** is an enterprise-grade AI assistant integrating **policy documents**, **supplier performance data**, and **risk simulations** into one intelligent system.
 It allows supply chain teams to **query KPIs**, **retrieve policies**, and **perform risk scenario analysis** in **natural language**.
 
