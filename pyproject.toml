@@ -1,0 +1,17 @@
+[project]
+name = "supplychain-copilot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain>=1.0.5",
+    "langchain-community>=0.4.1",
+    "langchain-openai>=1.0.2",
+    "langchain-pinecone>=0.2.13",
+    "langchain-text-splitters>=1.0.0",
+    "langgraph>=1.0.2",
+    "pinecone-client>=6.0.0",
+    "python-dotenv>=1.2.1",
+    "streamlit>=1.51.0",
+]

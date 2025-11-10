@@ -1,0 +1,8 @@
+Supplier Management Policy (Example)
+
+1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”
+2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% for two consecutive quarters, a joint improvement plan must be initiated.
+3. Regular suppliers undergo a performance evaluation once per year, focusing primarily on delivery stability and quality conformity rate.
+4. If a supplier’s delayed delivery causes a production line shutdown, the company reserves the right to claim corresponding losses according to the contract.
+
+
