@@ -1,6 +1,11 @@
 from langchain_openai import OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
-from pinecone import Pinecone
+try:
+    from pinecone import Pinecone
+except ImportError:
+    # Compatibility fallback for environments where pinecone exports runtime symbols
+    # from `pinecone.pinecone` instead of package root.
+    from pinecone.pinecone import Pinecone
 
 from core.config import (
     OPENAI_API_KEY,

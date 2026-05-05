@@ -12,7 +12,7 @@ dependencies = [
     "langchain-pinecone>=0.2.13",
     "langchain-text-splitters>=1.0.0",
     "langgraph>=1.0.2",
-    "pinecone>=5.0.0",         
+    "pinecone==6.0.2",
     "python-dotenv>=1.2.1",
     "streamlit>=1.51.0",
 ]

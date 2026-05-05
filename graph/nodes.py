@@ -41,6 +41,10 @@ def _build_clarification_question(ambiguity_type: str | None) -> str:
     return "Could you clarify your request so I can answer precisely?"
 
 
+def _response_language_instruction(state: SCState) -> str:
+    return "professional Chinese" if state.get("response_language", "en") == "zh" else "concise professional English"
+
+
 def _build_doc_citations(docs: list) -> list:
     citations = []
     for i, doc in enumerate(docs, start=1):
@@ -93,11 +97,21 @@ def router_node(state: SCState) -> SCState:
 
 
 def clarification_node(state: SCState) -> SCState:
+    is_zh = state.get("response_language", "en") == "zh"
     clarification = _build_clarification_question(state.get("ambiguity_type"))
+    if is_zh:
+        clarification_map = {
+            "When you say 'they/this supplier', which supplier are you referring to?": "你提到的“他们/这家供应商”具体指哪一家？",
+            "Do you want policy standards first, or supplier KPI data first?": "你是想先看政策标准，还是先看供应商KPI数据？",
+            "Please specify supplier name and time range (for example: Alpha, last 3 months).": "请补充供应商名称和时间范围（例如：Alpha，最近3个月）。",
+            "Could you clarify your request so I can answer precisely?": "请补充更多信息，我才能给出准确回答。",
+        }
+        clarification = clarification_map.get(clarification, clarification)
     state["clarification_question"] = clarification
     state["answer"] = (
-        f"I need one clarification before routing this request.\n\n{clarification}\n\n"
-        "Reply with the missing details and I will continue."
+        f"在进入下一步前，我需要先确认一个信息。\n\n{clarification}\n\n请补充后我会继续处理。"
+        if is_zh
+        else f"I need one clarification before routing this request.\n\n{clarification}\n\nReply with the missing details and I will continue."
     )
     return state
 
@@ -109,7 +123,13 @@ def rag_fallback_node(state: SCState) -> SCState:
     state["citations"] = _build_doc_citations(docs)
     context = "\n\n".join(d.page_content for d in docs)
     prompt = ChatPromptTemplate.from_template(RAG_FALLBACK_PROMPT)
-    resp = llm.invoke(prompt.format(question=q, context=context))
+    resp = llm.invoke(
+        prompt.format(
+            question=q,
+            context=context,
+            response_language_instruction=_response_language_instruction(state),
+        )
+    )
     state["fallback_mode"] = "rag_fallback"
     state["answer"] = resp.content
     return state
@@ -122,7 +142,13 @@ def policy_qa_node(state: SCState) -> SCState:
     state["citations"] = _build_doc_citations(docs)
     context = "\n\n".join(d.page_content for d in docs)
     prompt = ChatPromptTemplate.from_template(POLICY_QA_PROMPT)
-    resp = llm.invoke(prompt.format(question=q, context=context))
+    resp = llm.invoke(
+        prompt.format(
+            question=q,
+            context=context,
+            response_language_instruction=_response_language_instruction(state),
+        )
+    )
     state["answer"] = resp.content
     return state
 
@@ -156,7 +182,14 @@ def kpi_node(state: SCState) -> SCState:
     ]
 
     explain_prompt = ChatPromptTemplate.from_template(KPI_ANSWER_PROMPT)
-    resp = llm.invoke(explain_prompt.format(question=q, sql=sql, rows=json.dumps(rows, ensure_ascii=False)))
+    resp = llm.invoke(
+        explain_prompt.format(
+            question=q,
+            sql=sql,
+            rows=json.dumps(rows, ensure_ascii=False),
+            response_language_instruction=_response_language_instruction(state),
+        )
+    )
     state["answer"] = resp.content
     return state
 
@@ -217,6 +250,7 @@ def scenario_node(state: SCState) -> SCState:
             question=q,
             scenario_spec=json.dumps(scenario_spec, ensure_ascii=False),
             impact_rows=json.dumps(impact_rows, ensure_ascii=False),
+            response_language_instruction=_response_language_instruction(state),
         )
     )
     state["answer"] = resp.content

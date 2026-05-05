@@ -20,28 +20,28 @@ Rules:
 
 Few-shot examples:
 Q: What is our strategic supplier qualification policy?
-A: {"intent":"policy_qa","confidence":0.95,"ambiguity_type":null,"reason":"asks policy definition"}
+A: {{"intent":"policy_qa","confidence":0.95,"ambiguity_type":null,"reason":"asks policy definition"}}
 
 Q: Compare Alpha and Beta on-time delivery in last 3 months.
-A: {"intent":"kpi_query","confidence":0.96,"ambiguity_type":null,"reason":"explicit KPI comparison and time filter"}
+A: {{"intent":"kpi_query","confidence":0.96,"ambiguity_type":null,"reason":"explicit KPI comparison and time filter"}}
 
 Q: If Vietnam suppliers are delayed by 7 days, what is the impact?
-A: {"intent":"scenario_analysis","confidence":0.96,"ambiguity_type":null,"reason":"explicit what-if risk scenario"}
+A: {{"intent":"scenario_analysis","confidence":0.96,"ambiguity_type":null,"reason":"explicit what-if risk scenario"}}
 
 Q: What do they require for strategic suppliers?
-A: {"intent":"policy_qa","confidence":0.88,"ambiguity_type":"coreference","reason":"policy intent clear but reference unresolved"}
+A: {{"intent":"policy_qa","confidence":0.88,"ambiguity_type":"coreference","reason":"policy intent clear but reference unresolved"}}
 
 Q: Show their recent delivery performance.
-A: {"intent":"kpi_query","confidence":0.90,"ambiguity_type":"coreference","reason":"kpi request with unresolved supplier reference"}
+A: {{"intent":"kpi_query","confidence":0.90,"ambiguity_type":"coreference","reason":"kpi request with unresolved supplier reference"}}
 
 Q: What is the policy and how is Alpha performing against it?
-A: {"intent":"policy_qa","confidence":0.73,"ambiguity_type":"composite_intent","reason":"policy and KPI intents mixed"}
+A: {{"intent":"policy_qa","confidence":0.73,"ambiguity_type":"composite_intent","reason":"policy and KPI intents mixed"}}
 
 Q: Supplier delivery trend please.
-A: {"intent":"kpi_query","confidence":0.70,"ambiguity_type":"missing_entity","reason":"missing supplier and time range"}
+A: {{"intent":"kpi_query","confidence":0.70,"ambiguity_type":"missing_entity","reason":"missing supplier and time range"}}
 
 Q: We may face disruptions in Southeast Asia, thoughts?
-A: {"intent":"scenario_analysis","confidence":0.68,"ambiguity_type":"missing_entity","reason":"risk intent but region/scope undefined"}
+A: {{"intent":"scenario_analysis","confidence":0.68,"ambiguity_type":"missing_entity","reason":"risk intent but region/scope undefined"}}
 
 Question: {question}
 """
@@ -57,7 +57,7 @@ Context:
 Question:
 {question}
 
-Answer in concise, professional English.
+Answer in {response_language_instruction}.
 At the end, list the source filenames or sections you used (if available).
 """
 
@@ -104,11 +104,12 @@ Query Result (JSON list):
 {rows}
 
 Guidelines:
-1. Explain the result in plain business English (e.g., on-time delivery rate, order counts, supplier performance).
+1. Explain the result in plain language suitable for business users (e.g., on-time delivery rate, order counts, supplier performance).
 2. Comment on which suppliers perform well or poorly (if applicable).
 3. Mention if the dataset is small or results are indicative only.
 4. Limit the response to 6–8 concise sentences.
 5. Add a final line: "Evidence: SQL query executed."
+6. Respond in {response_language_instruction}.
 """
 
 SCENARIO_ANALYSIS_PROMPT = """You are a supply chain risk manager.
@@ -127,7 +128,7 @@ Please:
 2. Provide 3–5 actionable mitigation recommendations (e.g., increase safety stock, pre-build inventory, activate backup suppliers, joint risk review with strategic suppliers).
 3. Conclude with a note that this is a demo analysis based on sample data.
 
-Answer in professional English, concise and structured as a short management summary.
+Answer in {response_language_instruction}, concise and structured as a short management summary.
 """
 
 RAG_FALLBACK_PROMPT = """You are a supply chain copilot fallback assistant.
@@ -141,4 +142,6 @@ Context:
 
 Question:
 {question}
+
+Respond in {response_language_instruction}.
 """

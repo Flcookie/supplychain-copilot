@@ -8,6 +8,7 @@ class SCState(TypedDict, total=False):
     messages: Annotated[List[BaseMessage], add_messages]
 
     question: str
+    response_language: Optional[Literal["en", "zh"]]
 
     # Intent determined by the router
     intent: Literal["policy_qa", "kpi_query", "scenario_analysis", "unknown"]
