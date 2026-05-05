@@ -1,177 +1,216 @@
 import json
-from tools.sql_tools import run_sql_query
-from core.prompts import KPI_SQL_PROMPT, KPI_ANSWER_PROMPT, SCENARIO_ANALYSIS_PROMPT
 
-from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
 
 from core.config import LLM_MODEL
-from core.prompts import ROUTER_PROMPT, POLICY_QA_PROMPT
+from core.prompts import (
+    KPI_ANSWER_PROMPT,
+    KPI_SQL_PROMPT,
+    POLICY_QA_PROMPT,
+    RAG_FALLBACK_PROMPT,
+    ROUTER_PROMPT,
+    SCENARIO_ANALYSIS_PROMPT,
+)
 from rag.retriever import get_retriever
+from tools.sql_tools import run_sql_query_with_meta
 from .state import SCState
 
-# Initialize LLM
-llm = ChatOpenAI(
-    model=LLM_MODEL,
-    temperature=0,
-)
-
+llm = ChatOpenAI(model=LLM_MODEL, temperature=0)
 retriever = get_retriever()
 
 
-def router_node(state: SCState) -> SCState:
-    """Determine the user's intent based on the question, with rule-based fallback to ensure KPI-related queries are not misclassified as policy questions."""
-    q = state["question"]
-    q_lower = q.lower()
+def _safe_json_load(raw: str) -> dict:
+    try:
+        return json.loads(raw)
+    except Exception:
+        start = raw.find("{")
+        end = raw.rfind("}")
+        if start != -1 and end != -1 and end > start:
+            return json.loads(raw[start : end + 1])
+        raise
 
-    # Step 1️: Use LLM for initial intent prediction
+
+def _build_clarification_question(ambiguity_type: str | None) -> str:
+    if ambiguity_type == "coreference":
+        return "When you say 'they/this supplier', which supplier are you referring to?"
+    if ambiguity_type == "composite_intent":
+        return "Do you want policy standards first, or supplier KPI data first?"
+    if ambiguity_type == "missing_entity":
+        return "Please specify supplier name and time range (for example: Alpha, last 3 months)."
+    return "Could you clarify your request so I can answer precisely?"
+
+
+def _build_doc_citations(docs: list) -> list:
+    citations = []
+    for i, doc in enumerate(docs, start=1):
+        citations.append(
+            {
+                "type": "document",
+                "source": doc.metadata.get("source", ""),
+                "chunk_id": f"doc-{i}",
+                "clause": doc.metadata.get("section", ""),
+            }
+        )
+    return citations
+
+
+def router_node(state: SCState) -> SCState:
+    q = state["question"]
     prompt = ChatPromptTemplate.from_template(ROUTER_PROMPT)
     resp = llm.invoke(prompt.format(question=q))
-    intent = resp.content.strip()
 
-    # Step 2️: Rule-based fallback — prioritize KPI, Scenario, and Comparison queries
+    parsed = {
+        "intent": "policy_qa",
+        "confidence": 0.6,
+        "ambiguity_type": None,
+        "reason": "router defaulted due to unparsable output",
+    }
+    try:
+        llm_result = _safe_json_load(resp.content.strip())
+        parsed["intent"] = llm_result.get("intent", parsed["intent"])
+        parsed["confidence"] = float(llm_result.get("confidence", parsed["confidence"]))
+        parsed["ambiguity_type"] = llm_result.get("ambiguity_type")
+        parsed["reason"] = llm_result.get("reason", parsed["reason"])
+    except Exception:
+        pass
 
-    # KPI keywords
-    kpi_keywords_cn = ["准时交付率", "交付率", "交货率", "按时交付", "绩效", "KPI", "表现"]
-    kpi_keywords_en = ["otd", "otif", "on-time", "on time", "performance", "kpi"]
+    if parsed["intent"] not in ["policy_qa", "kpi_query", "scenario_analysis"]:
+        parsed["intent"] = "policy_qa"
 
-    # Comparison keywords
-    compare_keywords = ["compare", "vs", "versus", "对比", "比较"]
-
-    # Supplier names (for auxiliary intent detection)
-    supplier_keywords = ["Alpha", "Beta", "Gamma", "Delta"]
-
-    # If KPI or comparison keywords appear, force to KPI node
-    if (
-        any(k in q_lower for k in kpi_keywords_en)
-        or any(k in q for k in kpi_keywords_cn)
-        or any(k in q_lower for k in compare_keywords)
-    ):
-        intent = "kpi_query"
-
-    # If supplier names + performance-related words appear, also classify as KPI
-    if any(s.lower() in q_lower for s in supplier_keywords) and (
-        "率" in q or "表现" in q or "performance" in q_lower
-    ):
-        intent = "kpi_query"
-
-    # If question contains “delay / risk / if”, classify as Scenario
-    scenario_keywords = ["延迟", "delay", "晚到", "推迟", "断供", "中断", "风险", "impact"]
-    if any(k in q for k in scenario_keywords) and "if" in q_lower or "如果" in q:
-        intent = "scenario_analysis"
-
-    # Default fallback to policy Q&A
-    if intent not in ["policy_qa", "kpi_query", "scenario_analysis"]:
-        intent = "policy_qa"
-
-    # Save intent
-    state["intent"] = intent
+    state["intent"] = parsed["intent"]
+    state["confidence"] = max(0.0, min(parsed["confidence"], 1.0))
+    state["ambiguity_type"] = parsed["ambiguity_type"]
+    state["reason"] = parsed["reason"]
+    state["fallback_mode"] = "none"
+    state["route_decision"] = {
+        "intent": state["intent"],
+        "confidence": state["confidence"],
+        "ambiguity_type": state["ambiguity_type"],
+        "reason": state["reason"],
+    }
     return state
 
 
+def clarification_node(state: SCState) -> SCState:
+    clarification = _build_clarification_question(state.get("ambiguity_type"))
+    state["clarification_question"] = clarification
+    state["answer"] = (
+        f"I need one clarification before routing this request.\n\n{clarification}\n\n"
+        "Reply with the missing details and I will continue."
+    )
+    return state
 
-def policy_qa_node(state: SCState) -> SCState:
-    """RAG: Retrieve supply chain policy/contract information from Pinecone and answer."""
+
+def rag_fallback_node(state: SCState) -> SCState:
     q = state["question"]
-
     docs = retriever.invoke(q)
-
-    
-    state["retrieved_docs"] = [
-        {
-            "content": d.page_content,
-            "source": d.metadata.get("source", ""),
-        }
-        for d in docs
-    ]
-
+    state["retrieved_docs"] = [{"content": d.page_content, "source": d.metadata.get("source", "")} for d in docs]
+    state["citations"] = _build_doc_citations(docs)
     context = "\n\n".join(d.page_content for d in docs)
-
-    prompt = ChatPromptTemplate.from_template(POLICY_QA_PROMPT)
+    prompt = ChatPromptTemplate.from_template(RAG_FALLBACK_PROMPT)
     resp = llm.invoke(prompt.format(question=q, context=context))
-
+    state["fallback_mode"] = "rag_fallback"
     state["answer"] = resp.content
     return state
 
-def kpi_node(state: SCState) -> SCState:
-    """Generate SQL based on user question, query the SQLite demo DB, and return KPI interpretation."""
-    q = state["question"]
 
-    # 1) Generate SQL using LLM
+def policy_qa_node(state: SCState) -> SCState:
+    q = state["question"]
+    docs = retriever.invoke(q)
+    state["retrieved_docs"] = [{"content": d.page_content, "source": d.metadata.get("source", "")} for d in docs]
+    state["citations"] = _build_doc_citations(docs)
+    context = "\n\n".join(d.page_content for d in docs)
+    prompt = ChatPromptTemplate.from_template(POLICY_QA_PROMPT)
+    resp = llm.invoke(prompt.format(question=q, context=context))
+    state["answer"] = resp.content
+    return state
+
+
+def kpi_node(state: SCState) -> SCState:
+    q = state["question"]
     prompt = ChatPromptTemplate.from_template(KPI_SQL_PROMPT)
     sql = llm.invoke(prompt.format(question=q)).content.strip()
     state["sql_query"] = sql
 
-    # 2) Execute SQL
     try:
-        rows = run_sql_query(sql)
+        result = run_sql_query_with_meta(sql)
+        rows = result["rows"]
+        sql_meta = result["meta"]
     except Exception as e:
-        state["answer"] = f"执行 KPI 查询时出错：{e}"
+        state["answer"] = f"Error while running KPI query: {e}"
         state["sql_result"] = []
+        state["sql_meta"] = {"row_count": 0, "latency_ms": None, "error": str(e)}
+        state["citations"] = [{"type": "sql", "sql": sql, "row_count": 0, "latency_ms": None, "error": str(e)}]
         return state
 
     state["sql_result"] = rows
+    state["sql_meta"] = sql_meta
+    state["citations"] = [
+        {
+            "type": "sql",
+            "sql": sql,
+            "row_count": sql_meta.get("row_count", 0),
+            "latency_ms": sql_meta.get("latency_ms"),
+        }
+    ]
 
-    # 3) Let LLM explain the result in natural language
     explain_prompt = ChatPromptTemplate.from_template(KPI_ANSWER_PROMPT)
-    resp = llm.invoke(
-        explain_prompt.format(
-            question=q,
-            sql=sql,
-            rows=json.dumps(rows, ensure_ascii=False),
-        )
-    )
+    resp = llm.invoke(explain_prompt.format(question=q, sql=sql, rows=json.dumps(rows, ensure_ascii=False)))
     state["answer"] = resp.content
     return state
 
-def scenario_node(state: SCState) -> SCState:
-    """Parse simple delay scenarios and perform impact analysis based on sample data."""
-    q = state["question"]
 
-    # 1) Use LLM to extract parameters (country + delay days) from natural language
+def scenario_node(state: SCState) -> SCState:
+    q = state["question"]
     parse_prompt = ChatPromptTemplate.from_template(
         """
         Extract supply chain risk scenario parameters from the following question (in Chinese or English) and return as JSON:
-
         Fields:
         - country: Country of affected suppliers (e.g., 'VN', 'CN', 'DE'); if not mentioned, use null
         - delay_days: Expected general delay days (integer); if not mentioned, use 7 as default
-
         Output only JSON, no explanations.
-
         Question:
         {question}
         """
     )
     parsed_raw = llm.invoke(parse_prompt.format(question=q)).content.strip()
-
     try:
-        scenario_spec = json.loads(parsed_raw)
+        scenario_spec = _safe_json_load(parsed_raw)
     except Exception:
         scenario_spec = {"country": None, "delay_days": 7}
 
     state["scenario_spec"] = scenario_spec
-
-    country = scenario_spec.get("country") or "VN" 
-
-    # 2) Simplified: Query all orders in that country as “potentially affected orders”
-    sql = f"""
+    country = scenario_spec.get("country") or "VN"
+    sql = """
     SELECT s.name AS supplier_name,
            s.country,
            COUNT(p.id) AS total_pos,
            SUM(p.qty) AS total_qty
     FROM suppliers s
     JOIN purchase_orders p ON s.id = p.supplier_id
-    WHERE s.country = '{country}'
+    WHERE s.country = ?
     GROUP BY s.id;
     """
-
     try:
-        impact_rows = run_sql_query(sql)
+        result = run_sql_query_with_meta(sql, params=(country,))
+        impact_rows = result["rows"]
+        state["sql_query"] = f"{sql.strip()} -- params: ({country},)"
+        state["sql_result"] = impact_rows
+        state["sql_meta"] = result["meta"]
+        state["citations"] = [
+            {
+                "type": "sql",
+                "sql": sql.strip(),
+                "params": {"country": country},
+                "row_count": result["meta"].get("row_count", 0),
+                "latency_ms": result["meta"].get("latency_ms"),
+            }
+        ]
     except Exception as e:
         impact_rows = [{"error": str(e)}]
+        state["citations"] = [{"type": "sql", "sql": sql.strip(), "error": str(e)}]
 
-    # 3) Let LLM generate structured risk analysis
     explain_prompt = ChatPromptTemplate.from_template(SCENARIO_ANALYSIS_PROMPT)
     resp = llm.invoke(
         explain_prompt.format(
@@ -185,6 +224,6 @@ def scenario_node(state: SCState) -> SCState:
 
 
 def answer_node(state: SCState) -> SCState:
-    """Final output node: currently just returns the answer from the previous node; can be extended for formatting/tracing."""
-    # Additional info (citations, internal traces, etc.) can be attached here later
+    if "citations" not in state:
+        state["citations"] = []
     return state

@@ -88,7 +88,9 @@ for msg in st.session_state.messages:
     role = msg["role"]
     content = msg["content"]
     intent = msg.get("intent")
+    route_info = msg.get("route_info", {})
     sources = msg.get("sources", [])
+    citations = msg.get("citations", [])
 
     if role == "user":
         with st.chat_message("user"):
@@ -100,6 +102,9 @@ for msg in st.session_state.messages:
             else:
                 st.markdown("**Copilot**")
             st.markdown(content)
+            if route_info:
+                with st.expander("🧭 Route Decision"):
+                    st.json(route_info)
             if sources:
                 with st.expander("📎 View Referenced Documents"):
                     for i, src in enumerate(sources, start=1):
@@ -109,6 +114,9 @@ for msg in st.session_state.messages:
                         if snippet:
                             st.markdown(f"> {snippet}")
                         st.markdown("---")
+            if citations:
+                with st.expander("🧾 Execution Evidence"):
+                    st.json(citations)
 
 # ---------------- User Input ----------------
 user_input = st.chat_input("Ask a question about suppliers, KPIs, or risk scenarios...")
@@ -118,7 +126,15 @@ def run_copilot(question: str):
     answer = result.get("answer", "No answer generated.")
     intent = result.get("intent", "policy_qa")
     sources = result.get("retrieved_docs", [])
-    return answer, intent, sources
+    route_info = {
+        "intent": result.get("intent"),
+        "confidence": result.get("confidence"),
+        "ambiguity_type": result.get("ambiguity_type"),
+        "reason": result.get("reason"),
+        "fallback_mode": result.get("fallback_mode", "none"),
+    }
+    citations = result.get("citations", [])
+    return answer, intent, sources, route_info, citations
 
 if user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
@@ -128,11 +144,13 @@ if user_input:
     with st.chat_message("assistant"):
         placeholder = st.empty()
         placeholder.markdown("Analyzing your question... please wait.")
-        answer, intent, sources = run_copilot(user_input)
+        answer, intent, sources, route_info, citations = run_copilot(user_input)
         time.sleep(0.2)
         placeholder.empty()
         st.markdown(f"**Copilot** {intent_badge(intent)}", unsafe_allow_html=True)
         st.markdown(answer)
+        with st.expander("🧭 Route Decision"):
+            st.json(route_info)
         if sources:
             with st.expander("📎 View Referenced Documents"):
                 for i, src in enumerate(sources, start=1):
@@ -142,7 +160,17 @@ if user_input:
                     if snippet:
                         st.markdown(f"> {snippet}")
                     st.markdown("---")
+        if citations:
+            with st.expander("🧾 Execution Evidence"):
+                st.json(citations)
 
     st.session_state.messages.append(
-        {"role": "assistant", "content": answer, "intent": intent, "sources": sources}
+        {
+            "role": "assistant",
+            "content": answer,
+            "intent": intent,
+            "sources": sources,
+            "route_info": route_info,
+            "citations": citations,
+        }
     )

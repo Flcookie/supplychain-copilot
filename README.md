@@ -135,6 +135,9 @@ uv run python -m ingestion.build_vectorstore
 
 # Launch Streamlit UI
 uv run streamlit run app/ui.py
+
+# Run router A/B evaluation
+uv run python -m eval.run_router_eval
 ```
 
 ---
@@ -144,8 +147,8 @@ uv run streamlit run app/ui.py
 | Feature | Description |
 |----------|-------------|
 | **Hybrid Reasoning** | Combines RAG for unstructured document retrieval with SQL for structured KPI data. |
-| **LangGraph Workflow** | Modular orchestration framework connecting Policy, KPI, and Scenario nodes. |
-| **Explainable Answers** | Each response cites retrieved documents or executed SQL queries for transparency. |
+| **LangGraph Workflow** | Router-based orchestration with ambiguity-first and confidence-second routing policy. |
+| **Explainable Answers** | Each response now includes route decision (`intent/confidence/reason`) plus document or SQL evidence. |
 | **Enterprise UI** | Streamlit-based dashboard showing intents, KPIs, and contextual citations. |
 | **Scalable Integration** | Designed for integration with ERP and BI systems (PostgreSQL, SAP HANA, Snowflake). |
 
@@ -252,6 +255,49 @@ retriever = vectorstore.as_retriever(
 * Always provide explainable, cited answers.
 * Modular, environment-driven design.
 * Focus on **real business value** and workflow integration.
+
+---
+
+## Router Decision Policy
+
+To avoid conflicting behavior between fallback and clarification, the router uses two independent signals:
+
+1. `ambiguity_type`: whether user input is incomplete (`coreference`, `composite_intent`, `missing_entity`).
+2. `confidence`: certainty of intent classification.
+
+Decision priority:
+
+- If `ambiguity_type` is not empty, trigger clarification first.
+- Else if `confidence < 0.75`, trigger RAG fallback.
+- Else route normally to `policy_qa`, `kpi_query`, or `scenario_analysis`.
+
+This design separates two different failures:
+- clarification solves missing/ambiguous input data;
+- fallback solves uncertain intent classification.
+
+---
+
+## Evaluation Methodology
+
+The repository now includes a reproducible router A/B evaluation pipeline:
+
+- Dataset: `eval/datasets/router_eval.json`
+- Script: `eval/run_router_eval.py`
+- Outputs: timestamped JSON + Markdown reports under `eval/results/`
+
+Tracked metrics:
+- intent accuracy
+- ambiguity detection accuracy
+- clarification trigger rate
+- RAG fallback rate
+
+---
+
+## Experiment Boundaries
+
+- Current benchmarks are offline simulation based on curated prompts and demo data.
+- "Time reduction" claims are process decomposition estimates, not online telemetry.
+- Demo data is clean and standardized; production rollout requires data quality assessment and governance.
 
 ---
 
