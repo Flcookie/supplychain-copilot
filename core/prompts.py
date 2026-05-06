@@ -61,7 +61,30 @@ Answer in {response_language_instruction}.
 At the end, list the source filenames or sections you used (if available).
 """
 
+KPI_PARSE_PROMPT = """You extract a structured KPI intent from a user question.
+
+PoC database has ONLY tables: suppliers, purchase_orders (see metrics mapping below).
+
+Return JSON only with fields:
+- intent: always "KPI_Query"
+- supplier_hint: string or null (supplier name fragment if any)
+- metric: one of on_time_rate, order_volume, comparison, trend, other
+- time_range: string or null (e.g. "last_3_months", or null)
+- aggregation: one of single_supplier, side_by_side, rollup, other
+- need_clarification: boolean
+- clarification_reason: string or null
+
+Metrics dictionary (business meaning; SQL must still use actual columns):
+{metrics_blurb}
+
+User question:
+{question}
+"""
+
 KPI_SQL_PROMPT = """You are a senior data analyst writing SQL for a SQLite database.
+
+Structured intent (guide the query; invent no tables outside schema):
+{structured_parse}
 
 Database schema:
 

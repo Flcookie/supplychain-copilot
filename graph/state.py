@@ -24,6 +24,7 @@ class SCState(TypedDict, total=False):
     citations: List[Dict[str, Any]]
 
     # (Reserved) KPI / SQL
+    kpi_parse: Optional[Dict[str, Any]]
     sql_query: Optional[str]
     sql_result: Optional[List[Dict[str, Any]]]
     sql_meta: Optional[Dict[str, Any]]

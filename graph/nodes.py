@@ -1,4 +1,5 @@
 import json
+import os
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
@@ -6,6 +7,7 @@ from langchain_openai import ChatOpenAI
 from core.config import LLM_MODEL
 from core.prompts import (
     KPI_ANSWER_PROMPT,
+    KPI_PARSE_PROMPT,
     KPI_SQL_PROMPT,
     POLICY_QA_PROMPT,
     RAG_FALLBACK_PROMPT,
@@ -18,6 +20,24 @@ from .state import SCState
 
 llm = ChatOpenAI(model=LLM_MODEL, temperature=0)
 retriever = get_retriever()
+
+
+_BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+
+def _metrics_dictionary_blurb() -> str:
+    path = os.path.join(_BASE_DIR, "data", "metrics_dictionary.json")
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+    except OSError:
+        return "See PoC schema: suppliers, purchase_orders."
+    lines = []
+    for key, meta in data.items():
+        name = meta.get("business_name", key)
+        define = meta.get("definition", "")
+        lines.append(f"- {key} ({name}): {define}")
+    return "\n".join(lines)
 
 
 def _safe_json_load(raw: str) -> dict:
@@ -155,8 +175,32 @@ def policy_qa_node(state: SCState) -> SCState:
 
 def kpi_node(state: SCState) -> SCState:
     q = state["question"]
+    parse_prompt = ChatPromptTemplate.from_template(KPI_PARSE_PROMPT)
+    parse_raw = llm.invoke(
+        parse_prompt.format(question=q, metrics_blurb=_metrics_dictionary_blurb())
+    ).content.strip()
+    kpi_parse: dict = {
+        "intent": "KPI_Query",
+        "supplier_hint": None,
+        "metric": "other",
+        "time_range": None,
+        "aggregation": "other",
+        "need_clarification": False,
+        "clarification_reason": None,
+    }
+    try:
+        kpi_parse.update(_safe_json_load(parse_raw))
+    except Exception:
+        pass
+    state["kpi_parse"] = kpi_parse
+
     prompt = ChatPromptTemplate.from_template(KPI_SQL_PROMPT)
-    sql = llm.invoke(prompt.format(question=q)).content.strip()
+    sql = llm.invoke(
+        prompt.format(
+            question=q,
+            structured_parse=json.dumps(kpi_parse, ensure_ascii=False),
+        )
+    ).content.strip()
     state["sql_query"] = sql
 
     try:

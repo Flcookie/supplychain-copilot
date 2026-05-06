@@ -7,6 +7,24 @@ from typing import List, Dict, Any
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DB_PATH = os.path.join(BASE_DIR, "data", "supplychain_kpi.db")
 
+# PoC SQLite schema: extend when new analytical tables are added.
+ALLOWED_SQL_TABLES = frozenset({"suppliers", "purchase_orders"})
+
+
+def _tables_referenced_in_sql(sql: str) -> List[str]:
+    """Bare table names after FROM / JOIN (PoC SQLite; no schema qualifiers)."""
+    pat = re.compile(r"(?is)\b(?:from|join)\s+([a-z_][a-z0-9_]*)")
+    return pat.findall(sql)
+
+
+def _validate_table_whitelist(sql: str) -> None:
+    tables = [t.lower() for t in _tables_referenced_in_sql(sql)]
+    invalid = [t for t in tables if t not in ALLOWED_SQL_TABLES]
+    if invalid:
+        raise ValueError(
+            f"SQL references table(s) not in PoC allowlist {sorted(ALLOWED_SQL_TABLES)}: {invalid}"
+        )
+
 
 def _validate_read_only_sql(sql: str) -> None:
     cleaned = sql.strip().rstrip(";")
@@ -20,6 +38,7 @@ def _validate_read_only_sql(sql: str) -> None:
     lower_sql = cleaned.lower()
     if any(token in lower_sql for token in blocked):
         raise ValueError("Non read-only SQL operation detected.")
+    _validate_table_whitelist(sql)
 
 
 def run_sql_query_with_meta(sql: str, params: tuple | None = None) -> Dict[str, Any]:

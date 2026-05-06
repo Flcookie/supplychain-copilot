@@ -84,6 +84,9 @@ with st.sidebar:
 # ---------------- Session State ----------------
 if "messages" not in st.session_state:
     st.session_state.messages = []
+# When router sends user to clarification, we merge follow-up replies with this base question.
+if "clarification_base_question" not in st.session_state:
+    st.session_state.clarification_base_question = None
 
 # ---------------- Title ----------------
 st.markdown(
@@ -180,21 +183,39 @@ def run_copilot(question: str, response_language: str):
         "ambiguity_type": result.get("ambiguity_type"),
         "reason": result.get("reason"),
         "fallback_mode": result.get("fallback_mode", "none"),
+        "kpi_parse": result.get("kpi_parse"),
     }
     citations = result.get("citations", [])
     return answer, intent, sources, route_info, citations
+
+def _merge_clarification_reply(base_question: str, reply: str, lang_code: str) -> str:
+    if lang_code == "zh":
+        return f"{base_question.strip()}\n\n【用户补充】{reply.strip()}"
+    return f"{base_question.strip()}\n\n[User clarification] {reply.strip()}"
+
 
 if user_input:
     st.session_state.messages.append({"role": "user", "content": user_input, "lang": lang})
     with st.chat_message("user"):
         st.markdown(user_input)
 
+    base_q = st.session_state.clarification_base_question
+    question_for_graph = (
+        _merge_clarification_reply(base_q, user_input, lang) if base_q else user_input
+    )
+
     with st.chat_message("assistant"):
         placeholder = st.empty()
         placeholder.markdown(t["analyzing"])
-        answer, intent, sources, route_info, citations = run_copilot(user_input, lang)
+        answer, intent, sources, route_info, citations = run_copilot(question_for_graph, lang)
         time.sleep(0.2)
         placeholder.empty()
+
+    # Multi-turn clarification: accumulate context until ambiguity_type is cleared.
+    if route_info.get("ambiguity_type"):
+        st.session_state.clarification_base_question = question_for_graph
+    else:
+        st.session_state.clarification_base_question = None
 
     st.session_state.messages.append(
         {

@@ -1,0 +1,30 @@
+{
+  "on_time_rate": {
+    "business_name": "准时交付率",
+    "definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+    "default_time_window": "last_3_months",
+    "poc_table": "purchase_orders",
+    "fields": ["supplier_id", "due_date", "delivery_date"]
+  },
+  "defect_rate": {
+    "business_name": "质量缺陷率",
+    "definition": "缺陷数量 / 总交付数量（企业化扩展；PoC 以对话口径保留）",
+    "default_time_window": "last_3_months",
+    "poc_table": null,
+    "fields": []
+  },
+  "avg_delay_days": {
+    "business_name": "平均延误天数",
+    "definition": "延误订单的 AVG(delivery_date - due_date)",
+    "default_time_window": "last_3_months",
+    "poc_table": "purchase_orders",
+    "fields": ["supplier_id", "due_date", "delivery_date"]
+  },
+  "risk_score": {
+    "business_name": "供应商风险分",
+    "definition": "基于交付、质量、审核、风险事件的加权评分（企业化扩展；PoC 不单独落表）",
+    "default_time_window": "current_month",
+    "poc_table": null,
+    "fields": []
+  }
+}
