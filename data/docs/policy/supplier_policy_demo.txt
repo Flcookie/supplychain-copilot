@@ -1,0 +1,23 @@
+# Supplier Management Policy Demo
+
+Owner: Procurement
+Access Level: internal
+Effective Date: 2026-01-01
+
+## Strategic Supplier Criteria
+
+A strategic supplier is a supplier that provides critical materials, high annual spend, limited substitutability, or material impact on customer service. Strategic suppliers must be evaluated using delivery performance, quality performance, business continuity risk, and commercial dependency.
+
+Strategic suppliers require quarterly business reviews. The review should include on-time delivery, order volume, corrective actions, open risks, and continuity planning. A supplier may be downgraded if performance is persistently below agreed thresholds and corrective actions fail.
+
+## Supplier Segmentation
+
+Suppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration risk, and single-source exposure should be reviewed at least quarterly.
+
+## Backup Supplier Policy
+
+For critical materials, procurement should maintain qualified backup suppliers where feasible. Backup suppliers should be activated when there is repeated delivery failure, quality risk, geopolitical disruption, or capacity shortage that threatens customer commitments.
+
+## Evidence and Citation Requirements
+
+Copilot answers based on this policy must cite the source document, section title, and chunk identifier. If the policy does not contain enough evidence, the answer must say that the information is insufficient.

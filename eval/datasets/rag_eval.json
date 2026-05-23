@@ -1,0 +1,542 @@
+[
+  {
+    "id": "policy_001",
+    "question": "How do we define strategic suppliers?",
+    "expected_answer_points": ["strategic supplier criteria", "performance", "risk or importance"],
+    "expected_sources": ["supplier_policy_demo.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "easy"
+  },
+  {
+    "id": "policy_002",
+    "question": "What are the qualification rules for new suppliers?",
+    "expected_answer_points": ["qualification", "evaluation", "approval"],
+    "expected_sources": ["supplier_policy_demo.txt", "supplier_onboarding_sop.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "easy"
+  },
+  {
+    "id": "policy_003",
+    "question": "What evidence should be checked before onboarding a supplier?",
+    "expected_answer_points": ["business license", "quality certification", "risk screening"],
+    "expected_sources": ["supplier_onboarding_sop.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_004",
+    "question": "When should procurement escalate a supplier incident?",
+    "expected_answer_points": ["incident severity", "late delivery", "business continuity"],
+    "expected_sources": ["incident_response_sop.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_005",
+    "question": "What quality controls are required for critical materials?",
+    "expected_answer_points": ["inspection", "quality certification", "corrective action"],
+    "expected_sources": ["quality_policy.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_006",
+    "question": "Which suppliers require periodic business reviews?",
+    "expected_answer_points": ["strategic suppliers", "quarterly review", "performance review"],
+    "expected_sources": ["supplier_policy_demo.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "easy"
+  },
+  {
+    "id": "policy_007",
+    "question": "What does the contract say about Alpha delivery delays?",
+    "expected_answer_points": ["delivery obligation", "notice", "expedite or mitigation"],
+    "expected_sources": ["alpha_msa_demo.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_008",
+    "question": "What remedies apply if Beta repeatedly misses delivery commitments?",
+    "expected_answer_points": ["corrective action", "service review", "termination or mitigation"],
+    "expected_sources": ["beta_supply_agreement.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "hard"
+  },
+  {
+    "id": "policy_009",
+    "question": "What access level applies to supplier policy documents?",
+    "expected_answer_points": ["internal", "procurement", "access level"],
+    "expected_sources": ["supplier_policy_demo.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "easy"
+  },
+  {
+    "id": "policy_010",
+    "question": "How often should supplier risk be reviewed?",
+    "expected_answer_points": ["quarterly", "high-risk", "strategic suppliers"],
+    "expected_sources": ["supplier_policy_demo.txt", "procurement_faq.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_011",
+    "question": "What is the incident response process for a supplier disruption?",
+    "expected_answer_points": ["triage", "impact assessment", "mitigation owner"],
+    "expected_sources": ["incident_response_sop.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_012",
+    "question": "What should procurement do before approving a non-strategic supplier?",
+    "expected_answer_points": ["baseline screening", "commercial review", "quality approval"],
+    "expected_sources": ["supplier_onboarding_sop.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_013",
+    "question": "What is the policy for backup suppliers?",
+    "expected_answer_points": ["dual sourcing", "critical materials", "risk mitigation"],
+    "expected_sources": ["supplier_policy_demo.txt", "procurement_faq.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_014",
+    "question": "What documents support supplier quality qualification?",
+    "expected_answer_points": ["certification", "inspection results", "audit"],
+    "expected_sources": ["quality_policy.txt", "supplier_onboarding_sop.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_015",
+    "question": "How should a supplier corrective action be tracked?",
+    "expected_answer_points": ["owner", "due date", "closure evidence"],
+    "expected_sources": ["quality_policy.txt", "incident_response_sop.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "hard"
+  },
+  {
+    "id": "policy_016",
+    "question": "What is the procurement FAQ guidance on supplier scorecards?",
+    "expected_answer_points": ["scorecard", "KPI", "review cadence"],
+    "expected_sources": ["procurement_faq.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "easy"
+  },
+  {
+    "id": "policy_017",
+    "question": "What policy applies to supplier confidentiality?",
+    "expected_answer_points": ["confidentiality", "contract", "internal information"],
+    "expected_sources": ["alpha_msa_demo.txt", "beta_supply_agreement.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_018",
+    "question": "What is required for supplier audit readiness?",
+    "expected_answer_points": ["audit", "documentation", "quality records"],
+    "expected_sources": ["quality_policy.txt", "supplier_onboarding_sop.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "hard"
+  },
+  {
+    "id": "policy_019",
+    "question": "Can the system answer employee travel policy?",
+    "expected_answer_points": ["insufficient evidence", "not in supply chain documents"],
+    "expected_sources": [],
+    "answerability": false,
+    "intent": "policy_qa",
+    "difficulty": "easy"
+  },
+  {
+    "id": "policy_020",
+    "question": "What does the supplier policy say about country risk?",
+    "expected_answer_points": ["country risk", "risk review", "mitigation"],
+    "expected_sources": ["supplier_policy_demo.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_021",
+    "question": "How are policy documents supposed to be cited in answers?",
+    "expected_answer_points": ["source", "section", "chunk"],
+    "expected_sources": ["supplier_policy_demo.txt", "procurement_faq.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "hard"
+  },
+  {
+    "id": "policy_022",
+    "question": "What contract terms apply to expedited shipments?",
+    "expected_answer_points": ["expedite", "delivery", "cost responsibility"],
+    "expected_sources": ["alpha_msa_demo.txt", "beta_supply_agreement.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "hard"
+  },
+  {
+    "id": "policy_023",
+    "question": "What is the SOP owner for onboarding?",
+    "expected_answer_points": ["Procurement", "supplier onboarding", "owner"],
+    "expected_sources": ["supplier_onboarding_sop.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "easy"
+  },
+  {
+    "id": "policy_024",
+    "question": "What controls apply to supplier master data changes?",
+    "expected_answer_points": ["approval", "data validation", "audit trail"],
+    "expected_sources": ["supplier_onboarding_sop.txt", "procurement_faq.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "hard"
+  },
+  {
+    "id": "policy_025",
+    "question": "What does quality policy require after a recurring defect?",
+    "expected_answer_points": ["corrective action", "root cause", "verification"],
+    "expected_sources": ["quality_policy.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_026",
+    "question": "What is the review cadence for critical suppliers?",
+    "expected_answer_points": ["quarterly", "critical", "business review"],
+    "expected_sources": ["supplier_policy_demo.txt", "procurement_faq.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "easy"
+  },
+  {
+    "id": "policy_027",
+    "question": "What should be done when a supplier incident has customer impact?",
+    "expected_answer_points": ["escalate", "customer impact", "mitigation plan"],
+    "expected_sources": ["incident_response_sop.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_028",
+    "question": "What does the FAQ say about missing PO delivery dates?",
+    "expected_answer_points": ["delivery date", "purchase order", "data quality"],
+    "expected_sources": ["procurement_faq.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "medium"
+  },
+  {
+    "id": "policy_029",
+    "question": "What policy supports supplier segmentation?",
+    "expected_answer_points": ["strategic", "critical", "segmentation"],
+    "expected_sources": ["supplier_policy_demo.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "easy"
+  },
+  {
+    "id": "policy_030",
+    "question": "What does the contract say about force majeure notification?",
+    "expected_answer_points": ["force majeure", "notification", "mitigation"],
+    "expected_sources": ["alpha_msa_demo.txt", "beta_supply_agreement.txt"],
+    "answerability": true,
+    "intent": "policy_qa",
+    "difficulty": "hard"
+  },
+  {
+    "id": "kpi_001",
+    "question": "What is the on-time delivery rate for Alpha Electronics?",
+    "expected_answer_points": ["on_time_rate", "Alpha Electronics", "SQL evidence"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "easy"
+  },
+  {
+    "id": "kpi_002",
+    "question": "Alpha Electronics 的准时交付率是多少？",
+    "expected_answer_points": ["准时交付率", "Alpha Electronics", "SQL"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "easy"
+  },
+  {
+    "id": "kpi_003",
+    "question": "Compare Alpha Electronics and Beta Plastics on OTD.",
+    "expected_answer_points": ["comparison", "Alpha Electronics", "Beta Plastics", "SQL evidence"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "medium"
+  },
+  {
+    "id": "kpi_004",
+    "question": "Which supplier has the most purchase orders?",
+    "expected_answer_points": ["order_volume", "supplier ranking", "SQL evidence"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "medium"
+  },
+  {
+    "id": "kpi_005",
+    "question": "Show average delay days for Beta Plastics.",
+    "expected_answer_points": ["avg_delay_days", "Beta Plastics", "delayed orders"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "medium"
+  },
+  {
+    "id": "kpi_006",
+    "question": "What is Gamma Metals delivery performance?",
+    "expected_answer_points": ["Gamma Metals", "on_time_rate", "sample size"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "easy"
+  },
+  {
+    "id": "kpi_007",
+    "question": "Compare suppliers in Vietnam by on-time delivery.",
+    "expected_answer_points": ["Vietnam", "supplier comparison", "on_time_rate"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "hard"
+  },
+  {
+    "id": "kpi_008",
+    "question": "What is Delta Packaging's order volume?",
+    "expected_answer_points": ["Delta Packaging", "order_volume", "SQL"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "easy"
+  },
+  {
+    "id": "kpi_009",
+    "question": "Rank suppliers by delivery reliability.",
+    "expected_answer_points": ["ranking", "on_time_rate", "SQL evidence"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "hard"
+  },
+  {
+    "id": "kpi_010",
+    "question": "What KPI formula is used for OTD?",
+    "expected_answer_points": ["on_time_orders", "total_orders", "delivery_date <= due_date"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "easy"
+  },
+  {
+    "id": "kpi_011",
+    "question": "Can you calculate defect rate from current demo data?",
+    "expected_answer_points": ["not available", "no quality table", "insufficient data"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": false,
+    "intent": "kpi_query",
+    "difficulty": "medium"
+  },
+  {
+    "id": "kpi_012",
+    "question": "What is the sample size behind Alpha's OTD?",
+    "expected_answer_points": ["sample size", "total_orders", "Alpha Electronics"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "medium"
+  },
+  {
+    "id": "kpi_013",
+    "question": "Which country has more delayed orders?",
+    "expected_answer_points": ["country", "delayed orders", "SQL"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "hard"
+  },
+  {
+    "id": "kpi_014",
+    "question": "Show the total quantity ordered from Vietnam suppliers.",
+    "expected_answer_points": ["Vietnam", "total quantity", "purchase_orders"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "medium"
+  },
+  {
+    "id": "kpi_015",
+    "question": "How many POs did Alpha Electronics deliver late?",
+    "expected_answer_points": ["Alpha Electronics", "late orders", "delivery_date > due_date"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "medium"
+  },
+  {
+    "id": "kpi_016",
+    "question": "Compare Alpha, Beta, Gamma, and Delta on OTD.",
+    "expected_answer_points": ["all suppliers", "on_time_rate", "side-by-side"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "hard"
+  },
+  {
+    "id": "kpi_017",
+    "question": "What is OTIF for Alpha Electronics?",
+    "expected_answer_points": ["OTIF", "not available", "demo fields insufficient"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": false,
+    "intent": "kpi_query",
+    "difficulty": "medium"
+  },
+  {
+    "id": "kpi_018",
+    "question": "Give me the risk score for Beta Plastics.",
+    "expected_answer_points": ["risk_score", "not available", "requires enterprise risk tables"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": false,
+    "intent": "kpi_query",
+    "difficulty": "medium"
+  },
+  {
+    "id": "kpi_019",
+    "question": "What is the average delay for all delayed purchase orders?",
+    "expected_answer_points": ["avg_delay_days", "delayed purchase orders", "SQL"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "medium"
+  },
+  {
+    "id": "kpi_020",
+    "question": "Which materials are associated with late orders?",
+    "expected_answer_points": ["material", "late orders", "delivery_date > due_date"],
+    "expected_sources": ["metric_definitions.txt"],
+    "answerability": true,
+    "intent": "kpi_query",
+    "difficulty": "hard"
+  },
+  {
+    "id": "hybrid_001",
+    "question": "How is Alpha Electronics performing against strategic supplier expectations?",
+    "expected_answer_points": ["policy expectation", "Alpha KPI", "evidence from documents and SQL"],
+    "expected_sources": ["supplier_policy_demo.txt", "metric_definitions.txt"],
+    "answerability": true,
+    "intent": "hybrid",
+    "difficulty": "hard"
+  },
+  {
+    "id": "hybrid_002",
+    "question": "Does Beta Plastics need corrective action based on delivery performance and policy?",
+    "expected_answer_points": ["delivery performance", "corrective action policy", "SQL evidence"],
+    "expected_sources": ["quality_policy.txt", "beta_supply_agreement.txt", "metric_definitions.txt"],
+    "answerability": true,
+    "intent": "hybrid",
+    "difficulty": "hard"
+  },
+  {
+    "id": "hybrid_003",
+    "question": "If Vietnam suppliers are delayed by 7 days, what policy actions and data impacts should we consider?",
+    "expected_answer_points": ["Vietnam suppliers", "scenario impact", "policy mitigation"],
+    "expected_sources": ["incident_response_sop.txt", "supplier_policy_demo.txt"],
+    "answerability": true,
+    "intent": "hybrid",
+    "difficulty": "hard"
+  },
+  {
+    "id": "hybrid_004",
+    "question": "Which supplier should be prioritized for a business review based on OTD and supplier policy?",
+    "expected_answer_points": ["OTD comparison", "business review policy", "sample size"],
+    "expected_sources": ["supplier_policy_demo.txt", "metric_definitions.txt"],
+    "answerability": true,
+    "intent": "hybrid",
+    "difficulty": "hard"
+  },
+  {
+    "id": "hybrid_005",
+    "question": "Can Alpha's contract obligations explain its delivery KPI result?",
+    "expected_answer_points": ["contract delivery obligations", "Alpha KPI", "SQL evidence"],
+    "expected_sources": ["alpha_msa_demo.txt", "metric_definitions.txt"],
+    "answerability": true,
+    "intent": "hybrid",
+    "difficulty": "hard"
+  },
+  {
+    "id": "hybrid_006",
+    "question": "Should procurement activate a backup supplier for Beta based on current delivery data?",
+    "expected_answer_points": ["Beta delivery performance", "backup supplier policy", "recommendation boundary"],
+    "expected_sources": ["supplier_policy_demo.txt", "beta_supply_agreement.txt", "metric_definitions.txt"],
+    "answerability": true,
+    "intent": "hybrid",
+    "difficulty": "hard"
+  },
+  {
+    "id": "hybrid_007",
+    "question": "What data and policy evidence support classifying Gamma Metals as reliable?",
+    "expected_answer_points": ["Gamma KPI", "strategic supplier criteria", "evidence"],
+    "expected_sources": ["supplier_policy_demo.txt", "metric_definitions.txt"],
+    "answerability": true,
+    "intent": "hybrid",
+    "difficulty": "hard"
+  },
+  {
+    "id": "hybrid_008",
+    "question": "How should we handle a recurring late delivery issue under policy and KPI evidence?",
+    "expected_answer_points": ["late delivery data", "corrective action", "incident response"],
+    "expected_sources": ["incident_response_sop.txt", "quality_policy.txt", "metric_definitions.txt"],
+    "answerability": true,
+    "intent": "hybrid",
+    "difficulty": "hard"
+  },
+  {
+    "id": "hybrid_009",
+    "question": "What does the supplier scorecard need to include and what current demo KPI can populate it?",
+    "expected_answer_points": ["scorecard policy", "OTD", "order volume"],
+    "expected_sources": ["procurement_faq.txt", "metric_definitions.txt"],
+    "answerability": true,
+    "intent": "hybrid",
+    "difficulty": "medium"
+  },
+  {
+    "id": "hybrid_010",
+    "question": "Can we decide payment penalties for Alpha from current policy and KPI data?",
+    "expected_answer_points": ["insufficient evidence", "payment penalty terms missing or limited", "KPI alone not enough"],
+    "expected_sources": ["alpha_msa_demo.txt", "metric_definitions.txt"],
+    "answerability": false,
+    "intent": "hybrid",
+    "difficulty": "hard"
+  }
+]

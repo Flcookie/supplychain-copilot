@@ -1,0 +1,26 @@
+# Beta Plastics Supply Agreement Demo
+
+Supplier: Beta Plastics
+Owner: Legal / Procurement
+Access Level: internal
+Effective Date: 2026-01-01
+
+Clause 1. Delivery Performance
+
+Beta Plastics must meet the delivery date in each confirmed purchase order. Repeated missed commitments trigger a supplier performance review and may require a corrective action plan.
+
+Clause 2. Corrective Action and Service Review
+
+If Beta misses two or more delivery commitments in a review period, Procurement may request a corrective action plan. The plan must include root cause, containment, recovery date, responsible owner, and weekly progress updates.
+
+Clause 3. Mitigation and Backup Supply
+
+If Beta cannot recover supply in time to protect customer commitments, Procurement may activate qualified backup suppliers or redirect demand to alternate sources. Any commercial impact must be reviewed by Procurement and Legal.
+
+Clause 4. Confidentiality
+
+Beta must protect forecasts, drawings, quality records, and supplier scorecard information. Internal operational data may not be shared externally without written approval.
+
+Clause 5. Force Majeure
+
+Beta must provide written notice of force majeure events, affected materials, estimated duration, and proposed mitigation actions.

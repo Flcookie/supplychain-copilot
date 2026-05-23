@@ -2,6 +2,7 @@ from typing import Annotated, List, Literal, Dict, Any, Optional
 from typing_extensions import TypedDict
 from langgraph.graph.message import add_messages
 from langchain_core.messages import BaseMessage
+from core.evidence import Evidence
 
 
 class SCState(TypedDict, total=False):
@@ -11,7 +12,7 @@ class SCState(TypedDict, total=False):
     response_language: Optional[Literal["en", "zh"]]
 
     # Intent determined by the router
-    intent: Literal["policy_qa", "kpi_query", "scenario_analysis", "unknown"]
+    intent: Literal["policy_qa", "kpi_query", "scenario_analysis", "hybrid_query", "qualification_checklist", "unknown"]
     confidence: float
     reason: str
     ambiguity_type: Optional[Literal["coreference", "composite_intent", "missing_entity"]]
@@ -22,6 +23,7 @@ class SCState(TypedDict, total=False):
     # RAG documents
     retrieved_docs: List[Dict[str, Any]]
     citations: List[Dict[str, Any]]
+    evidence: Optional[Evidence]
 
     # (Reserved) KPI / SQL
     kpi_parse: Optional[Dict[str, Any]]

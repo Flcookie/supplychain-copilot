@@ -4,8 +4,15 @@ import re
 from dataclasses import dataclass
 from datetime import datetime, UTC
 
+import sys
 
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
+if ROOT_DIR not in sys.path:
+    sys.path.insert(0, ROOT_DIR)
+
+from core.qualification_rules import detect_qualification_checklist_intent
+
+
 DATASET_PATH = os.path.join(ROOT_DIR, "eval", "datasets", "router_eval.json")
 RESULT_DIR = os.path.join(ROOT_DIR, "eval", "results")
 
@@ -30,6 +37,13 @@ def baseline_router(question: str) -> RouterOutput:
 
 def optimized_router(question: str) -> RouterOutput:
     q = question.lower()
+    if detect_qualification_checklist_intent(question):
+        return RouterOutput(
+            intent="qualification_checklist",
+            confidence=0.93,
+            ambiguity_type=None,
+            reason="supplier qualification checklist keywords",
+        )
     ambiguity_type = None
     if any(k in q for k in ["they", "their", "this supplier", "those vendors", "他们", "这家"]):
         ambiguity_type = "coreference"

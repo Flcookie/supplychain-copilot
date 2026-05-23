@@ -1,0 +1,2517 @@
+{
+  "metrics": {
+    "samples": 60,
+    "retrieval_recall_at_3": 0.3333,
+    "retrieval_recall_at_5": 0.3333,
+    "retrieval_recall_at_10": 0.3333,
+    "mrr": 0.3167,
+    "avg_latency_ms": 2944.96,
+    "faithfulness": null,
+    "citation_precision": null,
+    "answer_completeness": null,
+    "refusal_accuracy": null
+  },
+  "details": [
+    {
+      "id": "policy_001",
+      "question": "How do we define strategic suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 8478.87,
+      "answer": "Strategic suppliers are defined as those that provide critical materials, have high procurement value, or significantly affect production continuity.\n\nSource: Supplier Management Policy (Example), Section 1",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_002",
+      "question": "What are the qualification rules for new suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2382.48,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_003",
+      "question": "What evidence should be checked before onboarding a supplier?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 3825.39,
+      "answer": "Before onboarding a supplier, verify whether they qualify as a strategic supplier based on the criticality of materials, procurement value, and impact on production continuity. Additionally, assess their delivery performance history and quality conformity to ensure alignment with company standards.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_004",
+      "question": "When should procurement escalate a supplier incident?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "incident_response_sop.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1028.92,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_005",
+      "question": "What quality controls are required for critical materials?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1170.63,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_006",
+      "question": "Which suppliers require periodic business reviews?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1068.26,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_007",
+      "question": "What does the contract say about Alpha delivery delays?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "alpha_msa_demo.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 4071.5,
+      "answer": "The contract states that if Alpha's delivery delays cause a production line shutdown, the company has the right to claim corresponding losses.\n\nSource: Supplier Management Policy",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_008",
+      "question": "What remedies apply if Beta repeatedly misses delivery commitments?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "beta_supply_agreement.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2630.22,
+      "answer": "If Beta is a strategic supplier and its on-time delivery rate remains below 95% for two consecutive quarters, a joint improvement plan must be initiated. Additionally, if Beta’s delayed delivery causes a production line shutdown, the company may claim corresponding losses as per the contract.\n\nSource: Supplier Management Policy",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_009",
+      "question": "What access level applies to supplier policy documents?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 2794.97,
+      "answer": "The provided context does not specify the access level for supplier policy documents.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_010",
+      "question": "How often should supplier risk be reviewed?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 2231.34,
+      "answer": "The context does not specify how often supplier risk should be reviewed.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_011",
+      "question": "What is the incident response process for a supplier disruption?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "incident_response_sop.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1235.68,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_012",
+      "question": "What should procurement do before approving a non-strategic supplier?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2167.36,
+      "answer": "Before approving a non-strategic supplier, procurement should ensure the supplier meets the company’s requirements for delivery stability and quality conformity, as these are the primary evaluation criteria for regular suppliers.  \n\nSource: Supplier Management Policy, points 1 and 3.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_013",
+      "question": "What is the policy for backup suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 4399.79,
+      "answer": "The provided context does not specify any policy regarding backup suppliers.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_014",
+      "question": "What documents support supplier quality qualification?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt",
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2236.28,
+      "answer": "The context does not specify which documents support supplier quality qualification.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_015",
+      "question": "How should a supplier corrective action be tracked?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt",
+        "incident_response_sop.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1970.66,
+      "answer": "The context does not specify how a supplier corrective action should be tracked.\n\nSource: Supplier Management Policy",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_016",
+      "question": "What is the procurement FAQ guidance on supplier scorecards?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2242.72,
+      "answer": "The provided context does not include information on procurement FAQ guidance regarding supplier scorecards.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.93,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_017",
+      "question": "What policy applies to supplier confidentiality?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2611.18,
+      "answer": "The provided context does not include any information regarding supplier confidentiality policies.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_018",
+      "question": "What is required for supplier audit readiness?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt",
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2449.15,
+      "answer": "The provided context does not specify requirements for supplier audit readiness.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_019",
+      "question": "Can the system answer employee travel policy?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": false,
+      "expected_sources": [],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 0.0,
+      "latency_ms": 830.32,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_020",
+      "question": "What does the supplier policy say about country risk?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1113.66,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_021",
+      "question": "How are policy documents supposed to be cited in answers?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 1928.95,
+      "answer": "Policy documents should be cited by referencing the specific policy name and relevant section or clause to ensure clarity and traceability.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_022",
+      "question": "What contract terms apply to expedited shipments?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1944.5,
+      "answer": "The provided context does not specify any contract terms related to expedited shipments.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_023",
+      "question": "What is the SOP owner for onboarding?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2245.07,
+      "answer": "The provided context does not specify the SOP owner for onboarding.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_024",
+      "question": "What controls apply to supplier master data changes?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_onboarding_sop.txt",
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1922.59,
+      "answer": "The provided context does not include information regarding controls for supplier master data changes.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_025",
+      "question": "What does quality policy require after a recurring defect?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 3039.88,
+      "answer": "The provided context does not specify any requirements or actions related to recurring defects in the quality policy.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_026",
+      "question": "What is the review cadence for critical suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 976.76,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_027",
+      "question": "What should be done when a supplier incident has customer impact?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "incident_response_sop.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 861.33,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_028",
+      "question": "What does the FAQ say about missing PO delivery dates?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1842.35,
+      "answer": "The provided context does not include any FAQ or information specifically addressing missing PO delivery dates.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_029",
+      "question": "What policy supports supplier segmentation?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 2742.25,
+      "answer": "Supplier segmentation is supported by the policy defining “strategic suppliers” as those providing critical materials, having high procurement value, or significantly affecting production continuity. This classification differentiates strategic suppliers from regular suppliers, enabling tailored management approaches.\n\nSource: Supplier Management Policy (Example), Section 1",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_030",
+      "question": "What does the contract say about force majeure notification?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2327.87,
+      "answer": "The provided context does not include any information about force majeure notification in the contract.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_001",
+      "question": "What is the on-time delivery rate for Alpha Electronics?",
+      "intent": "kpi_query",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 7924.15,
+      "answer": "The on-time delivery rate for Alpha Electronics over the last 3 months is 66.67%, meaning about two-thirds of their purchase orders were delivered on or before the due date. This metric is defined as the number of orders delivered on time divided by the total number of delivered orders, calculated by the formula:  \nSUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id).  \n\nThe query analyzed all purchase orders linked to Alpha Electronics, but the sample size is only 1 order, which is below the recommended minimum of 10 for reliable conclusions. Therefore, this result should be considered directional and not definitive of their overall performance. No comparison to other suppliers can be made from this data.  \n\nIn summary, while Alpha Electronics shows a 66.67% on-time delivery rate in this limited sample, more data is needed to accurately assess their reliability.  \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha electronics%');",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 6.23,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 1 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "The query analyzed all purchase orders linked to Alpha Electronics, but the sample size is only 1 order, which is below the recommended minimum of 10 for reliable conclusions. Therefore, this result should be considered directional and not definitive of their overall performance. No comparison to other suppliers can be made from this data."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_002",
+      "question": "Alpha Electronics 的准时交付率是多少？",
+      "intent": "kpi_query",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6674.23,
+      "answer": "The on-time delivery rate for Alpha Electronics is 66.67%, meaning about two-thirds of their purchase orders were delivered on or before the due date. This metric is defined as the number of orders delivered on time divided by the total number of delivered orders, calculated as:  \nSUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id).  \nThe data covers the last 3 months and is based on 1 purchase order record linked to Alpha Electronics. However, the sample size is below the recommended minimum of 10 orders, so this result should be considered directional rather than definitive. No comparison to other suppliers is possible with this limited data. Overall, Alpha Electronics shows moderate on-time performance, but more data is needed for a reliable assessment.  \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha electronics%');",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 0.83,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 1 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "The data covers the last 3 months and is based on 1 purchase order record linked to Alpha Electronics. However, the sample size is below the recommended minimum of 10 orders, so this result should be considered directional rather than definitive. No comparison to other suppliers is possible with this limited data. Overall, Alpha Electronics shows moderate on-time performance, but more data is needed for a reliable assessment."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_003",
+      "question": "Compare Alpha Electronics and Beta Plastics on OTD.",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 7543.12,
+      "answer": "The On-Time Delivery (OTD) rate measures the proportion of purchase orders delivered on or before their due date, calculated as the number of on-time deliveries divided by total deliveries. This analysis covers the last 3 months, based on 5 total orders from two suppliers, which is below the recommended minimum sample size of 10; therefore, results should be considered directional only. Alpha Electronics has an OTD rate of 66.67% with 3 orders, indicating that two-thirds of their deliveries met the deadline. In contrast, Beta Plastics has an OTD rate of 0% from 2 orders, meaning none of their deliveries were on time during this period. Based on this data, Alpha Electronics is performing better on delivery timeliness compared to Beta Plastics. However, due to the small sample size and limited data, these findings should be interpreted cautiously. \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.97,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    s.name AS supplier_name,\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate,\n    COUNT(p.id) AS total_orders\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha electronics%')\n   OR LOWER(s.name) LIKE LOWER('%beta plastics%')\nGROUP BY s.id, s.name\nORDER BY on_time_rate DESC;",
+          "params": {},
+          "row_count": 2,
+          "latency_ms": 1.51,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 5,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 5,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 5 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "The On-Time Delivery (OTD) rate measures the proportion of purchase orders delivered on or before their due date, calculated as the number of on-time deliveries divided by total deliveries. This analysis covers the last 3 months, based on 5 total orders from two suppliers, which is below the recommended minimum sample size of 10; therefore, results should be considered directional only. Alpha Electronics has an OTD rate of 66.67% with 3 orders, indicating that two-thirds of their deliveries met the deadline. In contrast, Beta Plastics has an OTD rate of 0% from 2 orders, meaning none of their deliveries were on time during this period. Based on this data, Alpha Electronics is performing better on delivery timeliness compared to Beta Plastics. However, due to the small sample size and limited data, these findings should be interpreted cautiously."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_004",
+      "question": "Which supplier has the most purchase orders?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 883.12,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.85,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "kpi_005",
+      "question": "Show average delay days for Beta Plastics.",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6637.31,
+      "answer": "The average delay for late deliveries from Beta Plastics over the last 3 months is 4.0 days. This metric is defined as the average number of days by which delivery dates exceed their due dates, calculated as AVG(julianday(delivery_date) - julianday(due_date)) for delayed orders only. The query included purchase orders where delivery was later than the due date, joined with supplier data filtered for Beta Plastics. The result is based on a single delayed order (sample size = 1), which is below the recommended minimum of 5 for reliable analysis. Therefore, this finding should be considered directional and not definitive of overall supplier performance. No comparison to other suppliers is available from this data. Please treat this as an initial indicator that Beta Plastics may have some delivery delays averaging 4 days when late.\n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    AVG(julianday(p.delivery_date) - julianday(p.due_date)) AS avg_delay_days\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%beta plastics%')\n  AND julianday(p.delivery_date) > julianday(p.due_date);",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 1.1,
+          "metric": "avg_delay_days",
+          "metric_definition": "延误订单的 AVG(delivery_date - due_date)",
+          "formula": "AVG(julianday(delivery_date) - julianday(due_date)) for delayed orders",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 5,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 1 is below the recommended minimum 5; treat the result as directional."
+        ],
+        "recommendations": [
+          "The average delay for late deliveries from Beta Plastics over the last 3 months is 4.0 days. This metric is defined as the average number of days by which delivery dates exceed their due dates, calculated as AVG(julianday(delivery_date) - julianday(due_date)) for delayed orders only. The query included purchase orders where delivery was later than the due date, joined with supplier data filtered for Beta Plastics. The result is based on a single delayed order (sample size = 1), which is below the recommended minimum of 5 for reliable analysis. Therefore, this finding should be considered directional and not definitive of overall supplier performance. No comparison to other suppliers is available from this data. Please treat this as an initial indicator that Beta Plastics may have some delivery delays averaging 4 days when late."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_006",
+      "question": "What is Gamma Metals delivery performance?",
+      "intent": "kpi_query",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6124.87,
+      "answer": "Gamma Metals has an on-time delivery rate of 100% based on 2 purchase orders in the last 3 months. This means all their deliveries met or were earlier than the due dates, indicating excellent delivery performance for this small sample. The metric used is defined as the number of orders delivered on or before the due date divided by the total number of orders, calculated as:\n\nSUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id).\n\nHowever, the sample size of 2 orders is below the recommended minimum of 10, so this result should be considered directional rather than definitive. No other suppliers were compared in this query. Overall, Gamma Metals appears reliable in this period, but more data is needed for a robust assessment.\n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    s.name AS supplier_name,\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate,\n    COUNT(p.id) AS total_orders\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%gamma metals%')\nGROUP BY s.id, s.name;",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 0.79,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 2,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 2,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 2 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "However, the sample size of 2 orders is below the recommended minimum of 10, so this result should be considered directional rather than definitive. No other suppliers were compared in this query. Overall, Gamma Metals appears reliable in this period, but more data is needed for a robust assessment."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_007",
+      "question": "Compare suppliers in Vietnam by on-time delivery.",
+      "intent": "kpi_query",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6387.3,
+      "answer": "The query compared on-time delivery rates for suppliers based in Vietnam over the last 3 months. The on-time delivery rate is defined as the number of orders delivered on or before the due date divided by the total number of orders, calculated as:  \nSUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id).  \n\nHowever, the query returned no data (0 rows), indicating no recorded purchase orders from Vietnamese suppliers in this period. The sample size is zero, which is below the recommended minimum of 10 orders, so no reliable conclusions can be drawn about supplier performance in Vietnam. Because of this, we cannot identify which suppliers perform well or poorly on on-time delivery.  \n\nPlease note this analysis is based on a demo dataset with limited data and should be treated as directional only.  \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    s.name AS supplier_name,\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate,\n    COUNT(p.id) AS total_orders\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.country) = 'vietnam'\nGROUP BY s.id, s.name\nORDER BY on_time_rate DESC;",
+          "params": {},
+          "row_count": 0,
+          "latency_ms": 0.7,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 0,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 0,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 0 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "However, the query returned no data (0 rows), indicating no recorded purchase orders from Vietnamese suppliers in this period. The sample size is zero, which is below the recommended minimum of 10 orders, so no reliable conclusions can be drawn about supplier performance in Vietnam. Because of this, we cannot identify which suppliers perform well or poorly on on-time delivery."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_008",
+      "question": "What is Delta Packaging's order volume?",
+      "intent": "kpi_query",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 5725.39,
+      "answer": "Delta Packaging has placed 2 purchase orders totaling 2,200 units in the last 3 months. The metric \"order volume\" here refers to the count of purchase orders and the sum of quantities ordered, calculated as COUNT(purchase_orders.id) and SUM(qty). This data is based on one query result row with a sufficient sample size, ensuring reliability for this period. No time range was specified, so the default last 3 months was used. Given the small demo dataset, these figures are illustrative and may not reflect full production performance. There is no comparative supplier performance data here to assess how Delta Packaging ranks. Overall, Delta Packaging’s order activity appears limited but quantifiable within the available data.\n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT COUNT(p.id) AS order_volume, SUM(p.qty) AS total_quantity\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%delta packaging%');",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 0.73,
+          "metric": "order_volume",
+          "metric_definition": "采购订单数量和订购数量之和",
+          "formula": "COUNT(purchase_orders.id), SUM(qty)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 1,
+          "is_sample_sufficient": true
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": true,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance."
+        ],
+        "recommendations": []
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_009",
+      "question": "Rank suppliers by delivery reliability.",
+      "intent": "kpi_query",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1034.55,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.85,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "kpi_010",
+      "question": "What KPI formula is used for OTD?",
+      "intent": "kpi_query",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2551.3,
+      "answer": "The On-Time Delivery (OTD) KPI is measured as the percentage of deliveries made on or before the scheduled delivery date out of the total deliveries within a given period.\n\nSource: Supplier Management Policy, section on strategic suppliers' on-time delivery rate target.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_011",
+      "question": "Can you calculate defect rate from current demo data?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": false,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 963.47,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.85,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "kpi_012",
+      "question": "What is the sample size behind Alpha's OTD?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 952.94,
+      "answer": "I need one clarification before routing this request.\n\nWhen you say 'they/this supplier', which supplier are you referring to?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": "coreference",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "kpi_013",
+      "question": "Which country has more delayed orders?",
+      "intent": "kpi_query",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2312.41,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.85,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "kpi_014",
+      "question": "Show the total quantity ordered from Vietnam suppliers.",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6830.78,
+      "answer": "The total quantity ordered from suppliers based in Vietnam over the last 3 months is reported as null, indicating no recorded purchase order quantities from these suppliers in the data. The metric measured is \"order_volume,\" defined as the sum of purchase order quantities (SUM(qty)) within the specified time range. The query joined supplier and purchase order data filtered by supplier country and returned one row with a sample size of one, which is sufficient for this dataset. Since the result is null, it suggests either no orders were placed with Vietnam suppliers during this period or the data is missing or incomplete for these suppliers. No performance evaluation of Vietnam suppliers can be made based on this result. Please note this data is from a demo database and may not reflect actual supplier activity. \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.9,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT SUM(p.qty) AS total_order_quantity\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.country) = LOWER('Vietnam');",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 0.77,
+          "metric": "order_volume",
+          "metric_definition": "采购订单数量和订购数量之和",
+          "formula": "COUNT(purchase_orders.id), SUM(qty)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 1,
+          "is_sample_sufficient": true
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": true,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance."
+        ],
+        "recommendations": []
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_015",
+      "question": "How many POs did Alpha Electronics deliver late?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 5544.61,
+      "answer": "Alpha Electronics delivered 1 purchase order late in the last 3 months. The metric used counts all purchase orders where the actual delivery date exceeded the due date. The formula for on-time delivery rate is the number of orders delivered on or before the due date divided by the total number of orders. This result is based on a sample size of 1 purchase order, which is below the recommended minimum of 10, so the finding should be considered directional only. Because of the small sample, we cannot conclusively assess Alpha Electronics’ overall delivery performance. No other suppliers’ data was included in this query. Please note this data is from a demo database and may not reflect actual production performance.\n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    COUNT(p.id) AS late_po_count\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha electronics%')\n  AND p.delivery_date > p.due_date;",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 0.76,
+          "metric": "other",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 1 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "Alpha Electronics delivered 1 purchase order late in the last 3 months. The metric used counts all purchase orders where the actual delivery date exceeded the due date. The formula for on-time delivery rate is the number of orders delivered on or before the due date divided by the total number of orders. This result is based on a sample size of 1 purchase order, which is below the recommended minimum of 10, so the finding should be considered directional only. Because of the small sample, we cannot conclusively assess Alpha Electronics’ overall delivery performance. No other suppliers’ data was included in this query. Please note this data is from a demo database and may not reflect actual production performance."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_016",
+      "question": "Compare Alpha, Beta, Gamma, and Delta on OTD.",
+      "intent": "kpi_query",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 7290.38,
+      "answer": "The On-Time Delivery (OTD) rate measures the proportion of orders delivered on or before their due date, calculated as the number of on-time deliveries divided by total orders. This analysis covers the last 3 months with 9 total orders across four suppliers, which is slightly below the recommended minimum sample size of 10, so results should be considered directional only.\n\nAmong the suppliers, Gamma Metals leads with a perfect OTD rate of 100% on 2 orders, indicating excellent delivery performance. Alpha Electronics follows with a 66.67% OTD rate over 3 orders, showing moderate reliability. Delta Packaging has a 50% OTD rate on 2 orders, suggesting room for improvement. Beta Plastics performed poorly with a 0% OTD rate on 2 orders, indicating consistent late deliveries.\n\nIn summary, Gamma Metals is the best performer, while Beta Plastics requires attention to improve timeliness. The small sample size limits definitive conclusions but provides useful directional insights.\n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.97,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    s.name AS supplier_name,\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate,\n    COUNT(p.id) AS total_orders\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha%')\n   OR LOWER(s.name) LIKE LOWER('%beta%')\n   OR LOWER(s.name) LIKE LOWER('%gamma%')\n   OR LOWER(s.name) LIKE LOWER('%delta%')\nGROUP BY s.id, s.name\nORDER BY on_time_rate DESC;",
+          "params": {},
+          "row_count": 4,
+          "latency_ms": 3.1,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 9,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 9,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 9 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "The On-Time Delivery (OTD) rate measures the proportion of orders delivered on or before their due date, calculated as the number of on-time deliveries divided by total orders. This analysis covers the last 3 months with 9 total orders across four suppliers, which is slightly below the recommended minimum sample size of 10, so results should be considered directional only."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_017",
+      "question": "What is OTIF for Alpha Electronics?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": false,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6354.73,
+      "answer": "The On-Time In-Full (OTIF) rate for Alpha Electronics is 66.67%, meaning about two-thirds of their purchase orders were delivered on or before the due date. This metric is defined as the number of orders delivered on time divided by the total number of delivered orders, calculated as:  \nSUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id).  \nThe data covers the last 3 months and is based on 1 purchase order record for Alpha Electronics. Since the sample size is only 1, which is below the recommended minimum of 10, this result should be considered directional and not definitive. No comparison to other suppliers can be made from this data. Improving Alpha Electronics’ delivery timeliness could enhance overall supply chain reliability.  \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha electronics%');",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 0.75,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 1 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "The data covers the last 3 months and is based on 1 purchase order record for Alpha Electronics. Since the sample size is only 1, which is below the recommended minimum of 10, this result should be considered directional and not definitive. No comparison to other suppliers can be made from this data. Improving Alpha Electronics’ delivery timeliness could enhance overall supply chain reliability."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_018",
+      "question": "Give me the risk score for Beta Plastics.",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": false,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 4122.6,
+      "answer": "Verified facts  \n- Supplier: Beta Plastics  \n- Country: Vietnam (VN)  \n- Affected purchase orders: 2  \n- Total quantity impacted: 1,400 units  \n- Assumed delay: 7 days  \n\nRecommendations  \n1. Increase safety stock levels for products sourced from Beta Plastics to buffer against the 7-day delay.  \n2. Pre-build inventory where feasible to mitigate supply disruption risks.  \n3. Identify and qualify backup suppliers in Vietnam or nearby regions to reduce dependency.  \n4. Conduct a joint risk review with Beta Plastics to improve visibility and develop contingency plans.  \n5. Monitor order fulfillment closely and adjust procurement schedules proactively.  \n\nNote: This is a demo analysis based on sample data.",
+      "route": {
+        "intent": "scenario_analysis",
+        "confidence": 0.92,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "simulation",
+        "sql": {
+          "query": "SELECT s.name AS supplier_name,\n           s.country,\n           COUNT(p.id) AS total_pos,\n           SUM(p.qty) AS total_qty\n    FROM suppliers s\n    JOIN purchase_orders p ON s.id = p.supplier_id\n    WHERE s.country = ?\n    GROUP BY s.id;",
+          "params": {
+            "country": "VN",
+            "delay_days": 7
+          },
+          "row_count": 2,
+          "latency_ms": 0.8,
+          "metric": "scenario_impact",
+          "metric_definition": "Affected suppliers and order quantities for the selected disruption scope.",
+          "formula": "COUNT(p.id), SUM(p.qty) grouped by affected supplier",
+          "time_range": "current demo dataset",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 2,
+          "minimum_sample_size": 1,
+          "is_sample_sufficient": true
+        },
+        "sample_size": 2,
+        "is_sample_sufficient": true,
+        "verified_facts": [
+          "Scenario scope: suppliers in VN; assumed delay: 7 days.",
+          "Beta Plastics: 2 affected purchase orders, total quantity 1400.",
+          "Delta Packaging: 2 affected purchase orders, total quantity 2200."
+        ],
+        "recommendations": [],
+        "assumptions": [
+          "If no country is specified, the demo defaults scenario analysis to VN."
+        ],
+        "limitations": [
+          "Scenario recommendations are model-generated based on queried demo order exposure."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_019",
+      "question": "What is the average delay for all delayed purchase orders?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 4999.08,
+      "answer": "The average delay for all delayed purchase orders over the last 3 months is 3.75 days. This metric is defined as the average number of days by which the delivery date exceeds the due date, calculated as AVG(julianday(delivery_date) - julianday(due_date)) for orders where delivery_date > due_date. The query analyzed 1 delayed order, which is below the recommended minimum sample size of 5, so this result should be considered directional only and not fully representative of overall supplier performance. Due to the limited data, we cannot reliably identify which suppliers are performing well or poorly in terms of delivery timeliness. Monitoring this metric with a larger sample will provide more actionable insights. For now, the data suggests some delay exists but further data is needed to confirm trends. \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.92,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT AVG(julianday(p.delivery_date) - julianday(p.due_date)) AS avg_delay_days\nFROM purchase_orders p\nWHERE julianday(p.delivery_date) > julianday(p.due_date);",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 0.7,
+          "metric": "avg_delay_days",
+          "metric_definition": "延误订单的 AVG(delivery_date - due_date)",
+          "formula": "AVG(julianday(delivery_date) - julianday(due_date)) for delayed orders",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 5,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 1 is below the recommended minimum 5; treat the result as directional."
+        ],
+        "recommendations": [
+          "The average delay for all delayed purchase orders over the last 3 months is 3.75 days. This metric is defined as the average number of days by which the delivery date exceeds the due date, calculated as AVG(julianday(delivery_date) - julianday(due_date)) for orders where delivery_date > due_date. The query analyzed 1 delayed order, which is below the recommended minimum sample size of 5, so this result should be considered directional only and not fully representative of overall supplier performance. Due to the limited data, we cannot reliably identify which suppliers are performing well or poorly in terms of delivery timeliness. Monitoring this metric with a larger sample will provide more actionable insights. For now, the data suggests some delay exists but further data is needed to confirm trends."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_020",
+      "question": "Which materials are associated with late orders?",
+      "intent": "kpi_query",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1132.97,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "scenario_analysis",
+        "confidence": 0.75,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_001",
+      "question": "How is Alpha Electronics performing against strategic supplier expectations?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1620.33,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.92,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_002",
+      "question": "Does Beta Plastics need corrective action based on delivery performance and policy?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt",
+        "beta_supply_agreement.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1246.69,
+      "answer": "I need one clarification before routing this request.\n\nCould you clarify your request so I can answer precisely?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": "null",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_003",
+      "question": "If Vietnam suppliers are delayed by 7 days, what policy actions and data impacts should we consider?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "incident_response_sop.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1001.81,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "scenario_analysis",
+        "confidence": 0.85,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_004",
+      "question": "Which supplier should be prioritized for a business review based on OTD and supplier policy?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1209.69,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_005",
+      "question": "Can Alpha's contract obligations explain its delivery KPI result?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "alpha_msa_demo.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "data\\docs\\supplier_policy_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2876.78,
+      "answer": "I don't know. The provided context does not include specific details about Alpha's contract obligations or its delivery KPI results.\n\nSource: Supplier Management Policy (Example)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "data\\docs\\supplier_policy_demo.txt#doc-1",
+            "source_name": "data\\docs\\supplier_policy_demo.txt",
+            "section": "",
+            "chunk_id": "doc-1",
+            "doc_type": "",
+            "retrieval_score": null,
+            "vector_score": null,
+            "keyword_score": null,
+            "rerank_score": null,
+            "content_preview": "Supplier Management Policy (Example)\n\n1. Suppliers that provide critical materials, have high procurement value, or significantly affect production continuity are defined as “strategic suppliers.”\n2. The on-time delivery rate target for strategic suppliers is 95%. If performance remains below 95% fo"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "hybrid_006",
+      "question": "Should procurement activate a backup supplier for Beta based on current delivery data?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "beta_supply_agreement.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1174.68,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "scenario_analysis",
+        "confidence": 0.92,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_007",
+      "question": "What data and policy evidence support classifying Gamma Metals as reliable?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1166.73,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_008",
+      "question": "How should we handle a recurring late delivery issue under policy and KPI evidence?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "incident_response_sop.txt",
+        "quality_policy.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1484.46,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.75,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_009",
+      "question": "What does the supplier scorecard need to include and what current demo KPI can populate it?",
+      "intent": "hybrid",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "procurement_faq.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 906.8,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_010",
+      "question": "Can we decide payment penalties for Alpha from current policy and KPI data?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": false,
+      "expected_sources": [
+        "alpha_msa_demo.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1249.6,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    }
+  ]
+}

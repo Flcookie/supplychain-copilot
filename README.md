@@ -70,7 +70,7 @@ Built with **LangGraph**, **LangChain**, **Pinecone**, and **Streamlit**, this p
 | Layer                    | Description                                                 |
 | ------------------------ | ----------------------------------------------------------- |
 | **Streamlit Chat UI**    | Interactive English UI with intent badges and citations     |
-| **LangGraph Workflow**   | Router → Policy_QA → KPI → Scenario → Answer                |
+| **LangGraph Workflow**   | Router → Policy_QA / KPI / Hybrid / Scenario → Answer        |
 | **RAG (Pinecone)**       | Retrieves supplier policies and management documents        |
 | **SQL KPI Query Engine** | Translates natural language → SQL → English explanation     |
 | **Scenario Node**        | Simulates “what-if” supplier risks & recommends mitigations |
@@ -83,10 +83,18 @@ Built with **LangGraph**, **LangChain**, **Pinecone**, and **Streamlit**, this p
    ▼
  Router Node ──→ Policy_QA Node ──┐
    │                              │
-   ├────────→ KPI Node ───────────┤──→ Answer Node → [END]
+   ├────────→ KPI Node ───────────┤
+   │                              ├──→ Answer Node → [END]
+   ├────────→ Hybrid Node ────────┤
    │                              │
    └────────→ Scenario Node ──────┘
 ```
+
+The router classifies each question as `policy_qa`, `kpi_query`,
+`scenario_analysis`, or `hybrid_query` (composite questions that need both
+policy and KPI evidence). KPI and Hybrid nodes both prefer deterministic
+parameterized SQL templates (`tools/kpi_sql_builder.py`) and only fall back to
+LLM-generated SQL when no template matches.
 
 ---
 
@@ -279,17 +287,49 @@ This design separates two different failures:
 
 ## Evaluation Methodology
 
-The repository now includes a reproducible router A/B evaluation pipeline:
+The repository now includes reproducible evaluation pipelines for both routing and RAG quality.
 
+Router evaluation:
 - Dataset: `eval/datasets/router_eval.json`
 - Script: `eval/run_router_eval.py`
-- Outputs: timestamped JSON + Markdown reports under `eval/results/`
+- Metrics: intent accuracy, ambiguity detection accuracy, clarification trigger rate, RAG fallback rate
 
-Tracked metrics:
-- intent accuracy
-- ambiguity detection accuracy
-- clarification trigger rate
-- RAG fallback rate
+RAG evaluation:
+- Dataset: `eval/datasets/rag_eval.json` (60 samples — 30 policy_qa, 20 kpi_query, 10 hybrid)
+- Script: `eval/run_rag_eval.py` (use `--skip-judge` to skip LLM-as-judge calls)
+- Regression log generator: `eval/generate_regression_log.py` reads a judged JSON and refreshes `eval/REGRESSION.md` with low-score samples and root-cause hypotheses.
+- Outputs: timestamped JSON + Markdown reports under `eval/results/`
+- Metrics: Retrieval Recall@K, MRR, latency, faithfulness, citation precision, answer completeness, refusal accuracy
+
+Latest retrieval comparison (judged):
+
+| Run | Recall@5 | MRR | Faithfulness | Citation precision | Answer completeness | Refusal accuracy | Latency |
+|-----|----------|------|---------------|--------------------|----------------------|-------------------|---------|
+| `baseline` (vector-only) | 33.33% | 0.317 | n/a | n/a | n/a | n/a | 2945 ms |
+| `post_hybrid` (hybrid + scenario chunkers) | 56.67% | 0.539 | n/a | n/a | n/a | n/a | 3677 ms |
+| `judged_post_hybrid` (RRF + rerank=openai + KPI templates + hybrid intent) | 83.33% | 0.761 | 4.15 / 5 | 4.20 / 5 | 4.10 / 5 | 4.42 / 5 | 4908 ms |
+| **`judged_final`** (router-narrow + refusal-path + dual-route hybrid + extended templates + structured policy prompt) | **100.00%** | **0.906** | **4.87 / 5** | **4.83 / 5** | **4.85 / 5** | **5.00 / 5** | 5898 ms |
+
+Source files:
+- Baseline: `eval/results/rag_eval_baseline_20260508_213656.md`
+- Post-hybrid: `eval/results/rag_eval_post_hybrid_20260508_214658.md`
+- Judged post-hybrid: `eval/results/rag_eval_judged_post_hybrid_20260508_223255.md`
+- **Judged final: `eval/results/rag_eval_judged_final_20260508_230616.md`**
+- Comparison: `eval/results/rag_eval_comparison_judged_final_20260508.md`
+
+KPI SQL template usage in the final run:
+- 14 / 20 KPI questions (70%) answered by deterministic SQL templates
+- 3 / 20 fell back to LLM-generated SQL (1 self-repair attempt allowed)
+- 3 / 20 returned a structured refusal because the metric (OTIF, defect rate, risk score) is not in the demo schema — refusal accuracy is 5 / 5
+- 2 / 10 hybrid questions used a deterministic KPI template
+
+To re-run the full judged evaluation:
+
+```bash
+uv run python -m eval.run_rag_eval --label judged_final
+uv run python -m eval.generate_regression_log \
+    --report eval/results/rag_eval_judged_final_<TIMESTAMP>.json
+```
 
 ---
 
@@ -303,16 +343,22 @@ Tracked metrics:
 
 ## 🛠️ Roadmap
 
-| Stage                    | Status         |
-| ------------------------ | -------------- |
-| Policy RAG + Pinecone    | ✅ Done         |
-| KPI Query via SQL        | ✅ Done         |
-| Scenario Analysis Node   | ✅ Done         |
-| English Streamlit UI     | ✅ Done         |
-| Chart Visualization      | 🔜 Planned     |
-| Role-Based Access (RBAC) | 🔜 Planned     |
-| ERP Database Integration | 🔜 In Progress |
-| Dockerized Deployment    | 🔜 Planned     |
+| Stage                                                | Status         |
+| ---------------------------------------------------- | -------------- |
+| Policy RAG + Pinecone                                | ✅ Done         |
+| KPI Query via SQL                                    | ✅ Done         |
+| Scenario Analysis Node                               | ✅ Done         |
+| Bilingual Streamlit UI (EN / 中文)                    | ✅ Done         |
+| Evidence Contract (`core/evidence.py`)               | ✅ Done         |
+| Hybrid Retrieval (RRF + rerank + scenario chunkers)  | ✅ Done         |
+| Hybrid Intent Node (Policy + KPI joint answer)       | ✅ Done         |
+| Deterministic KPI SQL templates                      | ✅ Done         |
+| LLM-as-judge RAG evaluation pipeline                 | ✅ Done         |
+| Regression Failure Log auto-population               | ✅ Done         |
+| Chart Visualization                                  | 🔜 Planned     |
+| Role-Based Access (RBAC)                             | 🔜 Planned     |
+| ERP Database Integration                             | 🔜 In Progress |
+| Dockerized Deployment                                | 🔜 Planned     |
 
 ---
 

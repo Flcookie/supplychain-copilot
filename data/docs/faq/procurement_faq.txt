@@ -1,0 +1,20 @@
+# Procurement FAQ
+
+Owner: Procurement Enablement
+Access Level: internal
+Effective Date: 2026-01-01
+
+Q: What should a supplier scorecard include?
+A: A supplier scorecard should include on-time delivery, order volume, quality events when available, open corrective actions, business continuity risks, and review cadence.
+
+Q: How often should critical suppliers be reviewed?
+A: Strategic and critical suppliers should be reviewed quarterly. High-risk suppliers may require monthly follow-up until corrective actions are closed.
+
+Q: What happens if purchase order delivery dates are missing?
+A: Missing PO due dates or delivery dates should be treated as a data quality issue. KPI calculations must disclose missing or insufficient data instead of fabricating performance.
+
+Q: When should procurement activate backup suppliers?
+A: Procurement should consider backup suppliers for repeated delivery misses, critical material shortages, geopolitical disruption, or quality issues that threaten customer commitments.
+
+Q: What evidence should Copilot show?
+A: Copilot should show the final answer, document sources, SQL queries for KPI answers, row counts, metric definitions, assumptions, limitations, and whether sample size is sufficient.

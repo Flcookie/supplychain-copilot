@@ -42,10 +42,28 @@ def get_vectorstore() -> PineconeVectorStore:
     )
 
 
-def get_retriever():
+def _doc_type_filter(doc_types: list[str] | None) -> dict | None:
+    if not doc_types:
+        return None
+    if len(doc_types) == 1:
+        return {"doc_type": doc_types[0]}
+    return {"doc_type": {"$in": doc_types}}
+
+
+def get_vector_retriever(k: int = 5, doc_types: list[str] | None = None):
     vs = get_vectorstore()
-    # k can be tuned later; using 5 for now
-    return vs.as_retriever(search_kwargs={"k": 5})
+    search_kwargs = {"k": k}
+    metadata_filter = _doc_type_filter(doc_types)
+    if metadata_filter:
+        search_kwargs["filter"] = metadata_filter
+    return vs.as_retriever(search_kwargs=search_kwargs)
+
+
+def get_retriever(k: int = 5, doc_types: list[str] | None = None):
+    from rag.hybrid_retriever import HybridRetriever
+    from rag.rerank import get_reranker
+
+    return HybridRetriever(k=k, doc_types=doc_types, reranker=get_reranker())
 
 
 # Manual test: uv run python -m rag.retriever

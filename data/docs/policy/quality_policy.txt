@@ -1,0 +1,21 @@
+# Supplier Quality Policy
+
+Owner: Supplier Quality
+Access Level: internal
+Effective Date: 2026-01-01
+
+## Quality Qualification
+
+Suppliers of critical materials must provide quality certifications, process capability evidence, inspection records, and audit readiness documentation before approval. Procurement and Supplier Quality jointly approve the qualification package.
+
+## Critical Material Controls
+
+Critical materials require incoming inspection plans, agreed quality limits, and documented escalation paths. Inspection evidence must be retained with the supplier scorecard and available for audit.
+
+## Corrective Action
+
+Recurring defects require a corrective action plan with root cause, owner, due date, containment action, and verification evidence. The corrective action remains open until Supplier Quality validates effectiveness.
+
+## Audit Readiness
+
+Suppliers must maintain quality records, process change history, certification status, and evidence of closed corrective actions. Missing records should be logged as an audit finding and assigned to an owner.

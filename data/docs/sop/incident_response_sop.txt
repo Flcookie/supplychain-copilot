@@ -1,0 +1,25 @@
+# Supplier Incident Response SOP
+
+Owner: Supply Chain Risk
+Access Level: internal
+Effective Date: 2026-01-01
+
+Step 1. Triage
+
+Classify the incident by severity, customer impact, affected materials, country, supplier, and expected recovery time. Incidents with customer impact or critical material risk must be escalated immediately.
+
+Step 2. Impact Assessment
+
+Quantify affected purchase orders, total quantity, due dates, inventory coverage, and alternate supply options. Use database facts for order exposure and keep model-generated recommendations separate.
+
+Step 3. Mitigation Plan
+
+Assign owners for expedite, safety stock review, alternate supplier activation, production rescheduling, and customer communication. Document assumptions and recovery dates.
+
+Step 4. Management Review
+
+Strategic supplier incidents and high-risk country disruptions require a management review. The review should include verified facts, open risks, mitigation status, and decision requests.
+
+Step 5. Closure
+
+Close the incident only after supply recovery is confirmed, customer impact is resolved, and corrective actions have evidence of completion.

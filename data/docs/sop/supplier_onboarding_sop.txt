@@ -1,0 +1,29 @@
+# Supplier Onboarding SOP
+
+Owner: Procurement Operations
+Access Level: internal
+Effective Date: 2026-01-01
+
+Step 1. Intake Request
+
+The requester submits supplier name, category, country, expected spend, material criticality, and business justification. Procurement checks whether an existing approved supplier can satisfy the requirement.
+
+Step 2. Baseline Screening
+
+Procurement collects business license, tax details, bank details, sanctions screening, country risk screening, and confidentiality acknowledgement. Missing evidence blocks approval.
+
+Step 3. Quality Qualification
+
+Supplier Quality reviews certifications, inspection requirements, process capability, audit readiness, and historical quality performance. Critical material suppliers require documented quality approval.
+
+Step 4. Commercial Review
+
+Procurement validates payment terms, lead time, MOQ, Incoterms, capacity, and delivery commitments. Strategic suppliers require business review cadence and scorecard ownership.
+
+Step 5. Master Data Setup
+
+Supplier master data changes require approval, data validation, and audit trail. Banking changes require independent verification.
+
+Step 6. Final Approval
+
+Procurement, Supplier Quality, and Legal approve the onboarding package. Approval evidence must be retained with the supplier record.

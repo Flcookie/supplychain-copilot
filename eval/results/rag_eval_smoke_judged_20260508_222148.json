@@ -1,0 +1,218 @@
+{
+  "metrics": {
+    "samples": 3,
+    "retrieval_recall_at_3": 0.3333,
+    "retrieval_recall_at_5": 0.3333,
+    "retrieval_recall_at_10": 0.3333,
+    "mrr": 0.3333,
+    "avg_latency_ms": 3034.51,
+    "faithfulness": 2.333,
+    "citation_precision": 2.333,
+    "answer_completeness": 2,
+    "refusal_accuracy": 2.333
+  },
+  "details": [
+    {
+      "id": "policy_001",
+      "question": "How do we define strategic suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt",
+        "supplier_onboarding_sop.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 7518.19,
+      "answer": "Strategic suppliers are defined as those providing critical materials, having high annual spend, limited substitutability, or a material impact on customer service. They must be evaluated based on delivery performance, quality performance, business continuity risk, and commercial dependency.\n\nSources:  \n- Supplier Management Policy Demo, Strategic Supplier Criteria section",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_policy_demo.txt#e2d541d1d975",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Strategic Supplier Criteria",
+            "chunk_id": "e2d541d1d975",
+            "doc_type": "policy",
+            "retrieval_score": 0.0739,
+            "vector_score": 0.6295,
+            "keyword_score": 0.9847,
+            "rerank_score": 0.6294,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Strategic Supplier Criteria\n\nA strategic supplier is a supplier that provides critical materials, high annual spend, limited substitutability, or material impact on customer service. Strategic"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#d7d58ba4e689",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Supplier Segmentation",
+            "chunk_id": "d7d58ba4e689",
+            "doc_type": "policy",
+            "retrieval_score": 0.0487,
+            "vector_score": 0.5531,
+            "keyword_score": 1.0,
+            "rerank_score": 0.5527,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Supplier Segmentation\n\nSuppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration r"
+          },
+          {
+            "source_id": "procurement_faq.txt#33b2342ee0a8",
+            "source_name": "procurement_faq.txt",
+            "section": "How often should critical suppliers be reviewed?",
+            "chunk_id": "33b2342ee0a8",
+            "doc_type": "faq",
+            "retrieval_score": 0.0974,
+            "vector_score": 0.5054,
+            "keyword_score": 0.8532,
+            "rerank_score": 0.5054,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: How often should critical suppliers be reviewed?\nA: Strategic and critical suppliers should be reviewed quarterly. High-risk suppliers may require monthly follow-up until corrective actions are clo"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#6e6317aa5115",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Backup Supplier Policy",
+            "chunk_id": "6e6317aa5115",
+            "doc_type": "policy",
+            "retrieval_score": 0.0464,
+            "vector_score": 0.4921,
+            "keyword_score": 0.2633,
+            "rerank_score": 0.4838,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Backup Supplier Policy\n\nFor critical materials, procurement should maintain qualified backup suppliers where feasible. Backup suppliers should be activated when there is repeated delivery fail"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#f0e24fb2af9c",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 4. Commercial Review",
+            "chunk_id": "f0e24fb2af9c",
+            "doc_type": "sop",
+            "retrieval_score": 0.0462,
+            "vector_score": 0.4641,
+            "keyword_score": 0.7594,
+            "rerank_score": 0.4639,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 4. Commercial Review\n\nProcurement validates payment terms, lead time, MOQ, Incoterms, capacity, and delivery commitments. Strategic suppliers require business review cadence and scorecard"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {
+        "faithfulness": {
+          "score": 5,
+          "reason": "The assistant's answer is fully supported by the retrieved evidence, specifically the 'Strategic Supplier Criteria' section of the 'Supplier Management Policy Demo' document."
+        },
+        "citation_precision": {
+          "score": 5,
+          "reason": "The assistant correctly cites the 'Strategic Supplier Criteria' section from the 'Supplier Management Policy Demo' document, which directly supports the answer."
+        },
+        "answer_completeness": {
+          "score": 4,
+          "reason": "The answer covers the criteria for strategic suppliers and mentions performance and risk, but does not explicitly mention 'importance' as a separate point."
+        },
+        "refusal_accuracy": {
+          "score": 5,
+          "reason": "The question is answerable, and the assistant provides a complete answer without incorrectly refusing."
+        }
+      }
+    },
+    {
+      "id": "policy_002",
+      "question": "What are the qualification rules for new suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 833.71,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {
+        "faithfulness": {
+          "score": 1,
+          "reason": "The answer does not address the question about qualification rules for new suppliers and instead asks for clarification that is irrelevant to the question."
+        },
+        "citation_precision": {
+          "score": 1,
+          "reason": "There are no citations provided, and the answer does not attempt to use any evidence to support its claims."
+        },
+        "answer_completeness": {
+          "score": 1,
+          "reason": "The answer does not cover any of the expected points such as qualification, evaluation, or approval."
+        },
+        "refusal_accuracy": {
+          "score": 1,
+          "reason": "The question is answerable, but the assistant incorrectly refuses to provide an answer by asking for irrelevant details."
+        }
+      }
+    },
+    {
+      "id": "policy_003",
+      "question": "What evidence should be checked before onboarding a supplier?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 751.64,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.9,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {
+        "faithfulness": {
+          "score": 1,
+          "reason": "The assistant's response does not address the question or provide any factual claims related to the expected answer points."
+        },
+        "citation_precision": {
+          "score": 1,
+          "reason": "There are no citations provided, and the response does not attempt to use any evidence to support an answer."
+        },
+        "answer_completeness": {
+          "score": 1,
+          "reason": "The response does not cover any of the expected answer points such as business license, quality certification, or risk screening."
+        },
+        "refusal_accuracy": {
+          "score": 1,
+          "reason": "The question is answerable, but the assistant incorrectly refuses to provide an answer by asking for irrelevant details."
+        }
+      }
+    }
+  ]
+}

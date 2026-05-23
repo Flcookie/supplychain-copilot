@@ -1,0 +1,44 @@
+# Supply Chain KPI Dictionary
+
+Owner: Supply Chain Analytics
+Access Level: internal
+Effective Date: 2026-01-01
+
+Metric: on_time_rate
+Business Name: On-time delivery rate (OTD)
+Definition: On-time orders divided by total delivered orders.
+Formula: SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)
+Required Tables: suppliers, purchase_orders
+Dimensions: supplier, country, material
+Default Time Range: last_3_months
+Minimum Sample Size: 10
+
+Metric: order_volume
+Business Name: Order volume
+Definition: Purchase order count and ordered quantity.
+Formula: COUNT(purchase_orders.id), SUM(qty)
+Required Tables: suppliers, purchase_orders
+Dimensions: supplier, country, material
+Default Time Range: last_3_months
+Minimum Sample Size: 1
+
+Metric: avg_delay_days
+Business Name: Average delay days
+Definition: Average days late for delayed purchase orders only.
+Formula: AVG(julianday(delivery_date) - julianday(due_date)) where delivery_date > due_date
+Required Tables: suppliers, purchase_orders
+Dimensions: supplier, country, material
+Default Time Range: last_3_months
+Minimum Sample Size: 5
+
+Metric: defect_rate
+Business Name: Quality defect rate
+Definition: Defect count divided by delivered quantity.
+Formula: defect_count / delivered_quantity
+Required Tables: quality_events, delivery_lots
+Status: Not available in the current demo SQLite database.
+
+Metric: risk_score
+Business Name: Supplier risk score
+Definition: Weighted delivery risk, quality risk, audit risk, and disruption risk.
+Status: Not available in the current demo SQLite database; requires enterprise risk tables.

@@ -1,0 +1,3529 @@
+{
+  "metrics": {
+    "samples": 60,
+    "retrieval_recall_at_3": 0.5667,
+    "retrieval_recall_at_5": 0.5667,
+    "retrieval_recall_at_10": 0.5667,
+    "mrr": 0.5389,
+    "avg_latency_ms": 3677.0,
+    "faithfulness": null,
+    "citation_precision": null,
+    "answer_completeness": null,
+    "refusal_accuracy": null
+  },
+  "details": [
+    {
+      "id": "policy_001",
+      "question": "How do we define strategic suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt",
+        "supplier_onboarding_sop.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6196.95,
+      "answer": "Strategic suppliers are defined as those providing critical materials, having high annual spend, limited substitutability, or a material impact on customer service. They must be evaluated on delivery performance, quality performance, business continuity risk, and commercial dependency.\n\nSources:  \n- Supplier Management Policy Demo, Strategic Supplier Criteria section",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_policy_demo.txt#e2d541d1d975",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Strategic Supplier Criteria",
+            "chunk_id": "e2d541d1d975",
+            "doc_type": "policy",
+            "retrieval_score": 0.7731,
+            "vector_score": 0.6295,
+            "keyword_score": 0.9847,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Strategic Supplier Criteria\n\nA strategic supplier is a supplier that provides critical materials, high annual spend, limited substitutability, or material impact on customer service. Strategic"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#d7d58ba4e689",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Supplier Segmentation",
+            "chunk_id": "d7d58ba4e689",
+            "doc_type": "policy",
+            "retrieval_score": 0.7318,
+            "vector_score": 0.5531,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Supplier Segmentation\n\nSuppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration r"
+          },
+          {
+            "source_id": "procurement_faq.txt#33b2342ee0a8",
+            "source_name": "procurement_faq.txt",
+            "section": "How often should critical suppliers be reviewed?",
+            "chunk_id": "33b2342ee0a8",
+            "doc_type": "faq",
+            "retrieval_score": 0.6592,
+            "vector_score": 0.5054,
+            "keyword_score": 0.8532,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: How often should critical suppliers be reviewed?\nA: Strategic and critical suppliers should be reviewed quarterly. High-risk suppliers may require monthly follow-up until corrective actions are clo"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#f0e24fb2af9c",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 4. Commercial Review",
+            "chunk_id": "f0e24fb2af9c",
+            "doc_type": "sop",
+            "retrieval_score": 0.5063,
+            "vector_score": 0.4641,
+            "keyword_score": 0.7594,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 4. Commercial Review\n\nProcurement validates payment terms, lead time, MOQ, Incoterms, capacity, and delivery commitments. Strategic suppliers require business review cadence and scorecard"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#6e6317aa5115",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Backup Supplier Policy",
+            "chunk_id": "6e6317aa5115",
+            "doc_type": "policy",
+            "retrieval_score": 0.4743,
+            "vector_score": 0.4921,
+            "keyword_score": 0.2633,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Backup Supplier Policy\n\nFor critical materials, procurement should maintain qualified backup suppliers where feasible. Backup suppliers should be activated when there is repeated delivery fail"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_002",
+      "question": "What are the qualification rules for new suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1300.41,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_003",
+      "question": "What evidence should be checked before onboarding a supplier?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "supplier_onboarding_sop.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 5458.0,
+      "answer": "Before onboarding a supplier, the following evidence must be checked:\n\n- Business license  \n- Tax details  \n- Bank details (with independent verification for banking changes)  \n- Sanctions screening  \n- Country risk screening  \n- Confidentiality acknowledgement  \n- Quality certifications and approvals (including inspection requirements, process capability, audit readiness, and historical quality performance for critical material suppliers)  \n- Final approval evidence from Procurement, Supplier Quality, and Legal  \n\nSource: Supplier Onboarding SOP, Steps 2, 3, 5, and 6",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_onboarding_sop.txt#e343bfc2f80a",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 6. Final Approval",
+            "chunk_id": "e343bfc2f80a",
+            "doc_type": "sop",
+            "retrieval_score": 0.6847,
+            "vector_score": 0.6411,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 6. Final Approval\n\nProcurement, Supplier Quality, and Legal approve the onboarding package. Approval evidence must be retained with the supplier record."
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#55d6fefd6209",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 2. Baseline Screening",
+            "chunk_id": "55d6fefd6209",
+            "doc_type": "sop",
+            "retrieval_score": 0.6238,
+            "vector_score": 0.6982,
+            "keyword_score": 0.6828,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 2. Baseline Screening\n\nProcurement collects business license, tax details, bank details, sanctions screening, country risk screening, and confidentiality acknowledgement. Missing evidence"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#ac08dc7bc10f",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 1. Intake Request",
+            "chunk_id": "ac08dc7bc10f",
+            "doc_type": "sop",
+            "retrieval_score": 0.6182,
+            "vector_score": 0.6486,
+            "keyword_score": 0.7635,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 1. Intake Request\n\nThe requester submits supplier name, category, country, expected spend, material criticality, and business justification. Procurement checks whether an existing approve"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#3f4af3106c52",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 5. Master Data Setup",
+            "chunk_id": "3f4af3106c52",
+            "doc_type": "sop",
+            "retrieval_score": 0.6105,
+            "vector_score": 0.6284,
+            "keyword_score": 0.7782,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 5. Master Data Setup\n\nSupplier master data changes require approval, data validation, and audit trail. Banking changes require independent verification."
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#bfecaf449fc8",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 3. Quality Qualification",
+            "chunk_id": "bfecaf449fc8",
+            "doc_type": "sop",
+            "retrieval_score": 0.6037,
+            "vector_score": 0.6313,
+            "keyword_score": 0.7497,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 3. Quality Qualification\n\nSupplier Quality reviews certifications, inspection requirements, process capability, audit readiness, and historical quality performance. Critical material supp"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_004",
+      "question": "When should procurement escalate a supplier incident?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "incident_response_sop.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1170.32,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_005",
+      "question": "What quality controls are required for critical materials?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1132.88,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_006",
+      "question": "Which suppliers require periodic business reviews?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 962.59,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_007",
+      "question": "What does the contract say about Alpha delivery delays?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "alpha_msa_demo.txt"
+      ],
+      "actual_sources": [
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 3679.53,
+      "answer": "Alpha Electronics must deliver confirmed purchase orders on or before the due date. If a delay is expected, Alpha must notify Procurement as soon as commercially reasonable, providing affected PO numbers, expected delay, root cause, and a recovery plan. If the delay is caused by Alpha, they shall support reasonable expedite options, with cost responsibility determined based on root cause and subject to review by Procurement and Legal.\n\nSources:  \n- Alpha Electronics Master Supply Agreement Demo, Clause 1. Delivery Commitments  \n- Alpha Electronics Master Supply Agreement Demo, Clause 2. Expedited Shipments",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "alpha_msa_demo.txt#fb952bfa25a1",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 2. Expedited Shipments",
+            "chunk_id": "fb952bfa25a1",
+            "doc_type": "contract",
+            "retrieval_score": 0.4714,
+            "vector_score": 0.6191,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 2. Expedited Shipments\n\nWhen delay is caused by Alpha, Alpha shall support reasonable expedite options. Cost responsibility depends on ro"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#5953c06796d4",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 1. Delivery Commitments",
+            "chunk_id": "5953c06796d4",
+            "doc_type": "contract",
+            "retrieval_score": 0.4639,
+            "vector_score": 0.6065,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Commitments\n\nAlpha Electronics shall deliver confirmed purchase orders on or before the due date in the purchase order. If Al"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#44cc7f0345dc",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 5. Force Majeure",
+            "chunk_id": "44cc7f0345dc",
+            "doc_type": "contract",
+            "retrieval_score": 0.445,
+            "vector_score": 0.575,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 5. Force Majeure\n\nAlpha must notify Procurement of force majeure events promptly, identify affected facilities, estimate recovery timing,"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#1ccc74126ec7",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 4. Confidentiality",
+            "chunk_id": "1ccc74126ec7",
+            "doc_type": "contract",
+            "retrieval_score": 0.4134,
+            "vector_score": 0.5223,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 4. Confidentiality\n\nAlpha shall protect internal forecasts, drawings, price information, supplier scorecards, and any non-public operatio"
+          },
+          {
+            "source_id": "beta_supply_agreement.txt#6126e9c3016f",
+            "source_name": "beta_supply_agreement.txt",
+            "section": "Clause 1. Delivery Performance",
+            "chunk_id": "6126e9c3016f",
+            "doc_type": "contract",
+            "retrieval_score": 0.4064,
+            "vector_score": 0.5107,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Beta Plastics Supply Agreement Demo\n\nSupplier: Beta Plastics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Performance\n\nBeta Plastics must meet the delivery date in each confirmed purchase order. Repeated missed commitments trigger a supplier perf"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_008",
+      "question": "What remedies apply if Beta repeatedly misses delivery commitments?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "beta_supply_agreement.txt"
+      ],
+      "actual_sources": [
+        "beta_supply_agreement.txt",
+        "alpha_msa_demo.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6551.41,
+      "answer": "If Beta Plastics repeatedly misses delivery commitments, Procurement may initiate a supplier performance review and require Beta to submit a corrective action plan detailing root cause, containment, recovery date, responsible owner, and weekly progress updates. If Beta cannot recover supply in time to protect customer commitments, Procurement may activate backup suppliers or redirect demand to alternate sources, with any commercial impact reviewed by Procurement and Legal.\n\nSources:  \n- Beta Plastics Supply Agreement Demo, Clause 1. Delivery Performance  \n- Beta Plastics Supply Agreement Demo, Clause 2. Corrective Action and Service Review  \n- Beta Plastics Supply Agreement Demo, Clause 3. Mitigation and Backup Supply",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "beta_supply_agreement.txt#6126e9c3016f",
+            "source_name": "beta_supply_agreement.txt",
+            "section": "Clause 1. Delivery Performance",
+            "chunk_id": "6126e9c3016f",
+            "doc_type": "contract",
+            "retrieval_score": 0.7101,
+            "vector_score": 0.5168,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Beta Plastics Supply Agreement Demo\n\nSupplier: Beta Plastics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Performance\n\nBeta Plastics must meet the delivery date in each confirmed purchase order. Repeated missed commitments trigger a supplier perf"
+          },
+          {
+            "source_id": "beta_supply_agreement.txt#c94cb3806c0a",
+            "source_name": "beta_supply_agreement.txt",
+            "section": "Clause 2. Corrective Action and Service Review",
+            "chunk_id": "c94cb3806c0a",
+            "doc_type": "contract",
+            "retrieval_score": 0.5777,
+            "vector_score": 0.5266,
+            "keyword_score": 0.8724,
+            "rerank_score": null,
+            "content_preview": "# Beta Plastics Supply Agreement Demo\n\nSupplier: Beta Plastics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 2. Corrective Action and Service Review\n\nIf Beta misses two or more delivery commitments in a review period, Procurement may request a corrective action"
+          },
+          {
+            "source_id": "beta_supply_agreement.txt#7b77f076c6d9",
+            "source_name": "beta_supply_agreement.txt",
+            "section": "Clause 3. Mitigation and Backup Supply",
+            "chunk_id": "7b77f076c6d9",
+            "doc_type": "contract",
+            "retrieval_score": 0.5028,
+            "vector_score": 0.4683,
+            "keyword_score": 0.7394,
+            "rerank_score": null,
+            "content_preview": "# Beta Plastics Supply Agreement Demo\n\nSupplier: Beta Plastics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 3. Mitigation and Backup Supply\n\nIf Beta cannot recover supply in time to protect customer commitments, Procurement may activate qualified backup suppli"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#5953c06796d4",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 1. Delivery Commitments",
+            "chunk_id": "5953c06796d4",
+            "doc_type": "contract",
+            "retrieval_score": 0.4573,
+            "vector_score": 0.4216,
+            "keyword_score": 0.3478,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Commitments\n\nAlpha Electronics shall deliver confirmed purchase orders on or before the due date in the purchase order. If Al"
+          },
+          {
+            "source_id": "beta_supply_agreement.txt#93887961e0eb",
+            "source_name": "beta_supply_agreement.txt",
+            "section": "Clause 5. Force Majeure",
+            "chunk_id": "93887961e0eb",
+            "doc_type": "contract",
+            "retrieval_score": 0.4452,
+            "vector_score": 0.4643,
+            "keyword_score": 0.5556,
+            "rerank_score": null,
+            "content_preview": "# Beta Plastics Supply Agreement Demo\n\nSupplier: Beta Plastics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 5. Force Majeure\n\nBeta must provide written notice of force majeure events, affected materials, estimated duration, and proposed mitigation actions."
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_009",
+      "question": "What access level applies to supplier policy documents?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [
+        "supplier_policy_demo.txt",
+        "quality_policy.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 2389.19,
+      "answer": "The access level for supplier policy documents is internal.\n\nSource: Supplier Management Policy Demo, multiple sections.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_policy_demo.txt#fe0e6e18e952",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Evidence and Citation Requirements",
+            "chunk_id": "fe0e6e18e952",
+            "doc_type": "policy",
+            "retrieval_score": 0.7638,
+            "vector_score": 0.6064,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Evidence and Citation Requirements\n\nCopilot answers based on this policy must cite the source document, section title, and chunk identifier. If the policy does not contain enough evidence, the"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#6e6317aa5115",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Backup Supplier Policy",
+            "chunk_id": "6e6317aa5115",
+            "doc_type": "policy",
+            "retrieval_score": 0.7117,
+            "vector_score": 0.59,
+            "keyword_score": 0.859,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Backup Supplier Policy\n\nFor critical materials, procurement should maintain qualified backup suppliers where feasible. Backup suppliers should be activated when there is repeated delivery fail"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#d7d58ba4e689",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Supplier Segmentation",
+            "chunk_id": "d7d58ba4e689",
+            "doc_type": "policy",
+            "retrieval_score": 0.6736,
+            "vector_score": 0.6484,
+            "keyword_score": 0.6151,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Supplier Segmentation\n\nSuppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration r"
+          },
+          {
+            "source_id": "quality_policy.txt#de1ab77c5474",
+            "source_name": "quality_policy.txt",
+            "section": "Critical Material Controls",
+            "chunk_id": "de1ab77c5474",
+            "doc_type": "policy",
+            "retrieval_score": 0.6436,
+            "vector_score": 0.5863,
+            "keyword_score": 0.6393,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Critical Material Controls\n\nCritical materials require incoming inspection plans, agreed quality limits, and documented escalation paths. Inspection evidence must be retained with the supplier sc"
+          },
+          {
+            "source_id": "quality_policy.txt#8fdcff42bf46",
+            "source_name": "quality_policy.txt",
+            "section": "Audit Readiness",
+            "chunk_id": "8fdcff42bf46",
+            "doc_type": "policy",
+            "retrieval_score": 0.6404,
+            "vector_score": 0.5902,
+            "keyword_score": 0.621,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Audit Readiness\n\nSuppliers must maintain quality records, process change history, certification status, and evidence of closed corrective actions. Missing records should be logged as an audit fin"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_010",
+      "question": "How often should supplier risk be reviewed?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "procurement_faq.txt",
+        "supplier_policy_demo.txt",
+        "incident_response_sop.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 5608.83,
+      "answer": "Supplier risk for strategic and critical suppliers should be reviewed at least quarterly, including country risk, concentration risk, and single-source exposure. High-risk suppliers may require monthly follow-up until corrective actions are closed.\n\nSources:  \n- Procurement FAQ  \n- Supplier Management Policy Demo (Supplier Segmentation)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "procurement_faq.txt#33b2342ee0a8",
+            "source_name": "procurement_faq.txt",
+            "section": "How often should critical suppliers be reviewed?",
+            "chunk_id": "33b2342ee0a8",
+            "doc_type": "faq",
+            "retrieval_score": 0.7801,
+            "vector_score": 0.6902,
+            "keyword_score": 0.8866,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: How often should critical suppliers be reviewed?\nA: Strategic and critical suppliers should be reviewed quarterly. High-risk suppliers may require monthly follow-up until corrective actions are clo"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#d7d58ba4e689",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Supplier Segmentation",
+            "chunk_id": "d7d58ba4e689",
+            "doc_type": "policy",
+            "retrieval_score": 0.7547,
+            "vector_score": 0.5911,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Supplier Segmentation\n\nSuppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration r"
+          },
+          {
+            "source_id": "incident_response_sop.txt#e8ede8ce6504",
+            "source_name": "incident_response_sop.txt",
+            "section": "Step 4. Management Review",
+            "chunk_id": "e8ede8ce6504",
+            "doc_type": "sop",
+            "retrieval_score": 0.6316,
+            "vector_score": 0.6373,
+            "keyword_score": 0.4975,
+            "rerank_score": null,
+            "content_preview": "# Supplier Incident Response SOP\n\nOwner: Supply Chain Risk\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 4. Management Review\n\nStrategic supplier incidents and high-risk country disruptions require a management review. The review should include verified facts, open risks, mitigation status"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#e2d541d1d975",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Strategic Supplier Criteria",
+            "chunk_id": "e2d541d1d975",
+            "doc_type": "policy",
+            "retrieval_score": 0.5548,
+            "vector_score": 0.5704,
+            "keyword_score": 0.3752,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Strategic Supplier Criteria\n\nA strategic supplier is a supplier that provides critical materials, high annual spend, limited substitutability, or material impact on customer service. Strategic"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#6e6317aa5115",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Backup Supplier Policy",
+            "chunk_id": "6e6317aa5115",
+            "doc_type": "policy",
+            "retrieval_score": 0.5383,
+            "vector_score": 0.533,
+            "keyword_score": 0.3951,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Backup Supplier Policy\n\nFor critical materials, procurement should maintain qualified backup suppliers where feasible. Backup suppliers should be activated when there is repeated delivery fail"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_011",
+      "question": "What is the incident response process for a supplier disruption?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "incident_response_sop.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 931.24,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_012",
+      "question": "What should procurement do before approving a non-strategic supplier?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt",
+        "supplier_onboarding_sop.txt",
+        "incident_response_sop.txt"
+      ],
+      "hit_position": 3,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 0.3333,
+      "latency_ms": 4535.04,
+      "answer": "Before approving a non-strategic supplier, procurement should complete the commercial review by validating payment terms, lead time, MOQ, Incoterms, capacity, and delivery commitments.\n\nSources:  \n- Supplier Onboarding SOP (Step 4. Commercial Review)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_policy_demo.txt#e2d541d1d975",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Strategic Supplier Criteria",
+            "chunk_id": "e2d541d1d975",
+            "doc_type": "policy",
+            "retrieval_score": 0.7818,
+            "vector_score": 0.6628,
+            "keyword_score": 0.9472,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Strategic Supplier Criteria\n\nA strategic supplier is a supplier that provides critical materials, high annual spend, limited substitutability, or material impact on customer service. Strategic"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#d7d58ba4e689",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Supplier Segmentation",
+            "chunk_id": "d7d58ba4e689",
+            "doc_type": "policy",
+            "retrieval_score": 0.7167,
+            "vector_score": 0.5924,
+            "keyword_score": 0.871,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Supplier Segmentation\n\nSuppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration r"
+          },
+          {
+            "source_id": "procurement_faq.txt#33b2342ee0a8",
+            "source_name": "procurement_faq.txt",
+            "section": "How often should critical suppliers be reviewed?",
+            "chunk_id": "33b2342ee0a8",
+            "doc_type": "faq",
+            "retrieval_score": 0.6199,
+            "vector_score": 0.6303,
+            "keyword_score": 0.4723,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: How often should critical suppliers be reviewed?\nA: Strategic and critical suppliers should be reviewed quarterly. High-risk suppliers may require monthly follow-up until corrective actions are clo"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#f0e24fb2af9c",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 4. Commercial Review",
+            "chunk_id": "f0e24fb2af9c",
+            "doc_type": "sop",
+            "retrieval_score": 0.5631,
+            "vector_score": 0.6079,
+            "keyword_score": 0.6614,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 4. Commercial Review\n\nProcurement validates payment terms, lead time, MOQ, Incoterms, capacity, and delivery commitments. Strategic suppliers require business review cadence and scorecard"
+          },
+          {
+            "source_id": "incident_response_sop.txt#e8ede8ce6504",
+            "source_name": "incident_response_sop.txt",
+            "section": "Step 4. Management Review",
+            "chunk_id": "e8ede8ce6504",
+            "doc_type": "sop",
+            "retrieval_score": 0.5089,
+            "vector_score": 0.5033,
+            "keyword_score": 0.6898,
+            "rerank_score": null,
+            "content_preview": "# Supplier Incident Response SOP\n\nOwner: Supply Chain Risk\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 4. Management Review\n\nStrategic supplier incidents and high-risk country disruptions require a management review. The review should include verified facts, open risks, mitigation status"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_013",
+      "question": "What is the policy for backup suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "supplier_policy_demo.txt",
+        "quality_policy.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 2874.69,
+      "answer": "The policy requires procurement to maintain qualified backup suppliers for critical materials where feasible. Backup suppliers should be activated in cases of repeated delivery failure, quality risk, geopolitical disruption, or capacity shortage that threaten customer commitments.\n\nSource: Supplier Management Policy Demo, Backup Supplier Policy section.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_policy_demo.txt#6e6317aa5115",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Backup Supplier Policy",
+            "chunk_id": "6e6317aa5115",
+            "doc_type": "policy",
+            "retrieval_score": 0.7719,
+            "vector_score": 0.6903,
+            "keyword_score": 0.859,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Backup Supplier Policy\n\nFor critical materials, procurement should maintain qualified backup suppliers where feasible. Backup suppliers should be activated when there is repeated delivery fail"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#fe0e6e18e952",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Evidence and Citation Requirements",
+            "chunk_id": "fe0e6e18e952",
+            "doc_type": "policy",
+            "retrieval_score": 0.6797,
+            "vector_score": 0.4662,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Evidence and Citation Requirements\n\nCopilot answers based on this policy must cite the source document, section title, and chunk identifier. If the policy does not contain enough evidence, the"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#d7d58ba4e689",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Supplier Segmentation",
+            "chunk_id": "d7d58ba4e689",
+            "doc_type": "policy",
+            "retrieval_score": 0.5918,
+            "vector_score": 0.5121,
+            "keyword_score": 0.6151,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Supplier Segmentation\n\nSuppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration r"
+          },
+          {
+            "source_id": "quality_policy.txt#8fdcff42bf46",
+            "source_name": "quality_policy.txt",
+            "section": "Audit Readiness",
+            "chunk_id": "8fdcff42bf46",
+            "doc_type": "policy",
+            "retrieval_score": 0.572,
+            "vector_score": 0.4762,
+            "keyword_score": 0.621,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Audit Readiness\n\nSuppliers must maintain quality records, process change history, certification status, and evidence of closed corrective actions. Missing records should be logged as an audit fin"
+          },
+          {
+            "source_id": "quality_policy.txt#ca6da43fe07b",
+            "source_name": "quality_policy.txt",
+            "section": "Quality Qualification",
+            "chunk_id": "ca6da43fe07b",
+            "doc_type": "policy",
+            "retrieval_score": 0.5619,
+            "vector_score": 0.4533,
+            "keyword_score": 0.6331,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Quality Qualification\n\nSuppliers of critical materials must provide quality certifications, process capability evidence, inspection records, and audit readiness documentation before approval. Pro"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_014",
+      "question": "What documents support supplier quality qualification?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt",
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "quality_policy.txt",
+        "supplier_onboarding_sop.txt",
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 5226.43,
+      "answer": "Supplier quality qualification is supported by quality certifications, process capability evidence, inspection records, and audit readiness documentation.\n\nSources:  \n- Supplier Quality Policy (Quality Qualification)  \n- Supplier Onboarding SOP (Step 3. Quality Qualification)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "quality_policy.txt#ca6da43fe07b",
+            "source_name": "quality_policy.txt",
+            "section": "Quality Qualification",
+            "chunk_id": "ca6da43fe07b",
+            "doc_type": "policy",
+            "retrieval_score": 0.8445,
+            "vector_score": 0.7409,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Quality Qualification\n\nSuppliers of critical materials must provide quality certifications, process capability evidence, inspection records, and audit readiness documentation before approval. Pro"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#bfecaf449fc8",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 3. Quality Qualification",
+            "chunk_id": "bfecaf449fc8",
+            "doc_type": "sop",
+            "retrieval_score": 0.7292,
+            "vector_score": 0.6463,
+            "keyword_score": 0.8048,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 3. Quality Qualification\n\nSupplier Quality reviews certifications, inspection requirements, process capability, audit readiness, and historical quality performance. Critical material supp"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#e2d541d1d975",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Strategic Supplier Criteria",
+            "chunk_id": "e2d541d1d975",
+            "doc_type": "policy",
+            "retrieval_score": 0.4787,
+            "vector_score": 0.5154,
+            "keyword_score": 0.2314,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Strategic Supplier Criteria\n\nA strategic supplier is a supplier that provides critical materials, high annual spend, limited substitutability, or material impact on customer service. Strategic"
+          },
+          {
+            "source_id": "quality_policy.txt#8fdcff42bf46",
+            "source_name": "quality_policy.txt",
+            "section": "Audit Readiness",
+            "chunk_id": "8fdcff42bf46",
+            "doc_type": "policy",
+            "retrieval_score": 0.4738,
+            "vector_score": 0.6476,
+            "keyword_score": 0.284,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Audit Readiness\n\nSuppliers must maintain quality records, process change history, certification status, and evidence of closed corrective actions. Missing records should be logged as an audit fin"
+          },
+          {
+            "source_id": "procurement_faq.txt#7ee91dbaea75",
+            "source_name": "procurement_faq.txt",
+            "section": "What should a supplier scorecard include?",
+            "chunk_id": "7ee91dbaea75",
+            "doc_type": "faq",
+            "retrieval_score": 0.4727,
+            "vector_score": 0.5029,
+            "keyword_score": 0.2365,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: What should a supplier scorecard include?\nA: A supplier scorecard should include on-time delivery, order volume, quality events when available, open corrective actions, business continuity risks, a"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_015",
+      "question": "How should a supplier corrective action be tracked?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt",
+        "incident_response_sop.txt"
+      ],
+      "actual_sources": [
+        "quality_policy.txt",
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt",
+        "procurement_faq.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 3894.6,
+      "answer": "A supplier corrective action should be tracked with a corrective action plan that includes root cause analysis, a responsible owner, due or recovery dates, containment actions, and verification evidence. The plan must remain open until effectiveness is validated by Supplier Quality or Procurement. Progress updates, such as weekly reports, may be required depending on the supplier agreement. Tracking should also be reflected in open corrective actions on the supplier scorecard and reviewed according to the supplier’s risk level.\n\nSources:  \n- Supplier Quality Policy (Corrective Action)  \n- Alpha Electronics Master Supply Agreement Demo (Clause 3)  \n- Beta Plastics Supply Agreement Demo (Clause 2)  \n- Procurement FAQ (Supplier scorecard and review cadence)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "quality_policy.txt#99eb251be667",
+            "source_name": "quality_policy.txt",
+            "section": "Corrective Action",
+            "chunk_id": "99eb251be667",
+            "doc_type": "policy",
+            "retrieval_score": 0.7974,
+            "vector_score": 0.6624,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Corrective Action\n\nRecurring defects require a corrective action plan with root cause, owner, due date, containment action, and verification evidence. The corrective action remains open until Sup"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#13d72efeba1c",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 3. Quality and Corrective Action",
+            "chunk_id": "13d72efeba1c",
+            "doc_type": "contract",
+            "retrieval_score": 0.6704,
+            "vector_score": 0.5477,
+            "keyword_score": 0.806,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 3. Quality and Corrective Action\n\nAlpha must support root-cause analysis for recurring defects and provide corrective action plans with o"
+          },
+          {
+            "source_id": "beta_supply_agreement.txt#c94cb3806c0a",
+            "source_name": "beta_supply_agreement.txt",
+            "section": "Clause 2. Corrective Action and Service Review",
+            "chunk_id": "c94cb3806c0a",
+            "doc_type": "contract",
+            "retrieval_score": 0.6297,
+            "vector_score": 0.5149,
+            "keyword_score": 0.736,
+            "rerank_score": null,
+            "content_preview": "# Beta Plastics Supply Agreement Demo\n\nSupplier: Beta Plastics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 2. Corrective Action and Service Review\n\nIf Beta misses two or more delivery commitments in a review period, Procurement may request a corrective action"
+          },
+          {
+            "source_id": "procurement_faq.txt#33b2342ee0a8",
+            "source_name": "procurement_faq.txt",
+            "section": "How often should critical suppliers be reviewed?",
+            "chunk_id": "33b2342ee0a8",
+            "doc_type": "faq",
+            "retrieval_score": 0.4665,
+            "vector_score": 0.5054,
+            "keyword_score": 0.2108,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: How often should critical suppliers be reviewed?\nA: Strategic and critical suppliers should be reviewed quarterly. High-risk suppliers may require monthly follow-up until corrective actions are clo"
+          },
+          {
+            "source_id": "procurement_faq.txt#7ee91dbaea75",
+            "source_name": "procurement_faq.txt",
+            "section": "What should a supplier scorecard include?",
+            "chunk_id": "7ee91dbaea75",
+            "doc_type": "faq",
+            "retrieval_score": 0.4645,
+            "vector_score": 0.5032,
+            "keyword_score": 0.2087,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: What should a supplier scorecard include?\nA: A supplier scorecard should include on-time delivery, order volume, quality events when available, open corrective actions, business continuity risks, a"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_016",
+      "question": "What is the procurement FAQ guidance on supplier scorecards?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "procurement_faq.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 4785.3,
+      "answer": "A supplier scorecard should include on-time delivery, order volume, quality events when available, open corrective actions, business continuity risks, and review cadence.\n\nSource: Procurement FAQ (Effective Date: 2026-01-01)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "procurement_faq.txt#7ee91dbaea75",
+            "source_name": "procurement_faq.txt",
+            "section": "What should a supplier scorecard include?",
+            "chunk_id": "7ee91dbaea75",
+            "doc_type": "faq",
+            "retrieval_score": 0.8343,
+            "vector_score": 0.8229,
+            "keyword_score": 0.8017,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: What should a supplier scorecard include?\nA: A supplier scorecard should include on-time delivery, order volume, quality events when available, open corrective actions, business continuity risks, a"
+          },
+          {
+            "source_id": "procurement_faq.txt#33b2342ee0a8",
+            "source_name": "procurement_faq.txt",
+            "section": "How often should critical suppliers be reviewed?",
+            "chunk_id": "33b2342ee0a8",
+            "doc_type": "faq",
+            "retrieval_score": 0.6857,
+            "vector_score": 0.6716,
+            "keyword_score": 0.6091,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: How often should critical suppliers be reviewed?\nA: Strategic and critical suppliers should be reviewed quarterly. High-risk suppliers may require monthly follow-up until corrective actions are clo"
+          },
+          {
+            "source_id": "procurement_faq.txt#beb96b75ab10",
+            "source_name": "procurement_faq.txt",
+            "section": "When should procurement activate backup suppliers?",
+            "chunk_id": "beb96b75ab10",
+            "doc_type": "faq",
+            "retrieval_score": 0.6462,
+            "vector_score": 0.5775,
+            "keyword_score": 0.6655,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: When should procurement activate backup suppliers?\nA: Procurement should consider backup suppliers for repeated delivery misses, critical material shortages, geopolitical disruption, or quality iss"
+          },
+          {
+            "source_id": "procurement_faq.txt#6bc9504a7fc5",
+            "source_name": "procurement_faq.txt",
+            "section": "What evidence should Copilot show?",
+            "chunk_id": "6bc9504a7fc5",
+            "doc_type": "faq",
+            "retrieval_score": 0.6439,
+            "vector_score": 0.6073,
+            "keyword_score": 0.5985,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: What evidence should Copilot show?\nA: Copilot should show the final answer, document sources, SQL queries for KPI answers, row counts, metric definitions, assumptions, limitations, and whether samp"
+          },
+          {
+            "source_id": "procurement_faq.txt#b46ad7cea8d2",
+            "source_name": "procurement_faq.txt",
+            "section": "What happens if purchase order delivery dates are missing?",
+            "chunk_id": "b46ad7cea8d2",
+            "doc_type": "faq",
+            "retrieval_score": 0.6144,
+            "vector_score": 0.573,
+            "keyword_score": 0.5687,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: What happens if purchase order delivery dates are missing?\nA: Missing PO due dates or delivery dates should be treated as a data quality issue. KPI calculations must disclose missing or insufficien"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_017",
+      "question": "What policy applies to supplier confidentiality?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt"
+      ],
+      "actual_sources": [
+        "supplier_policy_demo.txt",
+        "quality_policy.txt"
+      ],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 3169.33,
+      "answer": "The provided context does not contain information regarding supplier confidentiality policies. Therefore, the information is insufficient to answer the question.\n\nSource: Supplier Management Policy Demo, Supplier Quality Policy (all provided sections)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_policy_demo.txt#fe0e6e18e952",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Evidence and Citation Requirements",
+            "chunk_id": "fe0e6e18e952",
+            "doc_type": "policy",
+            "retrieval_score": 0.7012,
+            "vector_score": 0.502,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Evidence and Citation Requirements\n\nCopilot answers based on this policy must cite the source document, section title, and chunk identifier. If the policy does not contain enough evidence, the"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#6e6317aa5115",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Backup Supplier Policy",
+            "chunk_id": "6e6317aa5115",
+            "doc_type": "policy",
+            "retrieval_score": 0.6728,
+            "vector_score": 0.5252,
+            "keyword_score": 0.859,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Backup Supplier Policy\n\nFor critical materials, procurement should maintain qualified backup suppliers where feasible. Backup suppliers should be activated when there is repeated delivery fail"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#d7d58ba4e689",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Supplier Segmentation",
+            "chunk_id": "d7d58ba4e689",
+            "doc_type": "policy",
+            "retrieval_score": 0.6093,
+            "vector_score": 0.5412,
+            "keyword_score": 0.6151,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Supplier Segmentation\n\nSuppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration r"
+          },
+          {
+            "source_id": "quality_policy.txt#de1ab77c5474",
+            "source_name": "quality_policy.txt",
+            "section": "Critical Material Controls",
+            "chunk_id": "de1ab77c5474",
+            "doc_type": "policy",
+            "retrieval_score": 0.5883,
+            "vector_score": 0.4942,
+            "keyword_score": 0.6393,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Critical Material Controls\n\nCritical materials require incoming inspection plans, agreed quality limits, and documented escalation paths. Inspection evidence must be retained with the supplier sc"
+          },
+          {
+            "source_id": "quality_policy.txt#ca6da43fe07b",
+            "source_name": "quality_policy.txt",
+            "section": "Quality Qualification",
+            "chunk_id": "ca6da43fe07b",
+            "doc_type": "policy",
+            "retrieval_score": 0.5875,
+            "vector_score": 0.4959,
+            "keyword_score": 0.6331,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Quality Qualification\n\nSuppliers of critical materials must provide quality certifications, process capability evidence, inspection records, and audit readiness documentation before approval. Pro"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_018",
+      "question": "What is required for supplier audit readiness?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt",
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "quality_policy.txt",
+        "supplier_onboarding_sop.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 4915.38,
+      "answer": "Supplier audit readiness requires maintaining quality records, process change history, certification status, and evidence of closed corrective actions. Any missing records must be logged as an audit finding and assigned to an owner.\n\nSources:  \n- Supplier Quality Policy, Audit Readiness section",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "quality_policy.txt#8fdcff42bf46",
+            "source_name": "quality_policy.txt",
+            "section": "Audit Readiness",
+            "chunk_id": "8fdcff42bf46",
+            "doc_type": "policy",
+            "retrieval_score": 0.7836,
+            "vector_score": 0.6394,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Audit Readiness\n\nSuppliers must maintain quality records, process change history, certification status, and evidence of closed corrective actions. Missing records should be logged as an audit fin"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#bfecaf449fc8",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 3. Quality Qualification",
+            "chunk_id": "bfecaf449fc8",
+            "doc_type": "sop",
+            "retrieval_score": 0.5998,
+            "vector_score": 0.532,
+            "keyword_score": 0.9355,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 3. Quality Qualification\n\nSupplier Quality reviews certifications, inspection requirements, process capability, audit readiness, and historical quality performance. Critical material supp"
+          },
+          {
+            "source_id": "quality_policy.txt#ca6da43fe07b",
+            "source_name": "quality_policy.txt",
+            "section": "Quality Qualification",
+            "chunk_id": "ca6da43fe07b",
+            "doc_type": "policy",
+            "retrieval_score": 0.5649,
+            "vector_score": 0.4822,
+            "keyword_score": 0.9185,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Quality Qualification\n\nSuppliers of critical materials must provide quality certifications, process capability evidence, inspection records, and audit readiness documentation before approval. Pro"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#e2d541d1d975",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Strategic Supplier Criteria",
+            "chunk_id": "e2d541d1d975",
+            "doc_type": "policy",
+            "retrieval_score": 0.4637,
+            "vector_score": 0.5135,
+            "keyword_score": 0.1852,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Strategic Supplier Criteria\n\nA strategic supplier is a supplier that provides critical materials, high annual spend, limited substitutability, or material impact on customer service. Strategic"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#3f4af3106c52",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 5. Master Data Setup",
+            "chunk_id": "3f4af3106c52",
+            "doc_type": "sop",
+            "retrieval_score": 0.4592,
+            "vector_score": 0.5136,
+            "keyword_score": 0.5033,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 5. Master Data Setup\n\nSupplier master data changes require approval, data validation, and audit trail. Banking changes require independent verification."
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_019",
+      "question": "Can the system answer employee travel policy?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": false,
+      "expected_sources": [],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 0.0,
+      "latency_ms": 977.16,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_020",
+      "question": "What does the supplier policy say about country risk?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1021.58,
+      "answer": "I need one clarification before routing this request.\n\nWhen you say 'they/this supplier', which supplier are you referring to?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "coreference",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_021",
+      "question": "How are policy documents supposed to be cited in answers?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "supplier_policy_demo.txt",
+        "quality_policy.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 3189.21,
+      "answer": "Policy documents must be cited by referencing the source document name, the section title, and the specific chunk identifier. If the policy lacks sufficient information, the answer should state that explicitly.\n\nSources:  \n- Supplier Management Policy Demo, Evidence and Citation Requirements  \n- Supplier Management Policy Demo, Supplier Segmentation",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_policy_demo.txt#fe0e6e18e952",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Evidence and Citation Requirements",
+            "chunk_id": "fe0e6e18e952",
+            "doc_type": "policy",
+            "retrieval_score": 0.6628,
+            "vector_score": 0.4379,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Evidence and Citation Requirements\n\nCopilot answers based on this policy must cite the source document, section title, and chunk identifier. If the policy does not contain enough evidence, the"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#6e6317aa5115",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Backup Supplier Policy",
+            "chunk_id": "6e6317aa5115",
+            "doc_type": "policy",
+            "retrieval_score": 0.5435,
+            "vector_score": 0.3098,
+            "keyword_score": 0.859,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Backup Supplier Policy\n\nFor critical materials, procurement should maintain qualified backup suppliers where feasible. Backup suppliers should be activated when there is repeated delivery fail"
+          },
+          {
+            "source_id": "quality_policy.txt#ca6da43fe07b",
+            "source_name": "quality_policy.txt",
+            "section": "Quality Qualification",
+            "chunk_id": "ca6da43fe07b",
+            "doc_type": "policy",
+            "retrieval_score": 0.4732,
+            "vector_score": 0.3054,
+            "keyword_score": 0.6331,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Quality Qualification\n\nSuppliers of critical materials must provide quality certifications, process capability evidence, inspection records, and audit readiness documentation before approval. Pro"
+          },
+          {
+            "source_id": "quality_policy.txt#99eb251be667",
+            "source_name": "quality_policy.txt",
+            "section": "Corrective Action",
+            "chunk_id": "99eb251be667",
+            "doc_type": "policy",
+            "retrieval_score": 0.4688,
+            "vector_score": 0.2982,
+            "keyword_score": 0.6331,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Corrective Action\n\nRecurring defects require a corrective action plan with root cause, owner, due date, containment action, and verification evidence. The corrective action remains open until Sup"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#d7d58ba4e689",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Supplier Segmentation",
+            "chunk_id": "d7d58ba4e689",
+            "doc_type": "policy",
+            "retrieval_score": 0.4655,
+            "vector_score": 0.3017,
+            "keyword_score": 0.6151,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Supplier Segmentation\n\nSuppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration r"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_022",
+      "question": "What contract terms apply to expedited shipments?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt"
+      ],
+      "actual_sources": [
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 2707.98,
+      "answer": "Alpha Electronics must support reasonable expedite options when delays are caused by them. The cost responsibility for expedited shipments depends on the root cause and requires review by Procurement and Legal before any chargeback.\n\nSource: Alpha Electronics Master Supply Agreement Demo, Clause 2. Expedited Shipments",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "alpha_msa_demo.txt#fb952bfa25a1",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 2. Expedited Shipments",
+            "chunk_id": "fb952bfa25a1",
+            "doc_type": "contract",
+            "retrieval_score": 0.4262,
+            "vector_score": 0.5436,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 2. Expedited Shipments\n\nWhen delay is caused by Alpha, Alpha shall support reasonable expedite options. Cost responsibility depends on ro"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#5953c06796d4",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 1. Delivery Commitments",
+            "chunk_id": "5953c06796d4",
+            "doc_type": "contract",
+            "retrieval_score": 0.3334,
+            "vector_score": 0.3891,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Commitments\n\nAlpha Electronics shall deliver confirmed purchase orders on or before the due date in the purchase order. If Al"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#44cc7f0345dc",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 5. Force Majeure",
+            "chunk_id": "44cc7f0345dc",
+            "doc_type": "contract",
+            "retrieval_score": 0.3237,
+            "vector_score": 0.3729,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 5. Force Majeure\n\nAlpha must notify Procurement of force majeure events promptly, identify affected facilities, estimate recovery timing,"
+          },
+          {
+            "source_id": "beta_supply_agreement.txt#6126e9c3016f",
+            "source_name": "beta_supply_agreement.txt",
+            "section": "Clause 1. Delivery Performance",
+            "chunk_id": "6126e9c3016f",
+            "doc_type": "contract",
+            "retrieval_score": 0.316,
+            "vector_score": 0.36,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Beta Plastics Supply Agreement Demo\n\nSupplier: Beta Plastics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Performance\n\nBeta Plastics must meet the delivery date in each confirmed purchase order. Repeated missed commitments trigger a supplier perf"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#1ccc74126ec7",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 4. Confidentiality",
+            "chunk_id": "1ccc74126ec7",
+            "doc_type": "contract",
+            "retrieval_score": 0.3044,
+            "vector_score": 0.3407,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 4. Confidentiality\n\nAlpha shall protect internal forecasts, drawings, price information, supplier scorecards, and any non-public operatio"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_023",
+      "question": "What is the SOP owner for onboarding?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "supplier_onboarding_sop.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 3042.54,
+      "answer": "The SOP owner for supplier onboarding is Procurement Operations.\n\nSource: Supplier Onboarding SOP",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_onboarding_sop.txt#e343bfc2f80a",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 6. Final Approval",
+            "chunk_id": "e343bfc2f80a",
+            "doc_type": "sop",
+            "retrieval_score": 0.804,
+            "vector_score": 0.6786,
+            "keyword_score": 0.9894,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 6. Final Approval\n\nProcurement, Supplier Quality, and Legal approve the onboarding package. Approval evidence must be retained with the supplier record."
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#3f4af3106c52",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 5. Master Data Setup",
+            "chunk_id": "3f4af3106c52",
+            "doc_type": "sop",
+            "retrieval_score": 0.7926,
+            "vector_score": 0.6544,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 5. Master Data Setup\n\nSupplier master data changes require approval, data validation, and audit trail. Banking changes require independent verification."
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#bfecaf449fc8",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 3. Quality Qualification",
+            "chunk_id": "bfecaf449fc8",
+            "doc_type": "sop",
+            "retrieval_score": 0.788,
+            "vector_score": 0.6672,
+            "keyword_score": 0.959,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 3. Quality Qualification\n\nSupplier Quality reviews certifications, inspection requirements, process capability, audit readiness, and historical quality performance. Critical material supp"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#55d6fefd6209",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 2. Baseline Screening",
+            "chunk_id": "55d6fefd6209",
+            "doc_type": "sop",
+            "retrieval_score": 0.7879,
+            "vector_score": 0.662,
+            "keyword_score": 0.969,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 2. Baseline Screening\n\nProcurement collects business license, tax details, bank details, sanctions screening, country risk screening, and confidentiality acknowledgement. Missing evidence"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#f0e24fb2af9c",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 4. Commercial Review",
+            "chunk_id": "f0e24fb2af9c",
+            "doc_type": "sop",
+            "retrieval_score": 0.784,
+            "vector_score": 0.6604,
+            "keyword_score": 0.959,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 4. Commercial Review\n\nProcurement validates payment terms, lead time, MOQ, Incoterms, capacity, and delivery commitments. Strategic suppliers require business review cadence and scorecard"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_024",
+      "question": "What controls apply to supplier master data changes?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_onboarding_sop.txt",
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "supplier_onboarding_sop.txt",
+        "quality_policy.txt",
+        "alpha_msa_demo.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 4162.61,
+      "answer": "Supplier master data changes require approval, data validation, and an audit trail. Additionally, banking changes require independent verification.\n\nSources: Supplier Onboarding SOP - Step 5. Master Data Setup",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_onboarding_sop.txt#3f4af3106c52",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 5. Master Data Setup",
+            "chunk_id": "3f4af3106c52",
+            "doc_type": "sop",
+            "retrieval_score": 0.7888,
+            "vector_score": 0.648,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 5. Master Data Setup\n\nSupplier master data changes require approval, data validation, and audit trail. Banking changes require independent verification."
+          },
+          {
+            "source_id": "quality_policy.txt#de1ab77c5474",
+            "source_name": "quality_policy.txt",
+            "section": "Critical Material Controls",
+            "chunk_id": "de1ab77c5474",
+            "doc_type": "policy",
+            "retrieval_score": 0.5888,
+            "vector_score": 0.505,
+            "keyword_score": 0.6192,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Critical Material Controls\n\nCritical materials require incoming inspection plans, agreed quality limits, and documented escalation paths. Inspection evidence must be retained with the supplier sc"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#1ccc74126ec7",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 4. Confidentiality",
+            "chunk_id": "1ccc74126ec7",
+            "doc_type": "contract",
+            "retrieval_score": 0.4639,
+            "vector_score": 0.4607,
+            "keyword_score": 0.6248,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 4. Confidentiality\n\nAlpha shall protect internal forecasts, drawings, price information, supplier scorecards, and any non-public operatio"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#e2d541d1d975",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Strategic Supplier Criteria",
+            "chunk_id": "e2d541d1d975",
+            "doc_type": "policy",
+            "retrieval_score": 0.4467,
+            "vector_score": 0.5053,
+            "keyword_score": 0.1451,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Strategic Supplier Criteria\n\nA strategic supplier is a supplier that provides critical materials, high annual spend, limited substitutability, or material impact on customer service. Strategic"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#d7d58ba4e689",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Supplier Segmentation",
+            "chunk_id": "d7d58ba4e689",
+            "doc_type": "policy",
+            "retrieval_score": 0.4124,
+            "vector_score": 0.5206,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Supplier Segmentation\n\nSuppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration r"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_025",
+      "question": "What does quality policy require after a recurring defect?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 3514.63,
+      "answer": "I need one clarification before routing this request.\n\nCould you clarify your request so I can answer precisely?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": "null",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_026",
+      "question": "What is the review cadence for critical suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 2164.43,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_027",
+      "question": "What should be done when a supplier incident has customer impact?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "incident_response_sop.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1385.78,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "policy_028",
+      "question": "What does the FAQ say about missing PO delivery dates?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "procurement_faq.txt"
+      ],
+      "actual_sources": [
+        "procurement_faq.txt",
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 7313.94,
+      "answer": "The FAQ states that missing purchase order due dates or delivery dates should be treated as a data quality issue. KPI calculations must disclose missing or insufficient data rather than fabricating performance.\n\nSources: Procurement FAQ",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "procurement_faq.txt#b46ad7cea8d2",
+            "source_name": "procurement_faq.txt",
+            "section": "What happens if purchase order delivery dates are missing?",
+            "chunk_id": "b46ad7cea8d2",
+            "doc_type": "faq",
+            "retrieval_score": 0.7871,
+            "vector_score": 0.6451,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: What happens if purchase order delivery dates are missing?\nA: Missing PO due dates or delivery dates should be treated as a data quality issue. KPI calculations must disclose missing or insufficien"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#5953c06796d4",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 1. Delivery Commitments",
+            "chunk_id": "5953c06796d4",
+            "doc_type": "contract",
+            "retrieval_score": 0.4097,
+            "vector_score": 0.3796,
+            "keyword_score": 0.2732,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Commitments\n\nAlpha Electronics shall deliver confirmed purchase orders on or before the due date in the purchase order. If Al"
+          },
+          {
+            "source_id": "procurement_faq.txt#beb96b75ab10",
+            "source_name": "procurement_faq.txt",
+            "section": "When should procurement activate backup suppliers?",
+            "chunk_id": "beb96b75ab10",
+            "doc_type": "faq",
+            "retrieval_score": 0.3709,
+            "vector_score": 0.4083,
+            "keyword_score": 0.0863,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: When should procurement activate backup suppliers?\nA: Procurement should consider backup suppliers for repeated delivery misses, critical material shortages, geopolitical disruption, or quality iss"
+          },
+          {
+            "source_id": "beta_supply_agreement.txt#6126e9c3016f",
+            "source_name": "beta_supply_agreement.txt",
+            "section": "Clause 1. Delivery Performance",
+            "chunk_id": "6126e9c3016f",
+            "doc_type": "contract",
+            "retrieval_score": 0.3606,
+            "vector_score": 0.377,
+            "keyword_score": 0.1148,
+            "rerank_score": null,
+            "content_preview": "# Beta Plastics Supply Agreement Demo\n\nSupplier: Beta Plastics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Performance\n\nBeta Plastics must meet the delivery date in each confirmed purchase order. Repeated missed commitments trigger a supplier perf"
+          },
+          {
+            "source_id": "procurement_faq.txt#7ee91dbaea75",
+            "source_name": "procurement_faq.txt",
+            "section": "What should a supplier scorecard include?",
+            "chunk_id": "7ee91dbaea75",
+            "doc_type": "faq",
+            "retrieval_score": 0.3509,
+            "vector_score": 0.3759,
+            "keyword_score": 0.0846,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: What should a supplier scorecard include?\nA: A supplier scorecard should include on-time delivery, order volume, quality events when available, open corrective actions, business continuity risks, a"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_029",
+      "question": "What policy supports supplier segmentation?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [
+        "supplier_policy_demo.txt",
+        "quality_policy.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 3091.61,
+      "answer": "Supplier segmentation is supported by the \"Supplier Management Policy Demo\" under the section \"Supplier Segmentation,\" which defines supplier categories and requires documented risk assessments for strategic and critical suppliers.  \n\nSource: Supplier Management Policy Demo, Supplier Segmentation section.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_policy_demo.txt#fe0e6e18e952",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Evidence and Citation Requirements",
+            "chunk_id": "fe0e6e18e952",
+            "doc_type": "policy",
+            "retrieval_score": 0.7034,
+            "vector_score": 0.5056,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Evidence and Citation Requirements\n\nCopilot answers based on this policy must cite the source document, section title, and chunk identifier. If the policy does not contain enough evidence, the"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#d7d58ba4e689",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Supplier Segmentation",
+            "chunk_id": "d7d58ba4e689",
+            "doc_type": "policy",
+            "retrieval_score": 0.6996,
+            "vector_score": 0.6918,
+            "keyword_score": 0.6151,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Supplier Segmentation\n\nSuppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration r"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#6e6317aa5115",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Backup Supplier Policy",
+            "chunk_id": "6e6317aa5115",
+            "doc_type": "policy",
+            "retrieval_score": 0.6736,
+            "vector_score": 0.5264,
+            "keyword_score": 0.859,
+            "rerank_score": null,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Backup Supplier Policy\n\nFor critical materials, procurement should maintain qualified backup suppliers where feasible. Backup suppliers should be activated when there is repeated delivery fail"
+          },
+          {
+            "source_id": "quality_policy.txt#ca6da43fe07b",
+            "source_name": "quality_policy.txt",
+            "section": "Quality Qualification",
+            "chunk_id": "ca6da43fe07b",
+            "doc_type": "policy",
+            "retrieval_score": 0.5766,
+            "vector_score": 0.4778,
+            "keyword_score": 0.6331,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Quality Qualification\n\nSuppliers of critical materials must provide quality certifications, process capability evidence, inspection records, and audit readiness documentation before approval. Pro"
+          },
+          {
+            "source_id": "quality_policy.txt#de1ab77c5474",
+            "source_name": "quality_policy.txt",
+            "section": "Critical Material Controls",
+            "chunk_id": "de1ab77c5474",
+            "doc_type": "policy",
+            "retrieval_score": 0.5677,
+            "vector_score": 0.4599,
+            "keyword_score": 0.6393,
+            "rerank_score": null,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Critical Material Controls\n\nCritical materials require incoming inspection plans, agreed quality limits, and documented escalation paths. Inspection evidence must be retained with the supplier sc"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "policy_030",
+      "question": "What does the contract say about force majeure notification?",
+      "intent": "policy_qa",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt"
+      ],
+      "actual_sources": [
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 3799.03,
+      "answer": "Both Alpha Electronics and Beta Plastics must promptly notify Procurement in writing of force majeure events. Alpha must identify affected facilities, estimate recovery timing, and propose mitigation actions such as alternate plants or expedited production. Beta must specify affected materials, estimated duration, and proposed mitigation actions.\n\nSources:  \n- Alpha Electronics Master Supply Agreement Demo, Clause 5. Force Majeure  \n- Beta Plastics Supply Agreement Demo, Clause 5. Force Majeure",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "alpha_msa_demo.txt#44cc7f0345dc",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 5. Force Majeure",
+            "chunk_id": "44cc7f0345dc",
+            "doc_type": "contract",
+            "retrieval_score": 0.3992,
+            "vector_score": 0.4987,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 5. Force Majeure\n\nAlpha must notify Procurement of force majeure events promptly, identify affected facilities, estimate recovery timing,"
+          },
+          {
+            "source_id": "beta_supply_agreement.txt#93887961e0eb",
+            "source_name": "beta_supply_agreement.txt",
+            "section": "Clause 5. Force Majeure",
+            "chunk_id": "93887961e0eb",
+            "doc_type": "contract",
+            "retrieval_score": 0.3743,
+            "vector_score": 0.4571,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Beta Plastics Supply Agreement Demo\n\nSupplier: Beta Plastics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 5. Force Majeure\n\nBeta must provide written notice of force majeure events, affected materials, estimated duration, and proposed mitigation actions."
+          },
+          {
+            "source_id": "beta_supply_agreement.txt#6126e9c3016f",
+            "source_name": "beta_supply_agreement.txt",
+            "section": "Clause 1. Delivery Performance",
+            "chunk_id": "6126e9c3016f",
+            "doc_type": "contract",
+            "retrieval_score": 0.2964,
+            "vector_score": 0.3273,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Beta Plastics Supply Agreement Demo\n\nSupplier: Beta Plastics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Performance\n\nBeta Plastics must meet the delivery date in each confirmed purchase order. Repeated missed commitments trigger a supplier perf"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#fb952bfa25a1",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 2. Expedited Shipments",
+            "chunk_id": "fb952bfa25a1",
+            "doc_type": "contract",
+            "retrieval_score": 0.2912,
+            "vector_score": 0.3187,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 2. Expedited Shipments\n\nWhen delay is caused by Alpha, Alpha shall support reasonable expedite options. Cost responsibility depends on ro"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#5953c06796d4",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 1. Delivery Commitments",
+            "chunk_id": "5953c06796d4",
+            "doc_type": "contract",
+            "retrieval_score": 0.2869,
+            "vector_score": 0.3116,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Commitments\n\nAlpha Electronics shall deliver confirmed purchase orders on or before the due date in the purchase order. If Al"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_001",
+      "question": "What is the on-time delivery rate for Alpha Electronics?",
+      "intent": "kpi_query",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 7354.52,
+      "answer": "The on-time delivery rate for Alpha Electronics over the last 3 months is 66.67%, meaning about two-thirds of their purchase orders were delivered on or before the due date. This metric is defined as the number of orders delivered on time divided by the total number of delivered orders, calculated by the formula:  \nSUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id).  \n\nThe query analyzed all purchase orders linked to Alpha Electronics, but only one order was included in this sample. Since the sample size is below the recommended minimum of 10 orders, this result should be considered directional and not definitive. No comparison to other suppliers can be made from this data alone.  \n\nIn summary, while Alpha Electronics shows a 66.67% on-time delivery rate in this limited dataset, more data is needed to confidently assess their performance.  \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha electronics%');",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 3.72,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 1 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "The query analyzed all purchase orders linked to Alpha Electronics, but only one order was included in this sample. Since the sample size is below the recommended minimum of 10 orders, this result should be considered directional and not definitive. No comparison to other suppliers can be made from this data alone."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_002",
+      "question": "Alpha Electronics 的准时交付率是多少？",
+      "intent": "kpi_query",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 10436.54,
+      "answer": "The on-time delivery rate for Alpha Electronics is 66.67%, meaning about two-thirds of their purchase orders were delivered on or before the due date. This metric is defined as the number of orders delivered on time divided by the total number of delivered orders, calculated as:  \nSUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id).  \nThe data covers the last 3 months and is based on a single purchase order record (sample size = 1). Since the sample size is well below the recommended minimum of 10, this result should be considered directional and not definitive. No comparison to other suppliers is possible from this data. Please interpret this as an initial indication rather than a firm performance assessment.  \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha electronics%');",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 0.47,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 1 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "The data covers the last 3 months and is based on a single purchase order record (sample size = 1). Since the sample size is well below the recommended minimum of 10, this result should be considered directional and not definitive. No comparison to other suppliers is possible from this data. Please interpret this as an initial indication rather than a firm performance assessment."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_003",
+      "question": "Compare Alpha Electronics and Beta Plastics on OTD.",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 7299.3,
+      "answer": "The On-Time Delivery (OTD) rate measures the proportion of purchase orders delivered on or before their due date, calculated as the number of on-time deliveries divided by total deliveries. This analysis covers the last 3 months, based on 5 total orders from both suppliers combined, which is below the recommended minimum sample size of 10; therefore, results should be considered directional only. Alpha Electronics shows a 66.67% OTD rate with 3 orders, indicating that two-thirds of their deliveries met the deadline. In contrast, Beta Plastics has a 0% OTD rate from 2 orders, meaning none of their deliveries were on time during this period. While Alpha Electronics performs moderately better, both suppliers have limited data points, so further monitoring is advised. The metric formula used is: on-time deliveries divided by total deliveries (delivery_date ≤ due_date). \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.97,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    s.name AS supplier_name,\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate,\n    COUNT(p.id) AS total_orders\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha electronics%')\n   OR LOWER(s.name) LIKE LOWER('%beta plastics%')\nGROUP BY s.id, s.name\nORDER BY on_time_rate DESC;",
+          "params": {},
+          "row_count": 2,
+          "latency_ms": 1.25,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 5,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 5,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 5 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "The On-Time Delivery (OTD) rate measures the proportion of purchase orders delivered on or before their due date, calculated as the number of on-time deliveries divided by total deliveries. This analysis covers the last 3 months, based on 5 total orders from both suppliers combined, which is below the recommended minimum sample size of 10; therefore, results should be considered directional only. Alpha Electronics shows a 66.67% OTD rate with 3 orders, indicating that two-thirds of their deliveries met the deadline. In contrast, Beta Plastics has a 0% OTD rate from 2 orders, meaning none of their deliveries were on time during this period. While Alpha Electronics performs moderately better, both suppliers have limited data points, so further monitoring is advised. The metric formula used is: on-time deliveries divided by total deliveries (delivery_date ≤ due_date)."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_004",
+      "question": "Which supplier has the most purchase orders?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1045.04,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.85,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "kpi_005",
+      "question": "Show average delay days for Beta Plastics.",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 5568.4,
+      "answer": "The average delay for Beta Plastics’ late deliveries over the last 3 months is 4.0 days. This metric is defined as the average number of days by which delivery dates exceed due dates, calculated as AVG(julianday(delivery_date) - julianday(due_date)) for delayed orders only. The query joined supplier and purchase order data, filtering for orders delivered after their due dates. However, the sample size is only 1 delayed order, which is below the recommended minimum of 5, so this result should be considered directional and not definitive. No comparison to other suppliers can be made from this data alone. Monitoring this metric over a larger sample will provide a clearer picture of Beta Plastics’ delivery performance. \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    AVG(julianday(p.delivery_date) - julianday(p.due_date)) AS avg_delay_days\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%beta plastics%')\n  AND julianday(p.delivery_date) > julianday(p.due_date);",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 1.37,
+          "metric": "avg_delay_days",
+          "metric_definition": "延误订单的 AVG(delivery_date - due_date)",
+          "formula": "AVG(julianday(delivery_date) - julianday(due_date)) for delayed orders",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 5,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 1 is below the recommended minimum 5; treat the result as directional."
+        ],
+        "recommendations": [
+          "The average delay for Beta Plastics’ late deliveries over the last 3 months is 4.0 days. This metric is defined as the average number of days by which delivery dates exceed due dates, calculated as AVG(julianday(delivery_date) - julianday(due_date)) for delayed orders only. The query joined supplier and purchase order data, filtering for orders delivered after their due dates. However, the sample size is only 1 delayed order, which is below the recommended minimum of 5, so this result should be considered directional and not definitive. No comparison to other suppliers can be made from this data alone. Monitoring this metric over a larger sample will provide a clearer picture of Beta Plastics’ delivery performance."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_006",
+      "question": "What is Gamma Metals delivery performance?",
+      "intent": "kpi_query",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 8833.41,
+      "answer": "Gamma Metals has an on-time delivery rate of 100% based on 2 purchase orders in the last 3 months. This means all their deliveries met or were earlier than the due dates, indicating excellent delivery performance for this small sample. The metric used is defined as the number of orders delivered on or before the due date divided by the total number of orders, calculated as:\n\nSUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id).\n\nHowever, the sample size of 2 orders is below the recommended minimum of 10, so this result should be considered directional rather than definitive. No other suppliers were included in this query for comparison. Overall, Gamma Metals appears reliable in this period, but more data is needed for a robust assessment.\n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    s.name AS supplier_name,\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate,\n    COUNT(p.id) AS total_orders\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%gamma metals%')\nGROUP BY s.id, s.name;",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 0.94,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 2,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 2,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 2 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "However, the sample size of 2 orders is below the recommended minimum of 10, so this result should be considered directional rather than definitive. No other suppliers were included in this query for comparison. Overall, Gamma Metals appears reliable in this period, but more data is needed for a robust assessment."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_007",
+      "question": "Compare suppliers in Vietnam by on-time delivery.",
+      "intent": "kpi_query",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6834.68,
+      "answer": "The query compared on-time delivery rates for suppliers based in Vietnam over the last 3 months. The on-time delivery rate is defined as the number of orders delivered on or before the due date divided by the total number of orders, calculated as:  \nSUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id).  \n\nHowever, the query returned no data (0 rows), indicating no recorded purchase orders from Vietnamese suppliers in this period. The sample size is zero, which is below the recommended minimum of 10 orders, so no reliable conclusions can be drawn about supplier performance in Vietnam. Because of this, we cannot identify which suppliers perform well or poorly on on-time delivery.  \n\nPlease note this analysis is based on a demo database with limited data and is intended for directional insights only.  \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    s.name AS supplier_name,\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate,\n    COUNT(p.id) AS total_orders\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.country) = LOWER('Vietnam')\nGROUP BY s.id, s.name\nORDER BY on_time_rate DESC;",
+          "params": {},
+          "row_count": 0,
+          "latency_ms": 3.02,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 0,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 0,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 0 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "However, the query returned no data (0 rows), indicating no recorded purchase orders from Vietnamese suppliers in this period. The sample size is zero, which is below the recommended minimum of 10 orders, so no reliable conclusions can be drawn about supplier performance in Vietnam. Because of this, we cannot identify which suppliers perform well or poorly on on-time delivery."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_008",
+      "question": "What is Delta Packaging's order volume?",
+      "intent": "kpi_query",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 5501.05,
+      "answer": "Delta Packaging’s order volume over the last 3 months is 2 purchase orders, with a total ordered quantity of 2,200 units. The metric \"order_volume\" is defined as the count of purchase orders and the sum of quantities ordered, calculated by COUNT(purchase_orders.id) and SUM(qty). This data is based on one query result row, with a sample size of 1, which is sufficient for this analysis. No time range was specified in the query, so the default period of the last 3 months was used. Given the small sample size and illustrative nature of the data, these figures provide a directional view rather than a comprehensive performance assessment. There is no comparative supplier performance data here to evaluate how Delta Packaging ranks. Overall, Delta Packaging has a modest order volume in this period.\n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT COUNT(p.id) AS order_volume, SUM(p.qty) AS total_quantity\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%delta packaging%');",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 1.76,
+          "metric": "order_volume",
+          "metric_definition": "采购订单数量和订购数量之和",
+          "formula": "COUNT(purchase_orders.id), SUM(qty)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 1,
+          "is_sample_sufficient": true
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": true,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance."
+        ],
+        "recommendations": []
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_009",
+      "question": "Rank suppliers by delivery reliability.",
+      "intent": "kpi_query",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 995.99,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.85,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "kpi_010",
+      "question": "What KPI formula is used for OTD?",
+      "intent": "kpi_query",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt",
+        "procurement_faq.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 4115.78,
+      "answer": "The KPI formula for On-time Delivery Rate (OTD) is:\n\nSUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)\n\nThis calculates the proportion of purchase orders delivered on or before the due date out of the total delivered orders.\n\nSource: Supply Chain KPI Dictionary (On-time delivery rate - OTD)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.9,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "metric_definitions.txt#43cdc0ed43e6",
+            "source_name": "metric_definitions.txt",
+            "section": "on_time_rate",
+            "chunk_id": "43cdc0ed43e6",
+            "doc_type": "kpi_dict",
+            "retrieval_score": 0.6881,
+            "vector_score": 0.6468,
+            "keyword_score": 1.0,
+            "rerank_score": null,
+            "content_preview": "# Supply Chain KPI Dictionary\n\nOwner: Supply Chain Analytics\nAccess Level: internal\nEffective Date: 2026-01-01\n\nMetric: on_time_rate\nBusiness Name: On-time delivery rate (OTD)\nDefinition: On-time orders divided by total delivered orders.\nFormula: SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0"
+          },
+          {
+            "source_id": "procurement_faq.txt#b46ad7cea8d2",
+            "source_name": "procurement_faq.txt",
+            "section": "What happens if purchase order delivery dates are missing?",
+            "chunk_id": "b46ad7cea8d2",
+            "doc_type": "faq",
+            "retrieval_score": 0.2917,
+            "vector_score": 0.3195,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: What happens if purchase order delivery dates are missing?\nA: Missing PO due dates or delivery dates should be treated as a data quality issue. KPI calculations must disclose missing or insufficien"
+          },
+          {
+            "source_id": "procurement_faq.txt#6bc9504a7fc5",
+            "source_name": "procurement_faq.txt",
+            "section": "What evidence should Copilot show?",
+            "chunk_id": "6bc9504a7fc5",
+            "doc_type": "faq",
+            "retrieval_score": 0.2748,
+            "vector_score": 0.2913,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: What evidence should Copilot show?\nA: Copilot should show the final answer, document sources, SQL queries for KPI answers, row counts, metric definitions, assumptions, limitations, and whether samp"
+          },
+          {
+            "source_id": "procurement_faq.txt#7ee91dbaea75",
+            "source_name": "procurement_faq.txt",
+            "section": "What should a supplier scorecard include?",
+            "chunk_id": "7ee91dbaea75",
+            "doc_type": "faq",
+            "retrieval_score": 0.2657,
+            "vector_score": 0.2762,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: What should a supplier scorecard include?\nA: A supplier scorecard should include on-time delivery, order volume, quality events when available, open corrective actions, business continuity risks, a"
+          },
+          {
+            "source_id": "metric_definitions.txt#52316590bdb6",
+            "source_name": "metric_definitions.txt",
+            "section": "avg_delay_days",
+            "chunk_id": "52316590bdb6",
+            "doc_type": "kpi_dict",
+            "retrieval_score": 0.2619,
+            "vector_score": 0.4365,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Supply Chain KPI Dictionary\n\nOwner: Supply Chain Analytics\nAccess Level: internal\nEffective Date: 2026-01-01\n\nMetric: avg_delay_days\nBusiness Name: Average delay days\nDefinition: Average days late for delayed purchase orders only.\nFormula: AVG(julianday(delivery_date) - julianday(due_date)) where "
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_011",
+      "question": "Can you calculate defect rate from current demo data?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": false,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1130.26,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.85,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "kpi_012",
+      "question": "What is the sample size behind Alpha's OTD?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1024.49,
+      "answer": "I need one clarification before routing this request.\n\nWhen you say 'they/this supplier', which supplier are you referring to?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": "coreference",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "kpi_013",
+      "question": "Which country has more delayed orders?",
+      "intent": "kpi_query",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1853.11,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.85,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "kpi_014",
+      "question": "Show the total quantity ordered from Vietnam suppliers.",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6449.78,
+      "answer": "The total quantity ordered from suppliers based in Vietnam over the last 3 months is reported as null, indicating no recorded purchase order quantities from these suppliers in the data. The metric used here is \"order_volume,\" defined as the sum of purchase order quantities (SUM(qty)) and the count of purchase orders (COUNT(purchase_orders.id)). The query joined suppliers and purchase orders filtered by the supplier country being Vietnam. The data snapshot is from a demo SQLite supplychain_kpi.db, with a single row returned and a sample size of 1, which is sufficient for this analysis. Since the total quantity is null, it suggests either no orders were placed with Vietnam suppliers during this period or the data is missing or incomplete for these suppliers. No performance assessment of Vietnam suppliers can be made based on this result. \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.9,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT SUM(p.qty) AS total_order_quantity\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.country) = LOWER('Vietnam');",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 1.31,
+          "metric": "order_volume",
+          "metric_definition": "采购订单数量和订购数量之和",
+          "formula": "COUNT(purchase_orders.id), SUM(qty)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 1,
+          "is_sample_sufficient": true
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": true,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance."
+        ],
+        "recommendations": []
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_015",
+      "question": "How many POs did Alpha Electronics deliver late?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6193.78,
+      "answer": "Alpha Electronics delivered 1 purchase order late in the last 3 months. The metric used counts all purchase orders where the delivery date was after the due date. The formula for on-time delivery rate is the number of orders delivered on or before the due date divided by the total number of orders. This analysis is based on a single data row with a sample size of 1, which is below the recommended minimum of 10, so the result should be considered directional only. Due to the small sample, we cannot definitively assess Alpha Electronics’ overall delivery performance. No other suppliers’ performance was evaluated in this query. Please consider gathering more data for a robust performance review.  \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    COUNT(p.id) AS late_po_count\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha electronics%')\n  AND p.delivery_date > p.due_date;",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 0.91,
+          "metric": "other",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 1 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "Alpha Electronics delivered 1 purchase order late in the last 3 months. The metric used counts all purchase orders where the delivery date was after the due date. The formula for on-time delivery rate is the number of orders delivered on or before the due date divided by the total number of orders. This analysis is based on a single data row with a sample size of 1, which is below the recommended minimum of 10, so the result should be considered directional only. Due to the small sample, we cannot definitively assess Alpha Electronics’ overall delivery performance. No other suppliers’ performance was evaluated in this query. Please consider gathering more data for a robust performance review."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_016",
+      "question": "Compare Alpha, Beta, Gamma, and Delta on OTD.",
+      "intent": "kpi_query",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 14790.69,
+      "answer": "The On-Time Delivery (OTD) rate measures the proportion of orders delivered on or before their due date, calculated as the number of on-time deliveries divided by total orders. This analysis covers the last 3 months, based on 9 orders across four suppliers, which is slightly below the recommended minimum sample size of 10, so results should be considered directional only.\n\nAmong the suppliers, Gamma Metals leads with a perfect OTD rate of 100% over 2 orders, indicating excellent delivery performance. Alpha Electronics follows with a 66.7% OTD rate from 3 orders, showing moderate reliability. Delta Packaging has a 50% OTD rate on 2 orders, suggesting room for improvement. Beta Plastics performed poorly with a 0% OTD rate across 2 orders, indicating consistent late deliveries.\n\nIn summary, Gamma Metals is the best performer, while Beta Plastics requires attention to improve timeliness. The small sample size limits definitive conclusions but provides useful directional insights.\n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.97,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    s.name AS supplier_name,\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate,\n    COUNT(p.id) AS total_orders\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha%')\n   OR LOWER(s.name) LIKE LOWER('%beta%')\n   OR LOWER(s.name) LIKE LOWER('%gamma%')\n   OR LOWER(s.name) LIKE LOWER('%delta%')\nGROUP BY s.id, s.name\nORDER BY on_time_rate DESC;",
+          "params": {},
+          "row_count": 4,
+          "latency_ms": 1.16,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 9,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 9,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 9 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "The On-Time Delivery (OTD) rate measures the proportion of orders delivered on or before their due date, calculated as the number of on-time deliveries divided by total orders. This analysis covers the last 3 months, based on 9 orders across four suppliers, which is slightly below the recommended minimum sample size of 10, so results should be considered directional only."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_017",
+      "question": "What is OTIF for Alpha Electronics?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": false,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6559.47,
+      "answer": "The On-Time In-Full (OTIF) delivery rate for Alpha Electronics over the last 3 months is 66.67%. This means that about two-thirds of their purchase orders were delivered on or before the due date. The OTIF metric is defined as the number of orders delivered on time divided by the total number of delivered orders, calculated here as:\n\nSUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id).\n\nThe query analyzed 1 purchase order linked to Alpha Electronics, which is below the recommended minimum sample size of 10. Therefore, this result should be considered directional only and not fully representative of their overall performance. No comparison to other suppliers can be made from this data due to the limited sample. \n\nEvidence: SQL query executed.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "sql",
+        "sql": {
+          "query": "SELECT\n    ROUND(\n        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n        / NULLIF(COUNT(p.id), 0),\n        4\n    ) AS on_time_rate\nFROM suppliers s\nJOIN purchase_orders p ON p.supplier_id = s.id\nWHERE LOWER(s.name) LIKE LOWER('%alpha electronics%');",
+          "params": {},
+          "row_count": 1,
+          "latency_ms": 0.72,
+          "metric": "on_time_rate",
+          "metric_definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+          "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
+          "time_range": "last_3_months",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 1,
+          "minimum_sample_size": 10,
+          "is_sample_sufficient": false
+        },
+        "sample_size": 1,
+        "is_sample_sufficient": false,
+        "assumptions": [
+          "No time range was specified; defaulted to last_3_months."
+        ],
+        "limitations": [
+          "Demo KPI data is small and illustrative, not production supplier performance.",
+          "Sample size 1 is below the recommended minimum 10; treat the result as directional."
+        ],
+        "recommendations": [
+          "The query analyzed 1 purchase order linked to Alpha Electronics, which is below the recommended minimum sample size of 10. Therefore, this result should be considered directional only and not fully representative of their overall performance. No comparison to other suppliers can be made from this data due to the limited sample."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_018",
+      "question": "Give me the risk score for Beta Plastics.",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": false,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "metric_definitions.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 4341.78,
+      "answer": "Verified facts  \n- Supplier: Beta Plastics  \n- Country: Vietnam (VN)  \n- Affected purchase orders: 2  \n- Total quantity impacted: 1,400 units  \n- Assumed delay: 7 days  \n\nRecommendations  \n1. Increase safety stock levels for products sourced from Beta Plastics to buffer against the 7-day delay.  \n2. Pre-build inventory where feasible to mitigate supply disruption risks.  \n3. Identify and qualify backup suppliers in Vietnam to ensure alternative sourcing options.  \n4. Conduct a joint risk review with Beta Plastics to improve visibility and responsiveness.  \n5. Monitor order fulfillment closely and adjust procurement plans dynamically.  \n\nNote: This is a demo analysis based on sample data.",
+      "route": {
+        "intent": "scenario_analysis",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "simulation",
+        "sql": {
+          "query": "SELECT s.name AS supplier_name,\n           s.country,\n           COUNT(p.id) AS total_pos,\n           SUM(p.qty) AS total_qty\n    FROM suppliers s\n    JOIN purchase_orders p ON s.id = p.supplier_id\n    WHERE s.country = ?\n    GROUP BY s.id;",
+          "params": {
+            "country": "VN",
+            "delay_days": 7
+          },
+          "row_count": 2,
+          "latency_ms": 0.8,
+          "metric": "scenario_impact",
+          "metric_definition": "Affected suppliers and order quantities for the selected disruption scope.",
+          "formula": "COUNT(p.id), SUM(p.qty) grouped by affected supplier",
+          "time_range": "current demo dataset",
+          "data_snapshot": "demo SQLite supplychain_kpi.db",
+          "sample_size": 2,
+          "minimum_sample_size": 1,
+          "is_sample_sufficient": true
+        },
+        "sample_size": 2,
+        "is_sample_sufficient": true,
+        "verified_facts": [
+          "Scenario scope: suppliers in VN; assumed delay: 7 days.",
+          "Beta Plastics: 2 affected purchase orders, total quantity 1400.",
+          "Delta Packaging: 2 affected purchase orders, total quantity 2200."
+        ],
+        "recommendations": [],
+        "assumptions": [
+          "If no country is specified, the demo defaults scenario analysis to VN."
+        ],
+        "limitations": [
+          "Scenario recommendations are model-generated based on queried demo order exposure."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "kpi_019",
+      "question": "What is the average delay for all delayed purchase orders?",
+      "intent": "kpi_query",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1111.46,
+      "answer": "I need one clarification before routing this request.\n\nCould you clarify your request so I can answer precisely?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.92,
+        "ambiguity_type": "null",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "kpi_020",
+      "question": "Which materials are associated with late orders?",
+      "intent": "kpi_query",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1984.31,
+      "answer": "I need one clarification before routing this request.\n\nPlease specify supplier name and time range (for example: Alpha, last 3 months).\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "scenario_analysis",
+        "confidence": 0.75,
+        "ambiguity_type": "missing_entity",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_001",
+      "question": "How is Alpha Electronics performing against strategic supplier expectations?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1076.46,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "kpi_query",
+        "confidence": 0.92,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_002",
+      "question": "Does Beta Plastics need corrective action based on delivery performance and policy?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt",
+        "beta_supply_agreement.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1460.13,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_003",
+      "question": "If Vietnam suppliers are delayed by 7 days, what policy actions and data impacts should we consider?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "incident_response_sop.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1280.93,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "scenario_analysis",
+        "confidence": 0.85,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_004",
+      "question": "Which supplier should be prioritized for a business review based on OTD and supplier policy?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1027.79,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_005",
+      "question": "Can Alpha's contract obligations explain its delivery KPI result?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "alpha_msa_demo.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [
+        "alpha_msa_demo.txt",
+        "beta_supply_agreement.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 5108.8,
+      "answer": "Alpha's contract requires on-time delivery of confirmed purchase orders and timely notification to Procurement if delays are expected, including details and a recovery plan (Clause 1). If delays are caused by Alpha, they must support expedite options with cost responsibility reviewed by Procurement and Legal (Clause 2). Therefore, Alpha’s delivery KPI results can be explained by these obligations, especially if delays and corrective actions were properly communicated and managed per the contract.\n\nSources: Alpha Electronics Master Supply Agreement Demo, Clauses 1 and 2",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "alpha_msa_demo.txt#5953c06796d4",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 1. Delivery Commitments",
+            "chunk_id": "5953c06796d4",
+            "doc_type": "contract",
+            "retrieval_score": 0.4209,
+            "vector_score": 0.5349,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Commitments\n\nAlpha Electronics shall deliver confirmed purchase orders on or before the due date in the purchase order. If Al"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#fb952bfa25a1",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 2. Expedited Shipments",
+            "chunk_id": "fb952bfa25a1",
+            "doc_type": "contract",
+            "retrieval_score": 0.4197,
+            "vector_score": 0.5328,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 2. Expedited Shipments\n\nWhen delay is caused by Alpha, Alpha shall support reasonable expedite options. Cost responsibility depends on ro"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#13d72efeba1c",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 3. Quality and Corrective Action",
+            "chunk_id": "13d72efeba1c",
+            "doc_type": "contract",
+            "retrieval_score": 0.4012,
+            "vector_score": 0.5019,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 3. Quality and Corrective Action\n\nAlpha must support root-cause analysis for recurring defects and provide corrective action plans with o"
+          },
+          {
+            "source_id": "alpha_msa_demo.txt#44cc7f0345dc",
+            "source_name": "alpha_msa_demo.txt",
+            "section": "Clause 5. Force Majeure",
+            "chunk_id": "44cc7f0345dc",
+            "doc_type": "contract",
+            "retrieval_score": 0.3984,
+            "vector_score": 0.4974,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Alpha Electronics Master Supply Agreement Demo\n\nSupplier: Alpha Electronics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 5. Force Majeure\n\nAlpha must notify Procurement of force majeure events promptly, identify affected facilities, estimate recovery timing,"
+          },
+          {
+            "source_id": "beta_supply_agreement.txt#6126e9c3016f",
+            "source_name": "beta_supply_agreement.txt",
+            "section": "Clause 1. Delivery Performance",
+            "chunk_id": "6126e9c3016f",
+            "doc_type": "contract",
+            "retrieval_score": 0.393,
+            "vector_score": 0.4883,
+            "keyword_score": 0.0,
+            "rerank_score": null,
+            "content_preview": "# Beta Plastics Supply Agreement Demo\n\nSupplier: Beta Plastics\nOwner: Legal / Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nClause 1. Delivery Performance\n\nBeta Plastics must meet the delivery date in each confirmed purchase order. Repeated missed commitments trigger a supplier perf"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {}
+    },
+    {
+      "id": "hybrid_006",
+      "question": "Should procurement activate a backup supplier for Beta based on current delivery data?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "beta_supply_agreement.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1195.61,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "scenario_analysis",
+        "confidence": 0.92,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_007",
+      "question": "What data and policy evidence support classifying Gamma Metals as reliable?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1382.41,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.92,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_008",
+      "question": "How should we handle a recurring late delivery issue under policy and KPI evidence?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": true,
+      "expected_sources": [
+        "incident_response_sop.txt",
+        "quality_policy.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1191.04,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.75,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_009",
+      "question": "What does the supplier scorecard need to include and what current demo KPI can populate it?",
+      "intent": "hybrid",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "procurement_faq.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1040.91,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    },
+    {
+      "id": "hybrid_010",
+      "question": "Can we decide payment penalties for Alpha from current policy and KPI data?",
+      "intent": "hybrid",
+      "difficulty": "hard",
+      "answerability": false,
+      "expected_sources": [
+        "alpha_msa_demo.txt",
+        "metric_definitions.txt"
+      ],
+      "actual_sources": [],
+      "hit_position": null,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "recall_at_10": false,
+      "mrr": 0.0,
+      "latency_ms": 1279.24,
+      "answer": "I need one clarification before routing this request.\n\nDo you want policy standards first, or supplier KPI data first?\n\nReply with the missing details and I will continue.",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.85,
+        "ambiguity_type": "composite_intent",
+        "fallback_mode": "none"
+      },
+      "evidence": {},
+      "judge": {}
+    }
+  ]
+}

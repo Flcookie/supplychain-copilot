@@ -1,0 +1,588 @@
+{
+  "metrics": {
+    "samples": 5,
+    "retrieval_recall_at_3": 1,
+    "retrieval_recall_at_5": 1,
+    "retrieval_recall_at_10": 1,
+    "mrr": 0.9,
+    "avg_latency_ms": 6229.58,
+    "faithfulness": 4,
+    "citation_precision": 4.6,
+    "answer_completeness": 3.8,
+    "refusal_accuracy": 5
+  },
+  "details": [
+    {
+      "id": "policy_001",
+      "question": "How do we define strategic suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt"
+      ],
+      "actual_sources": [
+        "supplier_policy_demo.txt",
+        "procurement_faq.txt",
+        "supplier_onboarding_sop.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 7915.06,
+      "answer": "Strategic suppliers are defined as those providing critical materials, having high annual spend, limited substitutability, or a material impact on customer service. They must be evaluated based on delivery performance, quality performance, business continuity risk, and commercial dependency.\n\nSources:  \n- Supplier Management Policy Demo, Strategic Supplier Criteria section",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_policy_demo.txt#e2d541d1d975",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Strategic Supplier Criteria",
+            "chunk_id": "e2d541d1d975",
+            "doc_type": "policy",
+            "retrieval_score": 0.0739,
+            "vector_score": 0.6295,
+            "keyword_score": 0.9847,
+            "rerank_score": 0.6294,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Strategic Supplier Criteria\n\nA strategic supplier is a supplier that provides critical materials, high annual spend, limited substitutability, or material impact on customer service. Strategic"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#d7d58ba4e689",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Supplier Segmentation",
+            "chunk_id": "d7d58ba4e689",
+            "doc_type": "policy",
+            "retrieval_score": 0.0487,
+            "vector_score": 0.5531,
+            "keyword_score": 1.0,
+            "rerank_score": 0.5527,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Supplier Segmentation\n\nSuppliers are segmented as strategic, critical, standard, or tactical. Strategic and critical suppliers require documented risk assessment. Country risk, concentration r"
+          },
+          {
+            "source_id": "procurement_faq.txt#33b2342ee0a8",
+            "source_name": "procurement_faq.txt",
+            "section": "How often should critical suppliers be reviewed?",
+            "chunk_id": "33b2342ee0a8",
+            "doc_type": "faq",
+            "retrieval_score": 0.0974,
+            "vector_score": 0.5054,
+            "keyword_score": 0.8532,
+            "rerank_score": 0.5054,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: How often should critical suppliers be reviewed?\nA: Strategic and critical suppliers should be reviewed quarterly. High-risk suppliers may require monthly follow-up until corrective actions are clo"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#6e6317aa5115",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Backup Supplier Policy",
+            "chunk_id": "6e6317aa5115",
+            "doc_type": "policy",
+            "retrieval_score": 0.0464,
+            "vector_score": 0.4919,
+            "keyword_score": 0.2633,
+            "rerank_score": 0.4838,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Backup Supplier Policy\n\nFor critical materials, procurement should maintain qualified backup suppliers where feasible. Backup suppliers should be activated when there is repeated delivery fail"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#f0e24fb2af9c",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 4. Commercial Review",
+            "chunk_id": "f0e24fb2af9c",
+            "doc_type": "sop",
+            "retrieval_score": 0.0462,
+            "vector_score": 0.4641,
+            "keyword_score": 0.7594,
+            "rerank_score": 0.4639,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 4. Commercial Review\n\nProcurement validates payment terms, lead time, MOQ, Incoterms, capacity, and delivery commitments. Strategic suppliers require business review cadence and scorecard"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {
+        "faithfulness": {
+          "score": 4,
+          "reason": "The assistant's answer is mostly faithful to the evidence, accurately describing strategic suppliers as those providing critical materials, high annual spend, limited substitutability, or material impact on customer service. However, the mention of 'delivery performance, quality performance, business continuity risk, and commercial dependency' is not directly supported by the retrieved evidence."
+        },
+        "citation_precision": {
+          "score": 4,
+          "reason": "The citation provided supports the definition of strategic suppliers but does not directly support the additional criteria mentioned (performance and risk factors)."
+        },
+        "answer_completeness": {
+          "score": 4,
+          "reason": "The answer covers the expected points about strategic supplier criteria and importance but lacks direct evidence for performance and risk assessment, which are implied but not explicitly stated in the retrieved evidence."
+        },
+        "refusal_accuracy": {
+          "score": 5,
+          "reason": "The question is answerable, and the assistant provides an answer without incorrectly refusing or flagging insufficient evidence."
+        }
+      }
+    },
+    {
+      "id": "policy_002",
+      "question": "What are the qualification rules for new suppliers?",
+      "intent": "policy_qa",
+      "difficulty": "easy",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_policy_demo.txt",
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "quality_policy.txt",
+        "supplier_onboarding_sop.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": 2,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 0.5,
+      "latency_ms": 6546.59,
+      "answer": "New suppliers must undergo a multi-step qualification process:\n\n1. Intake Request: Submit supplier name, category, country, expected spend, material criticality, and business justification. Procurement checks for existing approved suppliers that meet the need.  \n2. Baseline Screening: Procurement collects business license, tax details, bank details, sanctions screening, country risk screening, and confidentiality acknowledgement. Missing any required evidence blocks approval.  \n3. Quality Qualification: Supplier Quality reviews quality certifications, inspection requirements, process capability, audit readiness, and historical quality performance. Suppliers of critical materials must provide documented quality approval, including quality certifications, process capability evidence, inspection records, and audit readiness documentation. Procurement and Supplier Quality jointly approve the qualification package.\n\nSources:  \n- Supplier Onboarding SOP (Steps 1, 2, 3)  \n- Supplier Quality Policy (Quality Qualification)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.94,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "quality_policy.txt#ca6da43fe07b",
+            "source_name": "quality_policy.txt",
+            "section": "Quality Qualification",
+            "chunk_id": "ca6da43fe07b",
+            "doc_type": "policy",
+            "retrieval_score": 0.0617,
+            "vector_score": 0.5576,
+            "keyword_score": 1.0,
+            "rerank_score": 0.5539,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Quality Qualification\n\nSuppliers of critical materials must provide quality certifications, process capability evidence, inspection records, and audit readiness documentation before approval. Pro"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#bfecaf449fc8",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 3. Quality Qualification",
+            "chunk_id": "bfecaf449fc8",
+            "doc_type": "sop",
+            "retrieval_score": 0.0609,
+            "vector_score": 0.5551,
+            "keyword_score": 0.79,
+            "rerank_score": 0.5474,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 3. Quality Qualification\n\nSupplier Quality reviews certifications, inspection requirements, process capability, audit readiness, and historical quality performance. Critical material supp"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#ac08dc7bc10f",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 1. Intake Request",
+            "chunk_id": "ac08dc7bc10f",
+            "doc_type": "sop",
+            "retrieval_score": 0.0315,
+            "vector_score": 0.5106,
+            "keyword_score": 0.0,
+            "rerank_score": 0.5101,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 1. Intake Request\n\nThe requester submits supplier name, category, country, expected spend, material criticality, and business justification. Procurement checks whether an existing approve"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#e2d541d1d975",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Strategic Supplier Criteria",
+            "chunk_id": "e2d541d1d975",
+            "doc_type": "policy",
+            "retrieval_score": 0.0455,
+            "vector_score": 0.4998,
+            "keyword_score": 0.1592,
+            "rerank_score": 0.4993,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Strategic Supplier Criteria\n\nA strategic supplier is a supplier that provides critical materials, high annual spend, limited substitutability, or material impact on customer service. Strategic"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#55d6fefd6209",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 2. Baseline Screening",
+            "chunk_id": "55d6fefd6209",
+            "doc_type": "sop",
+            "retrieval_score": 0.0313,
+            "vector_score": 0.4954,
+            "keyword_score": 0.0,
+            "rerank_score": 0.4903,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 2. Baseline Screening\n\nProcurement collects business license, tax details, bank details, sanctions screening, country risk screening, and confidentiality acknowledgement. Missing evidence"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {
+        "faithfulness": {
+          "score": 5,
+          "reason": "The assistant's answer is fully supported by the retrieved evidence. Each step of the qualification process is accurately described based on the provided documents."
+        },
+        "citation_precision": {
+          "score": 5,
+          "reason": "The answer precisely cites the relevant sections from the 'Supplier Onboarding SOP' and 'Supplier Quality Policy' documents, which directly support the details provided in the response."
+        },
+        "answer_completeness": {
+          "score": 5,
+          "reason": "The answer covers all expected points: qualification, evaluation, and approval, as outlined in the retrieved evidence."
+        },
+        "refusal_accuracy": {
+          "score": 5,
+          "reason": "The question is answerable, and the assistant provides a complete and accurate response without any refusal, aligning with the answerability status."
+        }
+      }
+    },
+    {
+      "id": "policy_003",
+      "question": "What evidence should be checked before onboarding a supplier?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "supplier_onboarding_sop.txt"
+      ],
+      "actual_sources": [
+        "supplier_onboarding_sop.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 6709.93,
+      "answer": "Before onboarding a supplier, the following evidence must be checked and collected:\n\n- Business license  \n- Tax details  \n- Bank details  \n- Sanctions screening  \n- Country risk screening  \n- Confidentiality acknowledgement  \n- Certifications and inspection requirements  \n- Process capability documentation  \n- Audit readiness evidence  \n- Historical quality performance records  \n- Payment terms validation  \n- Lead time confirmation  \n- Minimum order quantity (MOQ)  \n- Incoterms agreement  \n- Capacity and delivery commitments  \n\nAdditionally, for critical material suppliers, documented quality approval is required. Final approval evidence from Procurement, Supplier Quality, and Legal must be retained with the supplier record.\n\nSources:  \n- Supplier Onboarding SOP, Steps 1, 2, 3, 4, and 6 (Effective Date: 2026-01-01)",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.94,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "supplier_onboarding_sop.txt#55d6fefd6209",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 2. Baseline Screening",
+            "chunk_id": "55d6fefd6209",
+            "doc_type": "sop",
+            "retrieval_score": 0.0318,
+            "vector_score": 0.6982,
+            "keyword_score": 0.6828,
+            "rerank_score": 0.6982,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 2. Baseline Screening\n\nProcurement collects business license, tax details, bank details, sanctions screening, country risk screening, and confidentiality acknowledgement. Missing evidence"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#e343bfc2f80a",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 6. Final Approval",
+            "chunk_id": "e343bfc2f80a",
+            "doc_type": "sop",
+            "retrieval_score": 0.0325,
+            "vector_score": 0.6411,
+            "keyword_score": 1.0,
+            "rerank_score": 0.6412,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 6. Final Approval\n\nProcurement, Supplier Quality, and Legal approve the onboarding package. Approval evidence must be retained with the supplier record."
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#ac08dc7bc10f",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 1. Intake Request",
+            "chunk_id": "ac08dc7bc10f",
+            "doc_type": "sop",
+            "retrieval_score": 0.0471,
+            "vector_score": 0.6395,
+            "keyword_score": 0.7635,
+            "rerank_score": 0.6389,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 1. Intake Request\n\nThe requester submits supplier name, category, country, expected spend, material criticality, and business justification. Procurement checks whether an existing approve"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#bfecaf449fc8",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 3. Quality Qualification",
+            "chunk_id": "bfecaf449fc8",
+            "doc_type": "sop",
+            "retrieval_score": 0.0457,
+            "vector_score": 0.6313,
+            "keyword_score": 0.7497,
+            "rerank_score": 0.6314,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 3. Quality Qualification\n\nSupplier Quality reviews certifications, inspection requirements, process capability, audit readiness, and historical quality performance. Critical material supp"
+          },
+          {
+            "source_id": "supplier_onboarding_sop.txt#f0e24fb2af9c",
+            "source_name": "supplier_onboarding_sop.txt",
+            "section": "Step 4. Commercial Review",
+            "chunk_id": "f0e24fb2af9c",
+            "doc_type": "sop",
+            "retrieval_score": 0.0305,
+            "vector_score": 0.6261,
+            "keyword_score": 0.6758,
+            "rerank_score": 0.6264,
+            "content_preview": "# Supplier Onboarding SOP\n\nOwner: Procurement Operations\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 4. Commercial Review\n\nProcurement validates payment terms, lead time, MOQ, Incoterms, capacity, and delivery commitments. Strategic suppliers require business review cadence and scorecard"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {
+        "faithfulness": {
+          "score": 4,
+          "reason": "The assistant's answer is mostly faithful to the retrieved evidence, covering business license, quality certification, and risk screening. However, it includes additional details like tax details, bank details, and others not explicitly required by the expected answer points."
+        },
+        "citation_precision": {
+          "score": 5,
+          "reason": "The assistant accurately cites the relevant sections of the Supplier Onboarding SOP document that support the answer provided."
+        },
+        "answer_completeness": {
+          "score": 5,
+          "reason": "The answer covers all expected points: business license, quality certification, and risk screening, along with additional relevant details from the evidence."
+        },
+        "refusal_accuracy": {
+          "score": 5,
+          "reason": "The answer does not refuse to answer the question, which is appropriate given the answerability is true."
+        }
+      }
+    },
+    {
+      "id": "policy_004",
+      "question": "When should procurement escalate a supplier incident?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "incident_response_sop.txt"
+      ],
+      "actual_sources": [
+        "incident_response_sop.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 5459.89,
+      "answer": "Procurement should escalate a supplier incident immediately if there is customer impact or critical material risk.\n\nSource: Supplier Incident Response SOP, Step 1. Triage",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.9,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "incident_response_sop.txt#0de05192ebbb",
+            "source_name": "incident_response_sop.txt",
+            "section": "Step 1. Triage",
+            "chunk_id": "0de05192ebbb",
+            "doc_type": "sop",
+            "retrieval_score": 0.0489,
+            "vector_score": 0.6643,
+            "keyword_score": 1.0,
+            "rerank_score": 0.6644,
+            "content_preview": "# Supplier Incident Response SOP\n\nOwner: Supply Chain Risk\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 1. Triage\n\nClassify the incident by severity, customer impact, affected materials, country, supplier, and expected recovery time. Incidents with customer impact or critical material ris"
+          },
+          {
+            "source_id": "incident_response_sop.txt#6bb9d43c927e",
+            "source_name": "incident_response_sop.txt",
+            "section": "Step 2. Impact Assessment",
+            "chunk_id": "6bb9d43c927e",
+            "doc_type": "sop",
+            "retrieval_score": 0.0479,
+            "vector_score": 0.6217,
+            "keyword_score": 0.7038,
+            "rerank_score": 0.6219,
+            "content_preview": "# Supplier Incident Response SOP\n\nOwner: Supply Chain Risk\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 2. Impact Assessment\n\nQuantify affected purchase orders, total quantity, due dates, inventory coverage, and alternate supply options. Use database facts for order exposure and keep mode"
+          },
+          {
+            "source_id": "incident_response_sop.txt#e8ede8ce6504",
+            "source_name": "incident_response_sop.txt",
+            "section": "Step 4. Management Review",
+            "chunk_id": "e8ede8ce6504",
+            "doc_type": "sop",
+            "retrieval_score": 0.0471,
+            "vector_score": 0.6128,
+            "keyword_score": 0.7866,
+            "rerank_score": 0.6132,
+            "content_preview": "# Supplier Incident Response SOP\n\nOwner: Supply Chain Risk\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 4. Management Review\n\nStrategic supplier incidents and high-risk country disruptions require a management review. The review should include verified facts, open risks, mitigation status"
+          },
+          {
+            "source_id": "incident_response_sop.txt#6765498e0900",
+            "source_name": "incident_response_sop.txt",
+            "section": "Step 3. Mitigation Plan",
+            "chunk_id": "6765498e0900",
+            "doc_type": "sop",
+            "retrieval_score": 0.0474,
+            "vector_score": 0.6065,
+            "keyword_score": 0.8225,
+            "rerank_score": 0.6062,
+            "content_preview": "# Supplier Incident Response SOP\n\nOwner: Supply Chain Risk\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 3. Mitigation Plan\n\nAssign owners for expedite, safety stock review, alternate supplier activation, production rescheduling, and customer communication. Document assumptions and recover"
+          },
+          {
+            "source_id": "incident_response_sop.txt#5e3bbc6fb493",
+            "source_name": "incident_response_sop.txt",
+            "section": "Step 5. Closure",
+            "chunk_id": "5e3bbc6fb493",
+            "doc_type": "sop",
+            "retrieval_score": 0.0469,
+            "vector_score": 0.5935,
+            "keyword_score": 0.974,
+            "rerank_score": 0.5932,
+            "content_preview": "# Supplier Incident Response SOP\n\nOwner: Supply Chain Risk\nAccess Level: internal\nEffective Date: 2026-01-01\n\nStep 5. Closure\n\nClose the incident only after supply recovery is confirmed, customer impact is resolved, and corrective actions have evidence of completion."
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {
+        "faithfulness": {
+          "score": 3,
+          "reason": "The answer mentions 'customer impact or critical material risk' as reasons for escalation, which is supported by the evidence. However, it does not address 'late delivery' or 'business continuity' as expected answer points."
+        },
+        "citation_precision": {
+          "score": 4,
+          "reason": "The citation provided is relevant to the answer given, as it supports the claim about customer impact and critical material risk. However, it does not cover all expected points such as late delivery and business continuity."
+        },
+        "answer_completeness": {
+          "score": 2,
+          "reason": "The answer is incomplete as it only covers 'incident severity' and partially 'business continuity' through 'customer impact', but misses 'late delivery' and a more explicit mention of 'business continuity'."
+        },
+        "refusal_accuracy": {
+          "score": 5,
+          "reason": "The answer does not refuse to answer the question, which is appropriate since the question is answerable with the provided evidence."
+        }
+      }
+    },
+    {
+      "id": "policy_005",
+      "question": "What quality controls are required for critical materials?",
+      "intent": "policy_qa",
+      "difficulty": "medium",
+      "answerability": true,
+      "expected_sources": [
+        "quality_policy.txt"
+      ],
+      "actual_sources": [
+        "quality_policy.txt",
+        "procurement_faq.txt",
+        "supplier_policy_demo.txt"
+      ],
+      "hit_position": 1,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "recall_at_10": true,
+      "mrr": 1.0,
+      "latency_ms": 4516.44,
+      "answer": "Critical materials require incoming inspection plans, agreed quality limits, and documented escalation paths. Inspection evidence must be retained with the supplier scorecard and be available for audit.\n\nSource: Supplier Quality Policy – Critical Material Controls",
+      "route": {
+        "intent": "policy_qa",
+        "confidence": 0.95,
+        "ambiguity_type": null,
+        "fallback_mode": "none"
+      },
+      "evidence": {
+        "evidence_type": "document",
+        "sources": [
+          {
+            "source_id": "quality_policy.txt#de1ab77c5474",
+            "source_name": "quality_policy.txt",
+            "section": "Critical Material Controls",
+            "chunk_id": "de1ab77c5474",
+            "doc_type": "policy",
+            "retrieval_score": 0.0742,
+            "vector_score": 0.6822,
+            "keyword_score": 1.0,
+            "rerank_score": 0.6814,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Critical Material Controls\n\nCritical materials require incoming inspection plans, agreed quality limits, and documented escalation paths. Inspection evidence must be retained with the supplier sc"
+          },
+          {
+            "source_id": "quality_policy.txt#ca6da43fe07b",
+            "source_name": "quality_policy.txt",
+            "section": "Quality Qualification",
+            "chunk_id": "ca6da43fe07b",
+            "doc_type": "policy",
+            "retrieval_score": 0.0609,
+            "vector_score": 0.5263,
+            "keyword_score": 0.2133,
+            "rerank_score": 0.5257,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Quality Qualification\n\nSuppliers of critical materials must provide quality certifications, process capability evidence, inspection records, and audit readiness documentation before approval. Pro"
+          },
+          {
+            "source_id": "quality_policy.txt#8fdcff42bf46",
+            "source_name": "quality_policy.txt",
+            "section": "Audit Readiness",
+            "chunk_id": "8fdcff42bf46",
+            "doc_type": "policy",
+            "retrieval_score": 0.0471,
+            "vector_score": 0.4681,
+            "keyword_score": 0.1841,
+            "rerank_score": 0.4676,
+            "content_preview": "# Supplier Quality Policy\n\nOwner: Supplier Quality\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Audit Readiness\n\nSuppliers must maintain quality records, process change history, certification status, and evidence of closed corrective actions. Missing records should be logged as an audit fin"
+          },
+          {
+            "source_id": "procurement_faq.txt#33b2342ee0a8",
+            "source_name": "procurement_faq.txt",
+            "section": "How often should critical suppliers be reviewed?",
+            "chunk_id": "33b2342ee0a8",
+            "doc_type": "faq",
+            "retrieval_score": 0.0555,
+            "vector_score": 0.4453,
+            "keyword_score": 0.0,
+            "rerank_score": 0.4449,
+            "content_preview": "# Procurement FAQ\n\nOwner: Procurement Enablement\nAccess Level: internal\nEffective Date: 2026-01-01\n\nQ: How often should critical suppliers be reviewed?\nA: Strategic and critical suppliers should be reviewed quarterly. High-risk suppliers may require monthly follow-up until corrective actions are clo"
+          },
+          {
+            "source_id": "supplier_policy_demo.txt#e2d541d1d975",
+            "source_name": "supplier_policy_demo.txt",
+            "section": "Strategic Supplier Criteria",
+            "chunk_id": "e2d541d1d975",
+            "doc_type": "policy",
+            "retrieval_score": 0.0432,
+            "vector_score": 0.442,
+            "keyword_score": 0.0774,
+            "rerank_score": 0.4417,
+            "content_preview": "# Supplier Management Policy Demo\n\nOwner: Procurement\nAccess Level: internal\nEffective Date: 2026-01-01\n\n## Strategic Supplier Criteria\n\nA strategic supplier is a supplier that provides critical materials, high annual spend, limited substitutability, or material impact on customer service. Strategic"
+          }
+        ],
+        "assumptions": [],
+        "limitations": [
+          "Policy answers are limited to retrieved demo documents."
+        ]
+      },
+      "judge": {
+        "faithfulness": {
+          "score": 4,
+          "reason": "The assistant's answer is mostly faithful to the evidence, mentioning inspection plans and quality limits. However, it does not explicitly mention 'quality certification' or 'corrective action' as required controls, which are part of the expected answer points."
+        },
+        "citation_precision": {
+          "score": 5,
+          "reason": "The assistant correctly cites the 'Supplier Quality Policy – Critical Material Controls' as the source of its information, which directly supports the answer provided."
+        },
+        "answer_completeness": {
+          "score": 3,
+          "reason": "The answer covers 'inspection' and 'quality limits' but misses 'quality certification' and 'corrective action,' which are part of the expected answer points."
+        },
+        "refusal_accuracy": {
+          "score": 5,
+          "reason": "The question is answerable, and the assistant provides an answer without incorrectly refusing or flagging insufficient evidence."
+        }
+      }
+    }
+  ]
+}

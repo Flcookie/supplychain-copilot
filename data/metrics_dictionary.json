@@ -2,29 +2,61 @@
   "on_time_rate": {
     "business_name": "准时交付率",
     "definition": "准时交付订单数 / 总交付订单数（delivery_date <= due_date）",
+    "formula": "SUM(CASE WHEN delivery_date <= due_date THEN 1 ELSE 0 END) / COUNT(purchase_orders.id)",
     "default_time_window": "last_3_months",
+    "required_tables": ["suppliers", "purchase_orders"],
     "poc_table": "purchase_orders",
-    "fields": ["supplier_id", "due_date", "delivery_date"]
+    "fields": ["supplier_id", "due_date", "delivery_date"],
+    "dimensions": ["supplier", "country", "material"],
+    "minimum_sample_size": 10,
+    "data_snapshot": "demo SQLite supplychain_kpi.db"
+  },
+  "order_volume": {
+    "business_name": "订单量",
+    "definition": "采购订单数量和订购数量之和",
+    "formula": "COUNT(purchase_orders.id), SUM(qty)",
+    "default_time_window": "last_3_months",
+    "required_tables": ["suppliers", "purchase_orders"],
+    "poc_table": "purchase_orders",
+    "fields": ["supplier_id", "qty", "material"],
+    "dimensions": ["supplier", "country", "material"],
+    "minimum_sample_size": 1,
+    "data_snapshot": "demo SQLite supplychain_kpi.db"
   },
   "defect_rate": {
     "business_name": "质量缺陷率",
     "definition": "缺陷数量 / 总交付数量（企业化扩展；PoC 以对话口径保留）",
+    "formula": "defect_count / delivered_quantity",
     "default_time_window": "last_3_months",
+    "required_tables": [],
     "poc_table": null,
-    "fields": []
+    "fields": [],
+    "dimensions": ["supplier", "material", "month"],
+    "minimum_sample_size": 10,
+    "data_snapshot": "not available in demo SQLite; requires quality table integration"
   },
   "avg_delay_days": {
     "business_name": "平均延误天数",
     "definition": "延误订单的 AVG(delivery_date - due_date)",
+    "formula": "AVG(julianday(delivery_date) - julianday(due_date)) for delayed orders",
     "default_time_window": "last_3_months",
+    "required_tables": ["suppliers", "purchase_orders"],
     "poc_table": "purchase_orders",
-    "fields": ["supplier_id", "due_date", "delivery_date"]
+    "fields": ["supplier_id", "due_date", "delivery_date"],
+    "dimensions": ["supplier", "country", "material"],
+    "minimum_sample_size": 5,
+    "data_snapshot": "demo SQLite supplychain_kpi.db"
   },
   "risk_score": {
     "business_name": "供应商风险分",
     "definition": "基于交付、质量、审核、风险事件的加权评分（企业化扩展；PoC 不单独落表）",
+    "formula": "weighted delivery risk + quality risk + audit risk + disruption risk",
     "default_time_window": "current_month",
+    "required_tables": [],
     "poc_table": null,
-    "fields": []
+    "fields": [],
+    "dimensions": ["supplier", "country", "category"],
+    "minimum_sample_size": 1,
+    "data_snapshot": "not available in demo SQLite; requires enterprise risk tables"
   }
 }

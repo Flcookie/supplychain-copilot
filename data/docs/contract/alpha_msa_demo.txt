@@ -1,0 +1,26 @@
+# Alpha Electronics Master Supply Agreement Demo
+
+Supplier: Alpha Electronics
+Owner: Legal / Procurement
+Access Level: internal
+Effective Date: 2026-01-01
+
+Clause 1. Delivery Commitments
+
+Alpha Electronics shall deliver confirmed purchase orders on or before the due date in the purchase order. If Alpha expects a delay, Alpha must notify Procurement as soon as commercially reasonable and provide the affected PO numbers, expected delay, root cause, and recovery plan.
+
+Clause 2. Expedited Shipments
+
+When delay is caused by Alpha, Alpha shall support reasonable expedite options. Cost responsibility depends on root cause and must be reviewed by Procurement and Legal before chargeback.
+
+Clause 3. Quality and Corrective Action
+
+Alpha must support root-cause analysis for recurring defects and provide corrective action plans with owners and target completion dates.
+
+Clause 4. Confidentiality
+
+Alpha shall protect internal forecasts, drawings, price information, supplier scorecards, and any non-public operational data. Confidential information may only be used to perform the supply agreement.
+
+Clause 5. Force Majeure
+
+Alpha must notify Procurement of force majeure events promptly, identify affected facilities, estimate recovery timing, and propose mitigation actions such as alternate plants or expedited production.

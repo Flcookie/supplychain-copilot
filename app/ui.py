@@ -22,6 +22,7 @@ I18N = {
         - 📘 Policy Q&A via RAG (retrieval from policy/contract documents)
         - 📊 KPI Query via SQL over demo database
         - ⚙️ Scenario analysis for supplier delays or risks
+        - ✅ Supplier qualification checklist generator
         """,
         "system_info": "**System Info**",
         "try_asking": "💡 Try asking:\n- What is our on-time delivery rate for Alpha Electronics?\n- How do we define strategic suppliers?\n- What happens if Vietnam suppliers are delayed by 7 days?",
@@ -29,6 +30,11 @@ I18N = {
         "source_expander": "📎 View Referenced Documents",
         "route_expander": "🧭 Route Decision",
         "evidence_expander": "🧾 Execution Evidence",
+        "evidence_summary": "Evidence Summary",
+        "calculation_expander": "Calculation Details",
+        "limitations_expander": "Limitations & Assumptions",
+        "verified_facts": "Verified facts",
+        "recommendations": "Recommendations",
         "source_label": "Source",
         "chat_input": "Ask a question about suppliers, KPIs, or risk scenarios...",
         "analyzing": "Analyzing your question... please wait.",
@@ -44,6 +50,7 @@ I18N = {
         - 📘 政策问答（RAG 文档检索）
         - 📊 KPI 查询（自然语言转 SQL）
         - ⚙️ 风险推演（延迟/中断情景分析）
+        - ✅ 供应商准入清单生成
         """,
         "system_info": "**系统信息**",
         "try_asking": "💡 你可以试试：\n- Alpha Electronics 的准时交付率是多少？\n- 战略供应商如何定义？\n- 如果越南供应商延迟 7 天会有什么影响？",
@@ -51,6 +58,11 @@ I18N = {
         "source_expander": "📎 查看引用文档",
         "route_expander": "🧭 路由决策",
         "evidence_expander": "🧾 执行证据",
+        "evidence_summary": "证据摘要",
+        "calculation_expander": "计算说明",
+        "limitations_expander": "限制与假设",
+        "verified_facts": "已验证事实",
+        "recommendations": "建议",
         "source_label": "来源",
         "chat_input": "请输入供应商、KPI 或风险相关问题...",
         "analyzing": "正在分析你的问题，请稍候...",
@@ -105,8 +117,22 @@ st.markdown(
 def intent_badge(intent: str, lang_code: str = "en") -> str:
     intent = (intent or "policy_qa").lower()
     labels = {
-        "en": {"policy_qa": "Policy Q&A", "kpi_query": "KPI Query", "scenario_analysis": "Scenario", "general": "General"},
-        "zh": {"policy_qa": "政策问答", "kpi_query": "KPI 查询", "scenario_analysis": "风险推演", "general": "通用"},
+        "en": {
+            "policy_qa": "Policy Q&A",
+            "kpi_query": "KPI Query",
+            "scenario_analysis": "Scenario",
+            "hybrid_query": "Policy + KPI",
+            "qualification_checklist": "Qualification Checklist",
+            "general": "General",
+        },
+        "zh": {
+            "policy_qa": "政策问答",
+            "kpi_query": "KPI 查询",
+            "scenario_analysis": "风险推演",
+            "hybrid_query": "政策+KPI",
+            "qualification_checklist": "准入清单",
+            "general": "通用",
+        },
     }
     lang_labels = labels.get(lang_code, labels["en"])
     if intent == "policy_qa":
@@ -115,6 +141,10 @@ def intent_badge(intent: str, lang_code: str = "en") -> str:
         label, color = lang_labels["kpi_query"], "#2563eb"
     elif intent == "scenario_analysis":
         label, color = lang_labels["scenario_analysis"], "#ea580c"
+    elif intent == "hybrid_query":
+        label, color = lang_labels["hybrid_query"], "#7c3aed"
+    elif intent == "qualification_checklist":
+        label, color = lang_labels["qualification_checklist"], "#059669"
     else:
         label, color = lang_labels["general"], "#6b7280"
 
@@ -132,6 +162,70 @@ def intent_badge(intent: str, lang_code: str = "en") -> str:
     ">{label}</span>
     """
 
+
+def render_structured_evidence(evidence: dict, msg_t: dict):
+    if not evidence:
+        return
+
+    sql = evidence.get("sql") or {}
+    sources = evidence.get("sources") or []
+    assumptions = evidence.get("assumptions") or []
+    limitations = evidence.get("limitations") or []
+    verified_facts = evidence.get("verified_facts") or []
+    recommendations = evidence.get("recommendations") or []
+
+    with st.expander(msg_t["evidence_summary"]):
+        st.markdown(f"**Type:** `{evidence.get('evidence_type', 'unknown')}`")
+        if sources:
+            for i, src in enumerate(sources, start=1):
+                st.markdown(
+                    f"**[{i}] {src.get('source_name', 'Document')}** "
+                    f"`{src.get('chunk_id', '')}` {src.get('section', '')}"
+                )
+                if src.get("retrieval_score") is not None:
+                    st.caption(f"Retrieval score: {src.get('retrieval_score')}")
+                if src.get("content_preview"):
+                    st.markdown(f"> {src['content_preview']}")
+        if sql:
+            st.markdown(f"**Metric:** `{sql.get('metric', 'n/a')}`")
+            st.markdown(f"**Definition:** {sql.get('metric_definition', 'n/a')}")
+            st.markdown(f"**Time range:** `{sql.get('time_range', 'n/a')}`")
+            st.markdown(f"**Rows:** `{sql.get('row_count', 0)}` · **Sample size:** `{sql.get('sample_size', 0)}`")
+            if sql.get("is_sample_sufficient") is False:
+                st.warning(
+                    f"Sample size {sql.get('sample_size', 0)} is below the recommended minimum "
+                    f"{sql.get('minimum_sample_size', 0)}."
+                )
+
+    if sql:
+        with st.expander(msg_t["calculation_expander"]):
+            st.markdown(f"**Formula:** `{sql.get('formula', 'n/a')}`")
+            st.markdown(f"**Data snapshot:** `{sql.get('data_snapshot', 'n/a')}`")
+            if sql.get("query"):
+                st.code(sql["query"], language="sql")
+            if sql.get("params"):
+                st.json(sql["params"])
+
+    if verified_facts or recommendations:
+        with st.expander(msg_t["verified_facts"]):
+            for fact in verified_facts:
+                st.markdown(f"- {fact}")
+        if recommendations:
+            with st.expander(msg_t["recommendations"]):
+                for rec in recommendations:
+                    st.markdown(f"- {rec}")
+
+    if assumptions or limitations:
+        with st.expander(msg_t["limitations_expander"]):
+            if assumptions:
+                st.markdown("**Assumptions**")
+                for item in assumptions:
+                    st.markdown(f"- {item}")
+            if limitations:
+                st.markdown("**Limitations**")
+                for item in limitations:
+                    st.markdown(f"- {item}")
+
 # ---------------- Message Rendering ----------------
 for msg in st.session_state.messages:
     role = msg["role"]
@@ -140,6 +234,7 @@ for msg in st.session_state.messages:
     route_info = msg.get("route_info", {})
     sources = msg.get("sources", [])
     citations = msg.get("citations", [])
+    evidence = msg.get("evidence", {})
     msg_lang = msg.get("lang", lang)
     msg_t = I18N[msg_lang]
 
@@ -153,6 +248,7 @@ for msg in st.session_state.messages:
             else:
                 st.markdown(msg_t["copilot"])
             st.markdown(content)
+            render_structured_evidence(evidence, msg_t)
             if route_info:
                 with st.expander(msg_t["route_expander"]):
                     st.json(route_info)
@@ -186,7 +282,8 @@ def run_copilot(question: str, response_language: str):
         "kpi_parse": result.get("kpi_parse"),
     }
     citations = result.get("citations", [])
-    return answer, intent, sources, route_info, citations
+    evidence = result.get("evidence", {})
+    return answer, intent, sources, route_info, citations, evidence
 
 def _merge_clarification_reply(base_question: str, reply: str, lang_code: str) -> str:
     if lang_code == "zh":
@@ -207,7 +304,7 @@ if user_input:
     with st.chat_message("assistant"):
         placeholder = st.empty()
         placeholder.markdown(t["analyzing"])
-        answer, intent, sources, route_info, citations = run_copilot(question_for_graph, lang)
+        answer, intent, sources, route_info, citations, evidence = run_copilot(question_for_graph, lang)
         time.sleep(0.2)
         placeholder.empty()
 
@@ -225,6 +322,7 @@ if user_input:
             "sources": sources,
             "route_info": route_info,
             "citations": citations,
+            "evidence": evidence,
             "lang": lang,
         }
     )

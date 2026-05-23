@@ -58,5 +58,41 @@
     "question": "如果越南供应商晚到10天，对订单影响是什么？",
     "expected_intent": "scenario_analysis",
     "expected_ambiguity_type": null
+  },
+  {
+    "id": "qual_1_yarn",
+    "question": "We have a new yarn supplier from China. What qualification process should we follow?",
+    "expected_intent": "qualification_checklist",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "qual_2_chemical",
+    "question": "What documents are required for a chemical product supplier?",
+    "expected_intent": "qualification_checklist",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "qual_3_logistics",
+    "question": "A new logistics supplier wants to work with Ratti. What should the buyer check first?",
+    "expected_intent": "qualification_checklist",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "qual_4_sap",
+    "question": "What should we do before creating an SAP code for a new supplier?",
+    "expected_intent": "qualification_checklist",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "qual_5_outsource",
+    "question": "Which documents are needed for an outsourced manufacturing supplier?",
+    "expected_intent": "qualification_checklist",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "qual_6_general_service",
+    "question": "What is the qualification process for a general service supplier?",
+    "expected_intent": "qualification_checklist",
+    "expected_ambiguity_type": null
   }
 ]

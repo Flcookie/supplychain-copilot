@@ -8,6 +8,9 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 LLM_MODEL = os.getenv("LLM_MODEL", "gpt-4.1-mini")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
+RERANKER_BACKEND = os.getenv("RERANKER_BACKEND", "openai")
+RERANKER_MODEL = os.getenv("RERANKER_MODEL", "cross-encoder/ms-marco-MiniLM-L-6-v2")
+ENABLE_HYDE = os.getenv("ENABLE_HYDE", "false").lower() == "true"
 
 # ---------- Pinecone ----------
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
@@ -38,6 +41,8 @@ if missing:
 print("Config loaded:")
 print(f" - LLM_MODEL = {LLM_MODEL}")
 print(f" - EMBEDDING_MODEL = {EMBEDDING_MODEL}")
+print(f" - RERANKER_BACKEND = {RERANKER_BACKEND}")
+print(f" - ENABLE_HYDE = {ENABLE_HYDE}")
 print(f" - PINECONE_INDEX_NAME = {PINECONE_INDEX_NAME}")
 if PINECONE_HOST:
     print(f" - PINECONE_HOST = {PINECONE_HOST}")
