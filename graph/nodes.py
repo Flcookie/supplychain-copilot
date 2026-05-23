@@ -13,6 +13,8 @@ from core.qualification_rules import (
     format_checklist_markdown,
     generate_qualification_checklist,
     needs_category_clarification,
+    normalize_qualification_input,
+    resolve_response_language,
 )
 from core.prompts import (
     HYBRID_QA_PROMPT,
@@ -765,15 +767,13 @@ def scenario_node(state: SCState) -> SCState:
 
 def qualification_checklist_node(state: SCState) -> SCState:
     q = state["question"]
-    lang = state.get("response_language", "en") or "en"
+    lang = resolve_response_language(state.get("response_language"), q)
     input_data = extract_qualification_input(q)
 
     if needs_category_clarification(input_data):
         clarification = build_clarification_question(input_data, lang)
         if lang == "zh":
-            state["answer"] = (
-                f"在进入供应商准入清单前，我需要先确认类别信息。\n\n{clarification}"
-            )
+            state["answer"] = clarification
         else:
             state["answer"] = (
                 f"I need a bit more context before generating your qualification checklist.\n\n{clarification}"
@@ -782,7 +782,8 @@ def qualification_checklist_node(state: SCState) -> SCState:
         state["evidence"] = None
         return state
 
-    checklist = generate_qualification_checklist(input_data)
+    input_data = normalize_qualification_input(input_data)
+    checklist = generate_qualification_checklist(input_data, lang=lang)
     state["answer"] = format_checklist_markdown(checklist, lang)
     state["citations"] = [
         {

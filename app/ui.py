@@ -4,13 +4,34 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 import time
 import streamlit as st
 from core.config import LLM_MODEL, EMBEDDING_MODEL, PINECONE_INDEX_NAME
-from graph.graph import build_graph
 
 st.markdown("<style> .stChatMessage {font-size: 16px;} </style>", unsafe_allow_html=True)
 
 
-# Initialize graph
-graph = build_graph()
+# Bump when graph / qualification behavior changes to bust Streamlit graph cache.
+GRAPH_BUILD_VERSION = "qual-i18n-v3"
+
+
+def _graph_cache_key() -> str:
+    """Invalidate cached graph when workflow/rules code changes."""
+    root = os.path.dirname(os.path.dirname(__file__))
+    watch_files = [
+        os.path.join(root, "graph", "nodes.py"),
+        os.path.join(root, "graph", "graph.py"),
+        os.path.join(root, "core", "qualification_rules.py"),
+    ]
+    mtimes = "|".join(str(os.path.getmtime(p)) for p in watch_files if os.path.exists(p))
+    return f"{GRAPH_BUILD_VERSION}|{mtimes}"
+
+
+@st.cache_resource(show_spinner="Loading SupplyChain Copilot...")
+def get_graph(_cache_key: str):
+    from graph.graph import build_graph
+
+    return build_graph()
+
+
+graph = get_graph(_graph_cache_key())
 
 I18N = {
     "en": {
@@ -25,7 +46,7 @@ I18N = {
         - ✅ Supplier qualification checklist generator
         """,
         "system_info": "**System Info**",
-        "try_asking": "💡 Try asking:\n- What is our on-time delivery rate for Alpha Electronics?\n- How do we define strategic suppliers?\n- What happens if Vietnam suppliers are delayed by 7 days?",
+        "try_asking": "💡 Try asking:\n- What is our on-time delivery rate for Alpha Electronics?\n- How do we define strategic suppliers?\n- What happens if Vietnam suppliers are delayed by 7 days?\n- We have a new yarn supplier from China. What qualification process should we follow?",
         "title_desc": "AI Copilot for Supplier Performance & Policy Intelligence · Built with LangGraph + Pinecone + Streamlit",
         "source_expander": "📎 View Referenced Documents",
         "route_expander": "🧭 Route Decision",
@@ -53,7 +74,7 @@ I18N = {
         - ✅ 供应商准入清单生成
         """,
         "system_info": "**系统信息**",
-        "try_asking": "💡 你可以试试：\n- Alpha Electronics 的准时交付率是多少？\n- 战略供应商如何定义？\n- 如果越南供应商延迟 7 天会有什么影响？",
+        "try_asking": "💡 你可以试试：\n- Alpha Electronics 的准时交付率是多少？\n- 战略供应商如何定义？\n- 如果越南供应商延迟 7 天会有什么影响？\n- 我们有一家来自中国的新纱线供应商，准入流程应该怎么走？",
         "title_desc": "面向供应商绩效与政策智能的 AI Copilot · 基于 LangGraph + Pinecone + Streamlit",
         "source_expander": "📎 查看引用文档",
         "route_expander": "🧭 路由决策",
@@ -269,7 +290,9 @@ for msg in st.session_state.messages:
 user_input = st.chat_input(t["chat_input"])
 
 def run_copilot(question: str, response_language: str):
-    result = graph.invoke({"question": question, "response_language": response_language})
+    # Re-bind graph if code changed (Streamlit cache can hold stale compiled nodes).
+    active_graph = get_graph(_graph_cache_key())
+    result = active_graph.invoke({"question": question, "response_language": response_language})
     answer = result.get("answer", "No answer generated.")
     intent = result.get("intent", "policy_qa")
     sources = result.get("retrieved_docs", [])

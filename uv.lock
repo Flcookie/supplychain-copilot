@@ -2543,8 +2543,12 @@ dependencies = [
     { name = "pinecone" },
     { name = "python-dotenv" },
     { name = "rank-bm25" },
-    { name = "sentence-transformers" },
     { name = "streamlit" },
+]
+
+[package.optional-dependencies]
+rerank = [
+    { name = "sentence-transformers" },
 ]
 
 [package.metadata]
@@ -2558,9 +2562,10 @@ requires-dist = [
     { name = "pinecone", specifier = "==6.0.2" },
     { name = "python-dotenv", specifier = ">=1.2.1" },
     { name = "rank-bm25", specifier = ">=0.2.2" },
-    { name = "sentence-transformers", specifier = ">=5.4.1" },
+    { name = "sentence-transformers", marker = "extra == 'rerank'", specifier = ">=5.4.1" },
     { name = "streamlit", specifier = ">=1.51.0" },
 ]
+provides-extras = ["rerank"]
 
 [[package]]
 name = "sympy"

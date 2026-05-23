@@ -1,0 +1,8 @@
+# Avoid scanning transformers/sentence-transformers (optional deps) in site-packages,
+# which triggers torchvision import errors and can cause a blank UI reload loop.
+[server]
+fileWatcherType = "none"
+headless = true
+
+[browser]
+gatherUsageStats = false
