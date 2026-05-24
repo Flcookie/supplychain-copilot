@@ -1,0 +1,7 @@
+## Supplier Qualification Procedure — External background check
+
+After preliminary screening, an external background check should assess financial stability, legal exposure, geopolitical exposure, compliance requirements and strategic relevance. The supplier may be classified as safe, risky or not qualified.
+
+chunk_id: POL001-02
+doc_id: 
+source_type: Synthetic policy chunk derived from Ratti project report

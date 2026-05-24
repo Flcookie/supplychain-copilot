@@ -1,6 +1,6 @@
-# 🏭 SupplyChain Copilot
+# 🏭 Supplier Lifecycle Copilot
 
-***An AI-Powered Enterprise Assistant for Supplier Management, Performance, and Risk Analysis***
+***An AI-Powered Procurement Assistant for Supplier Qualification, KPIs, Risk & Vendor Rating — based on Ratti supplier management scenarios***
 
 ![LangGraph](https://img.shields.io/badge/LangGraph-Workflow-blue)
 ![Streamlit](https://img.shields.io/badge/UI-Streamlit-orange)
@@ -10,7 +10,22 @@
 ---
 
 ## 🌐 Overview
----
+
+**Supplier Lifecycle Copilot** extends the original SupplyChain Copilot with a **Ratti-inspired supplier management workflow**: qualification onboarding, policy Q&A, KPI NL2SQL, risk scenario analysis, and vendor rating explanation.
+
+> Based on Politecnico di Milano × Ratti S.p.A. project logic (qualification flow, Kraljic segmentation, ESG scoring, vendor rating). Uses **anonymized synthetic data**, not real supplier records.
+
+**RAG** handles unstructured policies (`policies_knowledge_base`). **NL2SQL** handles structured KPIs and supplier records in **`data/ratti_copilot_demo.db`** (anonymized synthetic Ratti demo data — no confidential supplier-level records).
+
+See [`docs/ratti/`](docs/ratti/) for PRD, data dictionary, evaluation set, and risk boundary design.
+
+### Core capabilities (interview demo)
+
+1. **Supplier qualification checklist** — category path, Kraljic, required documents, human approval gates  
+2. **Policy & ESG Q&A** — RAG over Ratti qualification / ESG / Kraljic policies  
+3. **Supplier KPI query** — multi-metric NL2SQL (e.g. yarn OTD + defect rate in 2025)  
+4. **Risk review & scenario analysis** — review-due lists with strict/relaxed fallback; what-if delay  
+5. **Vendor rating explanation** — score breakdown, driver analysis, recommended buyer actions  
 
 ## 🏢 Business Context & Problem Statement
 
@@ -22,8 +37,7 @@ In large manufacturing and retail enterprises, **supply chain teams face fragmen
 This project addresses a common pain point:
 > "How can supply chain professionals instantly retrieve policies, compare supplier KPIs, and analyze potential risks — all in one conversational interface?"
 
-SupplyChain Copilot bridges this gap with a unified **AI-powered assistant** that understands both structured and unstructured enterprise data.
-
+Supplier Lifecycle Copilot bridges this gap with a unified **AI decision-support assistant** that understands both structured and unstructured enterprise data.
 
 ## 🖥️ User Interface Preview
 
@@ -31,8 +45,7 @@ SupplyChain Copilot bridges this gap with a unified **AI-powered assistant** tha
   <img src="https://github.com/Flcookie/supplychain-copilot/blob/main/assets/ui_screenshot.png" width="90%" alt="SupplyChain Copilot Streamlit UI Preview">
 </p>
 
-> **Figure:** Streamlit-based enterprise dashboard integrating Chat + KPI + Policy + RAG sources.  
-> Displays intent detection (Policy / KPI / Scenario), structured query results, and document citations in a unified conversational interface.
+> **Figure:** Streamlit chat UI with **scenario templates**, router-driven **Current task** (intent + confidence), structured answers (Summary / Key Findings / Evidence / Limitations), and **collapsed** Evidence & Debug panels (SQL + router JSON).
 
 ---
 ## 🚀 Live Demo
@@ -41,8 +54,8 @@ Try it here: [supplychain-copilot.streamlit.app](https://supplychain-copilot.str
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://supplychain-copilot.streamlit.app/)
 ---
-**SupplyChain Copilot** is an enterprise-grade AI assistant integrating **policy documents**, **supplier performance data**, and **risk simulations** into one intelligent system.
-It allows supply chain teams to **query KPIs**, **retrieve policies**, and **perform risk scenario analysis** in **natural language**.
+**SupplyChain Copilot** (now **Supplier Lifecycle Copilot**) is an enterprise-grade AI assistant integrating **policy documents**, **supplier lifecycle data**, and **risk simulations** into one intelligent system.
+It allows procurement teams to **generate qualification checklists**, **query KPIs**, **retrieve policies**, **analyze risk scenarios**, and **explain vendor ratings** in **natural language**.
 
 Built with **LangGraph**, **LangChain**, **Pinecone**, and **Streamlit**, this project demonstrates a **production-ready AI Copilot architecture** for real-world enterprise supply chain applications.
 
@@ -69,11 +82,12 @@ Built with **LangGraph**, **LangChain**, **Pinecone**, and **Streamlit**, this p
 
 | Layer                    | Description                                                 |
 | ------------------------ | ----------------------------------------------------------- |
-| **Streamlit Chat UI**    | Interactive English UI with intent badges and citations     |
-| **LangGraph Workflow**   | Router → Policy_QA / KPI / Hybrid / Scenario → Answer        |
-| **RAG (Pinecone)**       | Retrieves supplier policies and management documents        |
-| **SQL KPI Query Engine** | Translates natural language → SQL → English explanation     |
-| **Scenario Node**        | Simulates “what-if” supplier risks & recommends mitigations |
+| **Streamlit Chat UI**    | Bilingual UI · 6 scenario templates · router “Current task” · business answer + collapsed Evidence / Debug |
+| **LangGraph Workflow**   | Router → Qualification / Policy / KPI / Risk / Vendor Rating / Hybrid → Answer |
+| **RAG (Pinecone)**       | Retrieves Ratti policy chunks + legacy policy/contract/SOP docs |
+| **SQL KPI Query Engine** | NL → SQL over `ratti_copilot_demo.db` (9 tables, read-only whitelist) |
+| **Risk Node**            | Review lists, quality issues, what-if delay, blacklist HITL |
+| **Vendor Rating Node**   | Explains A/B/C/D ratings with score breakdown and SQL evidence |
 
 ### 🔸 Workflow Diagram
 
@@ -81,20 +95,17 @@ Built with **LangGraph**, **LangChain**, **Pinecone**, and **Streamlit**, this p
 [START]
    │
    ▼
- Router Node ──→ Policy_QA Node ──┐
+ Router Node ──→ Qualification ──┐
    │                              │
+   ├────────→ Policy QA ──────────┤
    ├────────→ KPI Node ───────────┤
-   │                              ├──→ Answer Node → [END]
-   ├────────→ Hybrid Node ────────┤
-   │                              │
-   └────────→ Scenario Node ──────┘
+   ├────────→ Risk Scenario ──────┤
+   ├────────→ Vendor Rating ──────┤
+   └────────→ Hybrid Node ────────┤
+                                  ├──→ Answer → [END]
 ```
 
-The router classifies each question as `policy_qa`, `kpi_query`,
-`scenario_analysis`, or `hybrid_query` (composite questions that need both
-policy and KPI evidence). KPI and Hybrid nodes both prefer deterministic
-parameterized SQL templates (`tools/kpi_sql_builder.py`) and only fall back to
-LLM-generated SQL when no template matches.
+The router classifies each question into lifecycle intents: `qualification_checklist`, `policy_qa`, `kpi_query`, `risk_scenario`, `vendor_rating_explanation`, or `hybrid_query`.
 
 ---
 
@@ -129,23 +140,43 @@ PINECONE_API_KEY=pcsk_xxx
 LANGSMITH_TRACING_V2=true
 LANGSMITH_API_KEY=lsv2_xxx
 LANGSMITH_PROJECT=supplychain-copilot
-KPI_DB_URL=sqlite:///data/supplychain_kpi.db
+
+# Structured data (Ratti demo — default)
+DB_URL=sqlite:///data/ratti_copilot_demo.db
+SQLITE_DB_PATH=data/ratti_copilot_demo.db
+
+# Fixed “business date” for review-due / certificate-expiry SQL (reproducible demos)
+DEMO_CURRENT_DATE=2025-12-01
 ```
+
+> **Note:** `data/ratti_copilot_demo.db` ships with the repo (from the Ratti lifecycle package). The legacy `data/supplychain_kpi.db` (`data/init_demo_db.py`) is the original 2-table KPI prototype and is **not** used by the current UI or graph.
 
 ### 🧭 Commands
 
 ```bash
-# Initialize demo KPI database
-uv run python -m data.init_demo_db
+# Install dependencies
+uv sync
 
-# Ingest documents into Pinecone
-uv run python -m ingestion.build_vectorstore
+# Export Ratti policies → data/docs/policy/ (first-time or after policy edits)
+uv run python ingestion/export_ratti_policies.py
 
-# Launch Streamlit UI
-uv run streamlit run app/ui.py
+# Build / rebuild Pinecone index (includes Ratti policy chunks)
+uv run python -m ingestion.build_vectorstore --reindex
 
-# Run router A/B evaluation
-uv run python -m eval.run_router_eval
+# Launch Streamlit UI (local)
+uv run streamlit run app/ui.py --server.port 8502
+
+# Ratti router eval (25 lifecycle questions)
+uv run python -m eval.run_router_eval --dataset eval/datasets/ratti_eval_25.json --mode llm
+
+# Ratti KPI SQL template smoke test (against ratti_copilot_demo.db)
+uv run python -m eval.run_ratti_e2e_smoke
+```
+
+**Optional (legacy prototype only):**
+
+```bash
+uv run python -m data.init_demo_db   # creates data/supplychain_kpi.db — not used by default
 ```
 
 ---
@@ -162,55 +193,63 @@ uv run python -m eval.run_router_eval
 
 ---
 
-## 💬 Example Queries
+## 💬 Scenario Templates (recommended demo flow)
 
-| Type           | Example Question                                           | Behavior                                                          |
-| -------------- | ---------------------------------------------------------- | ----------------------------------------------------------------- |
-| **Policy Q&A** | “How do we define a strategic supplier?”                   | Retrieves answer from policy docs *(green tag)*                   |
-| **KPI Query**  | “What is the on-time delivery rate of Alpha Electronics?”  | Generates SQL → queries KPI DB → English explanation *(blue tag)* |
-| **Comparison** | “Compare performance between Alpha and Beta suppliers.”    | Produces grouped SQL & compares results                           |
-| **Scenario**   | “What happens if Vietnam suppliers are delayed by 7 days?” | Performs impact analysis & recommends mitigations *(orange tag)*  |
+Use the sidebar **Scenario templates** in Streamlit, or paste these questions:
+
+| # | Type | Example question | Router intent |
+|---|------|------------------|---------------|
+| 1 | **Qualification** | We have a new yarn supplier from China. What qualification process should we follow? | `qualification_checklist` |
+| 2 | **KPI** | Show the on-time delivery rate and defect rate of yarn suppliers in 2025. | `kpi_query` |
+| 3 | **Risk review** | Which suppliers should be reviewed this month due to high risk? | `risk_scenario` |
+| 4 | **Vendor rating** | Why did supplier SUP012 receive a C rating? | `vendor_rating_explanation` |
+| 5 | **Policy / ESG** | What ESG documents are required for yarn suppliers under Ratti qualification policy? | `policy_qa` |
+| 6 | **Hybrid** | For strategic yarn suppliers, what monitoring policy applies and what was their average on-time delivery in 2025? | `hybrid_query` |
+
+Answers follow a product-style structure where applicable: **Summary → Key Findings → Recommended Actions → Evidence → Limitations**. Technical detail (router JSON, raw SQL) sits under collapsed **Debug** / **Evidence** expanders.
 
 ---
 
 ## 🗄️ Data Design
 
-### 🧱 Database Schema
+### 🧱 Demo database (`ratti_copilot_demo.db`)
 
-```sql
-suppliers(
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    country TEXT,
-    is_strategic INTEGER
-);
+**Data snapshot label (shown in UI/evidence):** `anonymized Ratti demo database · ratti_copilot_demo.db`
 
-purchase_orders(
-    id INTEGER PRIMARY KEY,
-    supplier_id INTEGER,
-    material TEXT,
-    qty INTEGER,
-    due_date TEXT,
-    delivery_date TEXT
-);
-```
+Nine read-only whitelisted tables:
+
+| Table | Role |
+|-------|------|
+| `suppliers` | Master data, Kraljic, risk level, review dates, qualification status |
+| `category_rules` | Category-specific qualification rules |
+| `documents` | Certificates & compliance docs (expiry) |
+| `purchase_orders` | Order volume, amounts |
+| `delivery_events` | On-time delivery / delay |
+| `quality_events` | Defects, non-conformities |
+| `risk_events` | Risk scores and events |
+| `esg_assessments` | ESG scores |
+| `vendor_rating` | A/B/C/D ratings and score components |
+
+Calendar-sensitive queries (e.g. “review due this month”, certificates expiring soon) use **`DEMO_CURRENT_DATE`** (default `2025-12-01`) so demo results stay stable across real-world dates.
+
+Full field definitions: [`docs/ratti/`](docs/ratti/) data dictionary.
 
 ### 🔗 Integration Guidelines
 
 * Replace SQLite with **ERP/BI databases** (Postgres, MSSQL, SAP HANA, Snowflake).
-* Use **read-only** SQLAlchemy connections.
-* Configure `KPI_DB_URL` in `.env`.
+* Use **read-only** connections; keep table allowlists and `LIMIT` guards as in `tools/sql_tools.py`.
+* Point `DB_URL` / `SQLITE_DB_PATH` at your warehouse or replica.
 
 ---
 
 ## 🏢 Production Integration
 
-### 📊 KPI Database
+### 📊 Structured supplier / KPI database
 
 Connect to your enterprise data warehouse:
 
 ```bash
-KPI_DB_URL=postgresql+psycopg2://readonly_user:password@host:5432/supplychain
+DB_URL=postgresql+psycopg2://readonly_user:password@host:5432/supplychain
 ```
 
 ### 📁 Document Sources
@@ -277,7 +316,7 @@ Decision priority:
 
 - If `ambiguity_type` is not empty, trigger clarification first.
 - Else if `confidence < 0.75`, trigger RAG fallback.
-- Else route normally to `policy_qa`, `kpi_query`, or `scenario_analysis`.
+- Else route normally to lifecycle intents (`qualification_checklist`, `policy_qa`, `kpi_query`, `risk_scenario`, `vendor_rating_explanation`, `hybrid_query`).
 
 This design separates two different failures:
 - clarification solves missing/ambiguous input data;
@@ -290,8 +329,10 @@ This design separates two different failures:
 The repository now includes reproducible evaluation pipelines for both routing and RAG quality.
 
 Router evaluation:
-- Dataset: `eval/datasets/router_eval.json`
-- Script: `eval/run_router_eval.py`
+- Dataset: `eval/datasets/ratti_eval_25.json` (25 Ratti lifecycle questions)
+- Legacy dataset: `eval/datasets/router_eval.json`
+- Script: `eval/run_router_eval.py` (`--mode heuristic` or `--mode llm`)
+- SQL smoke: `eval/run_ratti_e2e_smoke.py`
 - Metrics: intent accuracy, ambiguity detection accuracy, clarification trigger rate, RAG fallback rate
 
 RAG evaluation:
@@ -317,11 +358,12 @@ Source files:
 - **Judged final: `eval/results/rag_eval_judged_final_20260508_230616.md`**
 - Comparison: `eval/results/rag_eval_comparison_judged_final_20260508.md`
 
-KPI SQL template usage in the final run:
+KPI SQL template usage in the legacy `supplychain_kpi.db` judged run (pre-Ratti schema):
 - 14 / 20 KPI questions (70%) answered by deterministic SQL templates
 - 3 / 20 fell back to LLM-generated SQL (1 self-repair attempt allowed)
-- 3 / 20 returned a structured refusal because the metric (OTIF, defect rate, risk score) is not in the demo schema — refusal accuracy is 5 / 5
-- 2 / 10 hybrid questions used a deterministic KPI template
+- 3 / 20 returned a structured refusal where the metric was outside the **old** 2-table schema
+
+**Ratti lifecycle** (`ratti_copilot_demo.db`): defect rate, ESG, vendor rating, and multi-metric yarn KPIs are supported via expanded templates — see `eval/run_ratti_e2e_smoke.py` and `tools/kpi_sql_builder.py`.
 
 To re-run the full judged evaluation:
 
@@ -349,6 +391,9 @@ uv run python -m eval.generate_regression_log \
 | KPI Query via SQL                                    | ✅ Done         |
 | Scenario Analysis Node                               | ✅ Done         |
 | Bilingual Streamlit UI (EN / 中文)                    | ✅ Done         |
+| Ratti lifecycle DB + 9-table NL2SQL                    | ✅ Done         |
+| Qualification checklist + vendor rating nodes         | ✅ Done         |
+| Product-style answer structure + collapsed Debug UI   | ✅ Done         |
 | Evidence Contract (`core/evidence.py`)               | ✅ Done         |
 | Hybrid Retrieval (RRF + rerank + scenario chunkers)  | ✅ Done         |
 | Hybrid Intent Node (Policy + KPI joint answer)       | ✅ Done         |
@@ -362,14 +407,17 @@ uv run python -m eval.generate_regression_log \
 
 ---
 
-## 🧾 Example Output
+## 🧾 Example Output (KPI)
 
-**User:** “Compare performance between Alpha and Beta suppliers.”
-**Copilot Response:**
+**User:** Show the on-time delivery rate and defect rate of yarn suppliers in 2025.
 
-> Alpha Electronics has a higher on-time delivery rate (~90%) compared to Beta Plastics (~60%).
-> This suggests Alpha is more reliable in meeting delivery commitments,
-> while Beta shows more delays. Continuous supplier evaluation and corrective actions are recommended for Beta Plastics.
+**Copilot (structured excerpt):**
+
+> **Answer Summary** — In 2025, 9 yarn suppliers were analyzed. Best OTD: Supplier_Yarns_IT_024 (91.7%, defect 3.82%). Weakest OTD: Supplier_Yarns_IT_048 (54.5%).  
+> **Key Findings** — OTD range 54.5%–91.7%; most defect rates ~3–4%.  
+> **Limitations** — Anonymized synthetic demo dataset; buyer validation required before supplier decisions.
+
+**Evidence (collapsed in UI):** SQL executed · 9 rows · `anonymized Ratti demo database · ratti_copilot_demo.db`
 
 ---
 

@@ -206,22 +206,14 @@ _TEXT_ZH: dict[str, str] = {
 
 
 def _lang_code(lang: str | None) -> str:
-    if not lang:
-        return "en"
-    normalized = str(lang).strip().lower()
-    if normalized in {"zh", "zh-cn", "zh_cn", "chinese", "中文", "cn"}:
-        return "zh"
-    return "en"
+    return "zh" if (lang or "en").lower().startswith("zh") else "en"
 
 
-def resolve_response_language(state_lang: str | None, question: str) -> str:
-    """Prefer UI language; fall back to Chinese if the question contains CJK text."""
-    code = _lang_code(state_lang)
-    if code == "zh":
-        return "zh"
+def resolve_response_language(explicit_lang: str | None, question: str) -> str:
+    """Prefer explicit UI language; infer Chinese from question text when needed."""
     if re.search(r"[\u4e00-\u9fff]", question or ""):
         return "zh"
-    return "en"
+    return _lang_code(explicit_lang)
 
 
 def _t(text: str, lang: str) -> str:
@@ -338,6 +330,24 @@ COUNTRY_SYNONYMS: list[tuple[list[str], str]] = [
 ]
 
 
+POLICY_EXPLANATION_HINTS = [
+    "why do ",
+    "why are ",
+    "why does ",
+    "what is the difference",
+    "how is ",
+    "how often",
+    "which categories",
+    "explain the ",
+    "explain how",
+]
+
+
+def is_policy_explanation_question(question: str) -> bool:
+    q = (question or "").lower()
+    return any(h in q for h in POLICY_EXPLANATION_HINTS)
+
+
 def detect_qualification_checklist_intent(question: str) -> bool:
     q = question.lower()
     return any(kw in q for kw in ROUTER_KEYWORDS)
@@ -345,13 +355,18 @@ def detect_qualification_checklist_intent(question: str) -> bool:
 
 def apply_qualification_router_override(parsed: dict[str, Any], question: str) -> dict[str, Any]:
     """Boost qualification_checklist when onboarding keywords are present."""
+    if is_policy_explanation_question(question):
+        return parsed
     if not detect_qualification_checklist_intent(question):
         return parsed
-    if parsed.get("intent") == "policy_qa" or float(parsed.get("confidence", 0)) < 0.85:
-        parsed = dict(parsed)
-        parsed["intent"] = "qualification_checklist"
-        parsed["confidence"] = max(float(parsed.get("confidence", 0)), 0.9)
-        parsed["reason"] = (parsed.get("reason") or "") + " (keyword match: supplier qualification checklist)"
+    if parsed.get("intent") == "qualification_checklist":
+        return parsed
+    if float(parsed.get("confidence", 0)) >= 0.85:
+        return parsed
+    parsed = dict(parsed)
+    parsed["intent"] = "qualification_checklist"
+    parsed["confidence"] = max(float(parsed.get("confidence", 0)), 0.9)
+    parsed["reason"] = (parsed.get("reason") or "") + " (keyword match: supplier qualification checklist)"
     return parsed
 
 

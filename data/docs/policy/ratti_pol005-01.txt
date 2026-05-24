@@ -1,0 +1,7 @@
+## Human-in-the-loop Rule — AI boundary
+
+AI can suggest qualification status, required documents and risk flags, but final supplier approval, blacklisting and audit decisions must remain under procurement manager responsibility.
+
+chunk_id: POL005-01
+doc_id: 
+source_type: Synthetic AI governance rule for demo

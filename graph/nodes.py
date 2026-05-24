@@ -1,11 +1,19 @@
 import json
 import os
+import re
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
 from core.config import LLM_MODEL
+from core.demo_constants import DEMO_CURRENT_DATE, RATTI_DATA_SNAPSHOT
+from core.kpi_parse_utils import normalize_kpi_parse as _normalize_kpi_parse
 from core.evidence import document_evidence, hybrid_evidence, simulation_evidence, sql_evidence
+from core.risk_rules import (
+    blacklist_guidance,
+    single_sourcing_guidance,
+)
+from core.router_overrides import apply_lifecycle_router_overrides
 from core.qualification_rules import (
     apply_qualification_router_override,
     build_clarification_question,
@@ -26,6 +34,7 @@ from core.prompts import (
     RAG_FALLBACK_PROMPT,
     ROUTER_PROMPT,
     SCENARIO_ANALYSIS_PROMPT,
+    VENDOR_RATING_PROMPT,
 )
 from rag.retriever import get_retriever
 from tools.kpi_sql_builder import TemplatedSQL, build_kpi_sql
@@ -43,7 +52,43 @@ hybrid_policy_retriever = get_retriever(k=5, doc_types=["policy", "contract", "s
 hybrid_kpi_retriever = get_retriever(k=2, doc_types=["kpi_dict"])
 
 
+_DATA_SNAPSHOT = RATTI_DATA_SNAPSHOT
+_SUPPLIER_ID_PATTERN = re.compile(r"(SUP\d{3})", re.IGNORECASE)
+
+
+def _extract_supplier_id(text: str) -> str | None:
+    match = _SUPPLIER_ID_PATTERN.search(text or "")
+    return match.group(1).upper() if match else None
+
+
 _BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+
+def _classify_risk_question(question: str) -> str:
+    q = (question or "").lower()
+    raw = question or ""
+    if "blacklist" in q or "黑名单" in raw:
+        return "blacklist"
+    if "single sourcing" in q or "single-sourcing" in q or "single source" in q or "单源" in raw or "单一来源" in raw:
+        return "single_sourcing"
+    if any(
+        phrase in raw
+        for phrase in [
+            "review this month",
+            "reviewed this month",
+            "本月应审查",
+            "本月需要审查",
+            "本月审查",
+            "这个月应审查",
+            "due to high risk",
+            "高风险",
+            "风险较高",
+        ]
+    ) or ("review" in q and "high risk" in q):
+        return "review_due"
+    if _extract_supplier_id(question) and ("quality" in q or "issues" in q):
+        return "quality_issues"
+    return "what_if_delay"
 
 
 def _metrics_dictionary_blurb() -> str:
@@ -132,6 +177,8 @@ def _build_clarification_question(ambiguity_type: str | None) -> str:
         return "Do you want policy standards first, or supplier KPI data first?"
     if ambiguity_type == "missing_entity":
         return "Please specify supplier name and time range (for example: Alpha, last 3 months)."
+    if ambiguity_type == "overbroad_data_request":
+        return "Please specify a supplier ID, category, time period, or metric. I cannot dump the entire database."
     return "Could you clarify your request so I can answer precisely?"
 
 
@@ -156,17 +203,10 @@ def _params_dict(params: tuple | None) -> dict:
     return {f"p{i}": value for i, value in enumerate(params, start=1)}
 
 
-# Metrics the demo schema (suppliers + purchase_orders) cannot answer. We refuse politely
-# rather than fabricating numbers from an unrelated table.
+# OTIF still requires line-level full-quantity data not modeled in Ratti demo.
 UNSUPPORTED_KPI_PATTERNS = {
-    "otif": "OTIF requires per-line full-quantity fulfillment data, which the demo schema (suppliers, purchase_orders) does not include.",
-    "on-time in full": "OTIF requires per-line full-quantity fulfillment data, which the demo schema does not include.",
-    "defect rate": "Defect rate requires a quality / inspection table that is not part of the demo schema.",
-    "defect_rate": "Defect rate requires a quality / inspection table that is not part of the demo schema.",
-    "risk score": "Supplier risk score requires enterprise risk tables (financial, geopolitical, ESG) that are not part of the demo schema.",
-    "risk_score": "Supplier risk score requires enterprise risk tables that are not part of the demo schema.",
-    "lead time": "Lead time requires order-creation / acknowledgement timestamps that are not part of the demo schema.",
-    "first pass yield": "First-pass yield requires quality inspection data that is not in the demo schema.",
+    "otif": "OTIF requires per-line full-quantity fulfillment data, which the Ratti demo schema does not include.",
+    "on-time in full": "OTIF requires per-line full-quantity fulfillment data, which the Ratti demo schema does not include.",
 }
 
 
@@ -203,6 +243,7 @@ def router_node(state: SCState) -> SCState:
         "intent": "policy_qa",
         "confidence": 0.6,
         "ambiguity_type": None,
+        "human_approval_required": False,
         "reason": "router defaulted due to unparsable output",
     }
     try:
@@ -210,25 +251,40 @@ def router_node(state: SCState) -> SCState:
         parsed["intent"] = llm_result.get("intent", parsed["intent"])
         parsed["confidence"] = float(llm_result.get("confidence", parsed["confidence"]))
         parsed["ambiguity_type"] = llm_result.get("ambiguity_type")
+        parsed["human_approval_required"] = bool(llm_result.get("human_approval_required", False))
         parsed["reason"] = llm_result.get("reason", parsed["reason"])
     except Exception:
         pass
 
-    valid_intents = ["policy_qa", "kpi_query", "scenario_analysis", "hybrid_query", "qualification_checklist"]
+    if parsed["intent"] == "scenario_analysis":
+        parsed["intent"] = "risk_scenario"
+
+    valid_intents = [
+        "policy_qa",
+        "kpi_query",
+        "risk_scenario",
+        "scenario_analysis",
+        "hybrid_query",
+        "qualification_checklist",
+        "vendor_rating_explanation",
+    ]
     if parsed["intent"] not in valid_intents:
         parsed["intent"] = "policy_qa"
 
     parsed = apply_qualification_router_override(parsed, q)
+    parsed = apply_lifecycle_router_overrides(parsed, q)
 
     state["intent"] = parsed["intent"]
     state["confidence"] = max(0.0, min(parsed["confidence"], 1.0))
     state["ambiguity_type"] = parsed["ambiguity_type"]
+    state["human_approval_required"] = parsed.get("human_approval_required", False)
     state["reason"] = parsed["reason"]
     state["fallback_mode"] = "none"
     state["route_decision"] = {
         "intent": state["intent"],
         "confidence": state["confidence"],
         "ambiguity_type": state["ambiguity_type"],
+        "human_approval_required": state.get("human_approval_required"),
         "reason": state["reason"],
     }
     return state
@@ -327,6 +383,7 @@ def kpi_node(state: SCState) -> SCState:
         kpi_parse.update(_safe_json_load(parse_raw))
     except Exception:
         pass
+    kpi_parse = _normalize_kpi_parse(q, kpi_parse)
     state["kpi_parse"] = kpi_parse
 
     unsupported_reason = _detect_unsupported_metric(q)
@@ -345,7 +402,7 @@ def kpi_node(state: SCState) -> SCState:
             metric_definition=unsupported_reason,
             formula="n/a",
             time_range=kpi_parse.get("time_range") or "n/a",
-            data_snapshot=metric_meta.get("data_snapshot", "demo SQLite supplychain_kpi.db"),
+            data_snapshot=metric_meta.get("data_snapshot", _DATA_SNAPSHOT),
             sample_size=0,
             minimum_sample_size=int(metric_meta.get("minimum_sample_size", 1)),
             assumptions=["Demo schema only contains suppliers and purchase_orders; KPIs requiring extra tables cannot be computed."],
@@ -458,7 +515,7 @@ def kpi_node(state: SCState) -> SCState:
             metric_definition=metric_meta.get("definition", "Metric definition unavailable."),
             formula=metric_meta.get("formula", ""),
             time_range=kpi_parse.get("time_range") or metric_meta.get("default_time_window", "last_3_months"),
-            data_snapshot=metric_meta.get("data_snapshot", "demo SQLite supplychain_kpi.db"),
+            data_snapshot=metric_meta.get("data_snapshot", _DATA_SNAPSHOT),
             sample_size=0,
             minimum_sample_size=int(metric_meta.get("minimum_sample_size", 1)),
             assumptions=["KPI execution failed before a result could be verified."],
@@ -491,11 +548,10 @@ def kpi_node(state: SCState) -> SCState:
     assumptions = []
     if not kpi_parse.get("time_range"):
         assumptions.append(f"No time range was specified; defaulted to {time_range}.")
-    limitations = ["Demo KPI data is small and illustrative, not production supplier performance."]
-    if sample_size < minimum_sample_size:
-        limitations.append(
-            f"Sample size {sample_size} is below the recommended minimum {minimum_sample_size}; treat the result as directional."
-        )
+    limitations = [
+        "Anonymized synthetic Ratti demo dataset for product prototyping — not production supplier performance.",
+        f"Demo sample: {sample_size} record(s) returned; treat as illustrative only.",
+    ]
     state["evidence"] = sql_evidence(
         query=final_sql,
         params=_params_dict(params),
@@ -505,7 +561,7 @@ def kpi_node(state: SCState) -> SCState:
         metric_definition=metric_meta.get("definition", "Metric definition unavailable."),
         formula=metric_meta.get("formula", ""),
         time_range=time_range,
-        data_snapshot=metric_meta.get("data_snapshot", "demo SQLite supplychain_kpi.db"),
+        data_snapshot=metric_meta.get("data_snapshot", "demo SQLite ratti_copilot_demo.db"),
         sample_size=sample_size,
         minimum_sample_size=minimum_sample_size,
         assumptions=assumptions,
@@ -514,6 +570,8 @@ def kpi_node(state: SCState) -> SCState:
     if state["evidence"].get("sql") is not None:
         state["evidence"]["sql"]["sql_source"] = sql_source
         state["evidence"]["sql"]["template_id"] = template_id
+        state["evidence"]["sql"]["is_sample_sufficient"] = False
+        state["evidence"]["is_sample_sufficient"] = False
     citation: dict = {
         "type": "sql",
         "sql": final_sql,
@@ -596,6 +654,7 @@ def hybrid_node(state: SCState) -> SCState:
         kpi_parse.update(_safe_json_load(parse_raw))
     except Exception:
         pass
+    kpi_parse = _normalize_kpi_parse(q, kpi_parse)
     state["kpi_parse"] = kpi_parse
 
     template = build_kpi_sql(q, kpi_parse)
@@ -624,7 +683,7 @@ def hybrid_node(state: SCState) -> SCState:
                 metric_definition=metric_meta.get("definition", "Metric definition unavailable."),
                 formula=metric_meta.get("formula", ""),
                 time_range=time_range,
-                data_snapshot=metric_meta.get("data_snapshot", "demo SQLite supplychain_kpi.db"),
+                data_snapshot=metric_meta.get("data_snapshot", _DATA_SNAPSHOT),
                 sample_size=sample_size,
                 minimum_sample_size=minimum_sample_size,
                 assumptions=[f"KPI sub-answer used deterministic template `{template.template_id}`."],
@@ -682,74 +741,193 @@ def hybrid_node(state: SCState) -> SCState:
 
 
 def scenario_node(state: SCState) -> SCState:
+    """Risk scenario analysis: review lists, quality issues, what-if delay, blacklist HITL."""
     q = state["question"]
-    parse_prompt = ChatPromptTemplate.from_template(
-        """
-        Extract supply chain risk scenario parameters from the following question (in Chinese or English) and return as JSON:
-        Fields:
-        - country: Country of affected suppliers (e.g., 'VN', 'CN', 'DE'); if not mentioned, use null
-        - delay_days: Expected general delay days (integer); if not mentioned, use 7 as default
-        Output only JSON, no explanations.
-        Question:
-        {question}
-        """
-    )
-    parsed_raw = llm.invoke(parse_prompt.format(question=q)).content.strip()
-    try:
-        scenario_spec = _safe_json_load(parsed_raw)
-    except Exception:
-        scenario_spec = {"country": None, "delay_days": 7}
-
+    risk_type = _classify_risk_question(q)
+    human_approval = bool(state.get("human_approval_required")) or risk_type == "blacklist"
+    scenario_spec = {"risk_type": risk_type, "human_approval_required": human_approval}
     state["scenario_spec"] = scenario_spec
-    country = scenario_spec.get("country") or "VN"
-    delay_days = int(scenario_spec.get("delay_days") or 7)
-    sql = """
-    SELECT s.name AS supplier_name,
-           s.country,
-           COUNT(p.id) AS total_pos,
-           SUM(p.qty) AS total_qty
-    FROM suppliers s
-    JOIN purchase_orders p ON s.id = p.supplier_id
-    WHERE s.country = ?
-    GROUP BY s.id;
-    """
+
+    impact_rows: list[dict] = []
+    sql = ""
+    params: tuple | dict = ()
+
+    relaxed_rows: list[dict] = []
+    if risk_type == "review_due":
+        sql = """
+SELECT DISTINCT s.supplier_id,
+       s.supplier_name_anonymized,
+       s.risk_level,
+       s.kraljic_quadrant,
+       s.next_review_date,
+       s.qualification_status
+FROM suppliers s
+LEFT JOIN risk_events r ON s.supplier_id = r.supplier_id
+WHERE (s.risk_level IN ('High', 'Medium') OR r.risk_score_1_25 >= 15)
+  AND s.next_review_date >= date(?, 'start of month')
+  AND s.next_review_date < date(?, 'start of month', '+1 month')
+ORDER BY s.risk_level DESC, s.next_review_date ASC
+"""
+        params = (DEMO_CURRENT_DATE, DEMO_CURRENT_DATE)
+    elif risk_type == "quality_issues":
+        supplier_id = _extract_supplier_id(q) or "SUP021"
+        sql = """
+SELECT q.quality_event_id,
+       q.event_date,
+       q.non_conformity_type,
+       q.severity,
+       q.defect_rate,
+       q.corrective_action_required,
+       s.supplier_id,
+       s.category_level_2,
+       s.kraljic_quadrant,
+       s.risk_level,
+       vr.rating_class
+FROM quality_events q
+JOIN suppliers s ON q.supplier_id = s.supplier_id
+LEFT JOIN vendor_rating vr ON s.supplier_id = vr.supplier_id
+WHERE s.supplier_id = ?
+ORDER BY q.event_date DESC
+"""
+        params = (supplier_id,)
+        scenario_spec["supplier_id"] = supplier_id
+    elif risk_type == "blacklist":
+        supplier_id = _extract_supplier_id(q) or "SUP030"
+        sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       s.risk_level,
+       s.qualification_status,
+       s.supply_risk_score,
+       r.risk_type,
+       r.risk_score_1_25,
+       r.recommended_action,
+       r.human_review_required
+FROM suppliers s
+LEFT JOIN risk_events r ON s.supplier_id = r.supplier_id
+WHERE s.supplier_id = ?
+ORDER BY r.risk_score_1_25 DESC
+"""
+        params = (supplier_id,)
+        scenario_spec["supplier_id"] = supplier_id
+    elif risk_type == "single_sourcing":
+        sql = """
+SELECT supplier_id,
+       supplier_name_anonymized,
+       category_level_2,
+       kraljic_quadrant,
+       single_sourcing_flag,
+       risk_level,
+       qualification_status
+FROM suppliers
+WHERE single_sourcing_flag = 1
+  AND category_level_2 LIKE '%Outsourced Fabric%'
+ORDER BY supply_risk_score DESC
+"""
+        params = ()
+    else:
+        delay_days = 7
+        if "delay" in q.lower():
+            delay_match = re.search(r"(\d+)\s*day", q.lower())
+            if delay_match:
+                delay_days = int(delay_match.group(1))
+        scenario_spec["delay_days"] = delay_days
+        category = "Yarns" if "yarn" in q.lower() else None
+        if category:
+            sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       s.category_level_2,
+       COUNT(p.po_id) AS affected_pos,
+       ROUND(SUM(p.order_amount_eur), 2) AS total_amount_eur
+FROM suppliers s
+JOIN purchase_orders p ON s.supplier_id = p.supplier_id
+WHERE s.kraljic_quadrant = 'Strategic'
+  AND s.category_level_2 = ?
+GROUP BY s.supplier_id, s.supplier_name_anonymized, s.category_level_2
+"""
+            params = (category,)
+        else:
+            sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       s.country,
+       COUNT(p.po_id) AS affected_pos,
+       ROUND(SUM(p.order_amount_eur), 2) AS total_amount_eur
+FROM suppliers s
+JOIN purchase_orders p ON s.supplier_id = p.supplier_id
+WHERE s.risk_level IN ('High', 'Medium')
+GROUP BY s.supplier_id, s.supplier_name_anonymized, s.country
+ORDER BY total_amount_eur DESC
+"""
+            params = ()
+
     try:
-        result = run_sql_query_with_meta(sql, params=(country,))
+        result = run_sql_query_with_meta(sql, params=params if isinstance(params, tuple) else None)
         impact_rows = result["rows"]
-        state["sql_query"] = f"{sql.strip()} -- params: ({country},)"
+        executed = result["meta"].get("executed_sql", sql.strip())
+        state["sql_query"] = executed
         state["sql_result"] = impact_rows
         state["sql_meta"] = result["meta"]
-        verified_facts = _scenario_verified_facts(impact_rows, country, delay_days)
-        state["evidence"] = simulation_evidence(
-            query=sql.strip(),
-            row_count=result["meta"].get("row_count", 0),
-            latency_ms=result["meta"].get("latency_ms"),
-            params={"country": country, "delay_days": delay_days},
-            verified_facts=verified_facts,
-            assumptions=[f"If no country is specified, the demo defaults scenario analysis to {country}."],
-            limitations=["Scenario recommendations are model-generated based on queried demo order exposure."],
-        )
-        state["citations"] = [
-            {
-                "type": "sql",
-                "sql": sql.strip(),
-                "params": {"country": country},
-                "row_count": result["meta"].get("row_count", 0),
-                "latency_ms": result["meta"].get("latency_ms"),
-            }
-        ]
     except Exception as e:
         impact_rows = [{"error": str(e)}]
-        state["evidence"] = simulation_evidence(
-            query=sql.strip(),
-            row_count=0,
-            latency_ms=None,
-            params={"country": country, "delay_days": delay_days},
-            verified_facts=[f"Scenario SQL failed: {e}"],
-            assumptions=[f"If no country is specified, the demo defaults scenario analysis to {country}."],
-            limitations=[str(e)],
-        )
-        state["citations"] = [{"type": "sql", "sql": sql.strip(), "error": str(e)}]
+        state["sql_query"] = sql.strip()
+        state["sql_result"] = []
+        state["sql_meta"] = {"row_count": 0, "error": str(e)}
+
+    if risk_type == "review_due" and len(impact_rows) == 0:
+        relaxed_sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       s.risk_level,
+       s.kraljic_quadrant,
+       s.next_review_date,
+       s.qualification_status
+FROM suppliers s
+WHERE s.risk_level IN ('High', 'Medium')
+  AND (
+        s.next_review_date < date(?, 'start of month')
+        OR s.next_review_date >= date(?, 'start of month', '+1 month')
+      )
+ORDER BY s.supply_risk_score DESC
+LIMIT 10
+"""
+        try:
+            relaxed_rows = run_sql_query_with_meta(
+                relaxed_sql, params=(DEMO_CURRENT_DATE, DEMO_CURRENT_DATE)
+            )["rows"]
+        except Exception:
+            relaxed_rows = []
+
+    verified_facts = []
+    if risk_type == "single_sourcing":
+        verified_facts = [
+            f"Found {len(impact_rows)} single-sourced outsourced fabric processing suppliers in demo data."
+        ] + single_sourcing_guidance()[:2]
+    elif impact_rows and "error" not in impact_rows[0]:
+        verified_facts.append(f"Risk scenario type: {risk_type}; rows returned: {len(impact_rows)}.")
+        for row in impact_rows[:5]:
+            sid = row.get("supplier_id", row.get("supplier_name_anonymized", "unknown"))
+            verified_facts.append(f"Supplier {sid}: risk_level={row.get('risk_level', 'n/a')}, rating={row.get('rating_class', 'n/a')}.")
+    else:
+        verified_facts.append("No matching risk records found in demo database.")
+
+    if human_approval:
+        verified_facts.extend(blacklist_guidance()[:2])
+
+    state["evidence"] = simulation_evidence(
+        query=sql.strip(),
+        row_count=len(impact_rows) if impact_rows else 0,
+        latency_ms=state.get("sql_meta", {}).get("latency_ms"),
+        params=scenario_spec,
+        verified_facts=verified_facts,
+        assumptions=["Risk recommendations combine SQL facts with Ratti procurement policy templates."],
+        limitations=[
+            "Anonymized synthetic Ratti demo data; final decisions require buyer/manager approval.",
+            f"Demo as-of date for calendar filters: {DEMO_CURRENT_DATE}.",
+        ],
+    )
+    state["citations"] = [{"type": "sql", "sql": state.get("sql_query"), "row_count": len(impact_rows)}]
 
     explain_prompt = ChatPromptTemplate.from_template(SCENARIO_ANALYSIS_PROMPT)
     resp = llm.invoke(
@@ -757,11 +935,138 @@ def scenario_node(state: SCState) -> SCState:
             question=q,
             scenario_spec=json.dumps(scenario_spec, ensure_ascii=False),
             impact_rows=json.dumps(impact_rows, ensure_ascii=False),
-            verified_facts=json.dumps(state.get("evidence", {}).get("verified_facts", []), ensure_ascii=False),
+            relaxed_rows=json.dumps(relaxed_rows, ensure_ascii=False),
+            verified_facts=json.dumps(verified_facts, ensure_ascii=False),
             response_language_instruction=_response_language_instruction(state),
         )
     )
-    state["answer"] = resp.content
+    answer = resp.content
+    if human_approval:
+        hitl = (
+            "\n\n**Human approval required:** AI can recommend actions only; procurement manager must confirm blacklist or status changes."
+            if state.get("response_language", "en") == "en"
+            else "\n\n**需人工确认：** AI 仅可给出建议，黑名单或状态变更须由采购经理审批。"
+        )
+        answer += hitl
+    state["answer"] = answer
+    state["human_approval_required"] = human_approval
+    return state
+
+
+def vendor_rating_node(state: SCState) -> SCState:
+    q = state["question"]
+    human_approval = bool(state.get("human_approval_required")) or (
+        "reserve" in q.lower() and "qualified" in q.lower()
+    )
+    supplier_id = _extract_supplier_id(q)
+
+    # Formula-only questions: use policy RAG context via retriever
+    if supplier_id is None and ("formula" in q.lower() or "weight" in q.lower()):
+        docs = policy_retriever.invoke(q)
+        state["retrieved_docs"] = [
+            {"content": d.page_content, "source": d.metadata.get("source_name") or d.metadata.get("source", "")}
+            for d in docs
+        ]
+        state["citations"] = _build_doc_citations(docs)
+        context = "\n\n".join(d.page_content for d in docs)
+        prompt = ChatPromptTemplate.from_template(POLICY_QA_PROMPT)
+        resp = llm.invoke(
+            prompt.format(
+                question=q,
+                context=context,
+                response_language_instruction=_response_language_instruction(state),
+            )
+        )
+        state["answer"] = resp.content
+        state["evidence"] = document_evidence(docs, evidence_type="document")
+        return state
+
+    if "reserve" in q.lower() and supplier_id is None:
+        sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       s.qualification_status,
+       vr.rating_class,
+       vr.final_vendor_rating_score,
+       s.risk_level,
+       vr.suggested_action
+FROM suppliers s
+JOIN vendor_rating vr ON s.supplier_id = vr.supplier_id
+WHERE s.qualification_status = 'Qualified'
+  AND (vr.rating_class IN ('C', 'D') OR s.risk_level = 'High')
+ORDER BY vr.final_vendor_rating_score ASC
+"""
+        rating_rows = run_sql_query_with_meta(sql)["rows"]
+        support_rows = []
+        state["sql_query"] = sql.strip()
+        state["sql_result"] = rating_rows
+    elif supplier_id:
+        rating_sql = """
+SELECT vr.*, s.supplier_name_anonymized, s.category_level_2, s.kraljic_quadrant, s.qualification_status
+FROM vendor_rating vr
+JOIN suppliers s ON vr.supplier_id = s.supplier_id
+WHERE vr.supplier_id = ?
+ORDER BY vr.period DESC
+LIMIT 1
+"""
+        rating_rows = run_sql_query_with_meta(rating_sql, params=(supplier_id,))["rows"]
+        support_sql = """
+SELECT 'delivery' AS source,
+       ROUND(AVG(delivery_delay_days), 2) AS avg_delay,
+       ROUND(AVG(on_time_flag) * 100, 2) AS otd_pct
+FROM delivery_events WHERE supplier_id = ?
+UNION ALL
+SELECT 'quality' AS source,
+       ROUND(AVG(defect_rate) * 100, 2) AS avg_defect_pct,
+       COUNT(*) AS event_count
+FROM quality_events WHERE supplier_id = ?
+"""
+        try:
+            support_rows = run_sql_query_with_meta(support_sql, params=(supplier_id, supplier_id))["rows"]
+        except Exception:
+            support_rows = []
+        state["sql_query"] = rating_sql.strip()
+        state["sql_result"] = rating_rows
+    else:
+        state["answer"] = "Please provide a supplier ID (e.g. SUP012) so I can explain the vendor rating."
+        return state
+
+    state["citations"] = [{"type": "sql", "sql": state.get("sql_query", ""), "row_count": len(rating_rows)}]
+    metric_meta = _metric_meta("vendor_rating")
+    state["evidence"] = sql_evidence(
+        query=state.get("sql_query") or "-- vendor rating lookup --",
+        params={"supplier_id": supplier_id},
+        row_count=len(rating_rows),
+        latency_ms=None,
+        metric="vendor_rating",
+        metric_definition=metric_meta.get("definition", ""),
+        formula=metric_meta.get("formula", ""),
+        time_range="2025",
+        data_snapshot=_DATA_SNAPSHOT,
+        sample_size=len(rating_rows),
+        minimum_sample_size=1,
+        limitations=["Vendor rating explanation uses synthetic Ratti demo data."],
+    )
+
+    explain_prompt = ChatPromptTemplate.from_template(VENDOR_RATING_PROMPT)
+    resp = llm.invoke(
+        explain_prompt.format(
+            question=q,
+            rating_rows=json.dumps(rating_rows, ensure_ascii=False),
+            support_rows=json.dumps(support_rows if supplier_id else rating_rows, ensure_ascii=False),
+            response_language_instruction=_response_language_instruction(state),
+        )
+    )
+    answer = resp.content
+    if human_approval:
+        hitl = (
+            "\n\n**Human approval required:** Status changes (e.g. Qualified → Qualified with Reserve) require buyer confirmation."
+            if state.get("response_language", "en") == "en"
+            else "\n\n**需人工确认：** 状态变更（如 Qualified → Qualified with Reserve）须采购员确认。"
+        )
+        answer += hitl
+    state["answer"] = answer
+    state["human_approval_required"] = human_approval
     return state
 
 

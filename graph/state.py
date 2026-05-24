@@ -12,10 +12,22 @@ class SCState(TypedDict, total=False):
     response_language: Optional[Literal["en", "zh"]]
 
     # Intent determined by the router
-    intent: Literal["policy_qa", "kpi_query", "scenario_analysis", "hybrid_query", "qualification_checklist", "unknown"]
+    intent: Literal[
+        "policy_qa",
+        "kpi_query",
+        "risk_scenario",
+        "scenario_analysis",
+        "hybrid_query",
+        "qualification_checklist",
+        "vendor_rating_explanation",
+        "unknown",
+    ]
     confidence: float
     reason: str
-    ambiguity_type: Optional[Literal["coreference", "composite_intent", "missing_entity"]]
+    ambiguity_type: Optional[
+        Literal["coreference", "composite_intent", "missing_entity", "overbroad_data_request"]
+    ]
+    human_approval_required: Optional[bool]
     clarification_question: Optional[str]
     fallback_mode: Optional[Literal["none", "rag_fallback"]]
     baseline_mode: Optional[bool]

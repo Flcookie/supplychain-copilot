@@ -1,0 +1,7 @@
+## Supplier Qualification Procedure — Pre-qualification
+
+Potential suppliers should first provide general company information through FORM1. Suppliers that do not accept the Supplier Code or Code of Ethics are automatically classified as not qualified.
+
+chunk_id: POL001-01
+doc_id: 
+source_type: Synthetic policy chunk derived from Ratti project report

@@ -1,0 +1,7 @@
+## ESG Assessment Rule — Scoring
+
+The ESG assessment consists of Environmental, Social and Governance sections. The proposed weights are Environmental 0.4, Social 0.3 and Governance 0.3. Binary compliance answers can be converted into a weighted ESG score.
+
+chunk_id: POL002-01
+doc_id: 
+source_type: Synthetic policy chunk derived from Ratti project report

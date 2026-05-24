@@ -49,7 +49,15 @@ if PINECONE_HOST:
 if LANGSMITH_TRACING_V2:
     print(f" - LangSmith enabled, project = {LANGSMITH_PROJECT}")
 
-DB_URL = os.getenv("DB_URL", "sqlite:///data/supplychain_kpi.db")
+DB_URL = os.getenv("DB_URL", "sqlite:///data/ratti_copilot_demo.db")
+
+_BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+SQLITE_DB_PATH = os.getenv(
+    "SQLITE_DB_PATH",
+    os.path.join(_BASE_DIR, "data", "ratti_copilot_demo.db"),
+)
+
+from core.demo_constants import DEMO_CURRENT_DATE, RATTI_DATA_SNAPSHOT  # noqa: E402
 
 
 if __name__ == "__main__":

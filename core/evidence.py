@@ -176,7 +176,7 @@ def simulation_evidence(
             "metric_definition": "Affected suppliers and order quantities for the selected disruption scope.",
             "formula": "COUNT(p.id), SUM(p.qty) grouped by affected supplier",
             "time_range": "current demo dataset",
-            "data_snapshot": "demo SQLite supplychain_kpi.db",
+            "data_snapshot": "anonymized Ratti demo database · ratti_copilot_demo.db",
             "sample_size": row_count,
             "minimum_sample_size": 1,
             "is_sample_sufficient": row_count >= 1,

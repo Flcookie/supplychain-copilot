@@ -10,6 +10,11 @@ class PolicyChunker(BaseChunker):
     def split_text(self, text: str) -> Iterable[Chunk]:
         parts = re.split(r"(?m)^##\s+", text)
         header = parts[0].strip()
+        if len(parts) == 1:
+            body = text.strip()
+            if body:
+                yield Chunk(text=body, section_title="Policy")
+            return
         for part in parts[1:]:
             lines = part.strip().splitlines()
             if not lines:

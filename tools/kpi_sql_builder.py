@@ -1,8 +1,4 @@
-"""Deterministic SQL templates for the KPIs we trust to build without LLM help.
-
-The goal is to keep enterprise-critical metrics on a tested, parameterized path
-and only fall back to the LLM when the question shape genuinely needs it.
-"""
+"""Deterministic SQL templates for Ratti supplier lifecycle KPIs."""
 
 from __future__ import annotations
 
@@ -11,34 +7,8 @@ from dataclasses import dataclass
 from typing import Optional
 
 
-SUPPLIER_SYNONYMS = {
-    "alpha": "Alpha Electronics",
-    "alpha electronics": "Alpha Electronics",
-    "beta": "Beta Plastics",
-    "beta plastics": "Beta Plastics",
-    "gamma": "Gamma Metals",
-    "gamma metals": "Gamma Metals",
-    "delta": "Delta Packaging",
-    "delta packaging": "Delta Packaging",
-}
-
-COUNTRY_HINTS = {
-    "vietnam": "VN",
-    "vietnamese": "VN",
-    "vn": "VN",
-    "china": "CN",
-    "chinese": "CN",
-    "cn": "CN",
-    "germany": "DE",
-    "german": "DE",
-    "de": "DE",
-}
-
-
-_SUPPLIER_PATTERN = re.compile(
-    r"alpha electronics|beta plastics|gamma metals|delta packaging|alpha|beta|gamma|delta",
-    re.IGNORECASE,
-)
+_SUPPLIER_ID_PATTERN = re.compile(r"\b(SUP\d{3})\b", re.IGNORECASE)
+_YEAR_PATTERN = re.compile(r"\b(20\d{2})\b")
 
 
 @dataclass
@@ -49,308 +19,387 @@ class TemplatedSQL:
     description: str
 
 
-def _detect_suppliers(text: str) -> list[str]:
-    found = []
-    for match in _SUPPLIER_PATTERN.findall(text or ""):
-        canonical = SUPPLIER_SYNONYMS.get(match.lower())
-        if canonical and canonical not in found:
-            found.append(canonical)
-    return found
+def _detect_supplier_ids(text: str) -> list[str]:
+    return list(dict.fromkeys(m.upper() for m in _SUPPLIER_ID_PATTERN.findall(text or "")))
 
 
-def _detect_country(text: str) -> Optional[str]:
+def _detect_year(text: str) -> Optional[str]:
+    match = _YEAR_PATTERN.search(text or "")
+    return match.group(1) if match else None
+
+
+def _detect_category(text: str) -> Optional[str]:
     lowered = (text or "").lower()
-    for keyword, code in COUNTRY_HINTS.items():
-        if re.search(rf"\b{re.escape(keyword)}\b", lowered):
-            return code
+    if "yarn" in lowered or "纱线" in text:
+        return "Yarns"
+    if "chemical" in lowered or "化工" in text or "化学品" in text:
+        return "Chemical Products"
+    if ("fabric" in lowered or "面料" in text or "布料" in text) and (
+        "process" in lowered or "加工" in text
+    ):
+        return "Outsourced Fabric and Yarn Processing"
+    if "fabric" in lowered or "面料" in text:
+        return "Fabrics"
     return None
 
 
 def _infer_metric_from_question(question: str) -> Optional[str]:
     text = (question or "").lower()
-    if any(token in text for token in ["on-time", "on time", "ontime", "otd", "delivery rate", "delivery performance", "reliability"]):
+    q = question or ""
+    if any(token in text for token in ["on-time", "on time", "ontime", "otd", "delivery rate"]) or any(
+        t in q for t in ["准时交付", "交付率", "准时率"]
+    ):
         return "on_time_rate"
-    if any(token in text for token in ["order volume", "purchase orders", "how many orders", "po count", "total orders", "order count"]):
-        return "order_volume"
-    if any(token in text for token in ["delay days", "average delay", "avg delay", "late by"]):
+    if any(token in text for token in ["defect rate", "defect_rate", "quality defect"]) or "缺陷率" in q:
+        return "defect_rate"
+    if any(token in text for token in ["vendor rating", "rating score", "rating class"]):
+        return "vendor_rating"
+    if any(token in text for token in ["spend", "annual spend"]):
+        return "spend"
+    if any(token in text for token in ["esg score", "esg"]):
+        return "esg_score"
+    if any(token in text for token in ["delay days", "average delay", "avg delay", "delivery delay"]):
         return "avg_delay_days"
+    if any(token in text for token in ["expire", "expiry", "certificate"]):
+        return "cert_expiry"
+    if any(token in text for token in ["next step", "status"]):
+        return "supplier_status"
     return None
 
 
 def build_kpi_sql(question: str, kpi_parse: dict) -> Optional[TemplatedSQL]:
-    """Return a parameterized SQL for the question if a deterministic template applies."""
-
+    """Return parameterized SQL when a deterministic Ratti template applies."""
+    text = (question or "").lower()
     metric = (kpi_parse or {}).get("metric") or "other"
     if metric in {"other", "comparison", "trend"}:
         inferred = _infer_metric_from_question(question)
-        if inferred is not None:
+        if inferred:
             metric = inferred
-    aggregation = (kpi_parse or {}).get("aggregation") or "other"
-    suppliers = _detect_suppliers(f"{question} {kpi_parse.get('supplier_hint', '') or ''}")
-    country = _detect_country(question)
+
+    supplier_ids = _detect_supplier_ids(f"{question} {kpi_parse.get('supplier_hint', '') or ''}")
+    category = _detect_category(question)
+    year = _detect_year(question)
+
+    # EVAL010 / Chinese yarn OTD + defect
+    has_otd = any(
+        t in text or t in (question or "")
+        for t in ["on-time", "otd", "delivery rate", "准时交付", "交付率", "准时率"]
+    )
+    has_defect = "defect" in text or "缺陷率" in (question or "")
+    if category == "Yarns" and has_defect and has_otd:
+        period = year or "2025"
+        return _yarn_otd_and_defect(period)
+
+    if category == "Yarns" and has_otd and year:
+        return _yarn_otd_and_defect(year)
+
+    if metric == "avg_delay_days" and ("above 5" in text or "> 5" in text or "greater than 5" in text):
+        return _avg_delay_above_threshold(5.0)
+
+    if "kraljic" in text and "spend" in text:
+        return _spend_by_kraljic()
+
+    if metric == "cert_expiry" or ("expire" in text and "certificate" in text):
+        return _certificates_expiring_soon(60)
+
+    if "strategic" in text and ("vendor rating" in text or "rating score" in text or "rank" in text):
+        return _strategic_vendor_rating_rank()
+
+    if metric == "esg_score" and ("below 60" in text or "< 60" in text):
+        return _esg_below_threshold_missing_docs(60)
+
+    if len(supplier_ids) == 1 and ("next step" in text or "status" in text):
+        return _supplier_status_snapshot(supplier_ids[0])
 
     if metric == "on_time_rate":
-        if aggregation in {"single_supplier", "other"} and len(suppliers) == 1:
-            return _on_time_rate_single(suppliers[0])
-        if aggregation in {"side_by_side", "rollup", "other"} and len(suppliers) >= 2:
-            return _on_time_rate_side_by_side(suppliers)
-        if country and not suppliers:
-            return _on_time_rate_by_country(country)
-        if aggregation == "rollup" and not suppliers:
-            return _on_time_rate_ranking()
+        if category:
+            return _on_time_rate_by_category(category, year)
+        if supplier_ids:
+            return _on_time_rate_by_supplier_id(supplier_ids[0], year)
 
-    if metric == "order_volume":
-        if suppliers:
-            return _order_volume_for_suppliers(suppliers)
-        if country:
-            return _order_volume_by_country(country)
-        return _order_volume_ranking()
+    if metric == "defect_rate" and category:
+        return _defect_rate_by_category(category, year)
 
-    if metric == "avg_delay_days":
-        if len(suppliers) == 1:
-            return _avg_delay_single(suppliers[0])
-        if country:
-            return _avg_delay_by_country(country)
-        if not suppliers:
-            return _avg_delay_overall()
-
-    # Late-orders aggregations (kpi_013 "which country has more delayed orders",
-    # kpi_020 "which materials are associated with late orders").
-    text = (question or "").lower()
-    if "delayed" in text or "late order" in text or "late orders" in text or "late delivery" in text:
-        if "country" in text or "countries" in text or country:
-            return _late_orders_by_country()
-        if "material" in text or "materials" in text:
-            return _late_orders_by_material()
+    if metric == "vendor_rating" and supplier_ids:
+        return _vendor_rating_snapshot(supplier_ids[0], year)
 
     return None
 
 
-def _on_time_rate_single(supplier: str) -> TemplatedSQL:
-    sql = (
-        "SELECT s.name AS supplier_name,\n"
-        "       ROUND(SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n"
-        "             / NULLIF(COUNT(p.id), 0), 4) AS on_time_rate,\n"
-        "       COUNT(p.id) AS total_orders\n"
-        "FROM suppliers s\n"
-        "JOIN purchase_orders p ON p.supplier_id = s.id\n"
-        "WHERE LOWER(s.name) LIKE LOWER(?)\n"
-        "GROUP BY s.id, s.name"
-    )
+def _yarn_otd_and_defect(period: str) -> TemplatedSQL:
+    sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       s.country,
+       vr.on_time_delivery_rate_pct,
+       vr.quality_defect_rate_pct,
+       vr.period
+FROM suppliers s
+JOIN vendor_rating vr ON s.supplier_id = vr.supplier_id
+WHERE s.category_level_2 = 'Yarns'
+  AND vr.period = ?
+ORDER BY vr.on_time_delivery_rate_pct DESC
+"""
     return TemplatedSQL(
-        template_id="otd_single_supplier",
-        sql=sql,
-        params=(f"%{supplier}%",),
-        description=f"On-time delivery rate for {supplier}",
+        template_id="yarn_otd_defect_period",
+        sql=sql.strip(),
+        params=(period,),
+        description=f"Yarn supplier OTD and defect rate for period {period}",
     )
 
 
-def _on_time_rate_side_by_side(suppliers: list[str]) -> TemplatedSQL:
-    placeholders = " OR ".join(["LOWER(s.name) LIKE LOWER(?)"] * len(suppliers))
-    sql = (
-        "SELECT s.name AS supplier_name,\n"
-        "       ROUND(SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n"
-        "             / NULLIF(COUNT(p.id), 0), 4) AS on_time_rate,\n"
-        "       COUNT(p.id) AS total_orders\n"
-        "FROM suppliers s\n"
-        "JOIN purchase_orders p ON p.supplier_id = s.id\n"
-        f"WHERE {placeholders}\n"
-        "GROUP BY s.id, s.name\n"
-        "ORDER BY on_time_rate DESC"
-    )
-    params = tuple(f"%{name}%" for name in suppliers)
+def _avg_delay_above_threshold(threshold: float) -> TemplatedSQL:
+    sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       s.category_level_2,
+       s.risk_level,
+       ROUND(AVG(d.delivery_delay_days), 2) AS avg_delay_days,
+       COUNT(d.delivery_id) AS delivery_count
+FROM suppliers s
+JOIN delivery_events d ON s.supplier_id = d.supplier_id
+GROUP BY s.supplier_id, s.supplier_name_anonymized, s.category_level_2, s.risk_level
+HAVING avg_delay_days > ?
+ORDER BY avg_delay_days DESC
+"""
     return TemplatedSQL(
-        template_id="otd_side_by_side",
-        sql=sql,
+        template_id="avg_delay_above_threshold",
+        sql=sql.strip(),
+        params=(threshold,),
+        description=f"Suppliers with average delivery delay above {threshold} days",
+    )
+
+
+def _spend_by_kraljic() -> TemplatedSQL:
+    sql = """
+SELECT kraljic_quadrant,
+       COUNT(*) AS supplier_count,
+       ROUND(SUM(annual_spend_eur), 2) AS total_spend_eur
+FROM suppliers
+GROUP BY kraljic_quadrant
+ORDER BY total_spend_eur DESC
+"""
+    return TemplatedSQL(
+        template_id="spend_by_kraljic",
+        sql=sql.strip(),
+        params=(),
+        description="Annual spend aggregated by Kraljic quadrant",
+    )
+
+
+def _demo_as_of_date() -> str:
+    try:
+        from core.demo_constants import DEMO_CURRENT_DATE
+
+        return DEMO_CURRENT_DATE
+    except ImportError:
+        return "2025-12-01"
+
+
+def _certificates_expiring_soon(days: int) -> TemplatedSQL:
+    sql = """
+SELECT d.supplier_id,
+       s.supplier_name_anonymized,
+       d.document_type,
+       d.expiry_date,
+       d.document_status
+FROM documents d
+JOIN suppliers s ON d.supplier_id = s.supplier_id
+WHERE d.expiry_date IS NOT NULL
+  AND d.expiry_date BETWEEN date(?) AND date(?, '+' || ? || ' days')
+ORDER BY d.expiry_date ASC
+"""
+    return TemplatedSQL(
+        template_id="certificates_expiring_soon",
+        sql=sql.strip(),
+        params=(_demo_as_of_date(), _demo_as_of_date(), days),
+        description=f"Certificates expiring within {days} days (demo as-of {_demo_as_of_date()})",
+    )
+
+
+def _strategic_vendor_rating_rank() -> TemplatedSQL:
+    sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       s.category_level_2,
+       vr.final_vendor_rating_score,
+       vr.rating_class,
+       vr.suggested_action
+FROM suppliers s
+JOIN vendor_rating vr ON s.supplier_id = vr.supplier_id
+WHERE s.kraljic_quadrant = 'Strategic'
+ORDER BY vr.final_vendor_rating_score DESC
+"""
+    return TemplatedSQL(
+        template_id="strategic_vendor_rating_rank",
+        sql=sql.strip(),
+        params=(),
+        description="Strategic suppliers ranked by vendor rating score",
+    )
+
+
+def _esg_below_threshold_missing_docs(threshold: float) -> TemplatedSQL:
+    sql = """
+SELECT e.supplier_id,
+       s.supplier_name_anonymized,
+       e.final_esg_score,
+       e.missing_or_expired_documents,
+       e.esg_risk_level,
+       e.human_review_required
+FROM esg_assessments e
+JOIN suppliers s ON e.supplier_id = s.supplier_id
+WHERE e.final_esg_score < ?
+  AND e.missing_or_expired_documents = 1
+ORDER BY e.final_esg_score ASC
+"""
+    return TemplatedSQL(
+        template_id="esg_below_threshold_missing_docs",
+        sql=sql.strip(),
+        params=(threshold,),
+        description=f"Suppliers with ESG score below {threshold} and missing/expired documents",
+    )
+
+
+def _supplier_status_snapshot(supplier_id: str) -> TemplatedSQL:
+    sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       s.qualification_status,
+       s.kraljic_quadrant,
+       s.category_level_1,
+       s.category_level_2,
+       s.risk_level,
+       s.next_review_date,
+       COUNT(d.document_id) AS document_count,
+       SUM(CASE WHEN d.document_status != 'Valid' THEN 1 ELSE 0 END) AS invalid_document_count
+FROM suppliers s
+LEFT JOIN documents d ON s.supplier_id = d.supplier_id
+WHERE s.supplier_id = ?
+GROUP BY s.supplier_id
+"""
+    return TemplatedSQL(
+        template_id="supplier_status_snapshot",
+        sql=sql.strip(),
+        params=(supplier_id,),
+        description=f"Qualification status snapshot for {supplier_id}",
+    )
+
+
+def _on_time_rate_by_category(category: str, year: Optional[str]) -> TemplatedSQL:
+    if year:
+        sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       ROUND(AVG(d.on_time_flag) * 100.0, 2) AS on_time_delivery_rate_pct,
+       COUNT(d.delivery_id) AS delivery_count
+FROM suppliers s
+JOIN delivery_events d ON s.supplier_id = d.supplier_id
+WHERE s.category_level_2 = ?
+  AND strftime('%Y', d.actual_delivery_date) = ?
+GROUP BY s.supplier_id, s.supplier_name_anonymized
+ORDER BY on_time_delivery_rate_pct DESC
+"""
+        params = (category, year)
+    else:
+        sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       ROUND(AVG(d.on_time_flag) * 100.0, 2) AS on_time_delivery_rate_pct,
+       COUNT(d.delivery_id) AS delivery_count
+FROM suppliers s
+JOIN delivery_events d ON s.supplier_id = d.supplier_id
+WHERE s.category_level_2 = ?
+GROUP BY s.supplier_id, s.supplier_name_anonymized
+ORDER BY on_time_delivery_rate_pct DESC
+"""
+        params = (category,)
+    return TemplatedSQL(
+        template_id="otd_by_category",
+        sql=sql.strip(),
         params=params,
-        description=f"On-time delivery rate side-by-side for {', '.join(suppliers)}",
+        description=f"On-time delivery rate for category {category}",
     )
 
 
-def _on_time_rate_by_country(country: str) -> TemplatedSQL:
-    sql = (
-        "SELECT s.name AS supplier_name,\n"
-        "       ROUND(SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n"
-        "             / NULLIF(COUNT(p.id), 0), 4) AS on_time_rate,\n"
-        "       COUNT(p.id) AS total_orders\n"
-        "FROM suppliers s\n"
-        "JOIN purchase_orders p ON p.supplier_id = s.id\n"
-        "WHERE s.country = ?\n"
-        "GROUP BY s.id, s.name\n"
-        "ORDER BY on_time_rate DESC"
-    )
+def _on_time_rate_by_supplier_id(supplier_id: str, year: Optional[str]) -> TemplatedSQL:
+    if year:
+        sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       ROUND(AVG(d.on_time_flag) * 100.0, 2) AS on_time_delivery_rate_pct,
+       COUNT(d.delivery_id) AS delivery_count
+FROM suppliers s
+JOIN delivery_events d ON s.supplier_id = d.supplier_id
+WHERE s.supplier_id = ?
+  AND strftime('%Y', d.actual_delivery_date) = ?
+GROUP BY s.supplier_id, s.supplier_name_anonymized
+"""
+        params = (supplier_id, year)
+    else:
+        sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       ROUND(AVG(d.on_time_flag) * 100.0, 2) AS on_time_delivery_rate_pct,
+       COUNT(d.delivery_id) AS delivery_count
+FROM suppliers s
+JOIN delivery_events d ON s.supplier_id = d.supplier_id
+WHERE s.supplier_id = ?
+GROUP BY s.supplier_id, s.supplier_name_anonymized
+"""
+        params = (supplier_id,)
     return TemplatedSQL(
-        template_id="otd_by_country",
-        sql=sql,
-        params=(country,),
-        description=f"On-time delivery rate for suppliers in {country}",
-    )
-
-
-def _on_time_rate_ranking() -> TemplatedSQL:
-    sql = (
-        "SELECT s.name AS supplier_name,\n"
-        "       ROUND(SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0\n"
-        "             / NULLIF(COUNT(p.id), 0), 4) AS on_time_rate,\n"
-        "       COUNT(p.id) AS total_orders\n"
-        "FROM suppliers s\n"
-        "JOIN purchase_orders p ON p.supplier_id = s.id\n"
-        "GROUP BY s.id, s.name\n"
-        "ORDER BY on_time_rate DESC"
-    )
-    return TemplatedSQL(
-        template_id="otd_ranking",
-        sql=sql,
-        params=(),
-        description="On-time delivery rate ranked across all suppliers",
-    )
-
-
-def _order_volume_for_suppliers(suppliers: list[str]) -> TemplatedSQL:
-    placeholders = " OR ".join(["LOWER(s.name) LIKE LOWER(?)"] * len(suppliers))
-    sql = (
-        "SELECT s.name AS supplier_name,\n"
-        "       COUNT(p.id) AS total_orders,\n"
-        "       SUM(p.qty) AS total_qty\n"
-        "FROM suppliers s\n"
-        "JOIN purchase_orders p ON p.supplier_id = s.id\n"
-        f"WHERE {placeholders}\n"
-        "GROUP BY s.id, s.name\n"
-        "ORDER BY total_orders DESC"
-    )
-    params = tuple(f"%{name}%" for name in suppliers)
-    return TemplatedSQL(
-        template_id="order_volume_supplier",
-        sql=sql,
+        template_id="otd_by_supplier_id",
+        sql=sql.strip(),
         params=params,
-        description=f"Order volume for {', '.join(suppliers)}",
+        description=f"On-time delivery rate for {supplier_id}",
     )
 
 
-def _order_volume_by_country(country: str) -> TemplatedSQL:
-    sql = (
-        "SELECT s.country,\n"
-        "       COUNT(p.id) AS total_orders,\n"
-        "       SUM(p.qty) AS total_qty\n"
-        "FROM suppliers s\n"
-        "JOIN purchase_orders p ON p.supplier_id = s.id\n"
-        "WHERE s.country = ?\n"
-        "GROUP BY s.country"
-    )
+def _defect_rate_by_category(category: str, year: Optional[str]) -> TemplatedSQL:
+    sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       ROUND(AVG(q.defect_rate) * 100.0, 2) AS quality_defect_rate_pct,
+       COUNT(q.quality_event_id) AS quality_event_count
+FROM suppliers s
+JOIN quality_events q ON s.supplier_id = q.supplier_id
+WHERE s.category_level_2 = ?
+GROUP BY s.supplier_id, s.supplier_name_anonymized
+ORDER BY quality_defect_rate_pct DESC
+"""
     return TemplatedSQL(
-        template_id="order_volume_country",
-        sql=sql,
-        params=(country,),
-        description=f"Order volume aggregated by country = {country}",
+        template_id="defect_rate_by_category",
+        sql=sql.strip(),
+        params=(category,),
+        description=f"Quality defect rate for category {category}",
     )
 
 
-def _order_volume_ranking() -> TemplatedSQL:
-    sql = (
-        "SELECT s.name AS supplier_name,\n"
-        "       COUNT(p.id) AS total_orders,\n"
-        "       SUM(p.qty) AS total_qty\n"
-        "FROM suppliers s\n"
-        "JOIN purchase_orders p ON p.supplier_id = s.id\n"
-        "GROUP BY s.id, s.name\n"
-        "ORDER BY total_orders DESC"
-    )
+def _vendor_rating_snapshot(supplier_id: str, year: Optional[str]) -> TemplatedSQL:
+    period = year or "2025"
+    sql = """
+SELECT vr.supplier_id,
+       s.supplier_name_anonymized,
+       s.category_level_2,
+       s.kraljic_quadrant,
+       vr.period,
+       vr.on_time_delivery_rate_pct,
+       vr.average_delay_days,
+       vr.quality_defect_rate_pct,
+       vr.operational_score,
+       vr.risk_inverse_score,
+       vr.esg_score,
+       vr.final_vendor_rating_score,
+       vr.rating_class,
+       vr.suggested_action
+FROM vendor_rating vr
+JOIN suppliers s ON vr.supplier_id = s.supplier_id
+WHERE vr.supplier_id = ?
+  AND vr.period = ?
+"""
     return TemplatedSQL(
-        template_id="order_volume_ranking",
-        sql=sql,
-        params=(),
-        description="Order volume ranked across all suppliers",
-    )
-
-
-def _avg_delay_single(supplier: str) -> TemplatedSQL:
-    sql = (
-        "SELECT s.name AS supplier_name,\n"
-        "       ROUND(AVG(julianday(p.delivery_date) - julianday(p.due_date)), 2) AS avg_delay_days,\n"
-        "       COUNT(p.id) AS delayed_orders\n"
-        "FROM suppliers s\n"
-        "JOIN purchase_orders p ON p.supplier_id = s.id\n"
-        "WHERE LOWER(s.name) LIKE LOWER(?)\n"
-        "  AND p.delivery_date > p.due_date\n"
-        "GROUP BY s.id, s.name"
-    )
-    return TemplatedSQL(
-        template_id="avg_delay_single",
-        sql=sql,
-        params=(f"%{supplier}%",),
-        description=f"Average delay days for {supplier}",
-    )
-
-
-def _avg_delay_overall() -> TemplatedSQL:
-    sql = (
-        "SELECT s.name AS supplier_name,\n"
-        "       ROUND(AVG(julianday(p.delivery_date) - julianday(p.due_date)), 2) AS avg_delay_days,\n"
-        "       COUNT(p.id) AS delayed_orders\n"
-        "FROM suppliers s\n"
-        "JOIN purchase_orders p ON p.supplier_id = s.id\n"
-        "WHERE p.delivery_date > p.due_date\n"
-        "GROUP BY s.id, s.name\n"
-        "ORDER BY avg_delay_days DESC"
-    )
-    return TemplatedSQL(
-        template_id="avg_delay_overall",
-        sql=sql,
-        params=(),
-        description="Average delay days across suppliers (delayed POs only)",
-    )
-
-
-def _avg_delay_by_country(country: str) -> TemplatedSQL:
-    sql = (
-        "SELECT s.country,\n"
-        "       ROUND(AVG(julianday(p.delivery_date) - julianday(p.due_date)), 2) AS avg_delay_days,\n"
-        "       COUNT(p.id) AS delayed_orders\n"
-        "FROM suppliers s\n"
-        "JOIN purchase_orders p ON p.supplier_id = s.id\n"
-        "WHERE s.country = ?\n"
-        "  AND p.delivery_date > p.due_date\n"
-        "GROUP BY s.country"
-    )
-    return TemplatedSQL(
-        template_id="avg_delay_by_country",
-        sql=sql,
-        params=(country,),
-        description=f"Average delay days for suppliers in {country} (delayed POs only)",
-    )
-
-
-def _late_orders_by_country() -> TemplatedSQL:
-    sql = (
-        "SELECT s.country,\n"
-        "       SUM(CASE WHEN p.delivery_date > p.due_date THEN 1 ELSE 0 END) AS late_orders,\n"
-        "       COUNT(p.id) AS total_orders\n"
-        "FROM suppliers s\n"
-        "JOIN purchase_orders p ON p.supplier_id = s.id\n"
-        "GROUP BY s.country\n"
-        "ORDER BY late_orders DESC"
-    )
-    return TemplatedSQL(
-        template_id="late_orders_by_country",
-        sql=sql,
-        params=(),
-        description="Late-order count grouped by supplier country",
-    )
-
-
-def _late_orders_by_material() -> TemplatedSQL:
-    sql = (
-        "SELECT p.material,\n"
-        "       SUM(CASE WHEN p.delivery_date > p.due_date THEN 1 ELSE 0 END) AS late_orders,\n"
-        "       COUNT(p.id) AS total_orders\n"
-        "FROM purchase_orders p\n"
-        "GROUP BY p.material\n"
-        "HAVING late_orders > 0\n"
-        "ORDER BY late_orders DESC"
-    )
-    return TemplatedSQL(
-        template_id="late_orders_by_material",
-        sql=sql,
-        params=(),
-        description="Late-order count grouped by material (only materials with late orders)",
+        template_id="vendor_rating_snapshot",
+        sql=sql.strip(),
+        params=(supplier_id, period),
+        description=f"Vendor rating snapshot for {supplier_id}",
     )

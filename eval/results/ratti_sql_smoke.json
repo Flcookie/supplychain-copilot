@@ -1,0 +1,55 @@
+{
+  "passed": 7,
+  "total": 7,
+  "details": [
+    {
+      "id": "EVAL010",
+      "question": "Show the on-time delivery rate and defect rate of yarn suppliers in 2025.",
+      "template_id": "yarn_otd_defect_period",
+      "ok": true,
+      "row_count": 9
+    },
+    {
+      "id": "EVAL011",
+      "question": "Which suppliers had average delivery delay above 5 days?",
+      "template_id": "avg_delay_above_threshold",
+      "ok": true,
+      "row_count": 0
+    },
+    {
+      "id": "EVAL012",
+      "question": "Rank strategic suppliers by vendor rating score.",
+      "template_id": "strategic_vendor_rating_rank",
+      "ok": true,
+      "row_count": 29
+    },
+    {
+      "id": "EVAL013",
+      "question": "Which suppliers have ESG score below 60 and missing certificates?",
+      "template_id": "esg_below_threshold_missing_docs",
+      "ok": true,
+      "row_count": 0
+    },
+    {
+      "id": "EVAL014",
+      "question": "How much spend do we have by Kraljic quadrant?",
+      "template_id": "spend_by_kraljic",
+      "ok": true,
+      "row_count": 4
+    },
+    {
+      "id": "EVAL015",
+      "question": "Find suppliers whose certificate will expire in the next 60 days.",
+      "template_id": "certificates_expiring_soon",
+      "ok": true,
+      "row_count": 22
+    },
+    {
+      "id": "EVAL005",
+      "question": "What is the next step for supplier SUP008?",
+      "template_id": "supplier_status_snapshot",
+      "ok": true,
+      "row_count": 1
+    }
+  ]
+}

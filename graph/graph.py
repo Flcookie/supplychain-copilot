@@ -12,6 +12,7 @@ from .nodes import (
     rag_fallback_node,
     router_node,
     scenario_node,
+    vendor_rating_node,
 )
 
 
@@ -26,6 +27,7 @@ def build_graph():
     workflow.add_node("hybrid", hybrid_node)
     workflow.add_node("scenario", scenario_node)
     workflow.add_node("qualification_checklist", qualification_checklist_node)
+    workflow.add_node("vendor_rating", vendor_rating_node)
     workflow.add_node("answer", answer_node)
 
     workflow.add_edge(START, "router")
@@ -35,12 +37,14 @@ def build_graph():
             intent = state.get("intent", "policy_qa")
             if intent == "kpi_query":
                 return "kpi"
-            if intent == "scenario_analysis":
+            if intent in {"scenario_analysis", "risk_scenario"}:
                 return "scenario"
             if intent == "hybrid_query":
                 return "hybrid"
             if intent == "qualification_checklist":
                 return "qualification_checklist"
+            if intent == "vendor_rating_explanation":
+                return "vendor_rating"
             return "policy_qa"
         if state.get("ambiguity_type"):
             return "clarification"
@@ -51,12 +55,14 @@ def build_graph():
             return "policy_qa"
         if intent == "kpi_query":
             return "kpi"
-        if intent == "scenario_analysis":
+        if intent in {"scenario_analysis", "risk_scenario"}:
             return "scenario"
         if intent == "hybrid_query":
             return "hybrid"
         if intent == "qualification_checklist":
             return "qualification_checklist"
+        if intent == "vendor_rating_explanation":
+            return "vendor_rating"
         return "policy_qa"
 
     workflow.add_conditional_edges(
@@ -70,6 +76,7 @@ def build_graph():
             "hybrid": "hybrid",
             "scenario": "scenario",
             "qualification_checklist": "qualification_checklist",
+            "vendor_rating": "vendor_rating",
         },
     )
 
@@ -80,6 +87,7 @@ def build_graph():
     workflow.add_edge("hybrid", "answer")
     workflow.add_edge("scenario", "answer")
     workflow.add_edge("qualification_checklist", "answer")
+    workflow.add_edge("vendor_rating", "answer")
     workflow.add_edge("answer", END)
 
     return workflow.compile()

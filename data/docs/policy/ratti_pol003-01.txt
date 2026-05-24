@@ -1,0 +1,7 @@
+## Kraljic Monitoring Rule — Strategic items
+
+Strategic items such as fabrics, yarns, leathers, outsourcing and outsourced fabric/yarn processing have direct impact on final product quality, continuity and traceability. They require high qualification intensity and quarterly monitoring.
+
+chunk_id: POL003-01
+doc_id: 
+source_type: Synthetic policy chunk derived from Ratti project report

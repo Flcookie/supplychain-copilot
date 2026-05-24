@@ -1,119 +1,74 @@
-ROUTER_PROMPT = """You are a classifier for a supply chain copilot.
+ROUTER_PROMPT = """You are the Router for a Supplier Lifecycle Copilot (Ratti procurement demo).
 Classify the user question and return JSON with fields:
-- intent: one of policy_qa, kpi_query, scenario_analysis, hybrid_query, qualification_checklist
+- intent: one of qualification_checklist, policy_qa, kpi_query, risk_scenario, vendor_rating_explanation, hybrid_query
 - confidence: float in [0,1]
-- ambiguity_type: one of coreference, composite_intent, missing_entity, or null
+- ambiguity_type: one of coreference, composite_intent, missing_entity, overbroad_data_request, or null
+- human_approval_required: boolean (true for blacklist, status change, audit/replacement decisions)
 - reason: short explanation (max 25 words)
 
 Rules:
 1) intent
-- policy_qa: contracts, policy clauses, supplier qualification POLICY text, SOP definitions (what the company policy says).
-- qualification_checklist: generate a structured onboarding/qualification checklist for a NEW or incoming supplier — required documents, Kraljic category, FORM1/FORM2, SAP code steps, ESG docs, buyer checks. Triggers include: new supplier, supplier onboarding, qualification process, required documents, FORM1, FORM2, SAP code, yarn/fabric/chemical/logistics/outsourcing supplier, Kraljic, supplier category for onboarding.
-- kpi_query: metrics, OTD/OTIF, trend, comparison, year-over-year, month-over-month.
-- scenario_analysis: what-if/risk/disruption impact and mitigation analysis.
-- hybrid_query: BOTH policy/contract evidence AND KPI/SQL evidence are clearly required to answer (e.g. "evaluate supplier X against policy", "should we activate corrective action based on delivery data and policy"). The subject (specific supplier, region, or scope) IS identifiable.
+- qualification_checklist: NEW supplier onboarding checklist — required documents, Kraljic, FORM1/FORM2, SAP code, ESG docs, buyer checks.
+- policy_qa: process rules, Kraljic monitoring, ESG formula, pre-qualification vs qualification, audit policy (what policy SAYS).
+- kpi_query: numeric KPIs — OTD, defect rate, spend, delay, ESG score, cert expiry, supplier status/next step (SUP###), rankings.
+- risk_scenario: what-if delay, high-risk review lists, single sourcing risks, quality issue actions, blacklist recommendation (with HITL).
+- vendor_rating_explanation: why a rating (A/B/C/D), rating formula, reserve candidates — NOT raw KPI tables alone.
+- hybrid_query: BOTH policy AND KPI/SQL clearly required with identifiable subject.
 
-2) ambiguity_type — DEFAULT TO null. Be conservative.
-- coreference: unresolved pronouns or vague references ("they", "this supplier", "those vendors", "他们", "这家") with no other clue who they are.
-- composite_intent: ONLY when policy and KPI intents are mixed AND no concrete subject (supplier / region / decision) is given. If the subject IS given, use hybrid_query with ambiguity_type=null instead.
-- missing_entity: VERY narrow. Use ONLY when the question literally cannot be answered without first knowing a specific supplier/region/material/time window. Do NOT trigger missing_entity for any of the following — they are all answerable as-is:
-  * Ranking / superlative questions ("which supplier has the most X", "rank suppliers by Y", "which country has the highest Z")
-  * Aggregation across all suppliers ("compare suppliers", "all suppliers", "across suppliers")
-  * Country- or region-scoped questions ("Vietnam suppliers", "DE suppliers", "Southeast Asia") — the country IS the scope
-  * General policy / SOP / qualification / onboarding questions
-  * Hybrid decision questions ("which supplier should we prioritize for review", "should we activate corrective action")
-  * Refusal-style questions about unsupported metrics ("calculate defect rate", "OTIF", "risk score") — those are answerable with a refusal at the KPI node, not via clarification
-- null: use null whenever the question is answerable as-is. Default to null. A missing time range alone is NEVER ambiguity (downstream defaults to last_3_months).
+2) Map legacy scenario_analysis questions to risk_scenario.
 
-3) Output strict JSON only, no markdown.
+3) human_approval_required=true when question asks to blacklist, approve/reject qualification, change status, or replace supplier.
+
+4) ambiguity_type — DEFAULT null. Use overbroad_data_request for "show all data" / dump entire database requests.
+Use coreference for unresolved "they/this supplier". Use missing_entity only when truly unanswerable.
+
+5) Output strict JSON only.
 
 Few-shot examples:
-Q: What is our strategic supplier qualification policy?
-A: {{"intent":"policy_qa","confidence":0.95,"ambiguity_type":null,"reason":"asks policy definition"}}
-
-Q: What are the qualification rules for new suppliers?
-A: {{"intent":"policy_qa","confidence":0.94,"ambiguity_type":null,"reason":"asks written policy rules, not a checklist"}}
-
-Q: What evidence should be checked before onboarding a supplier?
-A: {{"intent":"policy_qa","confidence":0.94,"ambiguity_type":null,"reason":"general SOP policy text; not structured checklist generation"}}
-
 Q: We have a new yarn supplier from China. What qualification process should we follow?
-A: {{"intent":"qualification_checklist","confidence":0.96,"ambiguity_type":null,"reason":"new supplier onboarding checklist with category"}}
+A: {{"intent":"qualification_checklist","confidence":0.96,"ambiguity_type":null,"human_approval_required":false,"reason":"new supplier onboarding checklist"}}
 
-Q: What documents are required for a chemical product supplier?
-A: {{"intent":"qualification_checklist","confidence":0.95,"ambiguity_type":null,"reason":"required documents for supplier qualification"}}
+Q: How is ESG score calculated?
+A: {{"intent":"policy_qa","confidence":0.94,"ambiguity_type":null,"human_approval_required":false,"reason":"ESG formula policy question"}}
 
-Q: A new logistics supplier wants to work with Ratti. What should the buyer check first?
-A: {{"intent":"qualification_checklist","confidence":0.94,"ambiguity_type":null,"reason":"buyer onboarding checks for new logistics supplier"}}
+Q: Show the on-time delivery rate and defect rate of yarn suppliers in 2025.
+A: {{"intent":"kpi_query","confidence":0.96,"ambiguity_type":null,"human_approval_required":false,"reason":"yarn KPI aggregation"}}
 
-Q: What should we do before creating an SAP code for a new supplier?
-A: {{"intent":"qualification_checklist","confidence":0.93,"ambiguity_type":null,"reason":"SAP code prerequisite onboarding steps"}}
+Q: Which suppliers should be reviewed this month due to high risk?
+A: {{"intent":"risk_scenario","confidence":0.95,"ambiguity_type":null,"human_approval_required":false,"reason":"high-risk review list"}}
 
-Q: How often should supplier risk be reviewed?
-A: {{"intent":"policy_qa","confidence":0.93,"ambiguity_type":null,"reason":"general policy cadence; applies universally"}}
+Q: Why did supplier SUP012 receive a C rating?
+A: {{"intent":"vendor_rating_explanation","confidence":0.97,"ambiguity_type":null,"human_approval_required":false,"reason":"explain vendor rating"}}
 
-Q: Compare Alpha and Beta on-time delivery in last 3 months.
-A: {{"intent":"kpi_query","confidence":0.96,"ambiguity_type":null,"reason":"explicit KPI comparison and time filter"}}
+Q: Explain the vendor rating formula for yarn suppliers.
+A: {{"intent":"vendor_rating_explanation","confidence":0.94,"ambiguity_type":null,"human_approval_required":false,"reason":"rating formula explanation"}}
 
-Q: What is our on-time delivery rate for Alpha Electronics?
-A: {{"intent":"kpi_query","confidence":0.95,"ambiguity_type":null,"reason":"explicit supplier and KPI; time range defaults"}}
+Q: What is the next step for supplier SUP008?
+A: {{"intent":"kpi_query","confidence":0.92,"ambiguity_type":null,"human_approval_required":false,"reason":"supplier status lookup"}}
 
-Q: Alpha Electronics 的准时交付率是多少？
-A: {{"intent":"kpi_query","confidence":0.95,"ambiguity_type":null,"reason":"explicit supplier and KPI; time range defaults"}}
+Q: If a strategic yarn supplier is delayed by 7 days, what should the buyer check?
+A: {{"intent":"risk_scenario","confidence":0.95,"ambiguity_type":null,"human_approval_required":false,"reason":"what-if delay mitigation"}}
 
-Q: If Vietnam suppliers are delayed by 7 days, what is the impact?
-A: {{"intent":"scenario_analysis","confidence":0.96,"ambiguity_type":null,"reason":"explicit what-if risk scenario"}}
+Q: Should we blacklist SUP030?
+A: {{"intent":"risk_scenario","confidence":0.93,"ambiguity_type":null,"human_approval_required":true,"reason":"blacklist needs manager approval"}}
 
-Q: How is Alpha Electronics performing against strategic supplier expectations?
-A: {{"intent":"hybrid_query","confidence":0.9,"ambiguity_type":null,"reason":"needs both policy expectations and Alpha KPI"}}
+Q: Which qualified suppliers should be moved to qualified with reserve?
+A: {{"intent":"vendor_rating_explanation","confidence":0.91,"ambiguity_type":null,"human_approval_required":true,"reason":"status recommendation only"}}
 
-Q: Does Beta Plastics need corrective action based on delivery performance and policy?
-A: {{"intent":"hybrid_query","confidence":0.92,"ambiguity_type":null,"reason":"requires Beta KPI and corrective-action policy"}}
+Q: Compare Supplier A and Supplier B.
+A: {{"intent":"kpi_query","confidence":0.55,"ambiguity_type":"coreference","human_approval_required":false,"reason":"comparison needs supplier IDs"}}
 
-Q: Which supplier has the most purchase orders?
-A: {{"intent":"kpi_query","confidence":0.94,"ambiguity_type":null,"reason":"ranking question; answer is the ranking itself"}}
+Q: Show me all data about suppliers.
+A: {{"intent":"policy_qa","confidence":0.70,"ambiguity_type":"overbroad_data_request","human_approval_required":false,"reason":"overbroad data dump rejected"}}
 
-Q: Compare suppliers in Vietnam by on-time delivery.
-A: {{"intent":"kpi_query","confidence":0.95,"ambiguity_type":null,"reason":"country scope + KPI; Vietnam IS the scope"}}
+Q: 展示2025年纱线供应商的准时交付率和缺陷率。
+A: {{"intent":"kpi_query","confidence":0.96,"ambiguity_type":null,"human_approval_required":false,"reason":"yarn KPI aggregation in Chinese"}}
 
-Q: Rank suppliers by delivery reliability.
-A: {{"intent":"kpi_query","confidence":0.94,"ambiguity_type":null,"reason":"ranking across all suppliers; no specific entity needed"}}
+Q: 为什么供应商SUP012获得了C级评级?
+A: {{"intent":"vendor_rating_explanation","confidence":0.97,"ambiguity_type":null,"human_approval_required":false,"reason":"explain SUP012 C rating in Chinese"}}
 
-Q: Which country has more delayed orders?
-A: {{"intent":"kpi_query","confidence":0.92,"ambiguity_type":null,"reason":"cross-country aggregation; answerable as-is"}}
-
-Q: Which materials are associated with late orders?
-A: {{"intent":"kpi_query","confidence":0.9,"ambiguity_type":null,"reason":"material aggregation across late orders"}}
-
-Q: Can you calculate defect rate from current demo data?
-A: {{"intent":"kpi_query","confidence":0.88,"ambiguity_type":null,"reason":"answerable as a refusal; KPI node will explain why defect_rate is unavailable"}}
-
-Q: What is OTIF for Alpha Electronics?
-A: {{"intent":"kpi_query","confidence":0.9,"ambiguity_type":null,"reason":"answerable as a refusal; KPI node will explain OTIF requires data not in demo schema"}}
-
-Q: Which supplier should be prioritized for a business review based on OTD and supplier policy?
-A: {{"intent":"hybrid_query","confidence":0.92,"ambiguity_type":null,"reason":"decision question combining OTD ranking and policy"}}
-
-Q: How should we handle a recurring late delivery issue under policy and KPI evidence?
-A: {{"intent":"hybrid_query","confidence":0.9,"ambiguity_type":null,"reason":"composite question with concrete subject (recurring late delivery)"}}
-
-Q: What does the supplier scorecard need to include and what current demo KPI can populate it?
-A: {{"intent":"hybrid_query","confidence":0.9,"ambiguity_type":null,"reason":"scorecard policy + KPI mapping; concrete subject"}}
-
-Q: What do they require for strategic suppliers?
-A: {{"intent":"policy_qa","confidence":0.88,"ambiguity_type":"coreference","reason":"policy intent clear but reference unresolved"}}
-
-Q: Show their recent delivery performance.
-A: {{"intent":"kpi_query","confidence":0.90,"ambiguity_type":"coreference","reason":"kpi request with unresolved supplier reference"}}
-
-Q: Tell me about policy and KPIs.
-A: {{"intent":"hybrid_query","confidence":0.55,"ambiguity_type":"composite_intent","reason":"policy and KPI intents mixed without specific subject"}}
-
-Q: Supplier delivery trend please.
-A: {{"intent":"kpi_query","confidence":0.70,"ambiguity_type":"missing_entity","reason":"no supplier or region given"}}
-
-Q: We may face disruptions in Southeast Asia, thoughts?
-A: {{"intent":"scenario_analysis","confidence":0.68,"ambiguity_type":"missing_entity","reason":"risk intent but region/scope undefined"}}
+Q: 本月应审查哪些供应商，因为风险较高？
+A: {{"intent":"risk_scenario","confidence":0.95,"ambiguity_type":null,"human_approval_required":false,"reason":"high-risk monthly review in Chinese"}}
 
 Question: {question}
 """
@@ -143,16 +98,22 @@ Answer in {response_language_instruction}.
 
 KPI_PARSE_PROMPT = """You extract a structured KPI intent from a user question.
 
-PoC database has ONLY tables: suppliers, purchase_orders (see metrics mapping below).
+Ratti demo database tables: suppliers, category_rules, documents, purchase_orders,
+delivery_events, quality_events, risk_events, esg_assessments, vendor_rating.
 
 Return JSON only with fields:
 - intent: always "KPI_Query"
-- supplier_hint: string or null (supplier name fragment if any)
-- metric: one of on_time_rate, order_volume, comparison, trend, other
-- time_range: string or null (e.g. "last_3_months", or null)
+- supplier_hint: string or null (supplier_id like SUP012 or category keyword)
+- metric: one of on_time_rate, defect_rate, avg_delay_days, vendor_rating, esg_score, spend, cert_expiry, order_volume, other
+- time_range: string or null (e.g. "2025", or null)
 - aggregation: one of single_supplier, side_by_side, rollup, other
-- need_clarification: boolean
+- need_clarification: boolean (set false when the question is answerable, including multi-metric KPI requests)
 - clarification_reason: string or null
+- metrics: optional list of metric names when user asks for multiple KPIs in one question
+
+Rules for need_clarification:
+- If the user asks for two KPIs together (e.g. on-time delivery AND defect rate), set need_clarification=false and list both in metrics.
+- Only set need_clarification=true when a required supplier ID, time range, or metric is truly missing.
 
 Metrics dictionary (business meaning; SQL must still use actual columns):
 {metrics_blurb}
@@ -161,71 +122,30 @@ User question:
 {question}
 """
 
-KPI_SQL_PROMPT = """You are a senior data analyst writing SQL for a SQLite database.
+KPI_SQL_PROMPT = """You are a senior data analyst writing SQL for a SQLite database (Ratti supplier lifecycle demo).
 
 Structured intent (guide the query; invent no tables outside schema):
 {structured_parse}
 
-Database schema:
+Database schema (key columns only):
 
-suppliers(id INTEGER, name TEXT, country TEXT, is_strategic INTEGER)
-purchase_orders(
-    id INTEGER,
-    supplier_id INTEGER,
-    material TEXT,
-    qty INTEGER,
-    due_date TEXT,
-    delivery_date TEXT
-)
+suppliers(supplier_id, supplier_name_anonymized, country, category_level_1, category_level_2,
+         kraljic_quadrant, qualification_status, annual_spend_eur, risk_level, next_review_date, single_sourcing_flag)
+category_rules(category_level_1, category_level_2, kraljic_quadrant, monitoring_frequency, required_documents)
+documents(document_id, supplier_id, document_type, expiry_date, document_status)
+purchase_orders(po_id, supplier_id, category_level_2, order_date, order_amount_eur, po_status)
+delivery_events(delivery_id, po_id, supplier_id, actual_delivery_date, delivery_delay_days, on_time_flag)
+quality_events(quality_event_id, supplier_id, severity, defect_rate, corrective_action_required)
+risk_events(risk_event_id, supplier_id, risk_type, risk_score_1_25, risk_status, recommended_action)
+esg_assessments(supplier_id, final_esg_score, missing_or_expired_documents, human_review_required)
+vendor_rating(supplier_id, period, on_time_delivery_rate_pct, quality_defect_rate_pct,
+              operational_score, risk_inverse_score, esg_score, final_vendor_rating_score, rating_class)
 
-General rules:
-- Only use the tables and columns above.
-- Always use case-insensitive pattern matching for supplier names: `LOWER(s.name) LIKE LOWER('%name%')`.
-- Return exactly one SELECT query.
-- Do NOT use markdown or backticks. Return ONLY the SQL query.
-
-SQLite aggregate rules (MUST follow, otherwise it raises "misuse of aggregate"):
-- NEVER put aggregate functions (COUNT, SUM, AVG, MIN, MAX) inside a WHERE clause. Use HAVING after GROUP BY instead.
-- When you compute a per-supplier metric, GROUP BY the supplier columns you select (e.g., `GROUP BY s.id, s.name`).
-- When the query returns a single overall number (no per-supplier breakdown), do NOT put non-aggregated columns in SELECT.
-- Use `SUM(CASE WHEN cond THEN 1 ELSE 0 END) * 1.0 / COUNT(*)` for ratios; do not use `COUNT()` with no argument.
-
-Metric definitions:
-- on_time_rate (OTD) = on_time_orders / total_orders, where an order is on-time when `delivery_date <= due_date`.
-- order_volume = COUNT(p.id) and/or SUM(p.qty) per supplier.
-- avg_delay_days = AVG(julianday(p.delivery_date) - julianday(p.due_date)) for delayed orders only.
-
-Canonical templates (adapt as needed; preserve the aggregate placement):
-
-[Single supplier on-time rate]
-SELECT
-    s.name AS supplier_name,
-    ROUND(
-        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0
-        / NULLIF(COUNT(p.id), 0),
-        4
-    ) AS on_time_rate,
-    COUNT(p.id) AS total_orders
-FROM suppliers s
-JOIN purchase_orders p ON p.supplier_id = s.id
-WHERE LOWER(s.name) LIKE LOWER('%alpha electronics%')
-GROUP BY s.id, s.name;
-
-[Side-by-side comparison of multiple suppliers]
-SELECT
-    s.name AS supplier_name,
-    ROUND(
-        SUM(CASE WHEN p.delivery_date <= p.due_date THEN 1 ELSE 0 END) * 1.0
-        / NULLIF(COUNT(p.id), 0),
-        4
-    ) AS on_time_rate,
-    COUNT(p.id) AS total_orders
-FROM suppliers s
-JOIN purchase_orders p ON p.supplier_id = s.id
-WHERE LOWER(s.name) LIKE LOWER('%alpha%')
-   OR LOWER(s.name) LIKE LOWER('%beta%')
-GROUP BY s.id, s.name
-ORDER BY on_time_rate DESC;
+Rules:
+- Only use tables/columns above. Supplier IDs look like SUP001.
+- Return exactly one SELECT query. No markdown or backticks.
+- Use GROUP BY when aggregating per supplier.
+- Use NULLIF to guard division by zero.
 
 User question:
 {question}
@@ -250,17 +170,18 @@ Fix the SQL while keeping the original intent. Common fixes:
 - Use `NULLIF(COUNT(*), 0)` to guard against division by zero.
 
 Database schema (do not invent tables/columns):
-suppliers(id INTEGER, name TEXT, country TEXT, is_strategic INTEGER)
-purchase_orders(id INTEGER, supplier_id INTEGER, material TEXT, qty INTEGER, due_date TEXT, delivery_date TEXT)
+suppliers(supplier_id, supplier_name_anonymized, country, category_level_2, kraljic_quadrant, risk_level, annual_spend_eur)
+delivery_events(supplier_id, delivery_delay_days, on_time_flag, actual_delivery_date)
+quality_events(supplier_id, defect_rate, severity)
+vendor_rating(supplier_id, period, final_vendor_rating_score, rating_class)
+documents(supplier_id, document_type, expiry_date, document_status)
+esg_assessments(supplier_id, final_esg_score, missing_or_expired_documents)
 
 Return ONLY the corrected SELECT query, no markdown, no backticks, no explanation.
 """
 
 
-KPI_ANSWER_PROMPT = """You are a supply chain performance analyst.
-
-Your task:
-- Interpret KPI query results and explain them to a supply chain manager.
+KPI_ANSWER_PROMPT = """You are a supply chain performance analyst for a Ratti-style procurement demo.
 
 User Question:
 {question}
@@ -274,18 +195,32 @@ Query Result (JSON list):
 Evidence Contract:
 {evidence}
 
-Guidelines:
-1. Explain the result in plain language suitable for business users (e.g., on-time delivery rate, order counts, supplier performance).
-2. Comment on which suppliers perform well or poorly (if applicable).
-3. Always state the metric definition, formula, time range, row count, and sample size from the Evidence Contract.
-4. If `is_sample_sufficient` is false, explicitly say the sample is below the recommended threshold and the result is directional only.
-5. Do not invent numbers outside Query Result.
-6. Limit the response to 6-8 concise sentences.
-7. Add a final line: "Evidence: SQL query executed."
-8. Respond in {response_language_instruction}.
+Format your answer with EXACTLY these markdown section headers (translate headers to the response language if needed):
+
+## Answer Summary
+2-3 sentences with the main takeaway. If multiple suppliers, name best and worst performers with numbers.
+
+## Key Findings
+Numbered list (3-5 bullets) with specific metrics from the query result. Include ranges when useful.
+
+## Evidence
+- SQL executed successfully (yes/no)
+- Rows returned: N
+- Period / time range
+- Data source: anonymized Ratti demo database · ratti_copilot_demo.db
+
+## Limitations
+State this is an anonymized synthetic demo dataset for product prototyping — NOT production data.
+Never say "sample size is sufficient" or "样本量充足". Say "demo sample of N supplier records" instead.
+Final supplier decisions require buyer validation.
+
+Rules:
+- Use ONLY numbers from Query Result.
+- Do not invent suppliers or metrics.
+- Respond in {response_language_instruction}.
 """
 
-SCENARIO_ANALYSIS_PROMPT = """You are a supply chain risk manager.
+SCENARIO_ANALYSIS_PROMPT = """You are a supply chain risk manager for a Ratti supplier lifecycle demo.
 
 Scenario Description:
 {question}
@@ -293,20 +228,66 @@ Scenario Description:
 Extracted Scenario Parameters:
 {scenario_spec}
 
-Related Orders or Impact Data:
+Strict-match query results (JSON):
 {impact_rows}
+
+Relaxed / fallback query results (JSON):
+{relaxed_rows}
 
 Verified Database Facts:
 {verified_facts}
 
-Please:
-1. Use two sections exactly: "Verified facts" and "Recommendations".
-2. In "Verified facts", only summarize queried database facts: affected suppliers, countries, order count, total quantity, and scenario parameters.
-3. In "Recommendations", provide 3-5 actionable mitigation recommendations (e.g., increase safety stock, pre-build inventory, activate backup suppliers, joint risk review with strategic suppliers).
-4. Do not mix facts and recommendations.
-5. Conclude with a note that this is a demo analysis based on sample data.
+Format with EXACTLY these markdown section headers (translate to response language if needed):
 
-Answer in {response_language_instruction}, concise and structured as a short management summary.
+## Strict Match
+Summarize strict-match SQL results. If empty, say clearly that no suppliers matched all criteria.
+
+## Relaxed Check
+If strict match is empty but relaxed rows exist, list high-risk or related suppliers from relaxed check.
+If both empty, say demo database has no matching records for this criteria.
+
+## Recommended Actions
+3-5 numbered buyer actions. If human approval is required, state AI recommends only — manager must decide.
+
+## Limitations
+Anonymized synthetic Ratti demo data · ratti_copilot_demo.db. Not production risk decisions.
+
+Rules:
+- Do not invent suppliers not in the JSON.
+- Respond in {response_language_instruction}.
+"""
+
+VENDOR_RATING_PROMPT = """You are a procurement analyst explaining vendor ratings.
+
+User question:
+{question}
+
+Vendor rating data (JSON):
+{rating_rows}
+
+Supporting KPI / risk context (JSON):
+{support_rows}
+
+Format with EXACTLY these markdown section headers (translate to response language if needed):
+
+## Rating Check
+If the user cited a wrong rating class (e.g. asked about C but data shows B), correct them first with data.
+
+## Score Breakdown
+List final score, operational score, risk inverse score, ESG score, and weights if present.
+
+## Main Drivers
+3-4 numbered reasons using ONLY provided data (delivery, quality, ESG, risk).
+
+## Recommended Action
+Use suggested_action from data when present; otherwise give a buyer-appropriate next step.
+
+## Limitations
+Anonymized synthetic Ratti demo data · ratti_copilot_demo.db. Status changes require human approval.
+
+Rules:
+- Do not invent numbers.
+- Respond in {response_language_instruction}.
 """
 
 HYBRID_QA_PROMPT = """You are a supply chain copilot answering a question that requires BOTH policy/contract evidence AND KPI data.

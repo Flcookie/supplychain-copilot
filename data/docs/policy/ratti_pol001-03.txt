@@ -1,0 +1,7 @@
+## Supplier Qualification Procedure — Qualification
+
+Suppliers that pass pre-qualification receive an SAP supplier code and enter category-based qualification through FORM2. FORM2 questions depend on first-tier and second-tier procurement category.
+
+chunk_id: POL001-03
+doc_id: 
+source_type: Synthetic policy chunk derived from Ratti project report

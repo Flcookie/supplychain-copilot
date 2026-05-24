@@ -1,0 +1,7 @@
+## Vendor Rating Guideline — Dimensions
+
+The proposed vendor rating model combines Operational Performance, Supply Risk Exposure and ESG & Sustainability. For yarn suppliers, suggested weights are Operational Performance 45%, Supply Risk Exposure 35% and ESG & Sustainability 20%.
+
+chunk_id: POL004-01
+doc_id: 
+source_type: Synthetic policy chunk derived from Ratti project report
