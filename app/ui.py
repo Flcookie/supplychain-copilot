@@ -6,8 +6,6 @@ import time
 
 import streamlit as st
 
-from core.config import LLM_MODEL, EMBEDDING_MODEL, PINECONE_INDEX_NAME
-
 from core.demo_constants import RATTI_DATA_SNAPSHOT
 
 st.markdown(
@@ -100,8 +98,6 @@ I18N = {
         "sidebar_title": "### Supplier Lifecycle Copilot",
         "sidebar_desc": """
 
-        **AI decision-support for Ratti-style supplier management** — LangGraph + RAG + NL2SQL.
-
         **Core capabilities:**
 
         1. Supplier qualification checklist
@@ -114,17 +110,10 @@ I18N = {
 
         5. Vendor rating explanation
 
-        **Data:** {data_snapshot}
-
-        Anonymized synthetic dataset based on Ratti supplier management logic. No confidential supplier-level data is used.
-
         """,
         "scenario_templates": "Scenario templates",
         "human_approval_warning": "Human approval required — AI recommends only; buyer/manager must confirm status or blacklist decisions.",
-        "system_info": "**System**",
-        "try_asking": "Pick a scenario template or ask freely about qualification, policies, KPIs, risk, or ratings.",
         "title_tagline": "AI decision-support system for Ratti-style supplier management",
-        "data_note": "Anonymized synthetic dataset · no confidential supplier data",
         "source_expander": "Referenced documents",
         "debug_expander": "Debug (router & trace)",
         "evidence_expander": "Evidence (SQL & data)",
@@ -156,8 +145,6 @@ I18N = {
         "sidebar_title": "### Supplier Lifecycle Copilot",
         "sidebar_desc": """
 
-        **面向 Ratti 供应商管理场景的 AI 决策辅助** — LangGraph + RAG + NL2SQL。
-
         **核心能力：**
 
         1. 供应商准入清单
@@ -170,17 +157,10 @@ I18N = {
 
         5. Vendor Rating 解释
 
-        **数据：** {data_snapshot}
-
-        基于 Ratti 供应商管理逻辑的脱敏合成数据，不含任何机密供应商级数据。
-
         """,
         "scenario_templates": "场景模板",
         "human_approval_warning": "需人工确认 — AI 仅可建议，状态变更或黑名单须采购经理审批。",
-        "system_info": "**系统**",
-        "try_asking": "选择场景模板，或直接提问准入、政策、KPI、风险、评分等问题。",
         "title_tagline": "面向 Ratti 供应商管理场景的 AI 决策辅助系统",
-        "data_note": "脱敏合成演示数据 · 不含机密供应商数据",
         "source_expander": "引用文档",
         "debug_expander": "调试信息（路由与追踪）",
         "evidence_expander": "证据（SQL 与数据）",
@@ -230,7 +210,7 @@ with st.sidebar:
 
     st.markdown(t["sidebar_title"])
 
-    st.markdown(t["sidebar_desc"].format(data_snapshot=RATTI_DATA_SNAPSHOT))
+    st.markdown(t["sidebar_desc"])
 
     st.markdown("---")
 
@@ -247,20 +227,6 @@ with st.sidebar:
         st.session_state.last_demo_label = selected_demo
 
         st.session_state.pending_demo_question = demo_question
-
-    st.markdown("---")
-
-    st.markdown(t["system_info"])
-
-    st.markdown(f"- LLM: `{LLM_MODEL}`")
-
-    st.markdown(f"- Embedding: `{EMBEDDING_MODEL}`")
-
-    st.markdown(f"- Vector Index: `{PINECONE_INDEX_NAME}`")
-
-    st.markdown("---")
-
-    st.caption(t["try_asking"])
 
 # ---------------- Session State ----------------
 
@@ -284,7 +250,6 @@ if "last_demo_label" not in st.session_state:
 # Use native widgets — indented HTML inside st.markdown() is parsed as a code block.
 st.title("Supplier Lifecycle Copilot")
 st.markdown(t["title_tagline"])
-st.caption(f"{t['data_note']} · {RATTI_DATA_SNAPSHOT}")
 
 
 _INTENT_LABELS = {
