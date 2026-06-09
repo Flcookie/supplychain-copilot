@@ -11,7 +11,6 @@ export function CopilotDrawer() {
     setOpen,
     messages,
     loading,
-    pageContext,
     scenarios,
     loadScenarios,
     sendMessage,
@@ -47,37 +46,28 @@ export function CopilotDrawer() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-50 rounded-full bg-[#553c9a] px-5 py-3 text-sm font-semibold text-white shadow-lg hover:bg-[#44307a]"
+        className="btn btn-fab btn-primary fixed bottom-6 right-6 z-50 shadow-md"
       >
         {L.open}
       </button>
     );
   }
 
-  const ctxLabel = [
-    pageContext.page,
-    pageContext.supplierName,
-    pageContext.reviewTaskId,
-  ]
-    .filter(Boolean)
-    .join(" · ");
-
   return (
-    <aside className="fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col border-l border-slate-200 bg-white shadow-xl">
-      <header className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
-        <div>
-          <h2 className="font-semibold text-[#1e3a5f]">{L.title}</h2>
-          {ctxLabel ? (
-            <p className="text-xs text-slate-500">
-              {L.context}: {ctxLabel}
-            </p>
-          ) : null}
-        </div>
+    <aside
+      className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[26rem] flex-col border-l"
+      style={{ background: "var(--surface)", borderColor: "var(--line-strong)" }}
+    >
+      <header
+        className="flex items-center justify-between border-b px-5 py-4"
+        style={{ borderColor: "var(--line)" }}
+      >
+        <h2 className="font-serif text-xl font-normal">{L.title}</h2>
         <div className="flex items-center gap-2">
           <select
             value={lang}
             onChange={(e) => setLang(e.target.value as "en" | "zh")}
-            className="rounded border border-slate-200 px-2 py-1 text-xs"
+            className="field w-auto py-1 text-xs"
           >
             <option value="en">EN</option>
             <option value="zh">中文</option>
@@ -85,15 +75,15 @@ export function CopilotDrawer() {
           <button
             type="button"
             onClick={() => setOpen(false)}
-            className="text-sm text-slate-500 hover:text-slate-800"
+            className="btn btn-ghost py-1"
           >
             {L.close}
           </button>
         </div>
       </header>
 
-      <div className="border-b border-slate-100 px-4 py-2">
-        <label className="text-xs font-medium text-slate-600">{L.scenarios}</label>
+      <div className="border-b px-5 py-3" style={{ borderColor: "var(--line)" }}>
+        <label className="panel-title">{L.scenarios}</label>
         <select
           value={scenario}
           onChange={(e) => {
@@ -101,7 +91,7 @@ export function CopilotDrawer() {
             setScenario(val);
             onScenario(val);
           }}
-          className="mt-1 w-full rounded border border-slate-200 px-2 py-1.5 text-sm"
+          className="field mt-1"
         >
           <option value="">—</option>
           {scenarios.map((s) => (
@@ -112,28 +102,34 @@ export function CopilotDrawer() {
         </select>
       </div>
 
-      <div className="flex-1 space-y-3 overflow-y-auto px-4 py-3">
+      <div className="flex-1 space-y-3 overflow-y-auto px-5 py-4">
         {messages.map((m) => (
           <MessageBubble key={m.id} message={m} lang={lang} />
         ))}
         {loading ? (
-          <p className="text-center text-sm text-slate-500">{L.analyzing}</p>
+          <p className="text-center text-sm" style={{ color: "var(--muted)" }}>
+            {L.analyzing}
+          </p>
         ) : null}
         <div ref={bottomRef} />
       </div>
 
-      <form onSubmit={onSubmit} className="border-t border-slate-200 p-4">
+      <form
+        onSubmit={onSubmit}
+        className="border-t p-5"
+        style={{ borderColor: "var(--line)", background: "var(--paper)" }}
+      >
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={L.placeholder}
           rows={2}
-          className="w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[#553c9a] focus:outline-none"
+          className="field resize-none"
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="mt-2 w-full rounded-lg bg-[#1e3a5f] py-2 text-sm font-medium text-white disabled:opacity-50"
+          className="btn btn-primary btn-block mt-2"
         >
           {L.send}
         </button>

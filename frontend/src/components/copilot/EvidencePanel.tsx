@@ -1,4 +1,4 @@
-import { intentLabels, t } from "../../i18n";
+import { t } from "../../i18n";
 import type { ChatMessage, Lang } from "../../types/api";
 
 function SqlBlock({ sql }: { sql: Record<string, unknown> }) {
@@ -8,7 +8,8 @@ function SqlBlock({ sql }: { sql: Record<string, unknown> }) {
         k === "query" && typeof v === "string" ? (
           <pre
             key={k}
-            className="overflow-x-auto rounded bg-slate-900 p-2 text-xs text-slate-100"
+            className="overflow-x-auto p-2 text-xs"
+            style={{ background: "var(--ink)", color: "#e8e2d9" }}
           >
             {v}
           </pre>
@@ -32,11 +33,10 @@ export function EvidencePanel({
   const L = t(lang).copilot;
   const evidence = message.evidence || {};
   const sql = (evidence.sql as Record<string, unknown>) || {};
-  const evSources = (evidence.sources as Record<string, unknown>[]) || [];
   const verified = (evidence.verified_facts as string[]) || [];
   const recommendations = (evidence.recommendations as string[]) || [];
   const hasEvidence =
-    Object.keys(sql).length || evSources.length || verified.length;
+    Object.keys(sql).length || verified.length || recommendations.length;
 
   const hasDebug =
     message.route_info ||
@@ -48,19 +48,17 @@ export function EvidencePanel({
   return (
     <div className="mt-3 space-y-2">
       {hasEvidence ? (
-        <details className="rounded border border-slate-200 bg-white text-sm">
-          <summary className="cursor-pointer px-3 py-2 font-medium">
-            {L.evidence}
-          </summary>
-          <div className="border-t border-slate-100 px-3 py-2">
+        <details className="panel text-sm">
+          <summary className="cursor-pointer px-3 py-2 font-medium">{L.evidence}</summary>
+          <div className="border-t px-3 py-2" style={{ borderColor: "var(--line)" }}>
             {Object.keys(sql).length > 0 && <SqlBlock sql={sql} />}
             {verified.map((f) => (
-              <p key={f} className="text-slate-700">
-                • {f}
+              <p key={f} style={{ color: "var(--ink-soft)" }}>
+                · {f}
               </p>
             ))}
             {recommendations.map((r) => (
-              <p key={r} className="text-slate-700">
+              <p key={r} style={{ color: "var(--ink-soft)" }}>
                 → {r}
               </p>
             ))}
@@ -69,18 +67,14 @@ export function EvidencePanel({
       ) : null}
 
       {hasDebug ? (
-        <details className="rounded border border-slate-200 bg-white text-sm">
-          <summary className="cursor-pointer px-3 py-2 font-medium">
-            {L.debug}
-          </summary>
-          <div className="border-t border-slate-100 px-3 py-2">
+        <details className="panel text-sm">
+          <summary className="cursor-pointer px-3 py-2 font-medium">{L.debug}</summary>
+          <div className="border-t px-3 py-2" style={{ borderColor: "var(--line)" }}>
             {message.route_info ? (
-              <pre className="overflow-x-auto text-xs">
-                {JSON.stringify(message.route_info, null, 2)}
-              </pre>
+              <pre className="overflow-x-auto text-xs">{JSON.stringify(message.route_info, null, 2)}</pre>
             ) : null}
             {message.sources?.map((src, i) => (
-              <p key={i} className="text-xs text-slate-600">
+              <p key={i} className="text-xs" style={{ color: "var(--muted)" }}>
                 [{i + 1}] {String(src.source || "Policy")}:{" "}
                 {String(src.content || "").slice(0, 200)}
               </p>
@@ -105,32 +99,24 @@ export function MessageBubble({
   if (isUser) {
     return (
       <div className="flex justify-end">
-        <div className="max-w-[90%] rounded-lg bg-[#1e3a5f] px-3 py-2 text-sm text-white">
+        <div
+          className="max-w-[90%] px-3 py-2 text-sm"
+          style={{ background: "var(--ink)", color: "var(--sidebar-active)" }}
+        >
           {message.content}
         </div>
       </div>
     );
   }
 
-  const intent = message.route_info?.intent || message.intent || "general";
-  const label = intentLabels[lang][intent] || intentLabels[lang].general;
-  const conf = message.route_info?.confidence;
-
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-3 text-sm shadow-sm">
-      <div className="mb-2 flex flex-wrap items-center gap-2 text-xs text-slate-500">
-        <span className="font-semibold text-slate-700">{L.currentTask}</span>
-        <span className="rounded-full bg-purple-100 px-2 py-0.5 text-purple-800">
-          {label}
-        </span>
-        <span>
-          {L.intent}: {intent}
-          {typeof conf === "number" ? ` · ${L.confidence}: ${conf.toFixed(2)}` : ""}
-        </span>
-      </div>
-      <div className="markdown-body whitespace-pre-wrap">{message.content}</div>
+    <div className="panel p-3 text-sm">
+      <div className="whitespace-pre-wrap leading-relaxed">{message.content}</div>
       {message.route_info?.human_approval_required ? (
-        <p className="mt-2 rounded border border-amber-200 bg-amber-50 px-2 py-1 text-xs text-amber-900">
+        <p
+          className="mt-2 border px-2 py-1 text-xs"
+          style={{ borderColor: "var(--warn)", color: "var(--warn)", background: "#f5efe3" }}
+        >
           {L.humanApproval}
         </p>
       ) : null}

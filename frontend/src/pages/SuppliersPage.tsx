@@ -10,11 +10,20 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { fetchSupplier, fetchSuppliers, sendChat } from "../api/client";
+import { fetchSupplier, fetchSuppliers } from "../api/client";
 import { useCopilot } from "../context/CopilotContext";
 import { t } from "../i18n";
 import type { Supplier } from "../types/api";
-import { AiPrimaryButton, OtdCell, RatingBadge, RiskBadge } from "../components/shared/UiBits";
+import {
+  ActionCell,
+  ButtonBar,
+  DataTable,
+  ListPanel,
+  OtdCell,
+  PageHeader,
+  RatingBadge,
+  RiskBadge,
+} from "../components/shared/UiBits";
 
 export function SuppliersPage() {
   const { lang } = useCopilot();
@@ -31,7 +40,11 @@ export function SuppliersPage() {
   }, [searchParams]);
 
   useEffect(() => {
-    fetchSuppliers({ search: search || undefined, category: category || undefined, risk_level: risk || undefined })
+    fetchSuppliers({
+      search: search || undefined,
+      category: category || undefined,
+      risk_level: risk || undefined,
+    })
       .then((r) => setItems(r.items))
       .catch(console.error);
   }, [search, category, risk]);
@@ -42,21 +55,21 @@ export function SuppliersPage() {
   );
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-bold text-[#1e3a5f]">{L.title}</h1>
+    <div>
+      <PageHeader title={L.title} />
 
-      <div className="flex flex-wrap gap-3">
+      <div className="toolbar mb-4">
         <input
           type="search"
           placeholder={L.search}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
+          className="field field-grow"
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
+          className="field"
         >
           <option value="">{L.filters.category}</option>
           {categories.map((c) => (
@@ -68,67 +81,66 @@ export function SuppliersPage() {
         <select
           value={risk}
           onChange={(e) => setRisk(e.target.value)}
-          className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
+          className="field"
         >
           <option value="">{L.filters.risk}</option>
-          <option value="high">high</option>
-          <option value="medium">medium</option>
-          <option value="low">low</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
         </select>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-        <table className="min-w-full text-sm">
-          <thead className="border-b bg-slate-50 text-left text-slate-600">
+      <ListPanel>
+        <DataTable>
+          <thead>
             <tr>
-              <th className="px-4 py-3">Supplier</th>
-              <th className="px-4 py-3">Category</th>
-              <th className="px-4 py-3">Rating</th>
-              <th className="px-4 py-3">OTD</th>
-              <th className="px-4 py-3">Risk</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3" />
+              <th>Supplier</th>
+              <th>Category</th>
+              <th>Rating</th>
+              <th>OTD</th>
+              <th>Risk</th>
+              <th>Status</th>
+              <th className="col-actions">Action</th>
             </tr>
           </thead>
           <tbody>
             {items.map((s) => (
-              <tr key={s.id} className="border-b border-slate-100">
-                <td className="px-4 py-3 font-medium">{s.name}</td>
-                <td className="px-4 py-3">{s.category}</td>
-                <td className="px-4 py-3">
+              <tr key={s.id}>
+                <td>
+                  <div className="font-medium">{s.name}</div>
+                  <div className="text-xs tabular-nums" style={{ color: "var(--muted)" }}>
+                    {s.id}
+                  </div>
+                </td>
+                <td style={{ color: "var(--ink-soft)" }}>{s.category}</td>
+                <td>
                   <RatingBadge rating={s.rating} />
                 </td>
-                <td className="px-4 py-3">
+                <td>
                   <OtdCell rate={s.otd_rate} />
                 </td>
-                <td className="px-4 py-3">
+                <td>
                   <RiskBadge level={s.risk_level} />
                 </td>
-                <td className="px-4 py-3">{s.status}</td>
-                <td className="px-4 py-3">
-                  <Link
-                    to={`/suppliers/${s.id}`}
-                    className="text-[#1e3a5f] underline"
-                  >
+                <td style={{ color: "var(--muted)" }}>{s.status}</td>
+                <ActionCell>
+                  <Link to={`/suppliers/${s.id}`} className="btn btn-sm btn-primary">
                     {L.details}
                   </Link>
-                </td>
+                </ActionCell>
               </tr>
             ))}
           </tbody>
-        </table>
-      </div>
+        </DataTable>
+      </ListPanel>
     </div>
   );
 }
 
 export function SupplierDetailPage({ supplierId }: { supplierId: string }) {
-  const { lang, setPageContext, setOpen, openWithQuestion, sendMessage } =
-    useCopilot();
+  const { lang, setPageContext, openWithQuestion } = useCopilot();
   const L = t(lang).suppliers;
   const [supplier, setSupplier] = useState<Supplier | null>(null);
-  const [aiSummary, setAiSummary] = useState<string | null>(null);
-  const [loadingAi, setLoadingAi] = useState(false);
 
   useEffect(() => {
     fetchSupplier(supplierId).then(setSupplier);
@@ -136,22 +148,15 @@ export function SupplierDetailPage({ supplierId }: { supplierId: string }) {
 
   useEffect(() => {
     if (!supplier) return;
-    setPageContext({
+    setPageContext((prev) => ({
+      ...prev,
       page: "supplier-detail",
       supplierId: supplier.id,
       supplierName: supplier.name,
-    });
-    setLoadingAi(true);
-    sendChat({
-      question: `[Context: supplier ${supplier.id} ${supplier.name}]\nWhy did supplier ${supplier.id} receive a ${supplier.rating} rating?`,
-      language: lang,
-    })
-      .then((r) => setAiSummary(r.answer))
-      .catch(console.error)
-      .finally(() => setLoadingAi(false));
-  }, [supplier, lang, setPageContext]);
+    }));
+  }, [supplier, setPageContext]);
 
-  if (!supplier) return <p>{t(lang).common.loading}</p>;
+  if (!supplier) return <p className="page-meta">{t(lang).common.loading}</p>;
 
   const trend = supplier.kpi_trend || {};
   const chartData = (trend.months || []).map((m, i) => ({
@@ -161,99 +166,117 @@ export function SupplierDetailPage({ supplierId }: { supplierId: string }) {
   }));
 
   return (
-    <div className="space-y-4">
-      <Link to="/suppliers" className="text-sm text-[#1e3a5f] underline">
+    <div>
+      <Link to="/suppliers" className="link mb-4 inline-block text-sm">
         ← {L.back}
       </Link>
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-bold text-[#1e3a5f]">{supplier.name}</h1>
-        <span className="text-slate-500">{supplier.id}</span>
+
+      <PageHeader
+        title={supplier.name}
+        meta={`${supplier.id} · ${supplier.category} · ${supplier.country}`}
+      />
+
+      <div className="mb-4 flex flex-wrap items-center gap-2">
         <RatingBadge rating={supplier.rating} />
         <RiskBadge level={supplier.risk_level} />
       </div>
-      <p className="text-slate-600">
-        {supplier.category} · {supplier.country}
-      </p>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="mb-3 font-semibold">Profile</h2>
-          <dl className="grid grid-cols-2 gap-2 text-sm">
-            <dt className="text-slate-500">Rating</dt>
-            <dd>{supplier.rating}</dd>
-            <dt className="text-slate-500">OTD</dt>
-            <dd>{(supplier.otd_rate * 100).toFixed(1)}%</dd>
-            <dt className="text-slate-500">Contract expiry</dt>
-            <dd>{supplier.contract_expiry}</dd>
-            <dt className="text-slate-500">Last review</dt>
-            <dd>{supplier.last_review}</dd>
-          </dl>
+      <section className="page-section">
+        <div className="page-section-head">
+          <h2 className="panel-title">Profile</h2>
         </div>
+        <ListPanel>
+          <DataTable>
+            <tbody>
+              <tr>
+                <td style={{ color: "var(--muted)", width: "12rem" }}>Contract expiry</td>
+                <td>{supplier.contract_expiry}</td>
+              </tr>
+              <tr>
+                <td style={{ color: "var(--muted)" }}>Last review</td>
+                <td>{supplier.last_review}</td>
+              </tr>
+              <tr>
+                <td style={{ color: "var(--muted)" }}>Status</td>
+                <td>{supplier.status}</td>
+              </tr>
+            </tbody>
+          </DataTable>
+        </ListPanel>
+      </section>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="mb-3 font-semibold">KPI trend (6 mo)</h2>
+      <section className="page-section">
+        <div className="page-section-head">
+          <h2 className="panel-title">KPI trend</h2>
+        </div>
+        <ListPanel className="panel-pad">
           {chartData.length ? (
             <ResponsiveContainer width="100%" height={220}>
               <LineChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis yAxisId="left" />
-                <YAxis yAxisId="right" orientation="right" />
-                <Tooltip />
+                <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" />
+                <XAxis dataKey="month" tick={{ fill: "var(--muted)", fontSize: 12 }} />
+                <YAxis yAxisId="left" tick={{ fill: "var(--muted)", fontSize: 12 }} />
+                <YAxis yAxisId="right" orientation="right" tick={{ fill: "var(--muted)", fontSize: 12 }} />
+                <Tooltip
+                  contentStyle={{
+                    background: "var(--surface)",
+                    border: "1px solid var(--line)",
+                    borderRadius: 0,
+                  }}
+                />
                 <Legend />
                 <Line
                   yAxisId="left"
                   type="monotone"
                   dataKey="otd"
-                  stroke="#1e3a5f"
+                  stroke="var(--ink)"
+                  strokeWidth={1.5}
+                  dot={false}
                   name="OTD %"
                 />
                 <Line
                   yAxisId="right"
                   type="monotone"
                   dataKey="defect"
-                  stroke="#dd6b20"
+                  stroke="var(--accent)"
+                  strokeWidth={1.5}
+                  dot={false}
                   name="Defect %"
                 />
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <p className="text-sm text-slate-500">No trend data</p>
+            <p className="text-sm" style={{ color: "var(--muted)" }}>
+              No trend data
+            </p>
           )}
-        </div>
-      </div>
+        </ListPanel>
+      </section>
 
-      <div className="rounded-xl border-2 border-[#553c9a]/30 bg-gradient-to-br from-blue-50 to-purple-50 p-5">
-        <h2 className="mb-2 font-semibold text-[#553c9a]">🤖 {L.aiAnalysis}</h2>
-        {loadingAi ? (
-          <p className="text-sm text-slate-600">{t(lang).common.loading}</p>
-        ) : (
-          <p className="whitespace-pre-wrap text-sm">{aiSummary}</p>
-        )}
-        <div className="mt-4 flex flex-wrap gap-2">
-          <AiPrimaryButton
-            label={L.askMore}
-            sublabel="Follow-up in Copilot"
-            onClick={() => {
-              setOpen(true);
-              void sendMessage(
-                `What actions should we take for ${supplier.name}?`,
-              );
-            }}
-          />
-          <button
-            type="button"
-            className="rounded-lg bg-[#1e3a5f] px-3 py-1 text-xs text-white"
-            onClick={() =>
-              openWithQuestion(
-                `Start formal review for ${supplier.id} ${supplier.name}`,
-              )
-            }
-          >
-            {L.startReview}
-          </button>
-        </div>
-      </div>
+      <ButtonBar>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() =>
+            openWithQuestion(
+              `Why did supplier ${supplier.id} receive a ${supplier.rating} rating? What actions should we take?`,
+            )
+          }
+        >
+          {L.askMore}
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() =>
+            openWithQuestion(
+              `Start formal review for ${supplier.id} ${supplier.name}. Summarize risk and recommend next steps.`,
+            )
+          }
+        >
+          {L.startReview}
+        </button>
+      </ButtonBar>
     </div>
   );
 }

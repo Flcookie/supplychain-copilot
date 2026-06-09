@@ -3,36 +3,51 @@ import { useEffect } from "react";
 import { CopilotDrawer } from "../copilot/CopilotDrawer";
 import { useCopilot } from "../../context/CopilotContext";
 import { Sidebar } from "./Sidebar";
-import { TopBar } from "./TopBar";
+import type { PageContext } from "../../types/api";
 
-const pageNames: Record<string, string> = {
-  "/": "home",
-  "/suppliers": "suppliers",
-  "/qualification": "qualification",
-  "/review": "review-queue",
-  "/policy": "policy",
-};
+function resolvePage(pathname: string): Pick<PageContext, "page"> {
+  if (pathname === "/") return { page: "home" };
+  if (pathname.startsWith("/suppliers/")) return { page: "supplier-detail" };
+  if (pathname === "/suppliers") return { page: "suppliers" };
+  if (pathname === "/qualification") return { page: "qualification" };
+  if (pathname === "/review") return { page: "review-queue" };
+  if (pathname === "/policy") return { page: "policy" };
+  return { page: pathname.slice(1) || "home" };
+}
 
 export function AppShell() {
   const location = useLocation();
   const { setPageContext, open } = useCopilot();
 
   useEffect(() => {
-    const base = pageNames[location.pathname] || location.pathname.slice(1);
-    setPageContext({ page: base });
+    const { page } = resolvePage(location.pathname);
+    setPageContext((prev) => {
+      const next: PageContext = { ...prev, page };
+      if (page !== "supplier-detail") {
+        delete next.supplierId;
+        delete next.supplierName;
+      }
+      if (page !== "review-queue") {
+        delete next.reviewTaskId;
+      }
+      if (page !== "qualification") {
+        delete next.extraPrefix;
+      }
+      return next;
+    });
   }, [location.pathname, setPageContext]);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <TopBar />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main
-          className={`flex-1 overflow-y-auto p-6 transition-[margin] ${open ? "mr-96" : ""}`}
-        >
+    <div className="flex min-h-screen">
+      <Sidebar />
+      <main
+        className={`flex-1 overflow-y-auto px-8 py-7 transition-[margin] ${open ? "mr-[26rem]" : ""}`}
+        style={{ background: "var(--paper)" }}
+      >
+        <div className="mx-auto max-w-6xl">
           <Outlet />
-        </main>
-      </div>
+        </div>
+      </main>
       <CopilotDrawer />
     </div>
   );

@@ -10,12 +10,12 @@ export const labels = {
       policy: "Policy",
     },
     copilot: {
-      title: "Copilot",
-      open: "Ask Copilot",
+      title: "Assistant",
+      open: "Open assistant",
       close: "Close",
       context: "Context",
       scenarios: "Scenario templates",
-      placeholder: "Ask about qualification, policies, KPIs, risk, or ratings...",
+      placeholder: "Ask about suppliers, policies, KPIs, or risk...",
       analyzing: "Analyzing your question...",
       currentTask: "Current task",
       intent: "Intent",
@@ -28,8 +28,8 @@ export const labels = {
       send: "Send",
     },
     home: {
-      riskAlerts: "Risk Alerts — action needed today",
-      kpiSnapshot: "KPI Snapshot — Yarn Category (2025)",
+      riskAlerts: "Risk alerts",
+      kpiSnapshot: "KPI snapshot",
       viewDetails: "View details",
       startReview: "Start review",
       metricActive: "Active in portfolio",
@@ -103,7 +103,7 @@ export const labels = {
       aiPanelEmpty: "Pick a suggested question or search a policy to get started.",
       askAboutDoc: "Ask AI about this policy",
     },
-    common: { loading: "Loading...", error: "Something went wrong" },
+    common: { loading: "Loading...", error: "Something went wrong", retry: "Retry" },
   },
   zh: {
     nav: {
@@ -114,8 +114,8 @@ export const labels = {
       policy: "政策",
     },
     copilot: {
-      title: "Copilot",
-      open: "Ask Copilot",
+      title: "Assistant",
+      open: "Open assistant",
       close: "关闭",
       context: "上下文",
       scenarios: "场景模板",
@@ -131,8 +131,8 @@ export const labels = {
       send: "发送",
     },
     home: {
-      riskAlerts: "风险警报 — 今日需处理",
-      kpiSnapshot: "KPI 快照 — 纱线品类（2025）",
+      riskAlerts: "风险警报",
+      kpiSnapshot: "KPI 快照",
       viewDetails: "查看详情",
       startReview: "发起复审",
       metricActive: "在管供应商",
@@ -206,7 +206,7 @@ export const labels = {
       aiPanelEmpty: "选择推荐问题或搜索政策开始提问。",
       askAboutDoc: "Ask AI 解读此政策",
     },
-    common: { loading: "加载中...", error: "出错了" },
+    common: { loading: "加载中...", error: "出错了", retry: "重试" },
   },
 } as const;
 

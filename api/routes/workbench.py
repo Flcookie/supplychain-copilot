@@ -67,7 +67,10 @@ def get_review_queue() -> ReviewQueueResponse:
                 status=task["status"],
             )
         )
-    return ReviewQueueResponse(items=items)
+    completed = sum(
+        1 for item in items if item.status in ("in_progress", "completed")
+    )
+    return ReviewQueueResponse(items=items, completed_count=completed)
 
 
 @router.get("/policies", response_model=PolicyListResponse)

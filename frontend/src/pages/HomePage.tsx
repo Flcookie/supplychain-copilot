@@ -5,139 +5,215 @@ import { useCopilot } from "../context/CopilotContext";
 import { t } from "../i18n";
 import type { DashboardSummary } from "../types/api";
 import {
+  ActionCell,
   AiPrimaryButton,
-  KpiBar,
-  MetricCard,
-  NextStepBanner,
-  severityClass,
+  DataTable,
+  KpiTableRow,
+  ListPanel,
+  PageHeader,
+  severityStyle,
 } from "../components/shared/UiBits";
+
+const EMPTY_KPI = {
+  otd_rate: 0,
+  otd_target: 0,
+  defect_rate: 0,
+  defect_target: 0,
+  lead_time_days: 0,
+  lead_time_target: 0,
+};
 
 export function HomePage() {
   const { lang, openWithQuestion } = useCopilot();
   const L = t(lang).home;
   const [data, setData] = useState<DashboardSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const load = () => {
+    setLoading(true);
+    setError(null);
+    fetchDashboard()
+      .then((res) => setData(res))
+      .catch((e) => setError(String(e)))
+      .finally(() => setLoading(false));
+  };
 
   useEffect(() => {
-    fetchDashboard()
-      .then(setData)
-      .catch((e) => setError(String(e)));
+    load();
   }, []);
 
-  if (error) return <p className="text-red-600">{error}</p>;
-  if (!data) return <p>{t(lang).common.loading}</p>;
+  if (loading) return <p className="page-meta">{t(lang).common.loading}</p>;
 
-  const kpi = data.yarn_kpi_snapshot;
+  if (error || !data) {
+    return (
+      <div>
+        <PageHeader title={t(lang).common.error} meta={error ?? undefined} />
+        <ButtonBarRetry onRetry={load} label={t(lang).common.retry} />
+      </div>
+    );
+  }
+
+  const alerts = data.risk_alerts ?? [];
+  const kpi = { ...EMPTY_KPI, ...(data.yarn_kpi_snapshot ?? {}) };
+
+  const summaryRows = [
+    { label: "Active suppliers", value: data.active_suppliers, to: "/suppliers" },
+    {
+      label: "At risk",
+      value: data.at_risk_suppliers,
+      to: "/suppliers?risk=high",
+      warn: true,
+    },
+    {
+      label: "Reviews due",
+      value: data.reviews_due_this_month,
+      to: "/review",
+      warn: true,
+    },
+    {
+      label: "Open qualifications",
+      value: data.open_qualifications,
+      to: "/qualification",
+    },
+  ];
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-[#1e3a5f]">{data.greeting}</h1>
-        <p className="text-slate-500">{data.period_label}</p>
-      </div>
+    <div>
+      <PageHeader title={data.greeting} meta={data.period_label} />
 
-      <NextStepBanner
-        title={L.nextStepTitle}
-        description={L.nextStepDesc}
-        actionLabel={L.nextStepAction}
-        to="/review"
-      />
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <MetricCard
-          label="Active Suppliers"
-          value={data.active_suppliers}
-          subtitle={L.metricActive}
-          actionHint={L.tapToView}
-          to="/suppliers"
-        />
-        <MetricCard
-          label="At-Risk Suppliers"
-          value={data.at_risk_suppliers}
-          highlight="danger"
-          subtitle={L.metricAtRisk}
-          actionHint={L.tapToView}
-          to="/suppliers?risk=high"
-        />
-        <MetricCard
-          label="Reviews Due This Month"
-          value={data.reviews_due_this_month}
-          highlight="warning"
-          subtitle={L.metricReviews}
-          actionHint={L.tapToView}
-          to="/review"
-        />
-        <MetricCard
-          label="Open Qualifications"
-          value={data.open_qualifications}
-          subtitle={L.metricQual}
-          actionHint={L.tapToView}
-          to="/qualification"
-        />
-      </div>
-
-      <section className="rounded-xl border border-slate-200 bg-white p-5">
-        <h2 className="mb-4 font-semibold">{L.riskAlerts}</h2>
-        <ul className="space-y-3">
-          {data.risk_alerts.map((a) => (
-            <li
-              key={a.supplier_id}
-              className={`flex flex-wrap items-center justify-between gap-3 rounded-lg px-4 py-3 ${severityClass(a.severity)}`}
-            >
-              <div>
-                <span
-                  className={`mr-2 rounded px-1.5 py-0.5 text-xs font-bold uppercase ${
-                    a.severity === "high"
-                      ? "bg-red-200 text-red-900"
-                      : "bg-orange-200 text-orange-900"
-                  }`}
-                >
-                  {a.severity}
-                </span>
-                <span className="text-sm font-medium text-slate-800">
-                  {a.message}
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Link
-                  to={`/suppliers/${a.supplier_id}`}
-                  className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-[#1e3a5f] hover:bg-slate-50"
-                >
-                  {L.viewDetails}
-                </Link>
-                <Link
-                  to="/review"
-                  className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-[#1e3a5f] hover:bg-slate-50"
-                >
-                  {L.startReview}
-                </Link>
-                <AiPrimaryButton
-                  label={t(lang).review.aiExplain}
-                  onClick={() => openWithQuestion(a.ask_ai_question)}
-                />
-              </div>
-            </li>
-          ))}
-        </ul>
+      <section className="page-section">
+        <div className="page-section-head">
+          <h2 className="panel-title">Overview</h2>
+        </div>
+        <ListPanel>
+          <DataTable>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Count</th>
+                <th className="col-actions">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {summaryRows.map((row) => (
+                <tr key={row.label}>
+                  <td>{row.label}</td>
+                  <td
+                    className="tabular-nums font-medium"
+                    style={{ color: row.warn ? "var(--warn)" : "var(--ink)" }}
+                  >
+                    {row.value}
+                  </td>
+                  <ActionCell>
+                    <Link to={row.to} className="btn btn-sm btn-ghost">
+                      View
+                    </Link>
+                  </ActionCell>
+                </tr>
+              ))}
+            </tbody>
+          </DataTable>
+        </ListPanel>
       </section>
 
-      <section className="rounded-xl border border-slate-200 bg-white p-5">
-        <h2 className="mb-4 font-semibold">{L.kpiSnapshot}</h2>
-        <KpiBar label="OTD Rate" value={kpi.otd_rate} target={kpi.otd_target} />
-        <KpiBar
-          label="Defect Rate"
-          value={kpi.defect_rate}
-          target={kpi.defect_target}
-          invert
-        />
-        <KpiBar
-          label="Lead Time"
-          value={kpi.lead_time_days}
-          target={kpi.lead_time_target}
-          invert
-          unit="d"
-        />
+      <section className="page-section">
+        <div className="page-section-head">
+          <h2 className="panel-title">{L.riskAlerts}</h2>
+        </div>
+        <ListPanel>
+          <DataTable>
+            <thead>
+              <tr>
+                <th>Supplier</th>
+                <th>Alert</th>
+                <th>Severity</th>
+                <th className="col-actions">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {alerts.length === 0 ? (
+                <tr>
+                  <td colSpan={4} style={{ color: "var(--muted)" }}>
+                    No open alerts
+                  </td>
+                </tr>
+              ) : (
+                alerts.map((a) => (
+                  <tr key={a.supplier_id}>
+                    <td className="tabular-nums">{a.supplier_id}</td>
+                    <td style={{ color: "var(--ink-soft)" }}>{a.message}</td>
+                    <td>
+                      <span
+                        className="text-xs font-medium uppercase"
+                        style={severityStyle(a.severity)}
+                      >
+                        {a.severity}
+                      </span>
+                    </td>
+                    <ActionCell>
+                      <Link
+                        to={`/suppliers/${a.supplier_id}`}
+                        className="btn btn-sm btn-ghost"
+                      >
+                        {L.viewDetails}
+                      </Link>
+                      <AiPrimaryButton
+                        label={t(lang).copilot.askAi}
+                        onClick={() => openWithQuestion(a.ask_ai_question)}
+                      />
+                    </ActionCell>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </DataTable>
+        </ListPanel>
       </section>
+
+      <section className="page-section">
+        <div className="page-section-head">
+          <h2 className="panel-title">{L.kpiSnapshot}</h2>
+        </div>
+        <ListPanel>
+          <DataTable>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Actual</th>
+                <th>Target</th>
+                <th>Progress</th>
+              </tr>
+            </thead>
+            <tbody>
+              <KpiTableRow label="OTD rate" value={kpi.otd_rate} target={kpi.otd_target} />
+              <KpiTableRow
+                label="Defect rate"
+                value={kpi.defect_rate}
+                target={kpi.defect_target}
+                invert
+              />
+              <KpiTableRow
+                label="Lead time"
+                value={kpi.lead_time_days}
+                target={kpi.lead_time_target}
+                invert
+                unit="d"
+              />
+            </tbody>
+          </DataTable>
+        </ListPanel>
+      </section>
+    </div>
+  );
+}
+
+function ButtonBarRetry({ onRetry, label }: { onRetry: () => void; label: string }) {
+  return (
+    <div className="btn-bar">
+      <button type="button" className="btn btn-primary" onClick={onRetry}>
+        {label}
+      </button>
     </div>
   );
 }

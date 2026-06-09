@@ -23,7 +23,7 @@ interface CopilotContextValue {
   loading: boolean;
   clarificationBase: string | null;
   pageContext: PageContext;
-  setPageContext: (ctx: PageContext) => void;
+  setPageContext: (ctx: PageContext | ((prev: PageContext) => PageContext)) => void;
   scenarios: ScenarioItem[];
   loadScenarios: () => Promise<void>;
   openWithQuestion: (question: string, prefix?: string) => void;
