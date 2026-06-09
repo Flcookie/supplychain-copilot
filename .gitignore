@@ -215,5 +215,8 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# Node / React frontend
+frontend/node_modules/
+
 # Portfolio HTML (local-only; do not commit)
 SupplyChain_AI产品经理作品集_总览.html

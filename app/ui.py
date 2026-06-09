@@ -6,92 +6,29 @@ import time
 
 import streamlit as st
 
+from api.scenarios import DEMO_SCENARIOS
+from api.services.copilot import graph_cache_key, merge_clarification_reply, run_copilot
 from core.demo_constants import RATTI_DATA_SNAPSHOT
 
 st.markdown(
     "<style> .stChatMessage {font-size: 16px;} </style>", unsafe_allow_html=True
 )
 
-# Bump when graph / qualification behavior changes to bust Streamlit graph cache.
-
-GRAPH_BUILD_VERSION = "ratti-lifecycle-v3-product"
+# Graph cache key lives in api.services.copilot
 
 
 def _graph_cache_key() -> str:
-    """Invalidate cached graph when workflow/rules code changes."""
-
-    root = os.path.dirname(os.path.dirname(__file__))
-
-    watch_files = [
-        os.path.join(root, "graph", "nodes.py"),
-        os.path.join(root, "graph", "graph.py"),
-        os.path.join(root, "core", "qualification_rules.py"),
-        os.path.join(root, "core", "prompts.py"),
-        os.path.join(root, "core", "router_overrides.py"),
-        os.path.join(root, "core", "demo_constants.py"),
-    ]
-
-    mtimes = "|".join(
-        str(os.path.getmtime(p)) for p in watch_files if os.path.exists(p)
-    )
-
-    return f"{GRAPH_BUILD_VERSION}|{mtimes}"
+    return graph_cache_key()
 
 
 @st.cache_resource(show_spinner="Loading SupplyChain Copilot...")
 def get_graph(_cache_key: str):
+    from api.services.copilot import get_graph as _get_graph
 
-    from graph.graph import build_graph
-
-    return build_graph()
+    return _get_graph(_cache_key)
 
 
 graph = get_graph(_graph_cache_key())
-
-DEMO_SCENARIOS = {
-    "en": [
-        ("— Select a scenario template —", ""),
-        (
-            "Supplier qualification checklist",
-            "We have a new yarn supplier from China. What qualification process should we follow?",
-        ),
-        (
-            "Yarn supplier KPIs (2025)",
-            "Show the on-time delivery rate and defect rate of yarn suppliers in 2025.",
-        ),
-        (
-            "High-risk supplier review",
-            "Which suppliers should be reviewed this month due to high risk?",
-        ),
-        ("Vendor rating explanation", "Why did supplier SUP012 receive a C rating?"),
-        (
-            "Policy & ESG Q&A",
-            "What ESG documents are required for yarn suppliers under Ratti qualification policy?",
-        ),
-        (
-            "Complex question (policy + KPI)",
-            "For strategic yarn suppliers, what monitoring policy applies and what was their average on-time delivery in 2025?",
-        ),
-    ],
-    "zh": [
-        ("— 选择场景模板 —", ""),
-        ("供应商准入清单", "我们有一家来自中国的新纱线供应商，准入流程应该怎么走？"),
-        (
-            "纱线供应商 KPI（2025）",
-            "Show the on-time delivery rate and defect rate of yarn suppliers in 2025.",
-        ),
-        (
-            "高风险供应商复审",
-            "Which suppliers should be reviewed this month due to high risk?",
-        ),
-        ("Vendor Rating 解释", "Why did supplier SUP012 receive a C rating?"),
-        ("政策与 ESG 问答", "纱线供应商准入需要哪些 ESG 文件？"),
-        (
-            "复合问题（政策 + KPI）",
-            "战略纱线供应商需要哪些监控政策？他们在 2025 年的平均准时交付率是多少？",
-        ),
-    ],
-}
 
 I18N = {
     "en": {
@@ -490,44 +427,20 @@ if not user_input and st.session_state.get("pending_demo_question"):
     user_input = st.session_state.pop("pending_demo_question")
 
 
-def run_copilot(question: str, response_language: str):
-
-    active_graph = get_graph(_graph_cache_key())
-
-    result = active_graph.invoke(
-        {"question": question, "response_language": response_language}
+def _run_copilot_ui(question: str, response_language: str):
+    result = run_copilot(question, response_language)
+    return (
+        result["answer"],
+        result["intent"],
+        result["sources"],
+        result["route_info"],
+        result["citations"],
+        result["evidence"],
     )
-
-    answer = result.get("answer", "No answer generated.")
-
-    intent = result.get("intent", "policy_qa")
-
-    sources = result.get("retrieved_docs", [])
-
-    route_info = {
-        "intent": result.get("intent"),
-        "confidence": result.get("confidence"),
-        "ambiguity_type": result.get("ambiguity_type"),
-        "human_approval_required": result.get("human_approval_required"),
-        "reason": result.get("reason"),
-        "fallback_mode": result.get("fallback_mode", "none"),
-        "kpi_parse": result.get("kpi_parse"),
-    }
-
-    citations = result.get("citations", [])
-
-    evidence = result.get("evidence", {})
-
-    return answer, intent, sources, route_info, citations, evidence
 
 
 def _merge_clarification_reply(base_question: str, reply: str, lang_code: str) -> str:
-
-    if lang_code == "zh":
-
-        return f"{base_question.strip()}\n\n【用户补充】{reply.strip()}"
-
-    return f"{base_question.strip()}\n\n[User clarification] {reply.strip()}"
+    return merge_clarification_reply(base_question, reply, lang_code)
 
 
 if user_input:
@@ -552,7 +465,7 @@ if user_input:
 
         placeholder.markdown(t["analyzing"])
 
-        answer, intent, sources, route_info, citations, evidence = run_copilot(
+        answer, intent, sources, route_info, citations, evidence = _run_copilot_ui(
             question_for_graph, lang
         )
 

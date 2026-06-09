@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+:root {
+  --brand: #1e3a5f;
+  --risk-high: #e53e3e;
+  --risk-medium: #dd6b20;
+  --risk-low: #276749;
+  --ai-purple: #553c9a;
+  --bg-page: #f7fafc;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--bg-page);
+  color: #1a202c;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 {
+  font-weight: 600;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.markdown-body p {
+  margin: 0.5rem 0;
+}
+
+.markdown-body ul {
+  margin: 0.5rem 0;
+  padding-left: 1.25rem;
+}
+
+.markdown-body code {
+  background: #edf2f7;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+}

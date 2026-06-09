@@ -163,8 +163,12 @@ uv run python ingestion/export_ratti_policies.py
 # Build / rebuild Pinecone index (includes Ratti policy chunks)
 uv run python -m ingestion.build_vectorstore --reindex
 
-# Launch Streamlit UI (local)
+# Launch Streamlit UI (local) — chat copilot
 uv run streamlit run app/ui.py --server.port 8502
+
+# FastAPI + React workbench (ProcureAI)
+uv run uvicorn api.main:app --reload --port 8000
+cd frontend && npm install && npm run dev   # http://localhost:5173
 
 # Ratti router eval (25 lifecycle questions)
 uv run python -m eval.run_router_eval --dataset eval/datasets/ratti_eval_25.json --mode llm
@@ -179,6 +183,20 @@ uv run python -m eval.run_ratti_e2e_smoke
 uv run python -m data.init_demo_db   # creates data/supplychain_kpi.db — not used by default
 ```
 
+### FastAPI + React workbench
+
+The **ProcureAI** supplier management workbench runs alongside Streamlit:
+
+| Stack | URL | Role |
+|-------|-----|------|
+| FastAPI | http://localhost:8000 | LangGraph adapter (`POST /api/chat`), workbench mock APIs |
+| React (Vite) | http://localhost:5173 | Home, Suppliers, Qualification, Review Queue, Policy + Copilot drawer |
+| Streamlit | http://localhost:8502 | Original chat-only copilot (unchanged) |
+
+`graph/`, `core/`, `rag/`, and `tools/` are shared — both UIs call the same `api.services.copilot.run_copilot()`.
+
+Production: build the frontend (`cd frontend && npm run build`); FastAPI serves `frontend/dist` when present.
+
 ---
 
 ## 💡 Key Innovations
@@ -188,7 +206,7 @@ uv run python -m data.init_demo_db   # creates data/supplychain_kpi.db — not u
 | **Hybrid Reasoning** | Combines RAG for unstructured document retrieval with SQL for structured KPI data. |
 | **LangGraph Workflow** | Router-based orchestration with ambiguity-first and confidence-second routing policy. |
 | **Explainable Answers** | Each response now includes route decision (`intent/confidence/reason`) plus document or SQL evidence. |
-| **Enterprise UI** | Streamlit-based dashboard showing intents, KPIs, and contextual citations. |
+| **Enterprise UI** | Streamlit chat copilot **or** React workbench (FastAPI backend) with intents, KPIs, and citations. |
 | **Scalable Integration** | Designed for integration with ERP and BI systems (PostgreSQL, SAP HANA, Snowflake). |
 
 ---

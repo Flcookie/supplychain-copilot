@@ -16,6 +16,8 @@ dependencies = [
     "python-dotenv>=1.2.1",
     "rank-bm25>=0.2.2",
     "streamlit>=1.51.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
 ]
 
 [project.optional-dependencies]
