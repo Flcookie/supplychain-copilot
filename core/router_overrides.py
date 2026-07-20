@@ -17,10 +17,25 @@ def _extract_supplier_id(question: str) -> str | None:
     return match.group(1).upper() if match else None
 
 
+def _clear_coreference_when_supplier_named(parsed: dict[str, Any], question: str) -> dict[str, Any]:
+    """Workbench rows already identify a supplier — do not ask which one."""
+    if not _has_supplier_id(question):
+        return parsed
+    if parsed.get("ambiguity_type") != "coreference":
+        return parsed
+    out = dict(parsed)
+    out["ambiguity_type"] = None
+    if float(out.get("confidence", 0)) < 0.78:
+        out["confidence"] = 0.85
+    out["reason"] = f"{out.get('reason', '')} (supplier id in query — skip coreference)".strip()
+    return out
+
+
 def apply_lifecycle_router_overrides(parsed: dict[str, Any], question: str) -> dict[str, Any]:
     """Override LLM routing when lifecycle intent is unambiguous (esp. Chinese queries)."""
     q = question or ""
     lower = q.lower()
+    parsed = _clear_coreference_when_supplier_named(parsed, q)
 
     # Vendor rating explanation (incl. Chinese)
     rating_ask = (
@@ -38,13 +53,13 @@ def apply_lifecycle_router_overrides(parsed: dict[str, Any], question: str) -> d
             ]
         )
         or ("获得了" in q and "级" in q and "评级" in q)
-        or re.search(r"received a [ABCD] rating", lower)
-        or re.search(r"\b[ABCD]\s*rating\b", lower)
+        or re.search(r"receiv(e|ed) a [a-d] rating", lower)
+        or re.search(r"\b[a-d]\s*rating\b", lower)
     )
     if _has_supplier_id(q) and (
         rating_ask
-        or re.search(r"\b[ABCD]\s*rating\b", lower)
-        or re.search(r"received a [ABCD] rating", lower)
+        or re.search(r"\b[a-d]\s*rating\b", lower)
+        or re.search(r"receiv(e|ed) a [a-d] rating", lower)
         or "获得了" in q and "级" in q
     ):
         return _set_intent(parsed, "vendor_rating_explanation", 0.95, "vendor rating explanation (rule override)")
@@ -97,10 +112,40 @@ def apply_lifecycle_router_overrides(parsed: dict[str, Any], question: str) -> d
     ):
         return _set_intent(parsed, "risk_scenario", 0.92, "what-if delay risk (rule override)")
 
+    # Hybrid: policy + KPI in the same question (must run before yarn KPI override)
+    policy_signal = any(
+        token in q
+        for token in [
+            "监控政策",
+            "政策",
+            "monitoring policy",
+            "monitoring policies",
+            "what policy",
+            "which policy",
+            "ESG文件",
+            "esg document",
+            "esg documents",
+        ]
+    ) or ("policy" in lower and ("applies" in lower or "required" in lower or "need" in lower))
+    kpi_signal = any(
+        token in q
+        for token in [
+            "准时交付",
+            "交付率",
+            "缺陷率",
+            "平均准时",
+            "on-time",
+            "on time delivery",
+            "defect rate",
+            "otd",
+            "平均交付",
+        ]
+    )
+    if policy_signal and kpi_signal:
+        return _set_intent(parsed, "hybrid_query", 0.95, "policy + KPI composite (rule override)")
+
     # KPI: yarn OTD + defect (Chinese)
-    if ("纱线" in q or "yarn" in lower) and any(
-        token in q for token in ["准时交付", "交付率", "缺陷率", "on-time", "defect rate", "otd"]
-    ):
+    if ("纱线" in q or "yarn" in lower) and kpi_signal:
         return _set_intent(parsed, "kpi_query", 0.94, "yarn KPI query (rule override)")
 
     return parsed

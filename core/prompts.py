@@ -70,6 +70,12 @@ A: {{"intent":"vendor_rating_explanation","confidence":0.97,"ambiguity_type":nul
 Q: 本月应审查哪些供应商，因为风险较高？
 A: {{"intent":"risk_scenario","confidence":0.95,"ambiguity_type":null,"human_approval_required":false,"reason":"high-risk monthly review in Chinese"}}
 
+Q: For strategic yarn suppliers, what monitoring policy applies and what was their average on-time delivery in 2025?
+A: {{"intent":"hybrid_query","confidence":0.96,"ambiguity_type":null,"human_approval_required":false,"reason":"policy + KPI composite"}}
+
+Q: 战略纱线供应商需要哪些监控政策？他们在 2025 年的平均准时交付率是多少？
+A: {{"intent":"hybrid_query","confidence":0.96,"ambiguity_type":null,"human_approval_required":false,"reason":"policy + KPI composite in Chinese"}}
+
 Question: {question}
 """
 

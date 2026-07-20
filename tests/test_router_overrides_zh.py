@@ -30,11 +30,41 @@ class TestChineseLifecycleRouting(unittest.TestCase):
         self.assertEqual(routed["intent"], "vendor_rating_explanation")
         self.assertEqual(_extract_supplier_id(q), "SUP012")
 
+    def test_vendor_rating_receive_tense(self):
+        q = "Why did supplier SUP012 receive a C rating?"
+        routed = apply_lifecycle_router_overrides(
+            {"intent": "policy_qa", "confidence": 0.9, "ambiguity_type": "coreference"},
+            q,
+        )
+        self.assertEqual(routed["intent"], "vendor_rating_explanation")
+        self.assertIsNone(routed["ambiguity_type"])
+
+    def test_coreference_cleared_when_supplier_id_present(self):
+        q = "Why is TechFab Italia (SUP021) at high risk and what actions should we take?"
+        routed = apply_lifecycle_router_overrides(
+            {"intent": "risk_scenario", "confidence": 0.8, "ambiguity_type": "coreference"},
+            q,
+        )
+        self.assertIsNone(routed["ambiguity_type"])
+
     def test_risk_review_routes(self):
         q = "本月应审查哪些供应商，因为风险较高？"
         routed = apply_lifecycle_router_overrides({"intent": "kpi_query", "confidence": 0.5}, q)
         self.assertEqual(routed["intent"], "risk_scenario")
         self.assertEqual(_classify_risk_question(q), "review_due")
+
+    def test_hybrid_policy_kpi_zh_not_swallowed_by_yarn_kpi(self):
+        q = "战略纱线供应商需要哪些监控政策？他们在 2025 年的平均准时交付率是多少？"
+        routed = apply_lifecycle_router_overrides({"intent": "kpi_query", "confidence": 0.95}, q)
+        self.assertEqual(routed["intent"], "hybrid_query")
+
+    def test_hybrid_policy_kpi_en(self):
+        q = (
+            "For strategic yarn suppliers, what monitoring policy applies "
+            "and what was their average on-time delivery in 2025?"
+        )
+        routed = apply_lifecycle_router_overrides({"intent": "kpi_query", "confidence": 0.9}, q)
+        self.assertEqual(routed["intent"], "hybrid_query")
 
 
 if __name__ == "__main__":
