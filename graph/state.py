@@ -20,6 +20,7 @@ class SCState(TypedDict, total=False):
         "hybrid_query",
         "qualification_checklist",
         "vendor_rating_explanation",
+        "supplier_assessment",
         "unknown",
     ]
     confidence: float
@@ -48,3 +49,39 @@ class SCState(TypedDict, total=False):
 
     route_decision: Optional[Dict[str, Any]]
     answer: Optional[str]
+
+    # Prompt-injection / security
+    injection_scan: Optional[Dict[str, Any]]
+    injection_blocked: Optional[bool]
+
+    # Parallel hybrid branches (policy ∥ kpi → aggregate)
+    policy_partial_answer: Optional[str]
+    kpi_partial_answer: Optional[str]
+    hybrid_parallel: Optional[bool]
+    hybrid_policy_docs: Optional[List[Dict[str, Any]]]
+    hybrid_sql_evidence: Optional[Dict[str, Any]]
+    hybrid_sample_size: Optional[int]
+    hybrid_minimum_sample_size: Optional[int]
+    cache_hit: Optional[bool]
+
+    # Checkpoint / task identity
+    thread_id: Optional[str]
+    task_type: Optional[Literal["chat", "supplier_assessment"]]
+    supplier_id: Optional[str]
+
+    # Review Agent
+    review_status: Optional[
+        Literal["pending", "passed", "failed", "needs_more_evidence", "skipped"]
+    ]
+    review_notes: Optional[str]
+    review_attempts: Optional[int]
+    unsupported_claims: Optional[List[str]]
+
+    # Supplier assessment task (parallel gather → synthesize)
+    task_plan: Optional[List[str]]
+    task_step: Optional[str]
+    assessment_profile: Optional[Dict[str, Any]]
+    assessment_kpi: Optional[Dict[str, Any]]
+    assessment_policy_docs: Optional[List[Dict[str, Any]]]
+    assessment_risk: Optional[Dict[str, Any]]
+    assessment_orders: Optional[Dict[str, Any]]

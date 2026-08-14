@@ -5,7 +5,11 @@ import json
 import sys
 from pathlib import Path
 
-DEFAULT = Path(__file__).resolve().parents[1] / "eval" / "results" / "rag_eval_judged_post_hybrid_20260508_223255.json"
+DEFAULT = (
+    Path(__file__).resolve().parents[1]
+    / "results"
+    / "rag_eval_judged_post_hybrid_20260508_223255.json"
+)
 
 
 def main() -> None:

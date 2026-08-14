@@ -173,6 +173,25 @@ body {
   background: color-mix(in srgb, var(--accent-soft) 55%, transparent);
 }
 
+.data-table tbody tr.row-selected td {
+  background: color-mix(in srgb, var(--accent-soft) 70%, var(--surface));
+}
+
+.data-table tbody tr.row-insight td {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  padding: 0.75rem 1rem 1rem;
+}
+
+.insight-inline {
+  border-left: 3px solid var(--accent);
+  padding: 0.5rem 0 0.5rem 0.75rem;
+}
+
+.data-table tbody tr.row-clickable {
+  cursor: pointer;
+}
+
 .data-table .col-actions {
   min-width: 11rem;
   width: 1%;

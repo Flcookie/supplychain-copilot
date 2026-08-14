@@ -5,6 +5,7 @@ langchain-pinecone
 langchain-chroma
 langchain-community
 langgraph
+langgraph-checkpoint-sqlite
 pinecone-client
 streamlit
 openai
@@ -12,3 +13,8 @@ pydantic
 python-dotenv
 sqlalchemy
 tqdm
+mcp>=1.8.0
+sqlglot>=26.0.0
+# Optional Cross-Encoder reranker: uv sync --extra rerank
+# sentence-transformers>=5.4.1
+# Dev: uv sync --extra dev  (pytest, httpx)

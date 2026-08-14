@@ -1,13 +1,14 @@
 # Ratti Supplier Lifecycle Copilot Package
 
-This package contains a complete MVP planning kit for an AI Product Manager portfolio project.
+Planning kit for the Supplier Lifecycle Copilot (synthetic / anonymized data).
 
-## Included
-- `ratti_copilot_dataset.xlsx`: multi-sheet synthetic dataset.
-- `ratti_copilot_demo.db`: SQLite database for NL2SQL prototype testing.
-- `csv_data/`: CSV versions of all tables.
-- `docs/`: PRD, data dictionary, prompt/tool design, evaluation set, risk & boundary design.
-- `prompts/`: JSON schema for router and agents.
+## Where files live
+
+| Path | Contents |
+|------|----------|
+| `data/ratti_source/` | Original kit: Excel, CSV, demo DB copy, prompts |
+| `data/ratti_copilot_demo.db` | Runtime SQLite used by NL2SQL |
+| `docs/ratti/` | Maintained PRD, data dictionary, eval set, risk boundary, resume notes |
 
 ## Disclaimer
 The dataset is synthetic and anonymized. It is based on the structure, rules and process logic of the Ratti industry project, not on real confidential supplier records.

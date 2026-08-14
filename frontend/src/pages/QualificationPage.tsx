@@ -17,7 +17,7 @@ const STEPS = [
 ];
 
 export function QualificationPage() {
-  const { lang, setOpen, setPageContext } = useCopilot();
+  const { lang, setPageContext } = useCopilot();
   const L = t(lang).qualification;
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormData>({
@@ -43,7 +43,6 @@ export function QualificationPage() {
       const res = await sendChat({ question, language: lang });
       setChecklist(res.answer);
       setStep(2);
-      setOpen(true);
     } catch (e) {
       alert(String(e));
     } finally {
@@ -130,13 +129,6 @@ export function QualificationPage() {
             <ButtonBar>
               <button type="button" onClick={() => setStep(1)} className="btn btn-ghost">
                 {L.back}
-              </button>
-              <button
-                type="button"
-                onClick={() => setOpen(true)}
-                className="btn btn-secondary"
-              >
-                {t(lang).copilot.open}
               </button>
               <button type="button" onClick={() => setStep(3)} className="btn btn-primary">
                 {L.next}

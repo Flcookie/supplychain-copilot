@@ -1,10 +1,11 @@
 from graph.graph import build_graph
+from graph.invoke import invoke_graph
 
 graph = build_graph()
 
 
 def ask_copilot(question: str) -> str:
-    result = graph.invoke({"question": question})
+    result = invoke_graph(graph, {"question": question, "response_language": "en"})
     return result.get("answer", "(No answer generated)")
 
 

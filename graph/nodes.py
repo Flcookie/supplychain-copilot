@@ -3,12 +3,12 @@ import os
 import re
 
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
 
-from core.config import LLM_MODEL
 from core.demo_constants import DEMO_CURRENT_DATE, RATTI_DATA_SNAPSHOT
+from core.entity_parse import classify_risk_question, extract_supplier_id
 from core.kpi_parse_utils import normalize_kpi_parse as _normalize_kpi_parse
 from core.evidence import document_evidence, hybrid_evidence, simulation_evidence, sql_evidence
+from core.llm import get_llm
 from core.risk_rules import (
     blacklist_guidance,
     single_sourcing_guidance,
@@ -24,7 +24,16 @@ from core.qualification_rules import (
     normalize_qualification_input,
     resolve_response_language,
 )
+from core.prompt_injection import (
+    refusal_message,
+    sanitize_answer,
+    scan_user_input,
+    wrap_question_for_prompt,
+)
 from core.prompts import (
+    HYBRID_AGGREGATE_PROMPT,
+    HYBRID_KPI_PARTIAL_PROMPT,
+    HYBRID_POLICY_PARTIAL_PROMPT,
     HYBRID_QA_PROMPT,
     KPI_ANSWER_PROMPT,
     KPI_PARSE_PROMPT,
@@ -36,59 +45,41 @@ from core.prompts import (
     SCENARIO_ANALYSIS_PROMPT,
     VENDOR_RATING_PROMPT,
 )
+from app.services.mcp_client import McpToolError, call_tool, format_tools_for_router, list_tools
 from rag.retriever import get_retriever
-from tools.kpi_sql_builder import TemplatedSQL, build_kpi_sql
+from tools.kpi_sql_builder import build_kpi_sql
 from tools.sql_tools import run_sql_query_with_meta
 from .state import SCState
 
-llm = ChatOpenAI(model=LLM_MODEL, temperature=0)
-retriever = get_retriever()
-# Doc-type-scoped retrievers help recall by filtering vector + BM25 to relevant corpora.
-policy_retriever = get_retriever(k=5, doc_types=["policy", "contract", "sop", "faq"])
-# For hybrid intent we run TWO scoped retrievals and merge — this guarantees that when the
-# question references KPI evidence we always include at least one kpi_dict chunk, even if
-# vector similarity ranks contracts higher.
-hybrid_policy_retriever = get_retriever(k=5, doc_types=["policy", "contract", "sop", "faq"])
-hybrid_kpi_retriever = get_retriever(k=2, doc_types=["kpi_dict"])
+
+def _policy_retriever():
+    return get_retriever(k=5, doc_types=["policy", "contract", "sop", "faq"])
+
+
+def _hybrid_kpi_retriever():
+    return get_retriever(k=2, doc_types=["kpi_dict"])
+
+
+_MCP_TOOLS_BLURB: str | None = None
+
+
+def _mcp_tool_catalog() -> str:
+    """Discover MCP tools once; descriptions are injected into the router prompt."""
+    global _MCP_TOOLS_BLURB
+    if _MCP_TOOLS_BLURB is not None:
+        return _MCP_TOOLS_BLURB
+    try:
+        _MCP_TOOLS_BLURB = format_tools_for_router(list_tools())
+    except Exception as exc:  # noqa: BLE001 — router must not hard-fail if MCP is down
+        return f"(MCP tools unavailable: {exc})"
+    return _MCP_TOOLS_BLURB
 
 
 _DATA_SNAPSHOT = RATTI_DATA_SNAPSHOT
-_SUPPLIER_ID_PATTERN = re.compile(r"(SUP\d{3})", re.IGNORECASE)
-
-
-def _extract_supplier_id(text: str) -> str | None:
-    match = _SUPPLIER_ID_PATTERN.search(text or "")
-    return match.group(1).upper() if match else None
-
+_extract_supplier_id = extract_supplier_id
+_classify_risk_question = classify_risk_question
 
 _BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
-
-def _classify_risk_question(question: str) -> str:
-    q = (question or "").lower()
-    raw = question or ""
-    if "blacklist" in q or "黑名单" in raw:
-        return "blacklist"
-    if "single sourcing" in q or "single-sourcing" in q or "single source" in q or "单源" in raw or "单一来源" in raw:
-        return "single_sourcing"
-    if any(
-        phrase in raw
-        for phrase in [
-            "review this month",
-            "reviewed this month",
-            "本月应审查",
-            "本月需要审查",
-            "本月审查",
-            "这个月应审查",
-            "due to high risk",
-            "高风险",
-            "风险较高",
-        ]
-    ) or ("review" in q and "high risk" in q):
-        return "review_due"
-    if _extract_supplier_id(question) and ("quality" in q or "issues" in q):
-        return "quality_issues"
-    return "what_if_delay"
 
 
 def _metrics_dictionary_blurb() -> str:
@@ -236,8 +227,34 @@ def _build_doc_citations(docs: list) -> list:
 
 def router_node(state: SCState) -> SCState:
     q = state["question"]
+
+    # API-forced intents (SkillHub workflow skills / assessment entry): keep seed.
+    if state.get("baseline_mode") and state.get("intent"):
+        seeded = state["intent"]
+        supplier_id = state.get("supplier_id") or _extract_supplier_id(q)
+        if supplier_id:
+            state["supplier_id"] = supplier_id
+            if seeded == "supplier_assessment":
+                state["ambiguity_type"] = None
+        elif seeded == "supplier_assessment" and not state.get("ambiguity_type"):
+            state["ambiguity_type"] = "missing_entity"
+        state["confidence"] = float(state.get("confidence") or 0.99)
+        if seeded == "supplier_assessment":
+            state["task_type"] = "supplier_assessment"
+        state["reason"] = state.get("reason") or f"api forced_intent={seeded}"
+        state["fallback_mode"] = "none"
+        state["route_decision"] = {
+            "intent": seeded,
+            "confidence": state["confidence"],
+            "ambiguity_type": state.get("ambiguity_type"),
+            "human_approval_required": False,
+            "reason": state["reason"],
+            "supplier_id": state.get("supplier_id"),
+        }
+        return state
+
     prompt = ChatPromptTemplate.from_template(ROUTER_PROMPT)
-    resp = llm.invoke(prompt.format(question=q))
+    resp = get_llm().invoke(prompt.format(question=q, mcp_tools=_mcp_tool_catalog()))
 
     parsed = {
         "intent": "policy_qa",
@@ -267,6 +284,7 @@ def router_node(state: SCState) -> SCState:
         "hybrid_query",
         "qualification_checklist",
         "vendor_rating_explanation",
+        "supplier_assessment",
     ]
     if parsed["intent"] not in valid_intents:
         parsed["intent"] = "policy_qa"
@@ -274,21 +292,29 @@ def router_node(state: SCState) -> SCState:
     parsed = apply_qualification_router_override(parsed, q)
     parsed = apply_lifecycle_router_overrides(parsed, q)
 
+    # Persist supplier entity when present for checkpoint / assessment.
+    supplier_id = _extract_supplier_id(q)
+    if supplier_id:
+        state["supplier_id"] = supplier_id
+
     state["intent"] = parsed["intent"]
     state["confidence"] = max(0.0, min(parsed["confidence"], 1.0))
     state["ambiguity_type"] = parsed["ambiguity_type"]
     state["human_approval_required"] = parsed.get("human_approval_required", False)
     state["reason"] = parsed["reason"]
     state["fallback_mode"] = "none"
+    state["task_type"] = (
+        "supplier_assessment" if parsed["intent"] == "supplier_assessment" else state.get("task_type") or "chat"
+    )
     state["route_decision"] = {
         "intent": state["intent"],
         "confidence": state["confidence"],
         "ambiguity_type": state["ambiguity_type"],
         "human_approval_required": state.get("human_approval_required"),
         "reason": state["reason"],
+        "supplier_id": state.get("supplier_id"),
     }
     return state
-
 
 def clarification_node(state: SCState) -> SCState:
     is_zh = state.get("response_language", "en") == "zh"
@@ -312,7 +338,7 @@ def clarification_node(state: SCState) -> SCState:
 
 def rag_fallback_node(state: SCState) -> SCState:
     q = state["question"]
-    docs = retriever.invoke(q)
+    docs = get_retriever().invoke(q)
     state["retrieved_docs"] = [
         {"content": d.page_content, "source": d.metadata.get("source_name") or d.metadata.get("source", "")}
         for d in docs
@@ -326,7 +352,7 @@ def rag_fallback_node(state: SCState) -> SCState:
     )
     context = "\n\n".join(d.page_content for d in docs)
     prompt = ChatPromptTemplate.from_template(RAG_FALLBACK_PROMPT)
-    resp = llm.invoke(
+    resp = get_llm().invoke(
         prompt.format(
             question=q,
             context=context,
@@ -340,7 +366,60 @@ def rag_fallback_node(state: SCState) -> SCState:
 
 def policy_qa_node(state: SCState) -> SCState:
     q = state["question"]
-    docs = policy_retriever.invoke(q)
+    lang = state.get("response_language") or "en"
+
+    scan = scan_user_input(q)
+    state["injection_scan"] = {
+        "is_injection": scan.is_injection,
+        "should_refuse": scan.should_refuse,
+        "reasons": list(scan.reasons),
+        "primary_attack": scan.primary_attack,
+    }
+    if scan.should_refuse:
+        state["injection_blocked"] = True
+        state["answer"] = refusal_message(lang)
+        state["retrieved_docs"] = []
+        state["citations"] = []
+        state["evidence"] = {
+            "type": "document",
+            "limitations": [
+                "Blocked by prompt-injection guard before retrieval.",
+                *list(scan.reasons),
+            ],
+            "assumptions": [],
+        }
+        return state
+
+    # MCP client: call_tool("query_policy") instead of hard-coded retriever.invoke.
+    try:
+        payload = call_tool("query_policy", {"query": q, "k": 5})
+    except McpToolError as exc:
+        state["answer"] = f"Policy retrieval failed via MCP: {exc.message}"
+        state["retrieved_docs"] = []
+        state["citations"] = []
+        state["evidence"] = {
+            "type": "document",
+            "limitations": [exc.message],
+        }
+        return state
+
+    if not isinstance(payload, dict):
+        payload = {}
+    documents = payload.get("documents") or []
+    context = payload.get("context") or ""
+
+    # Adapt MCP JSON docs into the lightweight Document-like objects evidence helpers expect.
+    class _Doc:
+        def __init__(self, item: dict):
+            self.page_content = item.get("content", "")
+            self.metadata = {
+                "source_name": item.get("source", ""),
+                "source": item.get("source", ""),
+                "doc_type": item.get("doc_type", ""),
+                "retrieval_score": item.get("retrieval_score"),
+            }
+
+    docs = [_Doc(item) for item in documents if isinstance(item, dict)]
     state["retrieved_docs"] = [
         {"content": d.page_content, "source": d.metadata.get("source_name") or d.metadata.get("source", "")}
         for d in docs
@@ -349,25 +428,31 @@ def policy_qa_node(state: SCState) -> SCState:
     state["evidence"] = document_evidence(
         docs,
         evidence_type="document",
-        limitations=["Policy answers are limited to retrieved demo documents."],
+        limitations=["Policy answers are limited to retrieved demo documents (via MCP query_policy)."],
     )
-    context = "\n\n".join(d.page_content for d in docs)
+    if not context:
+        context = "\n\n".join(d.page_content for d in docs)
     prompt = ChatPromptTemplate.from_template(POLICY_QA_PROMPT)
-    resp = llm.invoke(
+    resp = get_llm().invoke(
         prompt.format(
-            question=q,
+            question=wrap_question_for_prompt(q),
             context=context,
             response_language_instruction=_response_language_instruction(state),
         )
     )
-    state["answer"] = resp.content
+    cleaned, redactions = sanitize_answer(resp.content if isinstance(resp.content, str) else str(resp.content))
+    state["answer"] = cleaned
+    if redactions and isinstance(state.get("evidence"), dict):
+        limitations = list(state["evidence"].get("limitations") or [])
+        limitations.append(f"Output sanitizer redacted {len(redactions)} sensitive field pattern(s).")
+        state["evidence"]["limitations"] = limitations
     return state
 
 
 def kpi_node(state: SCState) -> SCState:
     q = state["question"]
     parse_prompt = ChatPromptTemplate.from_template(KPI_PARSE_PROMPT)
-    parse_raw = llm.invoke(
+    parse_raw = get_llm().invoke(
         parse_prompt.format(question=q, metrics_blurb=_metrics_dictionary_blurb())
     ).content.strip()
     kpi_parse: dict = {
@@ -436,17 +521,63 @@ def kpi_node(state: SCState) -> SCState:
         ]
         return state
 
-    template = build_kpi_sql(q, kpi_parse)
-    sql_source = "template" if template is not None else "llm"
-    template_id: str | None = template.template_id if template else None
-
-    if template is not None:
-        final_sql = template.sql
-        params: tuple | None = template.params
+    # MCP client path: structured query_kpi first; NL2SQL fallback passes sql= through the same tool.
+    supplier_hint = (kpi_parse.get("supplier_hint") or "") or ""
+    supplier_id = _extract_supplier_id(q) or _extract_supplier_id(supplier_hint) or ""
+    metric = kpi_parse.get("metric") or ""
+    if metric in {"other", "comparison", "trend"}:
+        metric_arg = ""
     else:
+        metric_arg = metric
+    time_range = kpi_parse.get("time_range") or ""
+
+    sql_attempts: list[dict] = []
+    rows: list = []
+    sql_meta: dict | None = None
+    last_error: str | None = None
+    final_sql: str | None = None
+    sql_source = "template"
+    template_id: str | None = None
+    params: tuple | None = None
+
+    try:
+        payload = call_tool(
+            "query_kpi",
+            {
+                "supplier_id": supplier_id,
+                "metric": metric_arg,
+                "time_range": time_range,
+                "question": q,
+            },
+        )
+        if not isinstance(payload, dict):
+            raise McpToolError("query_kpi", "MCP returned a non-object payload")
+        final_sql = payload.get("sql")
+        rows = payload.get("rows") or []
+        sql_meta = payload.get("meta") or {"row_count": len(rows), "latency_ms": None}
+        sql_source = payload.get("sql_source") or "template"
+        template_id = payload.get("template_id")
+        params_map = payload.get("params") or {}
+        params = tuple(params_map.values()) if params_map else None
+        state["sql_query"] = final_sql
+        sql_attempts.append(
+            {
+                "sql": final_sql,
+                "ok": True,
+                "row_count": sql_meta.get("row_count", len(rows)),
+                "source": sql_source,
+            }
+        )
+        last_error = None
+    except McpToolError as mcp_exc:
+        last_error = mcp_exc.message
+        sql_attempts.append(
+            {"sql": None, "ok": False, "error": last_error, "source": "mcp_template"}
+        )
+        # NL2SQL fallback: LLM writes SQL, MCP executes it (allowlisted read-only).
         prompt = ChatPromptTemplate.from_template(KPI_SQL_PROMPT)
         final_sql = _strip_sql_fences(
-            llm.invoke(
+            get_llm().invoke(
                 prompt.format(
                     question=q,
                     structured_parse=json.dumps(kpi_parse, ensure_ascii=False),
@@ -454,50 +585,64 @@ def kpi_node(state: SCState) -> SCState:
             ).content
         )
         params = None
-    state["sql_query"] = final_sql
+        sql_source = "llm"
+        template_id = None
+        state["sql_query"] = final_sql
 
-    sql_attempts: list[dict] = []
-    rows: list = []
-    sql_meta: dict | None = None
-    last_error: str | None = None
-
-    max_attempts = 1 if template is not None else 2  # templates are pre-validated; only LLM SQL gets repair
-    for attempt in range(max_attempts):
-        try:
-            result = run_sql_query_with_meta(final_sql, params=params)
-            rows = result["rows"]
-            sql_meta = result["meta"]
-            sql_attempts.append(
-                {
-                    "sql": final_sql,
-                    "ok": True,
-                    "row_count": sql_meta["row_count"],
-                    "source": sql_source if attempt == 0 else "llm_repair",
-                }
-            )
-            last_error = None
-            break
-        except Exception as e:
-            last_error = str(e)
-            sql_attempts.append(
-                {"sql": final_sql, "ok": False, "error": last_error, "source": sql_source if attempt == 0 else "llm_repair"}
-            )
-            if attempt == 0 and template is None:
-                repair_prompt = ChatPromptTemplate.from_template(KPI_SQL_REPAIR_PROMPT)
-                final_sql = _strip_sql_fences(
-                    llm.invoke(
-                        repair_prompt.format(
-                            question=q,
-                            failed_sql=final_sql,
-                            error=last_error,
-                        )
-                    ).content
+        for attempt in range(2):
+            try:
+                payload = call_tool(
+                    "query_kpi",
+                    {
+                        "supplier_id": supplier_id,
+                        "metric": metric_arg,
+                        "time_range": time_range,
+                        "question": q,
+                        "sql": final_sql,
+                    },
                 )
-                params = None
-                sql_source = "llm_repair"
+                if not isinstance(payload, dict):
+                    raise McpToolError("query_kpi", "MCP returned a non-object payload")
+                rows = payload.get("rows") or []
+                sql_meta = payload.get("meta") or {"row_count": len(rows), "latency_ms": None}
+                final_sql = payload.get("sql") or final_sql
+                sql_source = payload.get("sql_source") or sql_source
                 state["sql_query"] = final_sql
-            else:
+                sql_attempts.append(
+                    {
+                        "sql": final_sql,
+                        "ok": True,
+                        "row_count": sql_meta.get("row_count", len(rows)),
+                        "source": sql_source if attempt == 0 else "llm_repair",
+                    }
+                )
+                last_error = None
                 break
+            except McpToolError as exec_exc:
+                last_error = exec_exc.message
+                sql_attempts.append(
+                    {
+                        "sql": final_sql,
+                        "ok": False,
+                        "error": last_error,
+                        "source": sql_source if attempt == 0 else "llm_repair",
+                    }
+                )
+                if attempt == 0:
+                    repair_prompt = ChatPromptTemplate.from_template(KPI_SQL_REPAIR_PROMPT)
+                    final_sql = _strip_sql_fences(
+                        get_llm().invoke(
+                            repair_prompt.format(
+                                question=q,
+                                failed_sql=final_sql,
+                                error=last_error,
+                            )
+                        ).content
+                    )
+                    sql_source = "llm_repair"
+                    state["sql_query"] = final_sql
+                else:
+                    break
 
     if last_error is not None:
         state["answer"] = (
@@ -507,7 +652,7 @@ def kpi_node(state: SCState) -> SCState:
         state["sql_meta"] = {"row_count": 0, "latency_ms": None, "error": last_error}
         metric_meta = _metric_meta(kpi_parse.get("metric"))
         state["evidence"] = sql_evidence(
-            query=final_sql,
+            query=final_sql or "-- mcp query_kpi failed --",
             params=_params_dict(params),
             row_count=0,
             latency_ms=None,
@@ -551,12 +696,13 @@ def kpi_node(state: SCState) -> SCState:
     limitations = [
         "Anonymized synthetic Ratti demo dataset for product prototyping — not production supplier performance.",
         f"Demo sample: {sample_size} record(s) returned; treat as illustrative only.",
+        "KPI rows executed via MCP tool query_kpi.",
     ]
     state["evidence"] = sql_evidence(
-        query=final_sql,
+        query=final_sql or "",
         params=_params_dict(params),
-        row_count=sql_meta.get("row_count", 0),
-        latency_ms=sql_meta.get("latency_ms"),
+        row_count=(sql_meta or {}).get("row_count", 0),
+        latency_ms=(sql_meta or {}).get("latency_ms"),
         metric=metric,
         metric_definition=metric_meta.get("definition", "Metric definition unavailable."),
         formula=metric_meta.get("formula", ""),
@@ -575,8 +721,8 @@ def kpi_node(state: SCState) -> SCState:
     citation: dict = {
         "type": "sql",
         "sql": final_sql,
-        "row_count": sql_meta.get("row_count", 0),
-        "latency_ms": sql_meta.get("latency_ms"),
+        "row_count": (sql_meta or {}).get("row_count", 0),
+        "latency_ms": (sql_meta or {}).get("latency_ms"),
         "metric_definition": metric_meta.get("definition", ""),
         "time_range": time_range,
         "sample_size": sample_size,
@@ -589,7 +735,7 @@ def kpi_node(state: SCState) -> SCState:
     state["citations"] = [citation]
 
     explain_prompt = ChatPromptTemplate.from_template(KPI_ANSWER_PROMPT)
-    resp = llm.invoke(
+    resp = get_llm().invoke(
         explain_prompt.format(
             question=q,
             sql=final_sql,
@@ -604,16 +750,270 @@ def kpi_node(state: SCState) -> SCState:
     return state
 
 
-def hybrid_node(state: SCState) -> SCState:
-    """Joint Policy + KPI answer for composite questions.
 
-    The node always retrieves policy/contract evidence for the question, and
-    additionally tries the deterministic KPI SQL builder. If a template matches
-    the question, it executes that SQL and includes the rows in the prompt.
-    """
+def hybrid_dispatch_node(state: SCState) -> SCState:
+    """Fan-out marker: LangGraph runs hybrid_policy ∥ hybrid_kpi after this node."""
+    q = state.get("question") or ""
+    scan = scan_user_input(q)
+    update: dict = {
+        "hybrid_parallel": True,
+        "injection_scan": {
+            "is_injection": scan.is_injection,
+            "should_refuse": scan.should_refuse,
+            "reasons": list(scan.reasons),
+            "primary_attack": scan.primary_attack,
+        },
+    }
+    if scan.should_refuse:
+        refusal = refusal_message(state.get("response_language") or "en")
+        update.update(
+            {
+                "injection_blocked": True,
+                "policy_partial_answer": refusal,
+                "kpi_partial_answer": "",
+                "answer": refusal,
+                "retrieved_docs": [],
+                "citations": [],
+                "evidence": {
+                    "type": "hybrid",
+                    "limitations": [
+                        "Blocked by prompt-injection guard before hybrid fan-out.",
+                        *list(scan.reasons),
+                    ],
+                },
+            }
+        )
+    return update  # type: ignore[return-value]
+
+
+def hybrid_policy_branch(state: SCState) -> dict:
+    """Parallel policy branch for hybrid_query (retrieval + partial answer)."""
+    if state.get("injection_blocked"):
+        return {}
+
     q = state["question"]
-    policy_docs = hybrid_policy_retriever.invoke(q)
-    kpi_docs = hybrid_kpi_retriever.invoke(q)
+    policy_docs = _policy_retriever().invoke(q)
+    docs_meta = [
+        {
+            "content": d.page_content,
+            "metadata": dict(d.metadata or {}),
+        }
+        for d in policy_docs
+    ]
+    context = "\n\n".join(d.page_content for d in policy_docs)
+    prompt = ChatPromptTemplate.from_template(HYBRID_POLICY_PARTIAL_PROMPT)
+    resp = get_llm().invoke(
+        prompt.format(
+            question=wrap_question_for_prompt(q),
+            context=context,
+            response_language_instruction=_response_language_instruction(state),
+        )
+    )
+    partial = resp.content if isinstance(resp.content, str) else str(resp.content)
+    cleaned, _ = sanitize_answer(partial)
+    return {
+        "policy_partial_answer": cleaned,
+        "hybrid_policy_docs": docs_meta,
+    }
+
+
+def hybrid_kpi_branch(state: SCState) -> dict:
+    """Parallel KPI branch for hybrid_query (parse + template SQL + partial answer)."""
+    if state.get("injection_blocked"):
+        return {}
+
+    q = state["question"]
+    # Soft signal from kpi_dict retrieval (not merged into shared lists here to avoid races).
+    _ = _hybrid_kpi_retriever().invoke(q)
+
+    parse_prompt = ChatPromptTemplate.from_template(KPI_PARSE_PROMPT)
+    parse_raw = get_llm().invoke(
+        parse_prompt.format(question=q, metrics_blurb=_metrics_dictionary_blurb())
+    ).content.strip()
+    kpi_parse: dict = {
+        "intent": "KPI_Query",
+        "supplier_hint": None,
+        "metric": "other",
+        "time_range": None,
+        "aggregation": "other",
+    }
+    try:
+        kpi_parse.update(_safe_json_load(parse_raw))
+    except Exception:
+        pass
+    kpi_parse = _normalize_kpi_parse(q, kpi_parse)
+
+    template = build_kpi_sql(q, kpi_parse)
+    kpi_rows: list = []
+    kpi_sql_text = ""
+    sql_evidence_payload = None
+    sample_size = None
+    minimum_sample_size = 1
+    sql_meta_for_state = None
+    sql_citation = None
+
+    if template is not None:
+        try:
+            result = run_sql_query_with_meta(template.sql, params=template.params)
+            kpi_rows = result["rows"]
+            kpi_sql_text = template.sql
+            metric = kpi_parse.get("metric") or "on_time_rate"
+            metric_meta = _metric_meta(metric)
+            sample_size = _estimate_sample_size(kpi_rows)
+            minimum_sample_size = int(metric_meta.get("minimum_sample_size", 1))
+            time_range = kpi_parse.get("time_range") or metric_meta.get("default_time_window", "last_3_months")
+            sql_evidence_payload = sql_evidence(
+                query=template.sql,
+                params=_params_dict(template.params),
+                row_count=result["meta"].get("row_count", 0),
+                latency_ms=result["meta"].get("latency_ms"),
+                metric=metric,
+                metric_definition=metric_meta.get("definition", "Metric definition unavailable."),
+                formula=metric_meta.get("formula", ""),
+                time_range=time_range,
+                data_snapshot=metric_meta.get("data_snapshot", _DATA_SNAPSHOT),
+                sample_size=sample_size,
+                minimum_sample_size=minimum_sample_size,
+                assumptions=[f"KPI branch used deterministic template `{template.template_id}`."],
+                limitations=["Demo KPI dataset; treat numbers as illustrative."],
+            )["sql"]
+            sql_evidence_payload["sql_source"] = "template"
+            sql_evidence_payload["template_id"] = template.template_id
+            sql_meta_for_state = result["meta"]
+            sql_citation = {
+                "type": "sql",
+                "sql": template.sql,
+                "row_count": result["meta"].get("row_count", 0),
+                "latency_ms": result["meta"].get("latency_ms"),
+                "sample_size": sample_size,
+                "sql_source": "template",
+                "template_id": template.template_id,
+                "branch": "kpi",
+            }
+        except Exception as exc:
+            sql_citation = {"type": "sql", "sql": template.sql, "error": str(exc), "branch": "kpi"}
+
+    prompt = ChatPromptTemplate.from_template(HYBRID_KPI_PARTIAL_PROMPT)
+    resp = get_llm().invoke(
+        prompt.format(
+            question=wrap_question_for_prompt(q),
+            kpi_rows=json.dumps(kpi_rows, ensure_ascii=False),
+            kpi_sql=kpi_sql_text or "(no KPI SQL was executed for this question)",
+            response_language_instruction=_response_language_instruction(state),
+        )
+    )
+    partial = resp.content if isinstance(resp.content, str) else str(resp.content)
+    update: dict = {
+        "kpi_parse": kpi_parse,
+        "kpi_partial_answer": partial,
+        "sql_query": kpi_sql_text or None,
+        "sql_result": kpi_rows,
+        "sql_meta": sql_meta_for_state,
+        "hybrid_sql_evidence": sql_evidence_payload,
+        "hybrid_sample_size": sample_size,
+        "hybrid_minimum_sample_size": minimum_sample_size,
+    }
+    if sql_citation is not None:
+        update["citations"] = [sql_citation]
+    return update
+
+
+def hybrid_aggregate_node(state: SCState) -> dict:
+    """Join node: merge parallel policy + KPI branch results."""
+    if state.get("injection_blocked") and state.get("answer"):
+        return {}
+
+    q = state["question"]
+    policy_partial = state.get("policy_partial_answer") or "(policy branch produced no result)"
+    kpi_partial = state.get("kpi_partial_answer") or "(kpi branch produced no result)"
+
+    class _Doc:
+        def __init__(self, item: dict):
+            self.page_content = item.get("content", "")
+            self.metadata = item.get("metadata") or {}
+
+    meta_docs = state.get("hybrid_policy_docs") or []
+    docs = [_Doc(item) for item in meta_docs if isinstance(item, dict)]
+
+    sample_size = state.get("hybrid_sample_size")
+    minimum_sample_size = state.get("hybrid_minimum_sample_size") or 1
+    sql_evidence_payload = state.get("hybrid_sql_evidence")
+
+    evidence = hybrid_evidence(
+        docs=docs,
+        sql=sql_evidence_payload,
+        sample_size=sample_size,
+        minimum_sample_size=minimum_sample_size,
+        assumptions=[
+            "Hybrid answers fuse parallel Policy and KPI branches, then aggregate.",
+        ],
+        limitations=[
+            "If no KPI template matches, the KPI branch may return empty numeric evidence.",
+        ],
+    )
+
+    prompt = ChatPromptTemplate.from_template(HYBRID_AGGREGATE_PROMPT)
+    resp = get_llm().invoke(
+        prompt.format(
+            question=wrap_question_for_prompt(q),
+            policy_partial=policy_partial,
+            kpi_partial=kpi_partial,
+            evidence=json.dumps(evidence, ensure_ascii=False),
+            response_language_instruction=_response_language_instruction(state),
+        )
+    )
+    cleaned, redactions = sanitize_answer(resp.content if isinstance(resp.content, str) else str(resp.content))
+    if redactions:
+        limitations = list(evidence.get("limitations") or [])
+        limitations.append(f"Output sanitizer redacted {len(redactions)} sensitive field pattern(s).")
+        evidence["limitations"] = limitations
+
+    doc_citations = _build_doc_citations(docs)
+    existing_citations = list(state.get("citations") or [])
+    # Prefer SQL citations from KPI branch + document citations from policy branch.
+    merged_citations = existing_citations + [
+        c for c in doc_citations if c not in existing_citations
+    ]
+
+    return {
+        "answer": cleaned,
+        "evidence": evidence,
+        "retrieved_docs": [
+            {
+                "content": d.page_content,
+                "source": d.metadata.get("source_name") or d.metadata.get("source", ""),
+                "branch": "policy",
+            }
+            for d in docs
+        ],
+        "citations": merged_citations,
+        "hybrid_parallel": True,
+    }
+
+
+def hybrid_node(state: SCState) -> SCState:
+    """Legacy sequential hybrid (kept for smoke tests / baseline). Prefer parallel graph path."""
+    q = state["question"]
+    scan = scan_user_input(q)
+    state["injection_scan"] = {
+        "is_injection": scan.is_injection,
+        "should_refuse": scan.should_refuse,
+        "reasons": list(scan.reasons),
+        "primary_attack": scan.primary_attack,
+    }
+    if scan.should_refuse:
+        state["injection_blocked"] = True
+        state["answer"] = refusal_message(state.get("response_language") or "en")
+        state["retrieved_docs"] = []
+        state["citations"] = []
+        state["evidence"] = {
+            "type": "hybrid",
+            "limitations": ["Blocked by prompt-injection guard.", *list(scan.reasons)],
+        }
+        return state
+
+    policy_docs = _policy_retriever().invoke(q)
+    kpi_docs = _hybrid_kpi_retriever().invoke(q)
     # Interleave so at least one kpi_dict chunk lands in the top-5 evidence list.
     # Layout: policy[0..3] | kpi[0..1] | remaining policy.
     seen_keys: set = set()
@@ -640,7 +1040,7 @@ def hybrid_node(state: SCState) -> SCState:
 
     # Best-effort KPI parse for template matching. Failures degrade gracefully.
     parse_prompt = ChatPromptTemplate.from_template(KPI_PARSE_PROMPT)
-    parse_raw = llm.invoke(
+    parse_raw = get_llm().invoke(
         parse_prompt.format(question=q, metrics_blurb=_metrics_dictionary_blurb())
     ).content.strip()
     kpi_parse: dict = {
@@ -726,9 +1126,9 @@ def hybrid_node(state: SCState) -> SCState:
 
     policy_context = "\n\n".join(d.page_content for d in docs)
     prompt = ChatPromptTemplate.from_template(HYBRID_QA_PROMPT)
-    resp = llm.invoke(
+    resp = get_llm().invoke(
         prompt.format(
-            question=q,
+            question=wrap_question_for_prompt(q),
             policy_context=policy_context,
             kpi_rows=json.dumps(kpi_rows, ensure_ascii=False),
             kpi_sql=kpi_sql_text or "(no KPI SQL was executed for this question)",
@@ -736,7 +1136,12 @@ def hybrid_node(state: SCState) -> SCState:
             response_language_instruction=_response_language_instruction(state),
         )
     )
-    state["answer"] = resp.content
+    cleaned, redactions = sanitize_answer(resp.content if isinstance(resp.content, str) else str(resp.content))
+    state["answer"] = cleaned
+    if redactions and isinstance(state.get("evidence"), dict):
+        limitations = list(state["evidence"].get("limitations") or [])
+        limitations.append(f"Output sanitizer redacted {len(redactions)} sensitive field pattern(s).")
+        state["evidence"]["limitations"] = limitations
     return state
 
 
@@ -930,7 +1335,7 @@ LIMIT 10
     state["citations"] = [{"type": "sql", "sql": state.get("sql_query"), "row_count": len(impact_rows)}]
 
     explain_prompt = ChatPromptTemplate.from_template(SCENARIO_ANALYSIS_PROMPT)
-    resp = llm.invoke(
+    resp = get_llm().invoke(
         explain_prompt.format(
             question=q,
             scenario_spec=json.dumps(scenario_spec, ensure_ascii=False),
@@ -962,7 +1367,7 @@ def vendor_rating_node(state: SCState) -> SCState:
 
     # Formula-only questions: use policy RAG context via retriever
     if supplier_id is None and ("formula" in q.lower() or "weight" in q.lower()):
-        docs = policy_retriever.invoke(q)
+        docs = _policy_retriever().invoke(q)
         state["retrieved_docs"] = [
             {"content": d.page_content, "source": d.metadata.get("source_name") or d.metadata.get("source", "")}
             for d in docs
@@ -970,7 +1375,7 @@ def vendor_rating_node(state: SCState) -> SCState:
         state["citations"] = _build_doc_citations(docs)
         context = "\n\n".join(d.page_content for d in docs)
         prompt = ChatPromptTemplate.from_template(POLICY_QA_PROMPT)
-        resp = llm.invoke(
+        resp = get_llm().invoke(
             prompt.format(
                 question=q,
                 context=context,
@@ -1049,7 +1454,7 @@ FROM quality_events WHERE supplier_id = ?
     )
 
     explain_prompt = ChatPromptTemplate.from_template(VENDOR_RATING_PROMPT)
-    resp = llm.invoke(
+    resp = get_llm().invoke(
         explain_prompt.format(
             question=q,
             rating_rows=json.dumps(rating_rows, ensure_ascii=False),

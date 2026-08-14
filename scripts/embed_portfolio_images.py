@@ -5,7 +5,7 @@ import base64
 import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-HTML = ROOT / "SupplyChain_AI产品经理作品集_总览.html"
+HTML = ROOT / "assets" / "portfolio" / "SupplyChain_AI产品经理作品集_总览.html"
 PORT = ROOT / "assets" / "portfolio"
 
 FILES = [

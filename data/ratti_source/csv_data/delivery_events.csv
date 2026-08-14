@@ -1,0 +1,551 @@
+﻿delivery_id,po_id,supplier_id,expected_delivery_date,actual_delivery_date,delivery_delay_days,on_time_flag,delivered_quantity,delivery_issue_type,data_source_note
+DEL00001,PO00001,SUP024,2025-06-18,2025-06-18,0,1,1067,None,Synthetic delivery records for KPI demo
+DEL00002,PO00002,SUP047,2025-05-06,2025-05-06,0,1,40,None,Synthetic delivery records for KPI demo
+DEL00003,PO00003,SUP025,2025-08-02,2025-08-02,0,1,1195,None,Synthetic delivery records for KPI demo
+DEL00004,PO00004,SUP047,2025-12-03,2025-12-03,0,1,45,None,Synthetic delivery records for KPI demo
+DEL00005,PO00005,SUP013,2025-08-14,2025-08-14,0,1,51,None,Synthetic delivery records for KPI demo
+DEL00006,PO00006,SUP041,2025-11-12,2025-11-12,0,1,1,None,Synthetic delivery records for KPI demo
+DEL00007,PO00007,SUP037,2025-09-03,2025-09-03,0,1,1447,None,Synthetic delivery records for KPI demo
+DEL00008,PO00008,SUP033,2025-07-05,2025-07-05,0,1,28,None,Synthetic delivery records for KPI demo
+DEL00009,PO00009,SUP010,2025-06-04,2025-06-04,0,1,33,None,Synthetic delivery records for KPI demo
+DEL00010,PO00010,SUP041,2025-12-10,2025-12-10,0,1,28,None,Synthetic delivery records for KPI demo
+DEL00011,PO00011,SUP008,2025-10-05,2025-10-07,2,0,12,Late delivery,Synthetic delivery records for KPI demo
+DEL00012,PO00012,SUP051,2025-05-30,2025-05-30,0,1,48,None,Synthetic delivery records for KPI demo
+DEL00013,PO00013,SUP005,2025-06-27,2025-06-27,0,1,3823,None,Synthetic delivery records for KPI demo
+DEL00014,PO00014,SUP044,2025-03-22,2025-03-22,0,1,1,None,Synthetic delivery records for KPI demo
+DEL00015,PO00015,SUP025,2025-04-05,2025-04-05,0,1,339,None,Synthetic delivery records for KPI demo
+DEL00016,PO00016,SUP059,2025-07-07,2025-07-07,0,1,4732,None,Synthetic delivery records for KPI demo
+DEL00017,PO00017,SUP003,2025-08-05,2025-08-05,0,1,56,None,Synthetic delivery records for KPI demo
+DEL00018,PO00018,SUP001,2025-07-27,2025-07-27,0,1,2539,None,Synthetic delivery records for KPI demo
+DEL00019,PO00019,SUP032,2025-05-22,2025-05-22,0,1,1919,None,Synthetic delivery records for KPI demo
+DEL00020,PO00020,SUP054,2025-12-29,2025-12-29,0,1,1,None,Synthetic delivery records for KPI demo
+DEL00021,PO00021,SUP004,2025-04-07,2025-04-08,1,0,1946,Transport issue,Synthetic delivery records for KPI demo
+DEL00022,PO00022,SUP048,2025-03-29,2025-04-09,11,0,663,Partial delivery,Synthetic delivery records for KPI demo
+DEL00023,PO00023,SUP017,2025-07-13,2025-07-13,0,1,2722,None,Synthetic delivery records for KPI demo
+DEL00024,PO00024,SUP009,2025-11-09,2025-11-20,11,0,11,Late delivery,Synthetic delivery records for KPI demo
+DEL00025,PO00025,SUP050,2025-05-22,2025-05-22,0,1,17,None,Synthetic delivery records for KPI demo
+DEL00026,PO00026,SUP053,2026-02-10,2026-02-17,7,0,6,Late delivery,Synthetic delivery records for KPI demo
+DEL00027,PO00027,SUP017,2025-04-08,2025-04-08,0,1,3701,None,Synthetic delivery records for KPI demo
+DEL00028,PO00028,SUP009,2025-03-11,2025-03-13,2,0,50,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00029,PO00029,SUP041,2025-12-09,2025-12-09,0,1,17,None,Synthetic delivery records for KPI demo
+DEL00030,PO00030,SUP058,2025-07-03,2025-07-05,2,0,4751,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00031,PO00031,SUP012,2025-07-21,2025-07-21,0,1,2143,None,Synthetic delivery records for KPI demo
+DEL00032,PO00032,SUP042,2025-07-09,2025-07-09,0,1,36,None,Synthetic delivery records for KPI demo
+DEL00033,PO00033,SUP027,2025-05-23,2025-05-23,0,1,52,None,Synthetic delivery records for KPI demo
+DEL00034,PO00034,SUP023,2025-10-14,2025-10-14,0,1,23,None,Synthetic delivery records for KPI demo
+DEL00035,PO00035,SUP058,2025-06-03,2025-06-03,0,1,3914,None,Synthetic delivery records for KPI demo
+DEL00036,PO00036,SUP053,2025-02-19,2025-02-19,0,1,52,None,Synthetic delivery records for KPI demo
+DEL00037,PO00037,SUP012,2025-04-23,2025-04-23,0,1,2989,None,Synthetic delivery records for KPI demo
+DEL00038,PO00038,SUP037,2025-11-01,2025-11-01,0,1,1592,None,Synthetic delivery records for KPI demo
+DEL00039,PO00039,SUP039,2025-05-01,2025-05-01,0,1,1,None,Synthetic delivery records for KPI demo
+DEL00040,PO00040,SUP012,2025-06-25,2025-06-30,5,0,4855,Transport issue,Synthetic delivery records for KPI demo
+DEL00041,PO00041,SUP024,2026-01-28,2026-01-28,0,1,2807,None,Synthetic delivery records for KPI demo
+DEL00042,PO00042,SUP028,2026-01-01,2026-01-01,0,1,12,None,Synthetic delivery records for KPI demo
+DEL00043,PO00043,SUP025,2025-07-02,2025-07-07,5,0,4742,Transport issue,Synthetic delivery records for KPI demo
+DEL00044,PO00044,SUP040,2025-06-06,2025-06-07,1,0,32,Partial delivery,Synthetic delivery records for KPI demo
+DEL00045,PO00045,SUP021,2025-04-08,2025-04-08,0,1,41,None,Synthetic delivery records for KPI demo
+DEL00046,PO00046,SUP005,2025-07-22,2025-07-22,0,1,60,None,Synthetic delivery records for KPI demo
+DEL00047,PO00047,SUP057,2025-09-07,2025-09-07,0,1,2927,None,Synthetic delivery records for KPI demo
+DEL00048,PO00048,SUP037,2025-12-21,2026-01-02,12,0,2465,Late delivery,Synthetic delivery records for KPI demo
+DEL00049,PO00049,SUP057,2025-07-29,2025-07-29,0,1,4531,None,Synthetic delivery records for KPI demo
+DEL00050,PO00050,SUP058,2025-09-13,2025-09-13,0,1,1401,None,Synthetic delivery records for KPI demo
+DEL00051,PO00051,SUP045,2025-11-21,2025-11-30,9,0,17,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00052,PO00052,SUP019,2026-01-19,2026-01-19,0,1,7,None,Synthetic delivery records for KPI demo
+DEL00053,PO00053,SUP006,2025-09-14,2025-09-17,3,0,2220,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00054,PO00054,SUP029,2025-02-15,2025-02-15,0,1,2207,None,Synthetic delivery records for KPI demo
+DEL00055,PO00055,SUP043,2025-08-06,2025-08-06,0,1,49,None,Synthetic delivery records for KPI demo
+DEL00056,PO00056,SUP027,2025-11-08,2025-11-08,0,1,15,None,Synthetic delivery records for KPI demo
+DEL00057,PO00057,SUP058,2025-11-04,2025-11-04,0,1,1257,None,Synthetic delivery records for KPI demo
+DEL00058,PO00058,SUP014,2025-04-24,2025-05-01,7,0,6,Partial delivery,Synthetic delivery records for KPI demo
+DEL00059,PO00059,SUP017,2025-06-24,2025-06-25,1,0,2312,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00060,PO00060,SUP038,2025-03-06,2025-03-06,0,1,7,None,Synthetic delivery records for KPI demo
+DEL00061,PO00061,SUP042,2025-10-19,2025-10-19,0,1,3,None,Synthetic delivery records for KPI demo
+DEL00062,PO00062,SUP044,2026-01-23,2026-01-26,3,0,53,Transport issue,Synthetic delivery records for KPI demo
+DEL00063,PO00063,SUP002,2025-07-18,2025-07-18,0,1,4077,None,Synthetic delivery records for KPI demo
+DEL00064,PO00064,SUP020,2025-09-11,2025-09-11,0,1,27,None,Synthetic delivery records for KPI demo
+DEL00065,PO00065,SUP027,2025-10-16,2025-10-16,0,1,48,None,Synthetic delivery records for KPI demo
+DEL00066,PO00066,SUP050,2025-11-08,2025-11-15,7,0,53,Transport issue,Synthetic delivery records for KPI demo
+DEL00067,PO00067,SUP018,2025-08-13,2025-08-13,0,1,41,None,Synthetic delivery records for KPI demo
+DEL00068,PO00068,SUP029,2025-05-08,2025-05-08,0,1,2915,None,Synthetic delivery records for KPI demo
+DEL00069,PO00069,SUP019,2025-02-15,2025-02-26,11,0,55,Partial delivery,Synthetic delivery records for KPI demo
+DEL00070,PO00070,SUP027,2025-09-28,2025-09-28,0,1,50,None,Synthetic delivery records for KPI demo
+DEL00071,PO00071,SUP039,2025-01-26,2025-01-26,0,1,52,None,Synthetic delivery records for KPI demo
+DEL00072,PO00072,SUP023,2025-09-16,2025-09-21,5,0,37,Transport issue,Synthetic delivery records for KPI demo
+DEL00073,PO00073,SUP007,2025-09-15,2025-09-15,0,1,2314,None,Synthetic delivery records for KPI demo
+DEL00074,PO00074,SUP058,2025-12-26,2026-01-04,9,0,4287,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00075,PO00075,SUP044,2025-03-21,2025-03-21,0,1,19,None,Synthetic delivery records for KPI demo
+DEL00076,PO00076,SUP038,2026-02-10,2026-02-10,0,1,22,None,Synthetic delivery records for KPI demo
+DEL00077,PO00077,SUP033,2025-06-20,2025-06-20,0,1,57,None,Synthetic delivery records for KPI demo
+DEL00078,PO00078,SUP044,2025-07-03,2025-07-09,6,0,27,Transport issue,Synthetic delivery records for KPI demo
+DEL00079,PO00079,SUP008,2025-09-08,2025-09-08,0,1,38,None,Synthetic delivery records for KPI demo
+DEL00080,PO00080,SUP056,2026-01-15,2026-01-15,0,1,27,None,Synthetic delivery records for KPI demo
+DEL00081,PO00081,SUP027,2025-11-24,2025-12-07,13,0,56,Partial delivery,Synthetic delivery records for KPI demo
+DEL00082,PO00082,SUP004,2025-02-07,2025-02-13,6,0,1347,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00083,PO00083,SUP026,2025-09-14,2025-09-14,0,1,3,None,Synthetic delivery records for KPI demo
+DEL00084,PO00084,SUP058,2025-07-24,2025-07-26,2,0,83,Transport issue,Synthetic delivery records for KPI demo
+DEL00085,PO00085,SUP007,2025-08-24,2025-08-24,0,1,1418,None,Synthetic delivery records for KPI demo
+DEL00086,PO00086,SUP047,2025-11-08,2025-11-08,0,1,28,None,Synthetic delivery records for KPI demo
+DEL00087,PO00087,SUP049,2025-04-24,2025-04-24,0,1,3354,None,Synthetic delivery records for KPI demo
+DEL00088,PO00088,SUP011,2025-04-04,2025-04-04,0,1,356,None,Synthetic delivery records for KPI demo
+DEL00089,PO00089,SUP039,2025-02-07,2025-02-07,0,1,2,None,Synthetic delivery records for KPI demo
+DEL00090,PO00090,SUP036,2025-06-16,2025-06-16,0,1,1733,None,Synthetic delivery records for KPI demo
+DEL00091,PO00091,SUP043,2025-10-18,2025-10-18,0,1,45,None,Synthetic delivery records for KPI demo
+DEL00092,PO00092,SUP008,2025-04-03,2025-04-09,6,0,34,Transport issue,Synthetic delivery records for KPI demo
+DEL00093,PO00093,SUP060,2025-10-02,2025-10-10,8,0,1,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00094,PO00094,SUP047,2025-03-16,2025-03-16,0,1,30,None,Synthetic delivery records for KPI demo
+DEL00095,PO00095,SUP024,2026-01-09,2026-01-09,0,1,981,None,Synthetic delivery records for KPI demo
+DEL00096,PO00096,SUP011,2025-07-17,2025-07-17,0,1,2247,None,Synthetic delivery records for KPI demo
+DEL00097,PO00097,SUP008,2025-08-26,2025-08-26,0,1,18,None,Synthetic delivery records for KPI demo
+DEL00098,PO00098,SUP052,2025-04-10,2025-04-13,3,0,55,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00099,PO00099,SUP044,2025-08-31,2025-08-31,0,1,50,None,Synthetic delivery records for KPI demo
+DEL00100,PO00100,SUP047,2025-04-14,2025-04-14,0,1,6,None,Synthetic delivery records for KPI demo
+DEL00101,PO00101,SUP001,2026-02-05,2026-02-05,0,1,4773,None,Synthetic delivery records for KPI demo
+DEL00102,PO00102,SUP022,2025-11-02,2025-11-02,0,1,40,None,Synthetic delivery records for KPI demo
+DEL00103,PO00103,SUP023,2026-01-06,2026-01-07,1,0,53,Partial delivery,Synthetic delivery records for KPI demo
+DEL00104,PO00104,SUP031,2025-09-28,2025-09-29,1,0,18,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00105,PO00105,SUP016,2025-03-18,2025-03-18,0,1,37,None,Synthetic delivery records for KPI demo
+DEL00106,PO00106,SUP008,2025-09-20,2025-09-25,5,0,27,Transport issue,Synthetic delivery records for KPI demo
+DEL00107,PO00107,SUP036,2025-05-22,2025-05-22,0,1,3026,None,Synthetic delivery records for KPI demo
+DEL00108,PO00108,SUP050,2025-12-29,2025-12-29,0,1,43,None,Synthetic delivery records for KPI demo
+DEL00109,PO00109,SUP015,2025-01-30,2025-01-30,0,1,41,None,Synthetic delivery records for KPI demo
+DEL00110,PO00110,SUP048,2025-08-11,2025-08-18,7,0,3268,Late delivery,Synthetic delivery records for KPI demo
+DEL00111,PO00111,SUP003,2026-01-04,2026-01-11,7,0,58,Partial delivery,Synthetic delivery records for KPI demo
+DEL00112,PO00112,SUP001,2025-10-09,2025-10-09,0,1,3595,None,Synthetic delivery records for KPI demo
+DEL00113,PO00113,SUP059,2025-05-15,2025-05-20,5,0,4969,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00114,PO00114,SUP039,2026-01-12,2026-01-12,0,1,22,None,Synthetic delivery records for KPI demo
+DEL00115,PO00115,SUP020,2026-02-06,2026-02-06,0,1,46,None,Synthetic delivery records for KPI demo
+DEL00116,PO00116,SUP019,2026-01-16,2026-01-16,0,1,9,None,Synthetic delivery records for KPI demo
+DEL00117,PO00117,SUP036,2025-10-17,2025-10-17,0,1,3469,None,Synthetic delivery records for KPI demo
+DEL00118,PO00118,SUP001,2025-10-08,2025-10-10,2,0,1240,Partial delivery,Synthetic delivery records for KPI demo
+DEL00119,PO00119,SUP044,2025-05-25,2025-05-25,0,1,45,None,Synthetic delivery records for KPI demo
+DEL00120,PO00120,SUP056,2026-01-23,2026-01-23,0,1,48,None,Synthetic delivery records for KPI demo
+DEL00121,PO00121,SUP045,2025-06-07,2025-06-07,0,1,25,None,Synthetic delivery records for KPI demo
+DEL00122,PO00122,SUP056,2025-09-05,2025-09-05,0,1,46,None,Synthetic delivery records for KPI demo
+DEL00123,PO00123,SUP019,2025-09-05,2025-09-05,0,1,5,None,Synthetic delivery records for KPI demo
+DEL00124,PO00124,SUP017,2025-03-25,2025-03-25,0,1,2139,None,Synthetic delivery records for KPI demo
+DEL00125,PO00125,SUP004,2025-12-13,2025-12-13,0,1,4741,None,Synthetic delivery records for KPI demo
+DEL00126,PO00126,SUP015,2025-05-15,2025-05-16,1,0,35,Partial delivery,Synthetic delivery records for KPI demo
+DEL00127,PO00127,SUP022,2025-07-29,2025-08-04,6,0,49,Late delivery,Synthetic delivery records for KPI demo
+DEL00128,PO00128,SUP040,2025-12-07,2025-12-07,0,1,44,None,Synthetic delivery records for KPI demo
+DEL00129,PO00129,SUP025,2025-06-22,2025-06-22,0,1,252,None,Synthetic delivery records for KPI demo
+DEL00130,PO00130,SUP032,2025-02-17,2025-02-17,0,1,1627,None,Synthetic delivery records for KPI demo
+DEL00131,PO00131,SUP001,2025-11-28,2025-11-28,0,1,1796,None,Synthetic delivery records for KPI demo
+DEL00132,PO00132,SUP054,2026-01-29,2026-01-29,0,1,5,None,Synthetic delivery records for KPI demo
+DEL00133,PO00133,SUP006,2025-02-17,2025-02-23,6,0,1914,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00134,PO00134,SUP002,2025-08-02,2025-08-02,0,1,568,None,Synthetic delivery records for KPI demo
+DEL00135,PO00135,SUP051,2026-01-13,2026-01-13,0,1,19,None,Synthetic delivery records for KPI demo
+DEL00136,PO00136,SUP031,2025-05-02,2025-05-02,0,1,48,None,Synthetic delivery records for KPI demo
+DEL00137,PO00137,SUP024,2025-02-17,2025-02-17,0,1,1208,None,Synthetic delivery records for KPI demo
+DEL00138,PO00138,SUP036,2025-03-11,2025-03-11,0,1,2866,None,Synthetic delivery records for KPI demo
+DEL00139,PO00139,SUP054,2025-05-29,2025-06-04,6,0,43,Late delivery,Synthetic delivery records for KPI demo
+DEL00140,PO00140,SUP005,2025-05-22,2025-05-23,1,0,2939,Partial delivery,Synthetic delivery records for KPI demo
+DEL00141,PO00141,SUP029,2025-07-14,2025-07-14,0,1,1298,None,Synthetic delivery records for KPI demo
+DEL00142,PO00142,SUP011,2025-01-30,2025-01-31,1,0,1864,Transport issue,Synthetic delivery records for KPI demo
+DEL00143,PO00143,SUP029,2025-07-29,2025-07-29,0,1,941,None,Synthetic delivery records for KPI demo
+DEL00144,PO00144,SUP009,2025-10-22,2025-10-22,0,1,57,None,Synthetic delivery records for KPI demo
+DEL00145,PO00145,SUP041,2025-03-01,2025-03-01,0,1,50,None,Synthetic delivery records for KPI demo
+DEL00146,PO00146,SUP035,2025-09-15,2025-09-15,0,1,15,None,Synthetic delivery records for KPI demo
+DEL00147,PO00147,SUP026,2025-08-14,2025-08-19,5,0,40,Partial delivery,Synthetic delivery records for KPI demo
+DEL00148,PO00148,SUP037,2025-12-20,2025-12-20,0,1,4010,None,Synthetic delivery records for KPI demo
+DEL00149,PO00149,SUP005,2025-06-15,2025-06-30,15,0,1743,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00150,PO00150,SUP003,2025-12-26,2026-01-05,10,0,18,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00151,PO00151,SUP042,2025-03-21,2025-03-21,0,1,59,None,Synthetic delivery records for KPI demo
+DEL00152,PO00152,SUP032,2025-10-19,2025-10-23,4,0,1105,Transport issue,Synthetic delivery records for KPI demo
+DEL00153,PO00153,SUP012,2025-04-21,2025-04-21,0,1,1019,None,Synthetic delivery records for KPI demo
+DEL00154,PO00154,SUP031,2026-01-18,2026-01-18,0,1,37,None,Synthetic delivery records for KPI demo
+DEL00155,PO00155,SUP033,2025-03-05,2025-03-13,8,0,34,Transport issue,Synthetic delivery records for KPI demo
+DEL00156,PO00156,SUP014,2025-10-02,2025-10-02,0,1,56,None,Synthetic delivery records for KPI demo
+DEL00157,PO00157,SUP010,2025-11-13,2025-11-13,0,1,33,None,Synthetic delivery records for KPI demo
+DEL00158,PO00158,SUP030,2025-12-16,2025-12-29,13,0,24,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00159,PO00159,SUP039,2025-03-09,2025-03-09,0,1,38,None,Synthetic delivery records for KPI demo
+DEL00160,PO00160,SUP035,2025-02-04,2025-02-04,0,1,24,None,Synthetic delivery records for KPI demo
+DEL00161,PO00161,SUP051,2025-08-13,2025-08-13,0,1,48,None,Synthetic delivery records for KPI demo
+DEL00162,PO00162,SUP015,2025-03-09,2025-03-09,0,1,35,None,Synthetic delivery records for KPI demo
+DEL00163,PO00163,SUP051,2025-02-16,2025-02-16,0,1,34,None,Synthetic delivery records for KPI demo
+DEL00164,PO00164,SUP021,2025-08-28,2025-08-29,1,0,17,Transport issue,Synthetic delivery records for KPI demo
+DEL00165,PO00165,SUP026,2025-05-18,2025-05-18,0,1,36,None,Synthetic delivery records for KPI demo
+DEL00166,PO00166,SUP017,2025-07-20,2025-07-20,0,1,3311,None,Synthetic delivery records for KPI demo
+DEL00167,PO00167,SUP045,2025-04-06,2025-04-14,8,0,26,Late delivery,Synthetic delivery records for KPI demo
+DEL00168,PO00168,SUP053,2025-04-22,2025-04-22,0,1,28,None,Synthetic delivery records for KPI demo
+DEL00169,PO00169,SUP039,2025-02-20,2025-02-20,0,1,26,None,Synthetic delivery records for KPI demo
+DEL00170,PO00170,SUP050,2025-05-08,2025-05-08,0,1,13,None,Synthetic delivery records for KPI demo
+DEL00171,PO00171,SUP033,2025-10-13,2025-10-13,0,1,44,None,Synthetic delivery records for KPI demo
+DEL00172,PO00172,SUP023,2026-01-10,2026-01-10,0,1,13,None,Synthetic delivery records for KPI demo
+DEL00173,PO00173,SUP054,2025-11-27,2025-11-27,0,1,53,None,Synthetic delivery records for KPI demo
+DEL00174,PO00174,SUP060,2025-09-07,2025-09-14,7,0,36,Late delivery,Synthetic delivery records for KPI demo
+DEL00175,PO00175,SUP017,2025-11-15,2025-11-15,0,1,3677,None,Synthetic delivery records for KPI demo
+DEL00176,PO00176,SUP050,2025-09-28,2025-09-28,0,1,56,None,Synthetic delivery records for KPI demo
+DEL00177,PO00177,SUP045,2025-05-25,2025-05-25,0,1,23,None,Synthetic delivery records for KPI demo
+DEL00178,PO00178,SUP019,2025-03-21,2025-03-21,0,1,53,None,Synthetic delivery records for KPI demo
+DEL00179,PO00179,SUP021,2025-07-21,2025-07-21,0,1,18,None,Synthetic delivery records for KPI demo
+DEL00180,PO00180,SUP048,2025-05-27,2025-06-06,10,0,1711,Late delivery,Synthetic delivery records for KPI demo
+DEL00181,PO00181,SUP040,2025-02-14,2025-02-14,0,1,55,None,Synthetic delivery records for KPI demo
+DEL00182,PO00182,SUP057,2025-11-15,2025-11-15,0,1,4237,None,Synthetic delivery records for KPI demo
+DEL00183,PO00183,SUP035,2025-02-25,2025-02-25,0,1,56,None,Synthetic delivery records for KPI demo
+DEL00184,PO00184,SUP030,2025-06-18,2025-06-24,6,0,21,Transport issue,Synthetic delivery records for KPI demo
+DEL00185,PO00185,SUP031,2025-12-08,2025-12-08,0,1,32,None,Synthetic delivery records for KPI demo
+DEL00186,PO00186,SUP024,2025-08-18,2025-08-18,0,1,4730,None,Synthetic delivery records for KPI demo
+DEL00187,PO00187,SUP052,2025-06-12,2025-06-12,0,1,25,None,Synthetic delivery records for KPI demo
+DEL00188,PO00188,SUP031,2025-01-23,2025-01-23,0,1,9,None,Synthetic delivery records for KPI demo
+DEL00189,PO00189,SUP036,2025-10-28,2025-10-28,0,1,1388,None,Synthetic delivery records for KPI demo
+DEL00190,PO00190,SUP029,2025-07-14,2025-07-14,0,1,4640,None,Synthetic delivery records for KPI demo
+DEL00191,PO00191,SUP023,2026-01-28,2026-02-08,11,0,37,Transport issue,Synthetic delivery records for KPI demo
+DEL00192,PO00192,SUP044,2025-10-27,2025-10-27,0,1,29,None,Synthetic delivery records for KPI demo
+DEL00193,PO00193,SUP010,2025-04-24,2025-04-24,0,1,37,None,Synthetic delivery records for KPI demo
+DEL00194,PO00194,SUP021,2025-12-26,2025-12-26,0,1,39,None,Synthetic delivery records for KPI demo
+DEL00195,PO00195,SUP024,2025-12-07,2025-12-07,0,1,3441,None,Synthetic delivery records for KPI demo
+DEL00196,PO00196,SUP017,2026-01-06,2026-01-09,3,0,3926,Late delivery,Synthetic delivery records for KPI demo
+DEL00197,PO00197,SUP060,2025-08-14,2025-08-20,6,0,48,Partial delivery,Synthetic delivery records for KPI demo
+DEL00198,PO00198,SUP011,2025-01-24,2025-01-24,0,1,2714,None,Synthetic delivery records for KPI demo
+DEL00199,PO00199,SUP018,2025-11-12,2025-11-21,9,0,38,Transport issue,Synthetic delivery records for KPI demo
+DEL00200,PO00200,SUP031,2025-10-25,2025-10-25,0,1,29,None,Synthetic delivery records for KPI demo
+DEL00201,PO00201,SUP001,2025-02-10,2025-02-10,0,1,1166,None,Synthetic delivery records for KPI demo
+DEL00202,PO00202,SUP032,2025-09-28,2025-10-02,4,0,3576,Transport issue,Synthetic delivery records for KPI demo
+DEL00203,PO00203,SUP016,2025-04-25,2025-04-25,0,1,15,None,Synthetic delivery records for KPI demo
+DEL00204,PO00204,SUP049,2025-12-04,2025-12-04,0,1,4407,None,Synthetic delivery records for KPI demo
+DEL00205,PO00205,SUP030,2025-12-18,2025-12-18,0,1,40,None,Synthetic delivery records for KPI demo
+DEL00206,PO00206,SUP007,2025-06-18,2025-06-22,4,0,788,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00207,PO00207,SUP052,2025-10-13,2025-10-13,0,1,49,None,Synthetic delivery records for KPI demo
+DEL00208,PO00208,SUP031,2025-04-22,2025-04-22,0,1,17,None,Synthetic delivery records for KPI demo
+DEL00209,PO00209,SUP016,2025-08-21,2025-08-21,0,1,3,None,Synthetic delivery records for KPI demo
+DEL00210,PO00210,SUP025,2026-01-10,2026-01-10,0,1,1349,None,Synthetic delivery records for KPI demo
+DEL00211,PO00211,SUP008,2025-06-16,2025-06-16,0,1,13,None,Synthetic delivery records for KPI demo
+DEL00212,PO00212,SUP008,2025-06-04,2025-06-04,0,1,11,None,Synthetic delivery records for KPI demo
+DEL00213,PO00213,SUP003,2025-12-01,2025-12-01,0,1,10,None,Synthetic delivery records for KPI demo
+DEL00214,PO00214,SUP044,2025-12-11,2025-12-11,0,1,49,None,Synthetic delivery records for KPI demo
+DEL00215,PO00215,SUP032,2025-05-27,2025-05-27,0,1,2895,None,Synthetic delivery records for KPI demo
+DEL00216,PO00216,SUP017,2025-02-28,2025-02-28,0,1,4629,None,Synthetic delivery records for KPI demo
+DEL00217,PO00217,SUP023,2025-07-21,2025-07-27,6,0,52,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00218,PO00218,SUP017,2025-11-04,2025-11-04,0,1,4194,None,Synthetic delivery records for KPI demo
+DEL00219,PO00219,SUP024,2025-12-06,2025-12-06,0,1,568,None,Synthetic delivery records for KPI demo
+DEL00220,PO00220,SUP050,2025-10-26,2025-10-26,0,1,21,None,Synthetic delivery records for KPI demo
+DEL00221,PO00221,SUP005,2025-02-07,2025-02-14,7,0,1619,Transport issue,Synthetic delivery records for KPI demo
+DEL00222,PO00222,SUP001,2025-05-25,2025-05-25,0,1,705,None,Synthetic delivery records for KPI demo
+DEL00223,PO00223,SUP057,2025-08-31,2025-08-31,0,1,527,None,Synthetic delivery records for KPI demo
+DEL00224,PO00224,SUP054,2025-06-16,2025-06-16,0,1,34,None,Synthetic delivery records for KPI demo
+DEL00225,PO00225,SUP013,2025-05-19,2025-05-19,0,1,37,None,Synthetic delivery records for KPI demo
+DEL00226,PO00226,SUP037,2025-08-08,2025-08-08,0,1,3548,None,Synthetic delivery records for KPI demo
+DEL00227,PO00227,SUP033,2025-07-09,2025-07-09,0,1,39,None,Synthetic delivery records for KPI demo
+DEL00228,PO00228,SUP021,2025-08-12,2025-08-12,0,1,28,None,Synthetic delivery records for KPI demo
+DEL00229,PO00229,SUP050,2025-11-01,2025-11-01,0,1,28,None,Synthetic delivery records for KPI demo
+DEL00230,PO00230,SUP039,2025-02-18,2025-02-23,5,0,57,Partial delivery,Synthetic delivery records for KPI demo
+DEL00231,PO00231,SUP021,2025-02-05,2025-02-05,0,1,31,None,Synthetic delivery records for KPI demo
+DEL00232,PO00232,SUP009,2025-06-15,2025-06-15,0,1,16,None,Synthetic delivery records for KPI demo
+DEL00233,PO00233,SUP005,2025-07-23,2025-07-31,8,0,4770,Transport issue,Synthetic delivery records for KPI demo
+DEL00234,PO00234,SUP050,2025-02-26,2025-02-26,0,1,53,None,Synthetic delivery records for KPI demo
+DEL00235,PO00235,SUP055,2025-11-12,2025-11-12,0,1,41,None,Synthetic delivery records for KPI demo
+DEL00236,PO00236,SUP033,2026-01-14,2026-01-15,1,0,44,Late delivery,Synthetic delivery records for KPI demo
+DEL00237,PO00237,SUP019,2025-08-06,2025-08-14,8,0,4,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00238,PO00238,SUP050,2026-01-08,2026-01-08,0,1,31,None,Synthetic delivery records for KPI demo
+DEL00239,PO00239,SUP036,2025-12-22,2025-12-22,0,1,636,None,Synthetic delivery records for KPI demo
+DEL00240,PO00240,SUP006,2025-04-01,2025-04-01,0,1,2903,None,Synthetic delivery records for KPI demo
+DEL00241,PO00241,SUP053,2025-08-31,2025-08-31,0,1,60,None,Synthetic delivery records for KPI demo
+DEL00242,PO00242,SUP048,2025-02-19,2025-02-19,0,1,1170,None,Synthetic delivery records for KPI demo
+DEL00243,PO00243,SUP020,2025-09-25,2025-10-02,7,0,14,Transport issue,Synthetic delivery records for KPI demo
+DEL00244,PO00244,SUP040,2025-03-22,2025-03-22,0,1,58,None,Synthetic delivery records for KPI demo
+DEL00245,PO00245,SUP018,2025-03-05,2025-03-05,0,1,1,None,Synthetic delivery records for KPI demo
+DEL00246,PO00246,SUP059,2026-01-03,2026-01-03,0,1,206,None,Synthetic delivery records for KPI demo
+DEL00247,PO00247,SUP046,2025-03-19,2025-03-19,0,1,4941,None,Synthetic delivery records for KPI demo
+DEL00248,PO00248,SUP036,2026-01-08,2026-01-15,7,0,3712,Transport issue,Synthetic delivery records for KPI demo
+DEL00249,PO00249,SUP020,2025-06-09,2025-06-09,0,1,4,None,Synthetic delivery records for KPI demo
+DEL00250,PO00250,SUP002,2025-11-05,2025-11-05,0,1,2849,None,Synthetic delivery records for KPI demo
+DEL00251,PO00251,SUP044,2025-12-01,2025-12-01,0,1,37,None,Synthetic delivery records for KPI demo
+DEL00252,PO00252,SUP022,2025-09-28,2025-10-02,4,0,42,Transport issue,Synthetic delivery records for KPI demo
+DEL00253,PO00253,SUP058,2025-10-11,2025-10-11,0,1,1239,None,Synthetic delivery records for KPI demo
+DEL00254,PO00254,SUP047,2025-03-20,2025-03-20,0,1,57,None,Synthetic delivery records for KPI demo
+DEL00255,PO00255,SUP027,2025-08-25,2025-08-25,0,1,60,None,Synthetic delivery records for KPI demo
+DEL00256,PO00256,SUP018,2025-12-20,2025-12-20,0,1,39,None,Synthetic delivery records for KPI demo
+DEL00257,PO00257,SUP045,2025-09-17,2025-09-17,0,1,39,None,Synthetic delivery records for KPI demo
+DEL00258,PO00258,SUP031,2025-03-29,2025-03-29,0,1,3,None,Synthetic delivery records for KPI demo
+DEL00259,PO00259,SUP015,2025-12-29,2025-12-29,0,1,5,None,Synthetic delivery records for KPI demo
+DEL00260,PO00260,SUP021,2025-09-14,2025-09-14,0,1,50,None,Synthetic delivery records for KPI demo
+DEL00261,PO00261,SUP048,2025-12-04,2025-12-04,0,1,365,None,Synthetic delivery records for KPI demo
+DEL00262,PO00262,SUP057,2025-06-15,2025-06-15,0,1,371,None,Synthetic delivery records for KPI demo
+DEL00263,PO00263,SUP057,2025-06-30,2025-06-30,0,1,3510,None,Synthetic delivery records for KPI demo
+DEL00264,PO00264,SUP030,2026-01-01,2026-01-04,3,0,38,Transport issue,Synthetic delivery records for KPI demo
+DEL00265,PO00265,SUP012,2025-10-04,2025-10-04,0,1,1704,None,Synthetic delivery records for KPI demo
+DEL00266,PO00266,SUP059,2026-01-17,2026-01-17,0,1,1062,None,Synthetic delivery records for KPI demo
+DEL00267,PO00267,SUP040,2025-04-23,2025-04-23,0,1,3,None,Synthetic delivery records for KPI demo
+DEL00268,PO00268,SUP010,2025-04-10,2025-04-15,5,0,46,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00269,PO00269,SUP012,2025-03-17,2025-03-17,0,1,74,None,Synthetic delivery records for KPI demo
+DEL00270,PO00270,SUP035,2025-02-17,2025-02-17,0,1,16,None,Synthetic delivery records for KPI demo
+DEL00271,PO00271,SUP039,2025-11-11,2025-11-11,0,1,35,None,Synthetic delivery records for KPI demo
+DEL00272,PO00272,SUP043,2025-12-07,2025-12-07,0,1,59,None,Synthetic delivery records for KPI demo
+DEL00273,PO00273,SUP011,2026-01-05,2026-01-05,0,1,4923,None,Synthetic delivery records for KPI demo
+DEL00274,PO00274,SUP024,2025-01-31,2025-01-31,0,1,2694,None,Synthetic delivery records for KPI demo
+DEL00275,PO00275,SUP054,2025-10-20,2025-10-20,0,1,9,None,Synthetic delivery records for KPI demo
+DEL00276,PO00276,SUP014,2026-01-12,2026-01-12,0,1,7,None,Synthetic delivery records for KPI demo
+DEL00277,PO00277,SUP060,2026-01-22,2026-01-22,0,1,55,None,Synthetic delivery records for KPI demo
+DEL00278,PO00278,SUP023,2025-04-20,2025-04-20,0,1,47,None,Synthetic delivery records for KPI demo
+DEL00279,PO00279,SUP015,2026-01-23,2026-01-23,0,1,1,None,Synthetic delivery records for KPI demo
+DEL00280,PO00280,SUP048,2025-05-20,2025-05-20,0,1,2680,None,Synthetic delivery records for KPI demo
+DEL00281,PO00281,SUP017,2025-03-02,2025-03-02,0,1,4555,None,Synthetic delivery records for KPI demo
+DEL00282,PO00282,SUP026,2025-10-27,2025-10-27,0,1,13,None,Synthetic delivery records for KPI demo
+DEL00283,PO00283,SUP031,2025-02-03,2025-02-03,0,1,41,None,Synthetic delivery records for KPI demo
+DEL00284,PO00284,SUP060,2025-03-10,2025-03-10,0,1,47,None,Synthetic delivery records for KPI demo
+DEL00285,PO00285,SUP052,2025-07-12,2025-07-12,0,1,18,None,Synthetic delivery records for KPI demo
+DEL00286,PO00286,SUP054,2025-05-08,2025-05-08,0,1,12,None,Synthetic delivery records for KPI demo
+DEL00287,PO00287,SUP003,2025-06-22,2025-06-30,8,0,54,Partial delivery,Synthetic delivery records for KPI demo
+DEL00288,PO00288,SUP029,2025-09-25,2025-09-25,0,1,4146,None,Synthetic delivery records for KPI demo
+DEL00289,PO00289,SUP034,2025-07-05,2025-07-07,2,0,56,Late delivery,Synthetic delivery records for KPI demo
+DEL00290,PO00290,SUP046,2025-10-09,2025-10-18,9,0,4918,Late delivery,Synthetic delivery records for KPI demo
+DEL00291,PO00291,SUP002,2025-11-18,2025-11-18,0,1,1769,None,Synthetic delivery records for KPI demo
+DEL00292,PO00292,SUP050,2025-08-28,2025-08-28,0,1,10,None,Synthetic delivery records for KPI demo
+DEL00293,PO00293,SUP023,2025-11-05,2025-11-09,4,0,46,Transport issue,Synthetic delivery records for KPI demo
+DEL00294,PO00294,SUP022,2025-11-08,2025-11-22,14,0,2,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00295,PO00295,SUP054,2026-01-24,2026-01-24,0,1,20,None,Synthetic delivery records for KPI demo
+DEL00296,PO00296,SUP035,2025-03-18,2025-03-18,0,1,6,None,Synthetic delivery records for KPI demo
+DEL00297,PO00297,SUP046,2025-10-03,2025-10-03,0,1,1883,None,Synthetic delivery records for KPI demo
+DEL00298,PO00298,SUP045,2026-01-04,2026-01-04,0,1,57,None,Synthetic delivery records for KPI demo
+DEL00299,PO00299,SUP055,2025-04-23,2025-04-23,0,1,39,None,Synthetic delivery records for KPI demo
+DEL00300,PO00300,SUP007,2025-07-28,2025-07-28,0,1,2524,None,Synthetic delivery records for KPI demo
+DEL00301,PO00301,SUP016,2025-10-25,2025-10-25,0,1,25,None,Synthetic delivery records for KPI demo
+DEL00302,PO00302,SUP028,2025-09-23,2025-09-23,0,1,35,None,Synthetic delivery records for KPI demo
+DEL00303,PO00303,SUP008,2025-12-15,2025-12-15,0,1,36,None,Synthetic delivery records for KPI demo
+DEL00304,PO00304,SUP005,2025-11-16,2025-11-16,0,1,4935,None,Synthetic delivery records for KPI demo
+DEL00305,PO00305,SUP004,2025-03-08,2025-03-08,0,1,4807,None,Synthetic delivery records for KPI demo
+DEL00306,PO00306,SUP029,2025-10-25,2025-10-25,0,1,4784,None,Synthetic delivery records for KPI demo
+DEL00307,PO00307,SUP037,2026-01-09,2026-01-09,0,1,3611,None,Synthetic delivery records for KPI demo
+DEL00308,PO00308,SUP040,2025-10-21,2025-10-21,0,1,55,None,Synthetic delivery records for KPI demo
+DEL00309,PO00309,SUP004,2025-02-12,2025-02-12,0,1,2992,None,Synthetic delivery records for KPI demo
+DEL00310,PO00310,SUP045,2025-12-01,2025-12-01,0,1,46,None,Synthetic delivery records for KPI demo
+DEL00311,PO00311,SUP043,2025-05-06,2025-05-12,6,0,36,Partial delivery,Synthetic delivery records for KPI demo
+DEL00312,PO00312,SUP056,2025-12-25,2025-12-31,6,0,47,Partial delivery,Synthetic delivery records for KPI demo
+DEL00313,PO00313,SUP058,2026-02-06,2026-02-06,0,1,1522,None,Synthetic delivery records for KPI demo
+DEL00314,PO00314,SUP023,2025-05-14,2025-05-14,0,1,1,None,Synthetic delivery records for KPI demo
+DEL00315,PO00315,SUP060,2025-11-19,2025-11-19,0,1,1,None,Synthetic delivery records for KPI demo
+DEL00316,PO00316,SUP006,2025-04-23,2025-04-23,0,1,2339,None,Synthetic delivery records for KPI demo
+DEL00317,PO00317,SUP016,2025-09-10,2025-09-10,0,1,35,None,Synthetic delivery records for KPI demo
+DEL00318,PO00318,SUP001,2025-10-04,2025-10-04,0,1,3893,None,Synthetic delivery records for KPI demo
+DEL00319,PO00319,SUP052,2025-06-25,2025-06-30,5,0,41,Partial delivery,Synthetic delivery records for KPI demo
+DEL00320,PO00320,SUP043,2025-06-07,2025-06-07,0,1,6,None,Synthetic delivery records for KPI demo
+DEL00321,PO00321,SUP009,2025-12-06,2025-12-06,0,1,17,None,Synthetic delivery records for KPI demo
+DEL00322,PO00322,SUP048,2025-04-23,2025-04-23,0,1,1486,None,Synthetic delivery records for KPI demo
+DEL00323,PO00323,SUP056,2025-02-14,2025-02-14,0,1,10,None,Synthetic delivery records for KPI demo
+DEL00324,PO00324,SUP025,2025-06-06,2025-06-06,0,1,1352,None,Synthetic delivery records for KPI demo
+DEL00325,PO00325,SUP008,2025-02-13,2025-02-13,0,1,31,None,Synthetic delivery records for KPI demo
+DEL00326,PO00326,SUP035,2025-05-31,2025-05-31,0,1,25,None,Synthetic delivery records for KPI demo
+DEL00327,PO00327,SUP001,2025-07-02,2025-07-02,0,1,2636,None,Synthetic delivery records for KPI demo
+DEL00328,PO00328,SUP023,2025-09-03,2025-09-03,0,1,18,None,Synthetic delivery records for KPI demo
+DEL00329,PO00329,SUP050,2026-01-03,2026-01-03,0,1,38,None,Synthetic delivery records for KPI demo
+DEL00330,PO00330,SUP021,2025-10-15,2025-10-15,0,1,54,None,Synthetic delivery records for KPI demo
+DEL00331,PO00331,SUP044,2025-09-15,2025-09-19,4,0,2,Partial delivery,Synthetic delivery records for KPI demo
+DEL00332,PO00332,SUP041,2025-03-18,2025-03-26,8,0,39,Partial delivery,Synthetic delivery records for KPI demo
+DEL00333,PO00333,SUP045,2025-04-28,2025-05-03,5,0,30,Transport issue,Synthetic delivery records for KPI demo
+DEL00334,PO00334,SUP050,2025-03-03,2025-03-03,0,1,25,None,Synthetic delivery records for KPI demo
+DEL00335,PO00335,SUP053,2025-06-03,2025-06-03,0,1,32,None,Synthetic delivery records for KPI demo
+DEL00336,PO00336,SUP010,2025-11-07,2025-11-10,3,0,42,Late delivery,Synthetic delivery records for KPI demo
+DEL00337,PO00337,SUP050,2025-08-25,2025-08-25,0,1,10,None,Synthetic delivery records for KPI demo
+DEL00338,PO00338,SUP045,2025-07-20,2025-07-20,0,1,33,None,Synthetic delivery records for KPI demo
+DEL00339,PO00339,SUP050,2025-03-18,2025-03-18,0,1,25,None,Synthetic delivery records for KPI demo
+DEL00340,PO00340,SUP023,2025-07-16,2025-07-16,0,1,41,None,Synthetic delivery records for KPI demo
+DEL00341,PO00341,SUP006,2025-09-18,2025-09-18,0,1,1496,None,Synthetic delivery records for KPI demo
+DEL00342,PO00342,SUP025,2025-03-25,2025-03-25,0,1,3624,None,Synthetic delivery records for KPI demo
+DEL00343,PO00343,SUP038,2025-06-10,2025-06-10,0,1,51,None,Synthetic delivery records for KPI demo
+DEL00344,PO00344,SUP052,2025-08-27,2025-09-07,11,0,3,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00345,PO00345,SUP056,2025-10-18,2025-10-18,0,1,15,None,Synthetic delivery records for KPI demo
+DEL00346,PO00346,SUP002,2025-09-08,2025-09-08,0,1,1119,None,Synthetic delivery records for KPI demo
+DEL00347,PO00347,SUP007,2025-09-08,2025-09-08,0,1,573,None,Synthetic delivery records for KPI demo
+DEL00348,PO00348,SUP040,2025-05-04,2025-05-04,0,1,28,None,Synthetic delivery records for KPI demo
+DEL00349,PO00349,SUP037,2025-10-22,2025-10-22,0,1,1796,None,Synthetic delivery records for KPI demo
+DEL00350,PO00350,SUP045,2025-08-20,2025-08-28,8,0,14,Partial delivery,Synthetic delivery records for KPI demo
+DEL00351,PO00351,SUP012,2025-03-31,2025-03-31,0,1,3459,None,Synthetic delivery records for KPI demo
+DEL00352,PO00352,SUP041,2025-06-28,2025-06-28,0,1,16,None,Synthetic delivery records for KPI demo
+DEL00353,PO00353,SUP040,2025-03-13,2025-03-13,0,1,1,None,Synthetic delivery records for KPI demo
+DEL00354,PO00354,SUP007,2025-12-13,2025-12-13,0,1,4471,None,Synthetic delivery records for KPI demo
+DEL00355,PO00355,SUP018,2025-02-16,2025-02-25,9,0,59,Late delivery,Synthetic delivery records for KPI demo
+DEL00356,PO00356,SUP017,2025-07-27,2025-08-07,11,0,479,Late delivery,Synthetic delivery records for KPI demo
+DEL00357,PO00357,SUP008,2025-02-28,2025-02-28,0,1,38,None,Synthetic delivery records for KPI demo
+DEL00358,PO00358,SUP021,2025-05-12,2025-05-12,0,1,7,None,Synthetic delivery records for KPI demo
+DEL00359,PO00359,SUP015,2025-03-16,2025-03-16,0,1,4,None,Synthetic delivery records for KPI demo
+DEL00360,PO00360,SUP012,2025-08-17,2025-08-21,4,0,2113,Late delivery,Synthetic delivery records for KPI demo
+DEL00361,PO00361,SUP008,2025-10-02,2025-10-02,0,1,49,None,Synthetic delivery records for KPI demo
+DEL00362,PO00362,SUP051,2025-12-10,2025-12-10,0,1,36,None,Synthetic delivery records for KPI demo
+DEL00363,PO00363,SUP056,2025-06-04,2025-06-04,0,1,30,None,Synthetic delivery records for KPI demo
+DEL00364,PO00364,SUP016,2025-06-03,2025-06-03,0,1,15,None,Synthetic delivery records for KPI demo
+DEL00365,PO00365,SUP003,2025-09-15,2025-09-15,0,1,52,None,Synthetic delivery records for KPI demo
+DEL00366,PO00366,SUP027,2025-05-07,2025-05-07,0,1,16,None,Synthetic delivery records for KPI demo
+DEL00367,PO00367,SUP046,2025-10-06,2025-10-06,0,1,249,None,Synthetic delivery records for KPI demo
+DEL00368,PO00368,SUP026,2025-05-05,2025-05-05,0,1,46,None,Synthetic delivery records for KPI demo
+DEL00369,PO00369,SUP034,2025-02-11,2025-02-11,0,1,18,None,Synthetic delivery records for KPI demo
+DEL00370,PO00370,SUP033,2026-01-11,2026-01-11,0,1,8,None,Synthetic delivery records for KPI demo
+DEL00371,PO00371,SUP046,2025-03-18,2025-03-18,0,1,1727,None,Synthetic delivery records for KPI demo
+DEL00372,PO00372,SUP014,2025-05-23,2025-05-23,0,1,18,None,Synthetic delivery records for KPI demo
+DEL00373,PO00373,SUP034,2025-04-10,2025-04-10,0,1,44,None,Synthetic delivery records for KPI demo
+DEL00374,PO00374,SUP044,2026-01-01,2026-01-02,1,0,55,Transport issue,Synthetic delivery records for KPI demo
+DEL00375,PO00375,SUP005,2025-03-14,2025-03-14,0,1,1262,None,Synthetic delivery records for KPI demo
+DEL00376,PO00376,SUP019,2025-09-12,2025-09-12,0,1,31,None,Synthetic delivery records for KPI demo
+DEL00377,PO00377,SUP019,2025-04-18,2025-04-24,6,0,34,Transport issue,Synthetic delivery records for KPI demo
+DEL00378,PO00378,SUP043,2026-02-01,2026-02-01,0,1,29,None,Synthetic delivery records for KPI demo
+DEL00379,PO00379,SUP020,2025-04-21,2025-04-21,0,1,24,None,Synthetic delivery records for KPI demo
+DEL00380,PO00380,SUP011,2025-11-30,2025-11-30,0,1,2386,None,Synthetic delivery records for KPI demo
+DEL00381,PO00381,SUP043,2025-04-06,2025-04-06,0,1,3,None,Synthetic delivery records for KPI demo
+DEL00382,PO00382,SUP014,2025-10-24,2025-10-24,0,1,23,None,Synthetic delivery records for KPI demo
+DEL00383,PO00383,SUP035,2025-06-18,2025-06-18,0,1,26,None,Synthetic delivery records for KPI demo
+DEL00384,PO00384,SUP010,2025-02-13,2025-02-13,0,1,22,None,Synthetic delivery records for KPI demo
+DEL00385,PO00385,SUP049,2025-11-06,2025-11-06,0,1,3671,None,Synthetic delivery records for KPI demo
+DEL00386,PO00386,SUP009,2026-01-25,2026-01-26,1,0,2,Late delivery,Synthetic delivery records for KPI demo
+DEL00387,PO00387,SUP039,2025-12-14,2025-12-14,0,1,13,None,Synthetic delivery records for KPI demo
+DEL00388,PO00388,SUP006,2025-10-22,2025-10-26,4,0,509,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00389,PO00389,SUP024,2025-02-01,2025-02-01,0,1,2573,None,Synthetic delivery records for KPI demo
+DEL00390,PO00390,SUP048,2025-09-05,2025-09-16,11,0,3522,Late delivery,Synthetic delivery records for KPI demo
+DEL00391,PO00391,SUP005,2025-11-30,2025-12-01,1,0,3445,Partial delivery,Synthetic delivery records for KPI demo
+DEL00392,PO00392,SUP054,2025-08-09,2025-08-09,0,1,3,None,Synthetic delivery records for KPI demo
+DEL00393,PO00393,SUP015,2025-01-21,2025-01-29,8,0,20,Transport issue,Synthetic delivery records for KPI demo
+DEL00394,PO00394,SUP032,2026-01-10,2026-01-16,6,0,596,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00395,PO00395,SUP041,2026-01-24,2026-01-24,0,1,53,None,Synthetic delivery records for KPI demo
+DEL00396,PO00396,SUP055,2025-05-30,2025-05-30,0,1,10,None,Synthetic delivery records for KPI demo
+DEL00397,PO00397,SUP027,2025-12-21,2025-12-22,1,0,19,Partial delivery,Synthetic delivery records for KPI demo
+DEL00398,PO00398,SUP039,2025-05-07,2025-05-07,0,1,21,None,Synthetic delivery records for KPI demo
+DEL00399,PO00399,SUP007,2025-11-14,2025-11-14,0,1,1227,None,Synthetic delivery records for KPI demo
+DEL00400,PO00400,SUP022,2025-04-07,2025-04-08,1,0,51,Late delivery,Synthetic delivery records for KPI demo
+DEL00401,PO00401,SUP023,2025-07-09,2025-07-15,6,0,29,Transport issue,Synthetic delivery records for KPI demo
+DEL00402,PO00402,SUP055,2026-01-07,2026-01-07,0,1,20,None,Synthetic delivery records for KPI demo
+DEL00403,PO00403,SUP002,2025-10-09,2025-10-18,9,0,4256,Transport issue,Synthetic delivery records for KPI demo
+DEL00404,PO00404,SUP051,2025-04-19,2025-04-28,9,0,58,Late delivery,Synthetic delivery records for KPI demo
+DEL00405,PO00405,SUP023,2025-07-17,2025-07-17,0,1,45,None,Synthetic delivery records for KPI demo
+DEL00406,PO00406,SUP034,2025-05-11,2025-05-11,0,1,11,None,Synthetic delivery records for KPI demo
+DEL00407,PO00407,SUP031,2025-08-20,2025-08-20,0,1,44,None,Synthetic delivery records for KPI demo
+DEL00408,PO00408,SUP028,2025-05-29,2025-06-12,14,0,8,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00409,PO00409,SUP046,2025-07-09,2025-07-09,0,1,723,None,Synthetic delivery records for KPI demo
+DEL00410,PO00410,SUP048,2025-07-14,2025-07-27,13,0,3386,Late delivery,Synthetic delivery records for KPI demo
+DEL00411,PO00411,SUP052,2025-10-01,2025-10-10,9,0,7,Late delivery,Synthetic delivery records for KPI demo
+DEL00412,PO00412,SUP007,2025-04-08,2025-04-08,0,1,1680,None,Synthetic delivery records for KPI demo
+DEL00413,PO00413,SUP047,2025-10-07,2025-10-07,0,1,50,None,Synthetic delivery records for KPI demo
+DEL00414,PO00414,SUP026,2025-10-15,2025-10-15,0,1,50,None,Synthetic delivery records for KPI demo
+DEL00415,PO00415,SUP015,2025-12-03,2025-12-07,4,0,48,Late delivery,Synthetic delivery records for KPI demo
+DEL00416,PO00416,SUP025,2025-12-03,2025-12-08,5,0,676,Partial delivery,Synthetic delivery records for KPI demo
+DEL00417,PO00417,SUP032,2025-10-18,2025-10-22,4,0,2864,Late delivery,Synthetic delivery records for KPI demo
+DEL00418,PO00418,SUP057,2025-04-02,2025-04-02,0,1,2846,None,Synthetic delivery records for KPI demo
+DEL00419,PO00419,SUP050,2025-06-22,2025-06-22,0,1,9,None,Synthetic delivery records for KPI demo
+DEL00420,PO00420,SUP044,2025-11-16,2025-11-16,0,1,36,None,Synthetic delivery records for KPI demo
+DEL00421,PO00421,SUP025,2025-12-11,2025-12-11,0,1,2380,None,Synthetic delivery records for KPI demo
+DEL00422,PO00422,SUP002,2025-12-15,2025-12-15,0,1,3557,None,Synthetic delivery records for KPI demo
+DEL00423,PO00423,SUP020,2025-11-12,2025-11-12,0,1,5,None,Synthetic delivery records for KPI demo
+DEL00424,PO00424,SUP056,2025-09-17,2025-09-17,0,1,27,None,Synthetic delivery records for KPI demo
+DEL00425,PO00425,SUP021,2025-08-25,2025-08-25,0,1,34,None,Synthetic delivery records for KPI demo
+DEL00426,PO00426,SUP032,2025-10-13,2025-10-15,2,0,1702,Partial delivery,Synthetic delivery records for KPI demo
+DEL00427,PO00427,SUP004,2025-07-15,2025-07-15,0,1,1900,None,Synthetic delivery records for KPI demo
+DEL00428,PO00428,SUP038,2025-07-16,2025-07-31,15,0,52,Transport issue,Synthetic delivery records for KPI demo
+DEL00429,PO00429,SUP042,2025-07-13,2025-07-13,0,1,28,None,Synthetic delivery records for KPI demo
+DEL00430,PO00430,SUP040,2025-10-27,2025-10-27,0,1,36,None,Synthetic delivery records for KPI demo
+DEL00431,PO00431,SUP012,2025-11-30,2025-12-11,11,0,3878,Late delivery,Synthetic delivery records for KPI demo
+DEL00432,PO00432,SUP024,2025-09-10,2025-09-14,4,0,2509,Late delivery,Synthetic delivery records for KPI demo
+DEL00433,PO00433,SUP055,2025-08-24,2025-08-24,0,1,42,None,Synthetic delivery records for KPI demo
+DEL00434,PO00434,SUP016,2025-03-16,2025-03-16,0,1,16,None,Synthetic delivery records for KPI demo
+DEL00435,PO00435,SUP028,2025-12-07,2025-12-12,5,0,51,Late delivery,Synthetic delivery records for KPI demo
+DEL00436,PO00436,SUP032,2025-01-21,2025-01-21,0,1,737,None,Synthetic delivery records for KPI demo
+DEL00437,PO00437,SUP027,2025-07-18,2025-07-18,0,1,54,None,Synthetic delivery records for KPI demo
+DEL00438,PO00438,SUP060,2025-04-12,2025-04-12,0,1,38,None,Synthetic delivery records for KPI demo
+DEL00439,PO00439,SUP054,2025-11-27,2025-11-27,0,1,48,None,Synthetic delivery records for KPI demo
+DEL00440,PO00440,SUP027,2025-06-24,2025-06-30,6,0,35,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00441,PO00441,SUP016,2025-06-08,2025-06-08,0,1,45,None,Synthetic delivery records for KPI demo
+DEL00442,PO00442,SUP043,2025-02-19,2025-02-19,0,1,25,None,Synthetic delivery records for KPI demo
+DEL00443,PO00443,SUP035,2025-06-06,2025-06-06,0,1,59,None,Synthetic delivery records for KPI demo
+DEL00444,PO00444,SUP049,2025-05-27,2025-06-08,12,0,2648,Transport issue,Synthetic delivery records for KPI demo
+DEL00445,PO00445,SUP053,2025-10-16,2025-10-16,0,1,60,None,Synthetic delivery records for KPI demo
+DEL00446,PO00446,SUP053,2025-04-16,2025-04-16,0,1,23,None,Synthetic delivery records for KPI demo
+DEL00447,PO00447,SUP041,2025-08-31,2025-09-01,1,0,13,Late delivery,Synthetic delivery records for KPI demo
+DEL00448,PO00448,SUP055,2025-12-04,2025-12-04,0,1,21,None,Synthetic delivery records for KPI demo
+DEL00449,PO00449,SUP052,2025-06-13,2025-06-15,2,0,25,Partial delivery,Synthetic delivery records for KPI demo
+DEL00450,PO00450,SUP030,2025-05-05,2025-05-05,0,1,11,None,Synthetic delivery records for KPI demo
+DEL00451,PO00451,SUP010,2025-03-17,2025-03-25,8,0,37,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00452,PO00452,SUP060,2025-09-28,2025-10-03,5,0,56,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00453,PO00453,SUP053,2025-06-13,2025-06-13,0,1,27,None,Synthetic delivery records for KPI demo
+DEL00454,PO00454,SUP040,2025-09-10,2025-09-10,0,1,42,None,Synthetic delivery records for KPI demo
+DEL00455,PO00455,SUP045,2025-08-12,2025-08-12,0,1,45,None,Synthetic delivery records for KPI demo
+DEL00456,PO00456,SUP039,2026-01-24,2026-01-24,0,1,52,None,Synthetic delivery records for KPI demo
+DEL00457,PO00457,SUP020,2025-08-21,2025-08-23,2,0,58,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00458,PO00458,SUP057,2025-09-12,2025-09-16,4,0,2183,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00459,PO00459,SUP054,2025-06-23,2025-06-23,0,1,19,None,Synthetic delivery records for KPI demo
+DEL00460,PO00460,SUP011,2025-07-19,2025-07-19,0,1,1250,None,Synthetic delivery records for KPI demo
+DEL00461,PO00461,SUP011,2026-02-02,2026-02-02,0,1,4104,None,Synthetic delivery records for KPI demo
+DEL00462,PO00462,SUP030,2025-09-24,2025-09-24,0,1,56,None,Synthetic delivery records for KPI demo
+DEL00463,PO00463,SUP019,2025-04-20,2025-04-20,0,1,53,None,Synthetic delivery records for KPI demo
+DEL00464,PO00464,SUP034,2025-11-07,2025-11-07,0,1,5,None,Synthetic delivery records for KPI demo
+DEL00465,PO00465,SUP002,2025-06-09,2025-06-09,0,1,4886,None,Synthetic delivery records for KPI demo
+DEL00466,PO00466,SUP031,2025-09-14,2025-09-14,0,1,1,None,Synthetic delivery records for KPI demo
+DEL00467,PO00467,SUP021,2025-11-03,2025-11-04,1,0,4,Late delivery,Synthetic delivery records for KPI demo
+DEL00468,PO00468,SUP039,2025-07-27,2025-07-27,0,1,11,None,Synthetic delivery records for KPI demo
+DEL00469,PO00469,SUP049,2025-12-17,2025-12-18,1,0,2590,Late delivery,Synthetic delivery records for KPI demo
+DEL00470,PO00470,SUP033,2025-05-21,2025-05-21,0,1,25,None,Synthetic delivery records for KPI demo
+DEL00471,PO00471,SUP049,2025-09-04,2025-09-04,0,1,3431,None,Synthetic delivery records for KPI demo
+DEL00472,PO00472,SUP044,2025-05-11,2025-05-11,0,1,34,None,Synthetic delivery records for KPI demo
+DEL00473,PO00473,SUP059,2025-09-28,2025-10-03,5,0,1096,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00474,PO00474,SUP004,2025-10-21,2025-10-21,0,1,4255,None,Synthetic delivery records for KPI demo
+DEL00475,PO00475,SUP047,2025-11-11,2025-11-11,0,1,38,None,Synthetic delivery records for KPI demo
+DEL00476,PO00476,SUP012,2025-05-06,2025-05-07,1,0,2621,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00477,PO00477,SUP017,2025-07-12,2025-07-20,8,0,690,Late delivery,Synthetic delivery records for KPI demo
+DEL00478,PO00478,SUP002,2025-02-04,2025-02-10,6,0,3368,Transport issue,Synthetic delivery records for KPI demo
+DEL00479,PO00479,SUP045,2026-01-13,2026-01-13,0,1,5,None,Synthetic delivery records for KPI demo
+DEL00480,PO00480,SUP045,2025-04-15,2025-04-25,10,0,42,Partial delivery,Synthetic delivery records for KPI demo
+DEL00481,PO00481,SUP028,2025-01-26,2025-02-03,8,0,32,Partial delivery,Synthetic delivery records for KPI demo
+DEL00482,PO00482,SUP037,2025-07-30,2025-07-30,0,1,891,None,Synthetic delivery records for KPI demo
+DEL00483,PO00483,SUP048,2025-12-08,2025-12-08,0,1,2432,None,Synthetic delivery records for KPI demo
+DEL00484,PO00484,SUP040,2026-01-21,2026-01-31,10,0,4,Transport issue,Synthetic delivery records for KPI demo
+DEL00485,PO00485,SUP018,2025-12-31,2025-12-31,0,1,8,None,Synthetic delivery records for KPI demo
+DEL00486,PO00486,SUP011,2025-06-16,2025-06-16,0,1,3639,None,Synthetic delivery records for KPI demo
+DEL00487,PO00487,SUP059,2025-12-11,2025-12-14,3,0,3464,Partial delivery,Synthetic delivery records for KPI demo
+DEL00488,PO00488,SUP019,2026-01-01,2026-01-01,0,1,9,None,Synthetic delivery records for KPI demo
+DEL00489,PO00489,SUP051,2025-09-08,2025-09-08,0,1,14,None,Synthetic delivery records for KPI demo
+DEL00490,PO00490,SUP017,2025-07-19,2025-07-30,11,0,4174,Late delivery,Synthetic delivery records for KPI demo
+DEL00491,PO00491,SUP008,2025-11-05,2025-11-05,0,1,22,None,Synthetic delivery records for KPI demo
+DEL00492,PO00492,SUP058,2025-04-27,2025-04-27,0,1,903,None,Synthetic delivery records for KPI demo
+DEL00493,PO00493,SUP049,2025-03-11,2025-03-11,0,1,884,None,Synthetic delivery records for KPI demo
+DEL00494,PO00494,SUP011,2025-07-04,2025-07-04,0,1,4132,None,Synthetic delivery records for KPI demo
+DEL00495,PO00495,SUP053,2025-03-26,2025-03-26,0,1,29,None,Synthetic delivery records for KPI demo
+DEL00496,PO00496,SUP022,2025-07-05,2025-07-10,5,0,27,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00497,PO00497,SUP009,2025-09-10,2025-09-10,0,1,58,None,Synthetic delivery records for KPI demo
+DEL00498,PO00498,SUP050,2025-02-15,2025-02-15,0,1,6,None,Synthetic delivery records for KPI demo
+DEL00499,PO00499,SUP028,2025-03-05,2025-03-05,0,1,43,None,Synthetic delivery records for KPI demo
+DEL00500,PO00500,SUP052,2026-01-14,2026-01-14,0,1,27,None,Synthetic delivery records for KPI demo
+DEL00501,PO00501,SUP023,2025-01-29,2025-01-29,0,1,40,None,Synthetic delivery records for KPI demo
+DEL00502,PO00502,SUP029,2026-01-22,2026-01-22,0,1,3087,None,Synthetic delivery records for KPI demo
+DEL00503,PO00503,SUP047,2025-04-15,2025-04-15,0,1,19,None,Synthetic delivery records for KPI demo
+DEL00504,PO00504,SUP022,2025-12-09,2025-12-21,12,0,57,Transport issue,Synthetic delivery records for KPI demo
+DEL00505,PO00505,SUP033,2025-03-08,2025-03-08,0,1,17,None,Synthetic delivery records for KPI demo
+DEL00506,PO00506,SUP008,2025-09-13,2025-09-13,0,1,1,None,Synthetic delivery records for KPI demo
+DEL00507,PO00507,SUP038,2025-11-27,2025-11-27,0,1,15,None,Synthetic delivery records for KPI demo
+DEL00508,PO00508,SUP046,2025-11-05,2025-11-05,0,1,4307,None,Synthetic delivery records for KPI demo
+DEL00509,PO00509,SUP053,2025-08-09,2025-08-13,4,0,6,Partial delivery,Synthetic delivery records for KPI demo
+DEL00510,PO00510,SUP029,2025-03-11,2025-03-11,0,1,3349,None,Synthetic delivery records for KPI demo
+DEL00511,PO00511,SUP041,2025-09-09,2025-09-09,0,1,32,None,Synthetic delivery records for KPI demo
+DEL00512,PO00512,SUP033,2025-10-12,2025-10-12,0,1,30,None,Synthetic delivery records for KPI demo
+DEL00513,PO00513,SUP024,2025-04-16,2025-04-16,0,1,933,None,Synthetic delivery records for KPI demo
+DEL00514,PO00514,SUP019,2025-09-14,2025-09-14,0,1,10,None,Synthetic delivery records for KPI demo
+DEL00515,PO00515,SUP019,2025-05-09,2025-05-09,0,1,32,None,Synthetic delivery records for KPI demo
+DEL00516,PO00516,SUP020,2025-11-21,2025-11-21,0,1,51,None,Synthetic delivery records for KPI demo
+DEL00517,PO00517,SUP009,2025-04-20,2025-04-20,0,1,49,None,Synthetic delivery records for KPI demo
+DEL00518,PO00518,SUP006,2025-12-19,2025-12-19,0,1,3289,None,Synthetic delivery records for KPI demo
+DEL00519,PO00519,SUP048,2025-06-04,2025-06-04,0,1,253,None,Synthetic delivery records for KPI demo
+DEL00520,PO00520,SUP035,2025-11-02,2025-11-02,0,1,34,None,Synthetic delivery records for KPI demo
+DEL00521,PO00521,SUP002,2025-06-10,2025-06-10,0,1,4797,None,Synthetic delivery records for KPI demo
+DEL00522,PO00522,SUP028,2025-05-06,2025-05-07,1,0,34,Late delivery,Synthetic delivery records for KPI demo
+DEL00523,PO00523,SUP035,2025-04-22,2025-04-28,6,0,18,Partial delivery,Synthetic delivery records for KPI demo
+DEL00524,PO00524,SUP021,2025-04-16,2025-04-16,0,1,16,None,Synthetic delivery records for KPI demo
+DEL00525,PO00525,SUP038,2025-06-09,2025-06-09,0,1,33,None,Synthetic delivery records for KPI demo
+DEL00526,PO00526,SUP036,2025-08-08,2025-08-08,0,1,3388,None,Synthetic delivery records for KPI demo
+DEL00527,PO00527,SUP044,2025-03-15,2025-03-15,0,1,42,None,Synthetic delivery records for KPI demo
+DEL00528,PO00528,SUP055,2025-12-31,2025-12-31,0,1,10,None,Synthetic delivery records for KPI demo
+DEL00529,PO00529,SUP028,2025-11-16,2025-11-23,7,0,53,Partial delivery,Synthetic delivery records for KPI demo
+DEL00530,PO00530,SUP039,2025-06-09,2025-06-09,0,1,49,None,Synthetic delivery records for KPI demo
+DEL00531,PO00531,SUP020,2025-03-19,2025-03-19,0,1,54,None,Synthetic delivery records for KPI demo
+DEL00532,PO00532,SUP033,2025-07-10,2025-07-10,0,1,49,None,Synthetic delivery records for KPI demo
+DEL00533,PO00533,SUP022,2025-05-24,2025-05-24,0,1,22,None,Synthetic delivery records for KPI demo
+DEL00534,PO00534,SUP012,2025-09-11,2025-09-11,0,1,4055,None,Synthetic delivery records for KPI demo
+DEL00535,PO00535,SUP005,2025-10-11,2025-10-11,0,1,3696,None,Synthetic delivery records for KPI demo
+DEL00536,PO00536,SUP039,2025-08-03,2025-08-08,5,0,1,Partial delivery,Synthetic delivery records for KPI demo
+DEL00537,PO00537,SUP015,2025-02-04,2025-02-04,0,1,46,None,Synthetic delivery records for KPI demo
+DEL00538,PO00538,SUP020,2025-05-15,2025-05-15,0,1,24,None,Synthetic delivery records for KPI demo
+DEL00539,PO00539,SUP039,2025-04-25,2025-04-26,1,0,53,Supplier capacity issue,Synthetic delivery records for KPI demo
+DEL00540,PO00540,SUP044,2026-01-30,2026-01-30,0,1,5,None,Synthetic delivery records for KPI demo
+DEL00541,PO00541,SUP055,2025-06-06,2025-06-06,0,1,18,None,Synthetic delivery records for KPI demo
+DEL00542,PO00542,SUP035,2025-12-04,2025-12-04,0,1,57,None,Synthetic delivery records for KPI demo
+DEL00543,PO00543,SUP042,2025-02-23,2025-02-23,0,1,27,None,Synthetic delivery records for KPI demo
+DEL00544,PO00544,SUP024,2025-10-01,2025-10-01,0,1,1889,None,Synthetic delivery records for KPI demo
+DEL00545,PO00545,SUP026,2025-05-08,2025-05-12,4,0,48,Partial delivery,Synthetic delivery records for KPI demo
+DEL00546,PO00546,SUP022,2025-06-20,2025-06-20,0,1,7,None,Synthetic delivery records for KPI demo
+DEL00547,PO00547,SUP016,2025-04-03,2025-04-03,0,1,22,None,Synthetic delivery records for KPI demo
+DEL00548,PO00548,SUP005,2025-12-09,2025-12-09,0,1,3707,None,Synthetic delivery records for KPI demo
+DEL00549,PO00549,SUP025,2025-06-21,2025-06-21,0,1,517,None,Synthetic delivery records for KPI demo
+DEL00550,PO00550,SUP005,2025-03-04,2025-03-04,0,1,2272,None,Synthetic delivery records for KPI demo

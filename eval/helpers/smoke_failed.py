@@ -4,9 +4,10 @@ from __future__ import annotations
 import os
 import sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from graph.graph import build_graph  # noqa: E402
+from graph.invoke import invoke_graph  # noqa: E402
 
 
 SAMPLES = [
@@ -28,7 +29,7 @@ SAMPLES = [
 def main() -> None:
     g = build_graph()
     for q in SAMPLES:
-        r = g.invoke({"question": q, "response_language": "en"})
+        r = invoke_graph(g, {"question": q, "response_language": "en"})
         ev = r.get("evidence") or {}
         sql = ev.get("sql") or {}
         src_names = [s.get("source_name") for s in (ev.get("sources") or [])][:5]

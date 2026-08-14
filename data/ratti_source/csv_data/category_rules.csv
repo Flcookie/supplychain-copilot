@@ -1,0 +1,28 @@
+﻿category_level_1,category_level_2,kraljic_quadrant,monitoring_frequency,qualification_intensity,audit_rule,required_documents,default_weight_operational,default_weight_risk,default_weight_esg
+Goods,Fabrics,Strategic,Quarterly,High,Risk-based + periodic sample,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; Quality certificate; Traceability evidence; ESG certificates,45,35,20
+Goods,Yarns,Strategic,Quarterly,High,Risk-based + periodic sample,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; Quality certificate; Traceability evidence; ESG certificates; Recycled/certified fiber certificate,45,35,20
+Goods,Leathers,Strategic,Quarterly,High,Risk-based + periodic sample,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; Quality certificate; Traceability evidence; ESG certificates,45,35,20
+Manufacturing,Outsourcing,Strategic,Quarterly,High,Risk-based + periodic sample,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; Subcontracting Terms; Process capability evidence; Audit report,45,35,20
+Manufacturing,Outsourced Fabric and Yarn Processing,Strategic,Quarterly,High,Risk-based + periodic sample,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; Subcontracting Terms; Process capability evidence; Audit report,45,35,20
+Manufacturing,Outsourced Leather Processing,Strategic,Quarterly,High,Risk-based + periodic sample,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; Subcontracting Terms; Process capability evidence; Audit report,45,35,20
+Manufacturing,Garment Manufacturing / Confection,Strategic,Semi-annual,High,Risk-based,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; Subcontracting Terms; Process capability evidence; Audit report,45,30,25
+Manufacturing,General Processing / Manufacturing,Strategic,Semi-annual,High,Risk-based,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; Subcontracting Terms; Process capability evidence; Audit report,45,30,25
+Services,Plant and Machinery Maintenance,Bottleneck,Semi-annual,Medium-High,Risk-based / certification-based,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; Technical capability evidence; Safety documents,40,40,20
+Services,"IT (Software, Hardware)",Bottleneck,Semi-annual,Medium-High,Risk-based / certification-based,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; Data security statement; SLA,40,40,20
+Services,"Analysis and Monitoring (Water, Air, Fumes)",Bottleneck,Semi-annual,Medium-High,Risk-based / certification-based,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; REACH compliance; SDS; Environmental certificate,40,40,20
+Services,"MRO (Maintenance, Repair and Operations)",Bottleneck,Semi-annual,Medium-High,Risk-based / certification-based,Supplier Code; Code of Ethics; SA8000 questionnaire; Terms and Conditions; Technical capability evidence; Safety documents,40,40,20
+Goods,Chemical Products,Leverage,Semi-annual,Medium,Risk-based / compliance-based,Supplier Code; Code of Ethics; REACH compliance; SDS; Environmental certificate,35,35,30
+Transportation,Freight Transport / Logistics,Leverage,Semi-annual,Medium,Risk-based / compliance-based,Supplier Code; Code of Ethics; Insurance; Service level agreement,45,35,20
+Services,Facilities Management,Leverage,Semi-annual,Medium,Risk-based / compliance-based,Supplier Code; Code of Ethics,45,35,20
+Goods,"Garments, Components and Trimmings",Leverage,Semi-annual,Medium,Risk-based / compliance-based,Supplier Code; Code of Ethics; Quality certificate; Traceability evidence; ESG certificates,45,35,20
+Services,Consultancy Services,Leverage,Annual,Medium-Low,Not required unless high risk,Supplier Code; Code of Ethics,45,35,20
+Services,Healthcare Services,Leverage,Annual,Medium-Low,Not required unless high risk,Supplier Code; Code of Ethics,45,35,20
+Fixed Assets,Fixed Assets,Leverage,Annual,Medium-Low,Not required unless high risk,Supplier Code; Code of Ethics,45,35,20
+Goods,Wadding,Leverage,Annual,Medium-Low,Not required unless high risk,Supplier Code; Code of Ethics; Quality certificate; Traceability evidence; ESG certificates,45,35,20
+Services,General Services,Non-Critical,Annual,Low,Not required unless issue triggered,Supplier Code; Code of Ethics,50,30,20
+Services,Communication and Marketing,Non-Critical,Annual,Low,Not required unless issue triggered,Supplier Code; Code of Ethics,50,30,20
+Services,Personnel (Training and HR Services),Non-Critical,Annual,Low,Not required unless issue triggered,Supplier Code; Code of Ethics,50,30,20
+Services,General Administrative Services,Non-Critical,Annual,Low,Not required unless issue triggered,Supplier Code; Code of Ethics,50,30,20
+Transportation,Passenger Transport,Non-Critical,Annual,Low,Not required unless issue triggered,Supplier Code; Code of Ethics; Insurance; Service level agreement,50,30,20
+Services,Utilities,Non-Critical,Annual,Low,Not required unless issue triggered,Supplier Code; Code of Ethics,50,30,20
+Goods,"Packaging, Tubes and Pallets",Non-Critical,Annual,Low,Not required unless issue triggered,Supplier Code; Code of Ethics,50,30,20

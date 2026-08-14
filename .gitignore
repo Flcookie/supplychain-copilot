@@ -215,8 +215,24 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# Local observability traces (generated at runtime)
+data/traces.db
+data/traces.db-*
+data/checkpoints.sqlite
+data/checkpoints.sqlite-*
+
 # Node / React frontend
 frontend/node_modules/
 
 # Portfolio HTML (local-only; do not commit)
-SupplyChain_AI产品经理作品集_总览.html
+assets/portfolio/*.html
+SupplyChain_AI*.html
+
+# SkillHub stays local — do not publish
+skillhub/
+docs/skillhub/
+data/skillhub.db
+data/skillhub.db-*
+api/routes/skillhub.py
+tests/test_skillhub_*.py
+scripts/_build_skyworks_app.py

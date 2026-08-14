@@ -13,7 +13,8 @@ import {
 import { fetchSupplier, fetchSuppliers } from "../api/client";
 import { useCopilot } from "../context/CopilotContext";
 import { t } from "../i18n";
-import type { Supplier } from "../types/api";
+import type { ChatMessage, Supplier } from "../types/api";
+import { EmbeddedInsight } from "../components/copilot/EmbeddedInsight";
 import {
   ActionCell,
   ButtonBar,
@@ -138,9 +139,11 @@ export function SuppliersPage() {
 }
 
 export function SupplierDetailPage({ supplierId }: { supplierId: string }) {
-  const { lang, setPageContext, openWithQuestion } = useCopilot();
+  const { lang, setPageContext, ask, setOpen } = useCopilot();
   const L = t(lang).suppliers;
   const [supplier, setSupplier] = useState<Supplier | null>(null);
+  const [insight, setInsight] = useState<ChatMessage | null>(null);
+  const [analyzing, setAnalyzing] = useState(false);
 
   useEffect(() => {
     fetchSupplier(supplierId).then(setSupplier);
@@ -155,6 +158,17 @@ export function SupplierDetailPage({ supplierId }: { supplierId: string }) {
       supplierName: supplier.name,
     }));
   }, [supplier, setPageContext]);
+
+  const runInsight = async (question: string) => {
+    if (!supplier) return;
+    setAnalyzing(true);
+    try {
+      const msg = await ask(question);
+      setInsight(msg);
+    } finally {
+      setAnalyzing(false);
+    }
+  };
 
   if (!supplier) return <p className="page-meta">{t(lang).common.loading}</p>;
 
@@ -253,12 +267,22 @@ export function SupplierDetailPage({ supplierId }: { supplierId: string }) {
         </ListPanel>
       </section>
 
+      <EmbeddedInsight
+        title={L.aiInsightTitle}
+        loading={analyzing}
+        message={insight}
+        lang={lang}
+        emptyHint={L.aiInsightEmpty}
+        onOpenAssistant={() => setOpen(true)}
+      />
+
       <ButtonBar>
         <button
           type="button"
           className="btn btn-secondary"
+          disabled={analyzing}
           onClick={() =>
-            openWithQuestion(
+            void runInsight(
               `Why did supplier ${supplier.id} receive a ${supplier.rating} rating? What actions should we take?`,
             )
           }
@@ -268,8 +292,33 @@ export function SupplierDetailPage({ supplierId }: { supplierId: string }) {
         <button
           type="button"
           className="btn btn-primary"
+          disabled={analyzing}
+          onClick={() => {
+            setAnalyzing(true);
+            void ask(
+              lang === "zh"
+                ? `请对供应商 ${supplier.id} 生成完整评估报告`
+                : `Run a full supplier assessment for ${supplier.id}`,
+              {
+                assessment: true,
+                supplierId: supplier.id,
+                fresh: true,
+              },
+            )
+              .then((msg) => {
+                if (msg) setInsight(msg);
+              })
+              .finally(() => setAnalyzing(false));
+          }}
+        >
+          {L.fullAssessment}
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          disabled={analyzing}
           onClick={() =>
-            openWithQuestion(
+            void runInsight(
               `Start formal review for ${supplier.id} ${supplier.name}. Summarize risk and recommend next steps.`,
             )
           }

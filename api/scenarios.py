@@ -17,6 +17,10 @@ DEMO_SCENARIOS = {
         ),
         ("Vendor rating explanation", "Why did supplier SUP012 receive a C rating?"),
         (
+            "Full supplier assessment",
+            "Run a full supplier assessment for SUP012.",
+        ),
+        (
             "Policy & ESG Q&A",
             "What ESG documents are required for yarn suppliers under Ratti qualification policy?",
         ),
@@ -37,6 +41,7 @@ DEMO_SCENARIOS = {
             "Which suppliers should be reviewed this month due to high risk?",
         ),
         ("Vendor Rating 解释", "Why did supplier SUP012 receive a C rating?"),
+        ("完整供应商评估", "请对供应商 SUP012 做完整评估报告"),
         ("政策与 ESG 问答", "纱线供应商准入需要哪些 ESG 文件？"),
         (
             "复合问题（政策 + KPI）",

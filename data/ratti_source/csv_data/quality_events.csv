@@ -1,0 +1,110 @@
+﻿quality_event_id,po_id,supplier_id,event_date,non_conformity_type,severity,defect_quantity,inspection_quantity,defect_rate,corrective_action_required,data_source_note
+QEV00001,PO00001,SUP024,2025-06-20,Material defect,Major,53,1140,0.0465,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00002,PO00002,SUP047,2025-05-11,Missing certificate,Critical,2,40,0.05,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00003,PO00007,SUP037,2025-09-06,Reworkable non-conformity,Major,36,1465,0.0246,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00004,PO00011,SUP008,2025-10-11,Missing certificate,Critical,1,12,0.0833,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00005,PO00012,SUP051,2025-06-03,Color deviation,Major,2,48,0.0417,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00006,PO00013,SUP005,2025-07-01,Reworkable non-conformity,Major,83,4114,0.0202,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00007,PO00029,SUP041,2025-12-09,Not reworkable non-conformity,Critical,1,17,0.0588,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00008,PO00034,SUP023,2025-10-14,Not reworkable non-conformity,Critical,1,23,0.0435,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00009,PO00035,SUP058,2025-06-07,Color deviation,Major,182,3914,0.0465,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00010,PO00038,SUP037,2025-11-02,Reworkable non-conformity,Minor,24,1592,0.0151,No,Synthetic quality records for KPI and vendor rating demo
+QEV00011,PO00050,SUP058,2025-09-16,Not reworkable non-conformity,Critical,31,1401,0.0221,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00012,PO00051,SUP045,2025-11-30,Material defect,Critical,1,19,0.0526,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00013,PO00054,SUP029,2025-02-15,Reworkable non-conformity,Major,110,2207,0.0498,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00014,PO00059,SUP017,2025-06-29,Missing certificate,Critical,46,2312,0.0199,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00015,PO00077,SUP033,2025-06-21,Missing certificate,Critical,1,57,0.0175,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00016,PO00087,SUP049,2025-04-28,Missing certificate,Critical,170,3354,0.0507,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00017,PO00091,SUP043,2025-10-20,Reworkable non-conformity,Major,2,45,0.0444,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00018,PO00092,SUP008,2025-04-14,Not reworkable non-conformity,Critical,1,34,0.0294,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00019,PO00093,SUP060,2025-10-10,Missing certificate,Critical,1,1,1.0,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00020,PO00094,SUP047,2025-03-18,Reworkable non-conformity,Major,1,30,0.0333,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00021,PO00109,SUP015,2025-02-04,Not reworkable non-conformity,Critical,1,41,0.0244,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00022,PO00114,SUP039,2026-01-16,Packaging defect,Major,1,22,0.0455,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00023,PO00119,SUP044,2025-05-29,Reworkable non-conformity,Major,2,45,0.0444,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00024,PO00121,SUP045,2025-06-11,Not reworkable non-conformity,Critical,1,25,0.04,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00025,PO00123,SUP019,2025-09-09,Color deviation,Critical,1,5,0.2,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00026,PO00124,SUP017,2025-03-29,Color deviation,Major,43,2139,0.0201,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00027,PO00127,SUP022,2025-08-09,Not reworkable non-conformity,Critical,1,49,0.0204,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00028,PO00130,SUP032,2025-02-21,Missing certificate,Critical,102,1627,0.0627,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00029,PO00134,SUP002,2025-08-04,Reworkable non-conformity,Critical,34,568,0.0599,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00030,PO00136,SUP031,2025-05-07,Packaging defect,Major,2,48,0.0417,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00031,PO00142,SUP011,2025-02-03,Material defect,Critical,95,1864,0.051,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00032,PO00154,SUP031,2026-01-23,Not reworkable non-conformity,Critical,1,38,0.0263,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00033,PO00171,SUP033,2025-10-16,Color deviation,Major,1,44,0.0227,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00034,PO00172,SUP023,2026-01-15,Color deviation,Critical,1,13,0.0769,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00035,PO00176,SUP050,2025-10-03,Not reworkable non-conformity,Critical,2,56,0.0357,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00036,PO00180,SUP048,2025-06-09,Packaging defect,Minor,32,1711,0.0187,No,Synthetic quality records for KPI and vendor rating demo
+QEV00037,PO00182,SUP057,2025-11-18,Material defect,Major,172,4237,0.0406,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00038,PO00196,SUP017,2026-01-14,Reworkable non-conformity,Major,175,3926,0.0446,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00039,PO00202,SUP032,2025-10-05,Material defect,Critical,210,3576,0.0587,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00040,PO00204,SUP049,2025-12-09,Reworkable non-conformity,Minor,84,4407,0.0191,No,Synthetic quality records for KPI and vendor rating demo
+QEV00041,PO00205,SUP030,2025-12-19,Reworkable non-conformity,Major,2,40,0.05,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00042,PO00207,SUP052,2025-10-17,Reworkable non-conformity,Major,2,51,0.0392,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00043,PO00209,SUP016,2025-08-24,Not reworkable non-conformity,Critical,1,3,0.3333,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00044,PO00214,SUP044,2025-12-12,Reworkable non-conformity,Major,1,49,0.0204,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00045,PO00215,SUP032,2025-05-28,Packaging defect,Major,95,2895,0.0328,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00046,PO00221,SUP005,2025-02-14,Packaging defect,Major,38,1619,0.0235,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00047,PO00232,SUP009,2025-06-20,Not reworkable non-conformity,Critical,1,16,0.0625,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00048,PO00233,SUP005,2025-07-31,Material defect,Critical,261,4770,0.0547,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00049,PO00234,SUP050,2025-03-03,Packaging defect,Major,2,53,0.0377,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00050,PO00235,SUP055,2025-11-14,Not reworkable non-conformity,Critical,1,41,0.0244,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00051,PO00240,SUP006,2025-04-05,Color deviation,Major,90,2903,0.031,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00052,PO00241,SUP053,2025-08-31,Reworkable non-conformity,Major,3,60,0.05,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00053,PO00244,SUP040,2025-03-26,Packaging defect,Minor,1,58,0.0172,No,Synthetic quality records for KPI and vendor rating demo
+QEV00054,PO00255,SUP027,2025-08-29,Missing certificate,Critical,1,60,0.0167,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00055,PO00266,SUP059,2026-01-21,Packaging defect,Major,52,1062,0.049,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00056,PO00271,SUP039,2025-11-11,Not reworkable non-conformity,Critical,1,36,0.0278,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00057,PO00287,SUP003,2025-06-30,Not reworkable non-conformity,Critical,2,54,0.037,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00058,PO00290,SUP046,2025-10-20,Packaging defect,Critical,255,4918,0.0519,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00059,PO00294,SUP022,2025-11-27,Missing certificate,Critical,1,4,0.25,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00060,PO00298,SUP045,2026-01-07,Material defect,Minor,1,57,0.0175,No,Synthetic quality records for KPI and vendor rating demo
+QEV00061,PO00302,SUP028,2025-09-26,Missing certificate,Critical,2,35,0.0571,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00062,PO00312,SUP056,2026-01-03,Material defect,Major,2,47,0.0426,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00063,PO00336,SUP010,2025-11-12,Packaging defect,Major,1,42,0.0238,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00064,PO00349,SUP037,2025-10-23,Material defect,Major,37,1796,0.0206,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00065,PO00350,SUP045,2025-08-28,Reworkable non-conformity,Critical,1,16,0.0625,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00066,PO00355,SUP018,2025-02-28,Not reworkable non-conformity,Critical,1,59,0.0169,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00067,PO00364,SUP016,2025-06-07,Packaging defect,Critical,1,15,0.0667,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00068,PO00365,SUP003,2025-09-20,Packaging defect,Major,2,52,0.0385,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00069,PO00369,SUP034,2025-02-11,Packaging defect,Critical,1,18,0.0556,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00070,PO00370,SUP033,2026-01-15,Packaging defect,Critical,1,8,0.125,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00071,PO00371,SUP046,2025-03-23,Missing certificate,Critical,62,1727,0.0359,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00072,PO00372,SUP014,2025-05-27,Material defect,Critical,1,18,0.0556,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00073,PO00390,SUP048,2025-09-18,Missing certificate,Critical,106,3522,0.0301,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00074,PO00396,SUP055,2025-06-01,Color deviation,Critical,1,10,0.1,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00075,PO00400,SUP022,2025-04-11,Reworkable non-conformity,Minor,1,51,0.0196,No,Synthetic quality records for KPI and vendor rating demo
+QEV00076,PO00401,SUP023,2025-07-16,Not reworkable non-conformity,Critical,1,29,0.0345,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00077,PO00402,SUP055,2026-01-07,Reworkable non-conformity,Major,1,20,0.05,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00078,PO00403,SUP002,2025-10-18,Reworkable non-conformity,Major,111,4256,0.0261,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00079,PO00404,SUP051,2025-05-02,Color deviation,Critical,3,58,0.0517,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00080,PO00406,SUP034,2025-05-16,Missing certificate,Critical,1,11,0.0909,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00081,PO00411,SUP052,2025-10-14,Packaging defect,Critical,1,7,0.1429,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00082,PO00419,SUP050,2025-06-26,Packaging defect,Critical,1,9,0.1111,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00083,PO00421,SUP025,2025-12-15,Packaging defect,Major,79,2380,0.0332,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00084,PO00422,SUP002,2025-12-20,Not reworkable non-conformity,Critical,81,3557,0.0228,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00085,PO00423,SUP020,2025-11-17,Material defect,Critical,1,5,0.2,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00086,PO00438,SUP060,2025-04-14,Color deviation,Major,1,38,0.0263,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00087,PO00439,SUP054,2025-11-30,Color deviation,Major,1,48,0.0208,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00088,PO00446,SUP053,2025-04-17,Packaging defect,Major,1,23,0.0435,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00089,PO00447,SUP041,2025-09-02,Packaging defect,Critical,1,13,0.0769,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00090,PO00448,SUP055,2025-12-06,Missing certificate,Critical,1,21,0.0476,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00091,PO00452,SUP060,2025-10-04,Missing certificate,Critical,3,56,0.0536,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00092,PO00455,SUP045,2025-08-14,Material defect,Major,2,46,0.0435,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00093,PO00460,SUP011,2025-07-21,Material defect,Major,28,1289,0.0217,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00094,PO00465,SUP002,2025-06-14,Packaging defect,Minor,67,4886,0.0137,No,Synthetic quality records for KPI and vendor rating demo
+QEV00095,PO00468,SUP039,2025-08-01,Color deviation,Critical,1,12,0.0833,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00096,PO00480,SUP045,2025-04-28,Not reworkable non-conformity,Critical,2,42,0.0476,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00097,PO00493,SUP049,2025-03-13,Not reworkable non-conformity,Critical,16,884,0.0181,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00098,PO00501,SUP023,2025-02-03,Missing certificate,Critical,1,40,0.025,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00099,PO00511,SUP041,2025-09-14,Not reworkable non-conformity,Critical,1,32,0.0312,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00100,PO00513,SUP024,2025-04-18,Color deviation,Major,27,953,0.0283,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00101,PO00515,SUP019,2025-05-13,Material defect,Major,1,32,0.0312,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00102,PO00519,SUP048,2025-06-08,Not reworkable non-conformity,Critical,10,253,0.0395,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00103,PO00520,SUP035,2025-11-03,Missing certificate,Critical,1,34,0.0294,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00104,PO00521,SUP002,2025-06-12,Reworkable non-conformity,Critical,274,4797,0.0571,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00105,PO00523,SUP035,2025-04-28,Material defect,Major,1,20,0.05,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00106,PO00529,SUP028,2025-11-25,Material defect,Critical,3,53,0.0566,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00107,PO00533,SUP022,2025-05-29,Reworkable non-conformity,Major,1,22,0.0455,Yes,Synthetic quality records for KPI and vendor rating demo
+QEV00108,PO00539,SUP039,2025-04-30,Packaging defect,Minor,1,53,0.0189,No,Synthetic quality records for KPI and vendor rating demo
+QEV00109,PO00546,SUP022,2025-06-22,Color deviation,Critical,1,7,0.1429,Yes,Synthetic quality records for KPI and vendor rating demo

@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
+import { EmbeddedInsight } from "../components/copilot/EmbeddedInsight";
 import { fetchReviewQueue } from "../api/client";
 import { useCopilot } from "../context/CopilotContext";
 import { t } from "../i18n";
-import type { ReviewQueueItem } from "../types/api";
+import type { ChatMessage, ReviewQueueItem } from "../types/api";
 import {
   ActionCell,
+  ButtonBar,
   DataTable,
   ListPanel,
   PageHeader,
@@ -30,10 +32,12 @@ function isActiveReview(st: string) {
 }
 
 export function ReviewQueuePage() {
-  const { lang, setOpen, setPageContext, sendMessage } = useCopilot();
+  const { lang, setOpen, setPageContext, ask } = useCopilot();
   const L = t(lang).review;
   const [items, setItems] = useState<ReviewQueueItem[]>([]);
   const [statusMap, setStatusMap] = useState<Record<string, string>>({});
+  const [insights, setInsights] = useState<Record<string, ChatMessage>>({});
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -47,6 +51,7 @@ export function ReviewQueuePage() {
           initial[task.supplier_id] = task.status;
         }
         setStatusMap(initial);
+        if (r.items.length) setSelectedId(r.items[0].supplier_id);
       })
       .catch((e) => setError(String(e)))
       .finally(() => setLoading(false));
@@ -59,7 +64,10 @@ export function ReviewQueuePage() {
     }).length;
   }, [items, statusMap]);
 
-  const openTaskContext = (task: ReviewQueueItem) => {
+  const selectedTask = items.find((t) => t.supplier_id === selectedId) ?? null;
+
+  const selectTask = (task: ReviewQueueItem) => {
+    setSelectedId(task.supplier_id);
     setPageContext((prev) => ({
       ...prev,
       page: "review-queue",
@@ -67,22 +75,21 @@ export function ReviewQueuePage() {
       supplierName: task.supplier_name || undefined,
       reviewTaskId: task.supplier_id,
     }));
-    setOpen(true);
   };
 
-  const runReview = async (task: ReviewQueueItem) => {
-    const st = statusMap[task.supplier_id] ?? task.status;
-    openTaskContext(task);
+  const runReview = async (task: ReviewQueueItem, force = false) => {
+    selectTask(task);
+    const id = task.supplier_id;
+    if (!force && insights[id]) return;
 
-    if (isActiveReview(st)) {
-      return;
-    }
-
-    setBusyId(task.supplier_id);
+    setBusyId(id);
     const question = `Review supplier ${task.supplier_id} ${task.supplier_name}. Priority ${task.priority}. Reason: ${task.reason}. Summarize risk and recommend next steps.`;
     try {
-      await sendMessage(question);
-      setStatusMap((s) => ({ ...s, [task.supplier_id]: "in_progress" }));
+      const msg = await ask(question);
+      if (msg) {
+        setInsights((prev) => ({ ...prev, [id]: msg }));
+        setStatusMap((s) => ({ ...s, [id]: "in_progress" }));
+      }
     } finally {
       setBusyId(null);
     }
@@ -124,8 +131,13 @@ export function ReviewQueuePage() {
             {items.map((task) => {
               const st = statusMap[task.supplier_id] ?? task.status;
               const reviewing = busyId === task.supplier_id;
+              const selected = selectedId === task.supplier_id;
               return (
-                <tr key={task.supplier_id}>
+                <tr
+                  key={task.supplier_id}
+                  className={`row-clickable ${selected ? "row-selected" : ""}`}
+                  onClick={() => selectTask(task)}
+                >
                   <td>
                     <span
                       className="text-xs font-semibold uppercase tracking-wide"
@@ -151,18 +163,24 @@ export function ReviewQueuePage() {
                     <button
                       type="button"
                       disabled={reviewing}
-                      onClick={() => void runReview(task)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        void runReview(task, !insights[task.supplier_id]);
+                      }}
                       className="btn btn-sm btn-primary"
                     >
                       {reviewing
                         ? t(lang).common.loading
-                        : isActiveReview(st)
-                          ? L.continue
-                          : L.start}
+                        : insights[task.supplier_id]
+                          ? L.viewAnalysis
+                          : isActiveReview(st)
+                            ? L.continue
+                            : L.start}
                     </button>
                     <Link
                       to={`/suppliers/${task.supplier_id}`}
                       className="btn btn-sm btn-ghost"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       {t(lang).suppliers.details}
                     </Link>
@@ -173,6 +191,44 @@ export function ReviewQueuePage() {
           </tbody>
         </DataTable>
       </ListPanel>
+
+      {selectedTask ? (
+        <>
+          <EmbeddedInsight
+            title={L.workspaceTitle}
+            loading={busyId === selectedTask.supplier_id}
+            message={insights[selectedTask.supplier_id] ?? null}
+            lang={lang}
+            emptyHint={L.workspaceEmpty}
+            onOpenAssistant={() => setOpen(true)}
+          />
+          {insights[selectedTask.supplier_id] ? (
+            <ButtonBar>
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => alert("PIP draft simulated")}
+              >
+                {L.pip}
+              </button>
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => alert("Requires manager approval")}
+              >
+                {L.blacklist}
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => void runReview(selectedTask, true)}
+              >
+                {L.rerunAnalysis}
+              </button>
+            </ButtonBar>
+          ) : null}
+        </>
+      ) : null}
     </div>
   );
 }

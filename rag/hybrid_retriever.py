@@ -1,3 +1,10 @@
+"""Hybrid RAG: dual-path recall (vector + BM25) → RRF fusion → Cross-Encoder rerank.
+
+Funnel (industrial default):
+  vector_k / keyword_k (~30)  →  RRF merge  →  Top `rerank_pool` (20)
+  → Cross-Encoder fine-rank  →  Top `k` (5) to the generator.
+"""
+
 from __future__ import annotations
 
 import copy
@@ -6,7 +13,7 @@ from typing import Any
 
 from langchain_core.documents import Document
 
-from core.config import ENABLE_HYDE
+from core.config import ENABLE_HYDE, RERANK_POOL
 from rag.bm25_index import load_bm25_index, tokenize
 from rag.query_expansion import build_hyde_query, build_keyword_query
 from rag.retriever import get_vectorstore
@@ -23,14 +30,14 @@ class HybridRetriever:
         k: int = 5,
         vector_k: int = 30,
         keyword_k: int = 30,
-        rerank_pool: int = 20,
+        rerank_pool: int | None = None,
         doc_types: list[str] | None = None,
         reranker: Any | None = None,
     ):
         self.k = k
         self.vector_k = vector_k
         self.keyword_k = keyword_k
-        self.rerank_pool = rerank_pool
+        self.rerank_pool = rerank_pool if rerank_pool is not None else RERANK_POOL
         self.doc_types = doc_types
         self.reranker = reranker
         self.vectorstore = get_vectorstore()
@@ -91,9 +98,24 @@ class HybridRetriever:
             fused_docs.append(doc)
 
         fused_docs.sort(key=lambda doc: doc.metadata.get("retrieval_score", 0.0), reverse=True)
-        rerank_input = fused_docs[: max(self.rerank_pool, self.k)]
+        pool_size = max(self.rerank_pool, self.k)
+        rerank_input = fused_docs[:pool_size]
+
+        # Annotate pre-rerank ranks for observability / interview traces.
+        for idx, doc in enumerate(rerank_input, start=1):
+            doc.metadata["rrf_rank"] = idx
+            doc.metadata["rerank_pool_size"] = pool_size
+
         if self.reranker:
-            rerank_input = self.reranker.rerank(query, rerank_input, top_k=self.k)
+            reranked = self.reranker.rerank(query, rerank_input, top_k=self.k)
+            for doc in reranked:
+                doc.metadata["retrieval_funnel"] = (
+                    f"dual_recall→RRF_top{pool_size}→{getattr(self.reranker, 'name', 'rerank')}_top{self.k}"
+                )
+            return reranked
+
+        for doc in rerank_input[: self.k]:
+            doc.metadata["retrieval_funnel"] = f"dual_recall→RRF_top{self.k}"
         return rerank_input[: self.k]
 
     def _vector_queries(self, query: str) -> list[tuple[str, str, int]]:

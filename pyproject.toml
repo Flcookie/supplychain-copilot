@@ -18,7 +18,21 @@ dependencies = [
     "streamlit>=1.51.0",
     "fastapi>=0.115.0",
     "uvicorn[standard]>=0.32.0",
+    "mcp>=1.8.0",
+    "sqlglot>=26.0.0",
+    "langgraph-checkpoint-sqlite>=3.0.3",
 ]
 
 [project.optional-dependencies]
 rerank = ["sentence-transformers>=5.4.1"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+]
+

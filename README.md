@@ -1,137 +1,39 @@
-# 🏭 Supplier Lifecycle Copilot
+# 供应商生命周期 Copilot（Supplier Lifecycle Copilot）
 
-***An AI-Powered Procurement Assistant for Supplier Qualification, KPIs, Risk & Vendor Rating — based on Ratti supplier management scenarios***
+面向采购 / 供应链的对话式助手：供应商准入、政策问答、KPI 查询、风险场景与评级解释。
 
-![LangGraph](https://img.shields.io/badge/LangGraph-Workflow-blue)
-![Streamlit](https://img.shields.io/badge/UI-Streamlit-orange)
+![LangGraph](https://img.shields.io/badge/LangGraph-工作流-blue)
+![FastAPI](https://img.shields.io/badge/API-FastAPI-009688)
 ![License](https://img.shields.io/badge/License-Apache%202.0-green)
 ![OpenAI](https://img.shields.io/badge/LLM-GPT--4%20%2F%20GPT--4o--mini-black)
 
 ---
 
-## 🌐 Overview
+## 项目简介
 
-**Supplier Lifecycle Copilot** extends the original SupplyChain Copilot with a **Ratti-inspired supplier management workflow**: qualification onboarding, policy Q&A, KPI NL2SQL, risk scenario analysis, and vendor rating explanation.
+本项目基于 **米兰理工 × Ratti** 供应商管理场景抽象，用**脱敏合成数据**演示企业采购助手能力（非真实供应商机密数据）。
 
-> Based on Politecnico di Milano × Ratti S.p.A. project logic (qualification flow, Kraljic segmentation, ESG scoring, vendor rating). Uses **anonymized synthetic data**, not real supplier records.
+| 能力 | 说明 |
+|------|------|
+| 供应商准入清单 | 品类路径、Kraljic、所需证件、人工审批关口 |
+| 政策 / ESG 问答 | RAG 检索资格认证、ESG、Kraljic 等政策文档 |
+| 供应商 KPI 查询 | NL2SQL（准时率、缺陷率、支出等） |
+| 风险复审与场景 | 复审清单、质量事件、延期 what-if |
+| 评级解释 | A/B/C/D 构成拆解与采购建议 |
 
-**RAG** handles unstructured policies (`policies_knowledge_base`). **NL2SQL** handles structured KPIs and supplier records in **`data/ratti_copilot_demo.db`** (anonymized synthetic Ratti demo data — no confidential supplier-level records).
-
-See [`docs/ratti/`](docs/ratti/) for PRD, data dictionary, evaluation set, and risk boundary design.
-
-### Core capabilities (interview demo)
-
-1. **Supplier qualification checklist** — category path, Kraljic, required documents, human approval gates  
-2. **Policy & ESG Q&A** — RAG over Ratti qualification / ESG / Kraljic policies  
-3. **Supplier KPI query** — multi-metric NL2SQL (e.g. yarn OTD + defect rate in 2025)  
-4. **Risk review & scenario analysis** — review-due lists with strict/relaxed fallback; what-if delay  
-5. **Vendor rating explanation** — score breakdown, driver analysis, recommended buyer actions  
-
-## 🏢 Business Context & Problem Statement
-
-In large manufacturing and retail enterprises, **supply chain teams face fragmented data silos**:
-- Policy documents stored in shared drives or SharePoint.
-- KPI dashboards buried in BI tools.
-- Risk assessments manually compiled from spreadsheets.
-
-This project addresses a common pain point:
-> "How can supply chain professionals instantly retrieve policies, compare supplier KPIs, and analyze potential risks — all in one conversational interface?"
-
-Supplier Lifecycle Copilot bridges this gap with a unified **AI decision-support assistant** that understands both structured and unstructured enterprise data.
-
-## 🖥️ User Interface Preview
-
-<p align="center">
-  <img src="https://github.com/Flcookie/supplychain-copilot/blob/main/assets/ui_screenshot.png" width="90%" alt="SupplyChain Copilot Streamlit UI Preview">
-</p>
-
-> **Figure:** Streamlit chat UI with **scenario templates**, router-driven **Current task** (intent + confidence), structured answers (Summary / Key Findings / Evidence / Limitations), and **collapsed** Evidence & Debug panels (SQL + router JSON).
-
----
-## 🚀 Live Demo
-
-Try it here: [supplychain-copilot.streamlit.app](https://supplychain-copilot.streamlit.app/)
-
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://supplychain-copilot.streamlit.app/)
----
-**SupplyChain Copilot** (now **Supplier Lifecycle Copilot**) is an enterprise-grade AI assistant integrating **policy documents**, **supplier lifecycle data**, and **risk simulations** into one intelligent system.
-It allows procurement teams to **generate qualification checklists**, **query KPIs**, **retrieve policies**, **analyze risk scenarios**, and **explain vendor ratings** in **natural language**.
-
-Built with **LangGraph**, **LangChain**, **Pinecone**, and **Streamlit**, this project demonstrates a **production-ready AI Copilot architecture** for real-world enterprise supply chain applications.
+详细 PRD、数据字典与风险边界见 [`docs/ratti/`](docs/ratti/)。
 
 ---
 
-## 🎯 Project Goals
+## 快速开始
 
-* Improve enterprise information accessibility across supply chain teams.
-* Unify **structured (SQL)** and **unstructured (RAG)** data in one conversational interface.
-* Reduce time spent searching dashboards or policy PDFs.
-* Demonstrate **enterprise-level LLM workflow** design using LangGraph.
-
-### 💎 Value Proposition
-
-* Faster supplier intelligence and decision-making.
-* Explainable answers with document and data citations.
-* Scalable foundation for ERP & document system integration.
-
----
-
-## 🧠 System Architecture
-
-### 🔹 Layers
-
-| Layer                    | Description                                                 |
-| ------------------------ | ----------------------------------------------------------- |
-| **Streamlit Chat UI**    | Bilingual UI · 6 scenario templates · router “Current task” · business answer + collapsed Evidence / Debug |
-| **LangGraph Workflow**   | Router → Qualification / Policy / KPI / Risk / Vendor Rating / Hybrid → Answer |
-| **RAG (Pinecone)**       | Retrieves Ratti policy chunks + legacy policy/contract/SOP docs |
-| **SQL KPI Query Engine** | NL → SQL over `ratti_copilot_demo.db` (9 tables, read-only whitelist) |
-| **Risk Node**            | Review lists, quality issues, what-if delay, blacklist HITL |
-| **Vendor Rating Node**   | Explains A/B/C/D ratings with score breakdown and SQL evidence |
-
-### 🔸 Workflow Diagram
-
-```
-[START]
-   │
-   ▼
- Router Node ──→ Qualification ──┐
-   │                              │
-   ├────────→ Policy QA ──────────┤
-   ├────────→ KPI Node ───────────┤
-   ├────────→ Risk Scenario ──────┤
-   ├────────→ Vendor Rating ──────┤
-   └────────→ Hybrid Node ────────┤
-                                  ├──→ Answer → [END]
-```
-
-The router classifies each question into lifecycle intents: `qualification_checklist`, `policy_qa`, `kpi_query`, `risk_scenario`, `vendor_rating_explanation`, or `hybrid_query`.
-
----
-
-## 📂 Project Structure
-
-```
-app/           → User interfaces (CLI + Streamlit)
-core/          → Configuration, prompts, environment
-graph/         → LangGraph state, nodes, workflow
-rag/           → RAG retriever logic (Pinecone / Chroma)
-tools/         → SQL tools, ingestion helpers
-data/          → SQLite DB & documents
-ingestion/     → Document ingestion & vectorstore builder
-```
-
----
-
-## ⚙️ Setup & Environment
-
-### 🧩 Dependencies
+### 1. 安装依赖
 
 ```bash
 uv sync
 ```
 
-### 🌍 Environment Variables (`.env`)
+### 2. 配置环境变量（`.env`）
 
 ```bash
 OPENAI_API_KEY=sk-xxxx
@@ -141,318 +43,195 @@ LANGSMITH_TRACING_V2=true
 LANGSMITH_API_KEY=lsv2_xxx
 LANGSMITH_PROJECT=supplychain-copilot
 
-# Structured data (Ratti demo — default)
+# 结构化数据（Ratti 演示库，仓库已附带）
 DB_URL=sqlite:///data/ratti_copilot_demo.db
 SQLITE_DB_PATH=data/ratti_copilot_demo.db
 
-# Fixed “business date” for review-due / certificate-expiry SQL (reproducible demos)
+# 复审/证件到期等「业务日期」（保证演示可复现）
 DEMO_CURRENT_DATE=2025-12-01
 ```
 
-> **Note:** `data/ratti_copilot_demo.db` ships with the repo (from the Ratti lifecycle package). The legacy `data/supplychain_kpi.db` (`data/init_demo_db.py`) is the original 2-table KPI prototype and is **not** used by the current UI or graph.
-
-### 🧭 Commands
+### 3. （可选）重建向量索引
 
 ```bash
-# Install dependencies
-uv sync
-
-# Export Ratti policies → data/docs/policy/ (first-time or after policy edits)
 uv run python ingestion/export_ratti_policies.py
-
-# Build / rebuild Pinecone index (includes Ratti policy chunks)
 uv run python -m ingestion.build_vectorstore --reindex
+```
 
-# Launch Streamlit UI (local) — chat copilot
-uv run streamlit run app/ui.py --server.port 8502
+### 4. 启动服务
 
-# FastAPI + React workbench (ProcureAI)
-uv run uvicorn api.main:app --reload --port 8000
-cd frontend && npm install && npm run dev   # http://localhost:5173
+| 入口 | 命令 | 地址 |
+|------|------|------|
+| FastAPI | `uv run uvicorn api.main:app --reload --port 8000` | http://127.0.0.1:8000 |
+| Streamlit 对话 Copilot | `uv run streamlit run app/ui.py --server.port 8502` | http://127.0.0.1:8502 |
+| 可观测性面板 | `uv run streamlit run app/observability_ui.py --server.port 8503` | http://127.0.0.1:8503 |
+| React 工作台（开发） | `cd frontend && npm install && npm run dev` | http://localhost:5173 |
 
-# Ratti router eval (25 lifecycle questions)
-uv run python -m eval.run_router_eval --dataset eval/datasets/ratti_eval_25.json --mode llm
+生产构建前端后，FastAPI 会自动托管 `frontend/dist`。
 
-# Ratti KPI SQL template smoke test (against ratti_copilot_demo.db)
+---
+
+## 系统架构
+
+```
+用户提问
+   │
+   ▼
+ Router（意图路由）
+   ├─ 准入清单 qualification_checklist
+   ├─ 政策问答 policy_qa
+   ├─ KPI 查询 kpi_query
+   ├─ 风险场景 risk_scenario
+   ├─ 评级解释 vendor_rating_explanation
+   └─ 混合 hybrid_query
+          │
+          ▼
+       Answer（摘要 / 要点 / 证据 / 局限）
+```
+
+| 层级 | 说明 |
+|------|------|
+| UI | Streamlit 对话 · React 工作台 |
+| 编排 | LangGraph：Router → 业务节点 → Answer |
+| RAG | Pinecone + BM25 → RRF → Cross-Encoder 重排 |
+| SQL | 只读白名单 NL2SQL（`ratti_copilot_demo.db`） |
+| 工具 | MCP / 本地实现（政策检索、KPI、风险评分等） |
+| 观测 | LangSmith · 本地 Trace Store |
+
+路由策略简述：输入不完整时先澄清；置信度不足时走 RAG 兜底；否则进入对应生命周期意图。
+
+---
+
+## 推荐演示问题
+
+| # | 类型 | 示例问题 | 意图 |
+|---|------|----------|------|
+| 1 | 准入 | 我们有一家中国新纱线供应商，应按什么资格流程办理？ | `qualification_checklist` |
+| 2 | KPI | 展示 2025 年纱线供应商的准时交付率与缺陷率 | `kpi_query` |
+| 3 | 风险 | 本月哪些高风险供应商需要复审？ | `risk_scenario` |
+| 4 | 评级 | 为什么 SUP012 是 C 级？ | `vendor_rating_explanation` |
+| 5 | 政策 | 纱线供应商按 Ratti 资格政策需要哪些 ESG 文件？ | `policy_qa` |
+| 6 | 混合 | 战略纱线供应商的监控政策是什么？2025 平均准时率如何？ | `hybrid_query` |
+
+---
+
+## 数据说明
+
+演示库：`data/ratti_copilot_demo.db`（仓库内置，脱敏合成数据）。原始 CSV / Excel / 政策语料在 `data/ratti_source/`。
+
+| 表 | 作用 |
+|----|------|
+| `suppliers` | 主数据、Kraljic、风险、复审日期、资格状态 |
+| `category_rules` | 品类资格规则 |
+| `documents` | 证件与合规材料（含到期） |
+| `purchase_orders` | 订单量与金额 |
+| `delivery_events` | 准时/延迟交付 |
+| `quality_events` | 缺陷与不符合项 |
+| `risk_events` | 风险事件与评分 |
+| `esg_assessments` | ESG 评分 |
+| `vendor_rating` | A/B/C/D 评级构成 |
+
+日历类查询使用 `DEMO_CURRENT_DATE`（默认 `2025-12-01`），保证演示结果稳定。字段定义见 [`docs/ratti/`](docs/ratti/)。
+
+---
+
+## 目录结构
+
+按运行入口 → Agent 核心 → 平台扩展 → 数据 / 评测 / 文档分层。根目录只保留配置与 README。
+
+```
+api/                    FastAPI
+  main.py               应用入口（chat / workbench）
+  routes/               HTTP 路由
+  services/copilot.py   调用 LangGraph 的适配层
+  schemas/              请求/响应模型
+
+app/                    Streamlit 对话 UI、CLI、MCP 客户端
+graph/                  LangGraph：state / nodes / 并行 hybrid / assessment / review / checkpoint
+core/                   配置、提示词、路由 override、注入防护、语义缓存、Evidence
+rag/                    Hybrid RAG：向量 + BM25 → RRF → Cross-Encoder
+tools/                  Agent SQL：AST 只读校验、KPI 模板
+mcp_server/             MCP 工具：query_policy / query_kpi / score_supplier_risk
+observability/          本地 Trace 录制（SQLite）
+frontend/               React 采购工作台（Vite + TypeScript）
+ingestion/              政策导出、分场景 chunker、向量索引构建
+
+eval/                   评测脚本与数据集
+  datasets/             路由 / RAG / 注入评测集
+  results/              跑分报告
+  helpers/              失败样本排查等一次性脚本
+tests/                  Pytest
+
+data/
+  ratti_copilot_demo.db 运行用演示库
+  ratti_source/         原始 CSV / Excel / 政策语料
+  docs/                 已导出、供 RAG 使用的文本
+docs/
+  ratti/                PRD、数据字典、风险边界、简历定位
+  notes/                迭代笔记
+assets/portfolio/       作品集截图
+scripts/                作品集 HTML 一次性生成脚本
+```
+
+---
+
+## 技术栈
+
+| 组件 | 技术 |
+|------|------|
+| 工作流 | LangGraph |
+| RAG | LangChain + Pinecone + BM25 + Cross-Encoder |
+| LLM | OpenAI GPT-4 / GPT-4o-mini |
+| SQL 安全 | sqlglot AST（只读 SELECT/WITH + 表白名单 + LIMIT） |
+| API | FastAPI + Uvicorn |
+| UI | Streamlit · React (Vite) |
+| 工具协议 | MCP |
+| 追踪 | LangSmith · 本地 Trace |
+
+---
+
+## 评测
+
+口播卡（离线可复现，不需要 API Key）：
+
+| 维度 | 数字 | 怎么锁住 |
+|------|------|----------|
+| RAG Recall@5 | 33.3% → 56.7% → 83.3% → **100%** | 冻结产物 `eval/results/rag_eval_*.json` |
+| RAG MRR | 0.32 → 0.54 → 0.76 → **0.91** | 同上 |
+| 路由 intent | keyword **24%** → heuristic 48% → override 64% → LLM+override **100%** | `uv run python -m eval.run_router_eval --mode override`；LLM 档见归档 JSON |
+| 注入检测 | **30/30 = 100%** | `pytest tests/test_prompt_injection.py` |
+
+完整表与产物路径：[`eval/ABLATION.md`](eval/ABLATION.md)（`uv run python eval/ablation.py` 重生成）。
+
+说明：归档 RAG judged 跑分的精排是 OpenAI embedding；**当前默认**是 RRF Top20 → bge-reranker Cross-Encoder Top5。CE 漏斗契约由 `tests/test_rerank_funnel.py` 覆盖。
+
+```bash
+# 离线（CI 同款，无云密钥）
+uv sync --group dev
+uv run pytest tests -q
+uv run python eval/ablation.py
+uv run python eval/run_injection_eval.py
+uv run python -m eval.run_router_eval --mode override
+
+# 需要 LLM / Pinecone
+uv run python -m eval.run_router_eval --mode llm
 uv run python -m eval.run_ratti_e2e_smoke
-```
-
-**Optional (legacy prototype only):**
-
-```bash
-uv run python -m data.init_demo_db   # creates data/supplychain_kpi.db — not used by default
-```
-
-### FastAPI + React workbench
-
-The **ProcureAI** supplier management workbench runs alongside Streamlit:
-
-| Stack | URL | Role |
-|-------|-----|------|
-| FastAPI | http://localhost:8000 | LangGraph adapter (`POST /api/chat`), workbench mock APIs |
-| React (Vite) | http://localhost:5173 | Home, Suppliers, Qualification, Review Queue, Policy + Copilot drawer |
-| Streamlit | http://localhost:8502 | Original chat-only copilot (unchanged) |
-
-`graph/`, `core/`, `rag/`, and `tools/` are shared — both UIs call the same `api.services.copilot.run_copilot()`.
-
-Production: build the frontend (`cd frontend && npm run build`); FastAPI serves `frontend/dist` when present.
-
----
-
-## 💡 Key Innovations
-
-| Feature | Description |
-|----------|-------------|
-| **Hybrid Reasoning** | Combines RAG for unstructured document retrieval with SQL for structured KPI data. |
-| **LangGraph Workflow** | Router-based orchestration with ambiguity-first and confidence-second routing policy. |
-| **Explainable Answers** | Each response now includes route decision (`intent/confidence/reason`) plus document or SQL evidence. |
-| **Enterprise UI** | Streamlit chat copilot **or** React workbench (FastAPI backend) with intents, KPIs, and citations. |
-| **Scalable Integration** | Designed for integration with ERP and BI systems (PostgreSQL, SAP HANA, Snowflake). |
-
----
-
-## 💬 Scenario Templates (recommended demo flow)
-
-Use the sidebar **Scenario templates** in Streamlit, or paste these questions:
-
-| # | Type | Example question | Router intent |
-|---|------|------------------|---------------|
-| 1 | **Qualification** | We have a new yarn supplier from China. What qualification process should we follow? | `qualification_checklist` |
-| 2 | **KPI** | Show the on-time delivery rate and defect rate of yarn suppliers in 2025. | `kpi_query` |
-| 3 | **Risk review** | Which suppliers should be reviewed this month due to high risk? | `risk_scenario` |
-| 4 | **Vendor rating** | Why did supplier SUP012 receive a C rating? | `vendor_rating_explanation` |
-| 5 | **Policy / ESG** | What ESG documents are required for yarn suppliers under Ratti qualification policy? | `policy_qa` |
-| 6 | **Hybrid** | For strategic yarn suppliers, what monitoring policy applies and what was their average on-time delivery in 2025? | `hybrid_query` |
-
-Answers follow a product-style structure where applicable: **Summary → Key Findings → Recommended Actions → Evidence → Limitations**. Technical detail (router JSON, raw SQL) sits under collapsed **Debug** / **Evidence** expanders.
-
----
-
-## 🗄️ Data Design
-
-### 🧱 Demo database (`ratti_copilot_demo.db`)
-
-**Data snapshot label (shown in UI/evidence):** `anonymized Ratti demo database · ratti_copilot_demo.db`
-
-Nine read-only whitelisted tables:
-
-| Table | Role |
-|-------|------|
-| `suppliers` | Master data, Kraljic, risk level, review dates, qualification status |
-| `category_rules` | Category-specific qualification rules |
-| `documents` | Certificates & compliance docs (expiry) |
-| `purchase_orders` | Order volume, amounts |
-| `delivery_events` | On-time delivery / delay |
-| `quality_events` | Defects, non-conformities |
-| `risk_events` | Risk scores and events |
-| `esg_assessments` | ESG scores |
-| `vendor_rating` | A/B/C/D ratings and score components |
-
-Calendar-sensitive queries (e.g. “review due this month”, certificates expiring soon) use **`DEMO_CURRENT_DATE`** (default `2025-12-01`) so demo results stay stable across real-world dates.
-
-Full field definitions: [`docs/ratti/`](docs/ratti/) data dictionary.
-
-### 🔗 Integration Guidelines
-
-* Replace SQLite with **ERP/BI databases** (Postgres, MSSQL, SAP HANA, Snowflake).
-* Use **read-only** connections; keep table allowlists and `LIMIT` guards as in `tools/sql_tools.py`.
-* Point `DB_URL` / `SQLITE_DB_PATH` at your warehouse or replica.
-
----
-
-## 🏢 Production Integration
-
-### 📊 Structured supplier / KPI database
-
-Connect to your enterprise data warehouse:
-
-```bash
-DB_URL=postgresql+psycopg2://readonly_user:password@host:5432/supplychain
-```
-
-### 📁 Document Sources
-
-Replace `/data/docs` with your **corporate repository** (SharePoint, OneDrive, S3, NAS):
-
-```python
-metadata_example = {"department": "Procurement", "confidentiality": "internal"}
-```
-
-### 🔒 Access Control
-
-```python
-retriever = vectorstore.as_retriever(
-    search_kwargs={"filter": {"department": current_user_dept}}
-)
-```
-
-### 🧱 Security Principles
-
-* Read-only database access
-* No PII or financial data exposed
-* Query audit logs (user, timestamp, intent, SQL, docs)
-* Separate dev/staging/production environments
-
----
-
-## 🧰 Technology Stack
-
-| Component      | Technology                             |
-| -------------- | -------------------------------------- |
-| **Workflow**   | LangGraph                              |
-| **RAG**        | LangChain + Pinecone                   |
-| **LLM**        | OpenAI GPT-4 / GPT-4o-mini             |
-| **Database**   | SQLite / SQLAlchemy / ERP Integration  |
-| **UI**         | Streamlit                              |
-| **Tracing**    | LangSmith                              |
-| **Deployment** | uv · Docker · Streamlit Cloud · Vercel |
-
----
-
-## 💡 Design Philosophy
-
-> “Real enterprise AI is not about fancy prompts — it’s about integrating knowledge, data, and workflow.”
-
-### Principles
-
-* Each node = one clear responsibility.
-* Combine structured SQL + unstructured text.
-* Always provide explainable, cited answers.
-* Modular, environment-driven design.
-* Focus on **real business value** and workflow integration.
-
----
-
-## Router Decision Policy
-
-To avoid conflicting behavior between fallback and clarification, the router uses two independent signals:
-
-1. `ambiguity_type`: whether user input is incomplete (`coreference`, `composite_intent`, `missing_entity`).
-2. `confidence`: certainty of intent classification.
-
-Decision priority:
-
-- If `ambiguity_type` is not empty, trigger clarification first.
-- Else if `confidence < 0.75`, trigger RAG fallback.
-- Else route normally to lifecycle intents (`qualification_checklist`, `policy_qa`, `kpi_query`, `risk_scenario`, `vendor_rating_explanation`, `hybrid_query`).
-
-This design separates two different failures:
-- clarification solves missing/ambiguous input data;
-- fallback solves uncertain intent classification.
-
----
-
-## Evaluation Methodology
-
-The repository now includes reproducible evaluation pipelines for both routing and RAG quality.
-
-Router evaluation:
-- Dataset: `eval/datasets/ratti_eval_25.json` (25 Ratti lifecycle questions)
-- Legacy dataset: `eval/datasets/router_eval.json`
-- Script: `eval/run_router_eval.py` (`--mode heuristic` or `--mode llm`)
-- SQL smoke: `eval/run_ratti_e2e_smoke.py`
-- Metrics: intent accuracy, ambiguity detection accuracy, clarification trigger rate, RAG fallback rate
-
-RAG evaluation:
-- Dataset: `eval/datasets/rag_eval.json` (60 samples — 30 policy_qa, 20 kpi_query, 10 hybrid)
-- Script: `eval/run_rag_eval.py` (use `--skip-judge` to skip LLM-as-judge calls)
-- Regression log generator: `eval/generate_regression_log.py` reads a judged JSON and refreshes `eval/REGRESSION.md` with low-score samples and root-cause hypotheses.
-- Outputs: timestamped JSON + Markdown reports under `eval/results/`
-- Metrics: Retrieval Recall@K, MRR, latency, faithfulness, citation precision, answer completeness, refusal accuracy
-
-Latest retrieval comparison (judged):
-
-| Run | Recall@5 | MRR | Faithfulness | Citation precision | Answer completeness | Refusal accuracy | Latency |
-|-----|----------|------|---------------|--------------------|----------------------|-------------------|---------|
-| `baseline` (vector-only) | 33.33% | 0.317 | n/a | n/a | n/a | n/a | 2945 ms |
-| `post_hybrid` (hybrid + scenario chunkers) | 56.67% | 0.539 | n/a | n/a | n/a | n/a | 3677 ms |
-| `judged_post_hybrid` (RRF + rerank=openai + KPI templates + hybrid intent) | 83.33% | 0.761 | 4.15 / 5 | 4.20 / 5 | 4.10 / 5 | 4.42 / 5 | 4908 ms |
-| **`judged_final`** (router-narrow + refusal-path + dual-route hybrid + extended templates + structured policy prompt) | **100.00%** | **0.906** | **4.87 / 5** | **4.83 / 5** | **4.85 / 5** | **5.00 / 5** | 5898 ms |
-
-Source files:
-- Baseline: `eval/results/rag_eval_baseline_20260508_213656.md`
-- Post-hybrid: `eval/results/rag_eval_post_hybrid_20260508_214658.md`
-- Judged post-hybrid: `eval/results/rag_eval_judged_post_hybrid_20260508_223255.md`
-- **Judged final: `eval/results/rag_eval_judged_final_20260508_230616.md`**
-- Comparison: `eval/results/rag_eval_comparison_judged_final_20260508.md`
-
-KPI SQL template usage in the legacy `supplychain_kpi.db` judged run (pre-Ratti schema):
-- 14 / 20 KPI questions (70%) answered by deterministic SQL templates
-- 3 / 20 fell back to LLM-generated SQL (1 self-repair attempt allowed)
-- 3 / 20 returned a structured refusal where the metric was outside the **old** 2-table schema
-
-**Ratti lifecycle** (`ratti_copilot_demo.db`): defect rate, ESG, vendor rating, and multi-metric yarn KPIs are supported via expanded templates — see `eval/run_ratti_e2e_smoke.py` and `tools/kpi_sql_builder.py`.
-
-To re-run the full judged evaluation:
-
-```bash
 uv run python -m eval.run_rag_eval --label judged_final
-uv run python -m eval.generate_regression_log \
-    --report eval/results/rag_eval_judged_final_<TIMESTAMP>.json
 ```
 
----
-
-## Experiment Boundaries
-
-- Current benchmarks are offline simulation based on curated prompts and demo data.
-- "Time reduction" claims are process decomposition estimates, not online telemetry.
-- Demo data is clean and standardized; production rollout requires data quality assessment and governance.
+NL2SQL 走 **sqlglot AST**：只允许单条 SELECT/WITH、表白名单、自动 LIMIT；解析失败则拒绝执行。
 
 ---
 
-## 🛠️ Roadmap
+## 生产对接要点
 
-| Stage                                                | Status         |
-| ---------------------------------------------------- | -------------- |
-| Policy RAG + Pinecone                                | ✅ Done         |
-| KPI Query via SQL                                    | ✅ Done         |
-| Scenario Analysis Node                               | ✅ Done         |
-| Bilingual Streamlit UI (EN / 中文)                    | ✅ Done         |
-| Ratti lifecycle DB + 9-table NL2SQL                    | ✅ Done         |
-| Qualification checklist + vendor rating nodes         | ✅ Done         |
-| Product-style answer structure + collapsed Debug UI   | ✅ Done         |
-| Evidence Contract (`core/evidence.py`)               | ✅ Done         |
-| Hybrid Retrieval (RRF + rerank + scenario chunkers)  | ✅ Done         |
-| Hybrid Intent Node (Policy + KPI joint answer)       | ✅ Done         |
-| Deterministic KPI SQL templates                      | ✅ Done         |
-| LLM-as-judge RAG evaluation pipeline                 | ✅ Done         |
-| Regression Failure Log auto-population               | ✅ Done         |
-| Chart Visualization                                  | 🔜 Planned     |
-| Role-Based Access (RBAC)                             | 🔜 Planned     |
-| ERP Database Integration                             | 🔜 In Progress |
-| Dockerized Deployment                                | 🔜 Planned     |
+- **结构化数据**：将 `DB_URL` / `SQLITE_DB_PATH` 指向只读仓（Postgres、SAP HANA、Snowflake 等），保留表白名单与 `LIMIT`。
+- **文档**：用企业知识库替换 `data/docs`，检索侧可按部门 / 密级过滤。
+- **安全**：只读库、**AST SQL 校验**（sqlglot）、Prompt Injection 扫描、HTTP 工具域名白名单、调用可审计。日历窗口使用 `DEMO_CURRENT_DATE`（默认 `2025-12-01`），不用 `date('now')`。
+- **边界**：演示数据干净、标准化；上线需单独做数据质量与权限治理评估。
 
 ---
 
-## 🧾 Example Output (KPI)
+## 许可证
 
-**User:** Show the on-time delivery rate and defect rate of yarn suppliers in 2025.
-
-**Copilot (structured excerpt):**
-
-> **Answer Summary** — In 2025, 9 yarn suppliers were analyzed. Best OTD: Supplier_Yarns_IT_024 (91.7%, defect 3.82%). Weakest OTD: Supplier_Yarns_IT_048 (54.5%).  
-> **Key Findings** — OTD range 54.5%–91.7%; most defect rates ~3–4%.  
-> **Limitations** — Anonymized synthetic demo dataset; buyer validation required before supplier decisions.
-
-**Evidence (collapsed in UI):** SQL executed · 9 rows · `anonymized Ratti demo database · ratti_copilot_demo.db`
-
----
-
-## 👤 Author
-
-**Beiran Ma (马贝然)**
-*MSc Management Engineering — Supply Chain Track*
-Politecnico di Milano
-
-🎯 Focus: **AI × Supply Chain Systems**
-🌐 [GitHub](https://github.com/flcookie) 
-
----
-
-## ⚖️ License
-
-**Apache 2.0 License**
-[https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
-
-
+Apache License 2.0

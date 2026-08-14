@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - name: Install (no cloud keys)
+        run: uv sync --group dev
+      - name: Offline pytest
+        run: uv run pytest tests -q
+        env:
+          # Explicitly empty so a self-hosted runner cannot leak keys into CI.
+          OPENAI_API_KEY: ""
+          PINECONE_API_KEY: ""
+          INDEX_NAME: ""
+          PINECONE_INDEX_NAME: ""

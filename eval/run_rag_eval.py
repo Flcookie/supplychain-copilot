@@ -11,6 +11,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from eval.judges import judge_answer
 from graph.graph import build_graph
+from graph.invoke import invoke_graph
 
 
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -68,7 +69,9 @@ def evaluate(samples: list[dict[str, Any]], *, skip_judge: bool = False) -> dict
     details = []
     for sample in samples:
         started = time.perf_counter()
-        result = graph.invoke({"question": sample["question"], "response_language": "en"})
+        result = invoke_graph(
+            graph, {"question": sample["question"], "response_language": "en"}
+        )
         latency_ms = round((time.perf_counter() - started) * 1000, 2)
         actual_sources = _source_names_from_result(result)
         hit_pos = _hit_position(sample.get("expected_sources", []), actual_sources)

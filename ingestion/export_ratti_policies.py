@@ -7,13 +7,7 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CSV_PATH = (
-    ROOT
-    / "ratti_supplier_lifecycle_copilot_package"
-    / "ratti_supplier_lifecycle_copilot_package"
-    / "csv_data"
-    / "policies_knowledge_base.csv"
-)
+CSV_PATH = ROOT / "data" / "ratti_source" / "csv_data" / "policies_knowledge_base.csv"
 OUT_DIR = ROOT / "data" / "docs" / "policy"
 
 

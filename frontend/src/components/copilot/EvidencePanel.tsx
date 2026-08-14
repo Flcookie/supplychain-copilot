@@ -26,9 +26,11 @@ function SqlBlock({ sql }: { sql: Record<string, unknown> }) {
 export function EvidencePanel({
   message,
   lang,
+  showDebug = true,
 }: {
   message: ChatMessage;
   lang: Lang;
+  showDebug?: boolean;
 }) {
   const L = t(lang).copilot;
   const evidence = message.evidence || {};
@@ -66,7 +68,7 @@ export function EvidencePanel({
         </details>
       ) : null}
 
-      {hasDebug ? (
+      {hasDebug && showDebug ? (
         <details className="panel text-sm">
           <summary className="cursor-pointer px-3 py-2 font-medium">{L.debug}</summary>
           <div className="border-t px-3 py-2" style={{ borderColor: "var(--line)" }}>

@@ -1,0 +1,61 @@
+﻿supplier_id,assessment_date,environmental_score_0_100,social_score_0_100,governance_score_0_100,final_esg_score,e_weight,s_weight,g_weight,missing_or_expired_documents,esg_risk_level,human_review_required,data_source_note
+SUP001,2025-05-11,85.2,71.9,69.6,76.5,0.4,0.3,0.3,Code of Ethics,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP002,2025-04-07,84.9,73.1,94.8,84.4,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP003,2025-10-08,67.8,74.1,88.0,75.7,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP004,2025-08-10,70.8,87.5,85.9,80.3,0.4,0.3,0.3,Code of Ethics; SA8000 questionnaire; Terms and Conditions; Traceability evidence,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP005,2025-03-16,70.6,85.8,81.5,78.4,0.4,0.3,0.3,Supplier Code,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP006,2025-05-15,67.7,72.8,75.5,71.6,0.4,0.3,0.3,Code of Ethics; ESG certificates,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP007,2025-08-11,72.8,93.2,94.6,85.5,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP008,2025-06-20,67.9,64.1,68.2,66.8,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP009,2025-08-06,83.4,78.7,98.8,86.6,0.4,0.3,0.3,Subcontracting Terms,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP010,2025-12-10,88.7,76.1,75.7,81.0,0.4,0.3,0.3,Terms and Conditions,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP011,2025-04-28,70.8,91.6,85.2,81.3,0.4,0.3,0.3,Terms and Conditions; Recycled/certified fiber certificate,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP012,2025-08-20,85.7,95.6,78.2,86.4,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP013,2025-10-01,74.8,89.7,60.5,75.0,0.4,0.3,0.3,Code of Ethics,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP014,2025-10-02,72.2,80.5,71.2,74.4,0.4,0.3,0.3,Supplier Code,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP015,2025-07-20,72.4,80.6,80.5,77.3,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP016,2025-12-02,64.3,67.2,94.8,74.3,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP017,2025-12-25,59.9,71.2,100,75.3,0.4,0.3,0.3,Terms and Conditions; ESG certificates; Recycled/certified fiber certificate,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP018,2025-04-25,51.9,77.3,100,73.9,0.4,0.3,0.3,SA8000 questionnaire; Process capability evidence,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP019,2025-12-27,68.1,79.2,82.6,75.8,0.4,0.3,0.3,Supplier Code; Code of Ethics; Terms and Conditions; Audit report,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP020,2025-05-03,79.0,79.9,78.0,79.0,0.4,0.3,0.3,Supplier Code,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP021,2025-12-03,70.4,74.6,73.7,72.7,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP022,2025-12-22,68.6,75.1,68.6,70.5,0.4,0.3,0.3,SA8000 questionnaire; REACH compliance; SDS,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP023,2025-01-14,54.0,47.1,63.1,54.7,0.4,0.3,0.3,Supplier Code; Code of Ethics,High,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP024,2025-07-03,69.2,69.5,87.2,74.7,0.4,0.3,0.3,Terms and Conditions; Quality certificate; Traceability evidence,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP025,2025-07-06,74.9,58.2,92.6,75.2,0.4,0.3,0.3,Code of Ethics; Terms and Conditions; Quality certificate; Recycled/certified fiber certificate,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP026,2025-09-16,96.1,84.4,99.9,93.7,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP027,2025-12-14,70.4,76.0,66.6,70.9,0.4,0.3,0.3,Code of Ethics; SA8000 questionnaire; Terms and Conditions; Subcontracting Terms; Process capability evidence,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP028,2025-06-21,74.3,63.5,74.4,71.1,0.4,0.3,0.3,Supplier Code,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP029,2025-02-26,74.2,52.5,79.0,69.1,0.4,0.3,0.3,SA8000 questionnaire; Terms and Conditions; Quality certificate; Traceability evidence,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP030,2025-10-06,98.4,75.5,83.7,87.1,0.4,0.3,0.3,Code of Ethics; Subcontracting Terms,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP031,2025-05-16,95.9,82.8,70.1,84.2,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP032,2025-01-03,62.2,76.7,83.5,73.0,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP033,2025-10-11,85.9,94.6,83.0,87.6,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP034,2025-12-07,68.0,69.8,74.2,70.4,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP035,2025-05-20,85.8,70.8,58.1,73.0,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP036,2025-11-25,100,80.5,78.6,87.7,0.4,0.3,0.3,Supplier Code; SA8000 questionnaire; Terms and Conditions; Quality certificate,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP037,2025-05-23,62.6,100,64.8,74.5,0.4,0.3,0.3,Quality certificate,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP038,2025-10-08,73.9,75.8,87.6,78.6,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP039,2025-09-15,75.8,46.8,74.1,66.6,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP040,2025-09-15,58.4,61.1,88.4,68.2,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP041,2025-01-03,87.1,78.2,92.4,86.0,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP042,2025-09-13,87.0,55.6,93.1,79.4,0.4,0.3,0.3,Code of Ethics; Audit report,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP043,2025-03-22,71.6,50.2,96.2,72.6,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP044,2025-10-20,100,56.0,78.8,80.4,0.4,0.3,0.3,Supplier Code,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP045,2025-07-08,80.2,65.4,81.8,76.2,0.4,0.3,0.3,Supplier Code,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP046,2025-08-06,73.1,94.8,80.0,81.7,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP047,2025-09-05,57.9,77.7,61.5,64.9,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP048,2025-11-01,94.0,77.7,78.0,84.3,0.4,0.3,0.3,Code of Ethics; Quality certificate,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP049,2025-07-06,87.3,71.7,89.0,83.1,0.4,0.3,0.3,SA8000 questionnaire; Terms and Conditions,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP050,2025-03-09,35.9,83.5,71.2,60.8,0.4,0.3,0.3,Supplier Code,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP051,2025-01-13,87.5,61.4,59.2,71.2,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP052,2025-04-11,81.5,88.6,83.8,84.3,0.4,0.3,0.3,None,Low,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP053,2025-11-21,80.8,58.9,70.3,71.1,0.4,0.3,0.3,Technical capability evidence,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP054,2025-08-11,73.8,67.0,81.8,74.2,0.4,0.3,0.3,Supplier Code,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP055,2025-11-06,61.6,76.5,77.9,70.9,0.4,0.3,0.3,None,Medium,No,Synthetic ESG data; weighting follows Ratti project proposal
+SUP056,2025-03-12,90.0,83.5,99.1,90.8,0.4,0.3,0.3,Code of Ethics; Insurance,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP057,2025-12-21,85.3,85.5,83.8,84.9,0.4,0.3,0.3,Terms and Conditions; Traceability evidence,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP058,2025-04-10,78.8,35.6,67.8,62.5,0.4,0.3,0.3,Quality certificate,Medium,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP059,2025-02-13,88.0,89.4,86.3,87.9,0.4,0.3,0.3,Code of Ethics; Traceability evidence,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal
+SUP060,2025-05-03,96.0,79.1,67.6,82.4,0.4,0.3,0.3,Supplier Code; SA8000 questionnaire; Subcontracting Terms; Audit report,Low,Yes,Synthetic ESG data; weighting follows Ratti project proposal

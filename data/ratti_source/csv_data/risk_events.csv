@@ -1,0 +1,85 @@
+﻿risk_event_id,supplier_id,risk_type,event_date,likelihood_1_5,impact_1_5,risk_score_1_25,risk_status,recommended_action,human_review_required,data_source_note
+RSK0001,SUP056,Geopolitical exposure,2025-08-26,4,4,16,Monitoring,Monitor country risk and validate alternative suppliers,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0002,SUP057,Financial instability,2025-08-17,3,1,3,Monitoring,Request external financial check and review payment terms,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0003,SUP038,Commodity price volatility,2025-01-20,1,1,1,Closed,Review contract indexation and alternative sourcing,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0004,SUP005,Commodity price volatility,2025-11-17,5,2,10,Monitoring,Review contract indexation and alternative sourcing,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0005,SUP023,Repeated delivery delay,2025-08-06,4,5,20,Open,Trigger ad-hoc review and delivery recovery plan,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0006,SUP009,Geopolitical exposure,2025-05-19,1,2,2,Monitoring,Monitor country risk and validate alternative suppliers,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0007,SUP033,Subcontracting traceability,2025-09-25,3,5,15,Open,Request production site evidence and subcontractor declaration,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0008,SUP010,Quality non-conformity,2025-06-10,3,5,15,Monitoring,Open corrective action and consider audit,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0009,SUP001,Certificate expiry,2025-09-27,1,2,2,Closed,Ask supplier to upload renewed certificate,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0010,SUP055,Geopolitical exposure,2025-04-07,4,3,12,Closed,Monitor country risk and validate alternative suppliers,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0011,SUP059,Commodity price volatility,2025-04-22,1,3,3,Monitoring,Review contract indexation and alternative sourcing,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0012,SUP045,Quality non-conformity,2025-10-19,5,3,15,Monitoring,Open corrective action and consider audit,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0013,SUP040,Single sourcing dependency,2025-03-04,4,3,12,Monitoring,Scout backup supplier and review safety stock,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0014,SUP057,Geopolitical exposure,2025-01-21,4,2,8,Open,Monitor country risk and validate alternative suppliers,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0015,SUP045,Commodity price volatility,2025-04-08,4,5,20,Monitoring,Review contract indexation and alternative sourcing,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0016,SUP048,Subcontracting traceability,2025-07-06,4,2,8,Open,Request production site evidence and subcontractor declaration,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0017,SUP024,Geopolitical exposure,2025-01-18,1,3,3,Open,Monitor country risk and validate alternative suppliers,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0018,SUP010,Single sourcing dependency,2025-11-19,4,2,8,Monitoring,Scout backup supplier and review safety stock,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0019,SUP003,Geopolitical exposure,2025-05-06,2,2,4,Open,Monitor country risk and validate alternative suppliers,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0020,SUP057,Single sourcing dependency,2025-09-08,2,3,6,Open,Scout backup supplier and review safety stock,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0021,SUP013,Geopolitical exposure,2025-02-01,2,3,6,Closed,Monitor country risk and validate alternative suppliers,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0022,SUP009,Repeated delivery delay,2025-04-10,1,3,3,Monitoring,Trigger ad-hoc review and delivery recovery plan,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0023,SUP016,Subcontracting traceability,2025-09-26,3,2,6,Closed,Request production site evidence and subcontractor declaration,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0024,SUP057,Repeated delivery delay,2025-03-05,1,1,1,Open,Trigger ad-hoc review and delivery recovery plan,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0025,SUP013,Repeated delivery delay,2025-10-14,3,3,9,Closed,Trigger ad-hoc review and delivery recovery plan,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0026,SUP016,Geopolitical exposure,2025-04-28,5,5,25,Monitoring,Monitor country risk and validate alternative suppliers,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0027,SUP051,Certificate expiry,2025-01-21,3,2,6,Monitoring,Ask supplier to upload renewed certificate,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0028,SUP056,Certificate expiry,2025-08-07,5,5,25,Open,Ask supplier to upload renewed certificate,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0029,SUP051,Quality non-conformity,2025-03-17,5,1,5,Monitoring,Open corrective action and consider audit,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0030,SUP049,Subcontracting traceability,2025-08-06,4,5,20,Monitoring,Request production site evidence and subcontractor declaration,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0031,SUP046,Subcontracting traceability,2025-12-16,5,4,20,Monitoring,Request production site evidence and subcontractor declaration,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0032,SUP018,Repeated delivery delay,2025-04-08,5,1,5,Open,Trigger ad-hoc review and delivery recovery plan,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0033,SUP029,Commodity price volatility,2025-05-14,4,2,8,Monitoring,Review contract indexation and alternative sourcing,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0034,SUP037,Certificate expiry,2025-09-03,3,3,9,Open,Ask supplier to upload renewed certificate,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0035,SUP049,Financial instability,2025-09-12,3,4,12,Open,Request external financial check and review payment terms,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0036,SUP038,Geopolitical exposure,2025-10-11,4,5,20,Monitoring,Monitor country risk and validate alternative suppliers,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0037,SUP029,Quality non-conformity,2025-06-26,4,4,16,Monitoring,Open corrective action and consider audit,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0038,SUP021,Single sourcing dependency,2025-03-15,4,1,4,Open,Scout backup supplier and review safety stock,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0039,SUP017,Financial instability,2025-05-27,3,1,3,Closed,Request external financial check and review payment terms,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0040,SUP033,Financial instability,2025-02-04,3,2,6,Open,Request external financial check and review payment terms,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0041,SUP024,Geopolitical exposure,2025-06-07,5,2,10,Closed,Monitor country risk and validate alternative suppliers,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0042,SUP022,Single sourcing dependency,2025-04-23,3,3,9,Closed,Scout backup supplier and review safety stock,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0043,SUP009,Single sourcing dependency,2025-05-27,1,3,3,Monitoring,Scout backup supplier and review safety stock,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0044,SUP051,Repeated delivery delay,2025-11-01,4,5,20,Monitoring,Trigger ad-hoc review and delivery recovery plan,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0045,SUP042,Certificate expiry,2025-04-24,4,2,8,Closed,Ask supplier to upload renewed certificate,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0046,SUP014,Quality non-conformity,2025-10-26,2,5,10,Closed,Open corrective action and consider audit,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0047,SUP049,Quality non-conformity,2025-02-11,4,3,12,Open,Open corrective action and consider audit,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0048,SUP028,Repeated delivery delay,2025-08-28,2,4,8,Closed,Trigger ad-hoc review and delivery recovery plan,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0049,SUP002,Subcontracting traceability,2025-03-10,2,5,10,Closed,Request production site evidence and subcontractor declaration,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0050,SUP001,Quality non-conformity,2025-04-14,3,3,9,Monitoring,Open corrective action and consider audit,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0051,SUP044,Repeated delivery delay,2025-06-19,5,3,15,Open,Trigger ad-hoc review and delivery recovery plan,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0052,SUP037,Geopolitical exposure,2025-06-19,2,2,4,Closed,Monitor country risk and validate alternative suppliers,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0053,SUP052,Repeated delivery delay,2025-07-03,4,2,8,Closed,Trigger ad-hoc review and delivery recovery plan,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0054,SUP025,Commodity price volatility,2025-06-19,4,1,4,Monitoring,Review contract indexation and alternative sourcing,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0055,SUP041,Single sourcing dependency,2025-02-22,1,2,2,Closed,Scout backup supplier and review safety stock,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0056,SUP012,Geopolitical exposure,2025-01-06,5,4,20,Open,Monitor country risk and validate alternative suppliers,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0057,SUP005,Repeated delivery delay,2025-04-10,3,2,6,Closed,Trigger ad-hoc review and delivery recovery plan,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0058,SUP034,Financial instability,2025-06-17,4,1,4,Open,Request external financial check and review payment terms,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0059,SUP011,Subcontracting traceability,2025-03-04,4,4,16,Open,Request production site evidence and subcontractor declaration,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0060,SUP035,Repeated delivery delay,2025-07-28,4,1,4,Open,Trigger ad-hoc review and delivery recovery plan,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0061,SUP009,Commodity price volatility,2025-12-22,3,4,12,Monitoring,Review contract indexation and alternative sourcing,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0062,SUP011,Single sourcing dependency,2025-09-23,5,2,10,Closed,Scout backup supplier and review safety stock,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0063,SUP030,Single sourcing dependency,2025-03-15,2,1,2,Open,Scout backup supplier and review safety stock,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0064,SUP053,Repeated delivery delay,2025-09-11,5,2,10,Closed,Trigger ad-hoc review and delivery recovery plan,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0065,SUP057,Quality non-conformity,2025-10-02,4,4,16,Open,Open corrective action and consider audit,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0066,SUP019,Quality non-conformity,2025-07-20,3,3,9,Open,Open corrective action and consider audit,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0067,SUP027,Commodity price volatility,2025-12-14,2,5,10,Monitoring,Review contract indexation and alternative sourcing,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0068,SUP025,Certificate expiry,2025-07-23,5,1,5,Open,Ask supplier to upload renewed certificate,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0069,SUP016,Certificate expiry,2025-05-22,3,5,15,Open,Ask supplier to upload renewed certificate,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0070,SUP045,Commodity price volatility,2025-09-04,4,4,16,Monitoring,Review contract indexation and alternative sourcing,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0071,SUP005,Financial instability,2025-07-15,5,3,15,Open,Request external financial check and review payment terms,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0072,SUP017,Commodity price volatility,2025-08-01,5,1,5,Open,Review contract indexation and alternative sourcing,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0073,SUP041,Quality non-conformity,2025-12-13,4,3,12,Open,Open corrective action and consider audit,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0074,SUP026,Geopolitical exposure,2025-02-23,1,3,3,Open,Monitor country risk and validate alternative suppliers,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0075,SUP021,Quality non-conformity,2025-02-03,4,4,16,Open,Open corrective action and consider audit,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0076,SUP046,Quality non-conformity,2025-05-27,2,4,8,Open,Open corrective action and consider audit,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0077,SUP011,Geopolitical exposure,2025-03-10,5,1,5,Open,Monitor country risk and validate alternative suppliers,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0078,SUP035,Repeated delivery delay,2025-11-25,2,1,2,Open,Trigger ad-hoc review and delivery recovery plan,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0079,SUP044,Single sourcing dependency,2025-06-06,2,4,8,Open,Scout backup supplier and review safety stock,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0080,SUP046,Geopolitical exposure,2025-08-23,5,2,10,Open,Monitor country risk and validate alternative suppliers,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0081,SUP054,Financial instability,2025-08-02,4,3,12,Closed,Request external financial check and review payment terms,Yes,Synthetic risk events for Risk Scenario Analysis demo
+RSK0082,SUP001,Geopolitical exposure,2025-04-12,4,2,8,Open,Monitor country risk and validate alternative suppliers,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0083,SUP013,Financial instability,2025-01-01,1,4,4,Monitoring,Request external financial check and review payment terms,No,Synthetic risk events for Risk Scenario Analysis demo
+RSK0084,SUP053,Commodity price volatility,2025-02-26,1,2,2,Closed,Review contract indexation and alternative sourcing,No,Synthetic risk events for Risk Scenario Analysis demo

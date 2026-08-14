@@ -62,8 +62,24 @@ export function sendChat(body: {
   question: string;
   language: Lang;
   clarification_base_question?: string | null;
+  thread_id?: string | null;
+  task_type?: "chat" | "supplier_assessment" | null;
+  supplier_id?: string | null;
 }): Promise<ChatResponse> {
   return request("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export function runSupplierAssessment(body: {
+  supplier_id: string;
+  language: Lang;
+  question?: string | null;
+  thread_id?: string | null;
+}): Promise<ChatResponse> {
+  return request("/api/assessment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),

@@ -1,0 +1,320 @@
+﻿document_id,supplier_id,document_type,upload_date,issue_date,expiry_date,document_status,extracted_fields,ai_extraction_confidence,manual_validation_required,data_source_note
+DOC0001,SUP001,Supplier Code,2024-07-15,2024-05-20,2027-05-20,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0002,SUP001,Code of Ethics,2024-05-04,2024-04-03,2025-04-03,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.86,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0003,SUP001,Quality certificate,2024-05-24,2024-04-23,2026-04-23,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0004,SUP001,Traceability evidence,2024-05-27,2024-05-08,2026-05-08,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.89,No,Synthetic document metadata for Document Intelligence demo
+DOC0005,SUP001,ESG certificates,2024-10-14,2024-09-17,2026-09-17,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.98,No,Synthetic document metadata for Document Intelligence demo
+DOC0006,SUP002,Supplier Code,2025-01-31,2024-12-16,2026-12-16,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.87,No,Synthetic document metadata for Document Intelligence demo
+DOC0007,SUP002,Code of Ethics,2024-10-28,2024-10-10,2025-10-10,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.78,No,Synthetic document metadata for Document Intelligence demo
+DOC0008,SUP002,SA8000 questionnaire,2024-01-31,2024-01-23,2027-01-23,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0009,SUP002,Terms and Conditions,2024-11-09,2024-09-10,2027-09-10,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.75,No,Synthetic document metadata for Document Intelligence demo
+DOC0010,SUP002,Quality certificate,2024-09-03,2024-08-04,2025-08-04,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0011,SUP002,Traceability evidence,2024-01-13,2024-01-09,2026-01-09,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0012,SUP002,ESG certificates,2024-04-02,2024-02-19,2027-02-19,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,No,Synthetic document metadata for Document Intelligence demo
+DOC0013,SUP003,Supplier Code,2024-11-10,2024-09-13,2026-09-13,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0014,SUP003,Code of Ethics,2024-08-18,2024-07-10,2027-07-10,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.74,No,Synthetic document metadata for Document Intelligence demo
+DOC0015,SUP004,Supplier Code,2024-02-21,2024-01-08,2026-01-08,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.94,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0016,SUP004,Code of Ethics,2024-05-30,2024-04-09,2027-04-09,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0017,SUP004,SA8000 questionnaire,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0018,SUP004,Terms and Conditions,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0019,SUP004,Quality certificate,2024-05-17,2024-03-26,2026-03-26,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.87,No,Synthetic document metadata for Document Intelligence demo
+DOC0020,SUP004,Traceability evidence,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0021,SUP004,ESG certificates,2024-08-12,2024-07-09,2027-07-09,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.85,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0022,SUP004,Recycled/certified fiber certificate,2024-02-03,2024-01-14,2027-01-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0023,SUP005,Supplier Code,2024-10-02,2024-09-21,2026-09-21,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.98,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0024,SUP005,Code of Ethics,2024-07-26,2024-07-21,2026-07-21,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0025,SUP005,Quality certificate,2024-07-13,2024-06-22,2025-06-22,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,No,Synthetic document metadata for Document Intelligence demo
+DOC0026,SUP005,Traceability evidence,2024-11-15,2024-11-13,2027-11-13,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0027,SUP005,ESG certificates,2024-07-29,2024-06-04,2026-06-04,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.85,No,Synthetic document metadata for Document Intelligence demo
+DOC0028,SUP006,Supplier Code,2025-01-25,2024-12-16,2025-12-16,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0029,SUP006,Code of Ethics,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0030,SUP006,SA8000 questionnaire,2024-03-11,2024-01-18,2026-01-18,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0031,SUP006,Terms and Conditions,2024-09-26,2024-08-04,2027-08-04,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.76,No,Synthetic document metadata for Document Intelligence demo
+DOC0032,SUP006,Quality certificate,2024-06-03,2024-05-17,2027-05-17,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,No,Synthetic document metadata for Document Intelligence demo
+DOC0033,SUP006,Traceability evidence,2024-09-12,2024-08-08,2026-08-08,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.76,No,Synthetic document metadata for Document Intelligence demo
+DOC0034,SUP006,ESG certificates,2024-12-11,2024-10-17,2027-10-17,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.74,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0035,SUP006,Recycled/certified fiber certificate,2024-07-28,2024-07-11,2027-07-11,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.93,No,Synthetic document metadata for Document Intelligence demo
+DOC0036,SUP007,Supplier Code,2024-05-07,2024-04-23,2025-04-23,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.94,No,Synthetic document metadata for Document Intelligence demo
+DOC0037,SUP007,Code of Ethics,2024-08-08,2024-06-24,2026-06-24,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,No,Synthetic document metadata for Document Intelligence demo
+DOC0038,SUP007,Quality certificate,2024-12-05,2024-11-26,2027-11-26,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.85,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0039,SUP007,Traceability evidence,2024-11-13,2024-09-19,2026-09-19,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.75,No,Synthetic document metadata for Document Intelligence demo
+DOC0040,SUP007,ESG certificates,2024-02-26,2024-02-17,2026-02-17,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0041,SUP008,Supplier Code,2024-12-18,2024-12-13,2027-12-13,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.94,No,Synthetic document metadata for Document Intelligence demo
+DOC0042,SUP008,Code of Ethics,2024-10-23,2024-09-13,2026-09-13,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.91,No,Synthetic document metadata for Document Intelligence demo
+DOC0043,SUP009,Supplier Code,2025-01-29,2024-12-10,2025-12-10,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0044,SUP009,Code of Ethics,2024-06-21,2024-06-12,2026-06-12,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.78,No,Synthetic document metadata for Document Intelligence demo
+DOC0045,SUP009,SA8000 questionnaire,2024-12-01,2024-11-26,2025-11-26,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0046,SUP009,Terms and Conditions,2024-08-04,2024-07-20,2027-07-20,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.85,No,Synthetic document metadata for Document Intelligence demo
+DOC0047,SUP009,Subcontracting Terms,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0048,SUP009,Process capability evidence,2024-06-20,2024-05-22,2025-05-22,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.95,No,Synthetic document metadata for Document Intelligence demo
+DOC0049,SUP009,Audit report,2024-04-09,2024-03-03,2026-03-03,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.8,No,Synthetic document metadata for Document Intelligence demo
+DOC0050,SUP010,Supplier Code,2024-02-21,2024-01-27,2027-01-27,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0051,SUP010,Code of Ethics,2024-11-28,2024-11-25,2027-11-25,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,No,Synthetic document metadata for Document Intelligence demo
+DOC0052,SUP010,SA8000 questionnaire,2024-06-16,2024-05-25,2025-05-25,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.78,No,Synthetic document metadata for Document Intelligence demo
+DOC0053,SUP010,Terms and Conditions,2024-07-04,2024-05-22,2027-05-22,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.94,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0054,SUP010,Subcontracting Terms,2024-12-15,2024-11-04,2027-11-04,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,No,Synthetic document metadata for Document Intelligence demo
+DOC0055,SUP010,Process capability evidence,2024-01-24,2024-01-19,2026-01-19,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,No,Synthetic document metadata for Document Intelligence demo
+DOC0056,SUP010,Audit report,2024-08-09,2024-07-06,2025-07-06,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.95,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0057,SUP011,Supplier Code,2024-12-19,2024-11-24,2027-11-24,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.97,No,Synthetic document metadata for Document Intelligence demo
+DOC0058,SUP011,Code of Ethics,2024-06-03,2024-06-03,2026-06-03,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0059,SUP011,SA8000 questionnaire,2024-08-04,2024-06-22,2027-06-22,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0060,SUP011,Terms and Conditions,2024-12-12,2024-11-12,2025-11-12,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0061,SUP011,Quality certificate,2024-09-25,2024-09-11,2027-09-11,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.89,No,Synthetic document metadata for Document Intelligence demo
+DOC0062,SUP011,Traceability evidence,2024-10-03,2024-08-23,2026-08-23,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,No,Synthetic document metadata for Document Intelligence demo
+DOC0063,SUP011,ESG certificates,2024-01-25,2024-01-10,2026-01-10,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.95,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0064,SUP011,Recycled/certified fiber certificate,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0065,SUP012,Supplier Code,2024-07-22,2024-07-09,2025-07-09,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0066,SUP012,Code of Ethics,2024-06-27,2024-06-04,2027-06-04,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.86,No,Synthetic document metadata for Document Intelligence demo
+DOC0067,SUP012,Quality certificate,2024-06-19,2024-06-02,2026-06-02,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.77,No,Synthetic document metadata for Document Intelligence demo
+DOC0068,SUP012,Traceability evidence,2024-08-16,2024-08-03,2027-08-03,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.89,No,Synthetic document metadata for Document Intelligence demo
+DOC0069,SUP012,ESG certificates,2024-01-10,2024-01-02,2026-01-02,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.92,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0070,SUP013,Supplier Code,2024-07-01,2024-05-28,2025-05-28,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0071,SUP013,Code of Ethics,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0072,SUP013,Insurance,2024-06-27,2024-06-26,2025-06-26,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.77,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0073,SUP013,Service level agreement,2024-12-21,2024-12-14,2027-12-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.91,No,Synthetic document metadata for Document Intelligence demo
+DOC0074,SUP014,Supplier Code,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0075,SUP014,Code of Ethics,2024-09-20,2024-08-21,2025-08-21,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.94,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0076,SUP015,Supplier Code,2024-10-12,2024-09-10,2026-09-10,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0077,SUP015,Code of Ethics,2025-01-14,2024-12-04,2027-12-04,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.95,No,Synthetic document metadata for Document Intelligence demo
+DOC0078,SUP015,SA8000 questionnaire,2024-05-10,2024-04-14,2026-04-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.81,No,Synthetic document metadata for Document Intelligence demo
+DOC0079,SUP015,Terms and Conditions,2024-08-13,2024-07-24,2025-07-24,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.89,No,Synthetic document metadata for Document Intelligence demo
+DOC0080,SUP015,REACH compliance,2024-05-14,2024-03-22,2026-03-22,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.74,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0081,SUP015,SDS,2024-08-20,2024-07-04,2027-07-04,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,No,Synthetic document metadata for Document Intelligence demo
+DOC0082,SUP015,Environmental certificate,2024-02-23,2024-01-19,2027-01-19,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.81,No,Synthetic document metadata for Document Intelligence demo
+DOC0083,SUP016,Supplier Code,2024-06-25,2024-05-20,2026-05-20,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.85,No,Synthetic document metadata for Document Intelligence demo
+DOC0084,SUP016,Code of Ethics,2024-09-12,2024-08-08,2025-08-08,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,No,Synthetic document metadata for Document Intelligence demo
+DOC0085,SUP017,Supplier Code,2024-07-05,2024-05-11,2026-05-11,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.76,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0086,SUP017,Code of Ethics,2024-12-23,2024-11-13,2025-11-13,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.97,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0087,SUP017,SA8000 questionnaire,2024-03-08,2024-02-24,2027-02-24,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,No,Synthetic document metadata for Document Intelligence demo
+DOC0088,SUP017,Terms and Conditions,2024-04-30,2024-03-12,2026-03-12,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0089,SUP017,Quality certificate,2024-11-20,2024-10-03,2025-10-03,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0090,SUP017,Traceability evidence,2024-12-01,2024-11-03,2026-11-03,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.89,No,Synthetic document metadata for Document Intelligence demo
+DOC0091,SUP017,ESG certificates,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0092,SUP017,Recycled/certified fiber certificate,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0093,SUP018,Supplier Code,2024-04-01,2024-03-25,2026-03-25,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.72,No,Synthetic document metadata for Document Intelligence demo
+DOC0094,SUP018,Code of Ethics,2024-03-19,2024-03-05,2026-03-05,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.85,No,Synthetic document metadata for Document Intelligence demo
+DOC0095,SUP018,SA8000 questionnaire,2024-06-05,2024-06-03,2026-06-03,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0096,SUP018,Terms and Conditions,2024-09-08,2024-08-03,2026-08-03,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,No,Synthetic document metadata for Document Intelligence demo
+DOC0097,SUP018,Subcontracting Terms,2024-11-21,2024-11-14,2026-11-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,No,Synthetic document metadata for Document Intelligence demo
+DOC0098,SUP018,Process capability evidence,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0099,SUP018,Audit report,2024-12-18,2024-12-12,2025-12-12,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.78,No,Synthetic document metadata for Document Intelligence demo
+DOC0100,SUP019,Supplier Code,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0101,SUP019,Code of Ethics,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0102,SUP019,SA8000 questionnaire,2024-03-29,2024-03-25,2027-03-25,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.77,No,Synthetic document metadata for Document Intelligence demo
+DOC0103,SUP019,Terms and Conditions,2024-09-12,2024-08-15,2027-08-15,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.9,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0104,SUP019,Subcontracting Terms,2024-11-29,2024-10-21,2027-10-21,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.8,No,Synthetic document metadata for Document Intelligence demo
+DOC0105,SUP019,Process capability evidence,2024-06-09,2024-06-05,2026-06-05,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0106,SUP019,Audit report,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0107,SUP020,Supplier Code,2024-12-30,2024-11-28,2025-11-28,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0108,SUP020,Code of Ethics,2024-12-14,2024-10-18,2027-10-18,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,No,Synthetic document metadata for Document Intelligence demo
+DOC0109,SUP021,Supplier Code,2024-11-05,2024-09-21,2025-09-21,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0110,SUP021,Code of Ethics,2024-09-25,2024-08-17,2027-08-17,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.76,No,Synthetic document metadata for Document Intelligence demo
+DOC0111,SUP021,Insurance,2024-06-25,2024-05-13,2026-05-13,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,No,Synthetic document metadata for Document Intelligence demo
+DOC0112,SUP021,Service level agreement,2024-12-16,2024-11-11,2025-11-11,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.9,No,Synthetic document metadata for Document Intelligence demo
+DOC0113,SUP022,Supplier Code,2024-08-19,2024-07-05,2027-07-05,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,No,Synthetic document metadata for Document Intelligence demo
+DOC0114,SUP022,Code of Ethics,2024-09-11,2024-07-21,2026-07-21,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.75,No,Synthetic document metadata for Document Intelligence demo
+DOC0115,SUP022,SA8000 questionnaire,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0116,SUP022,Terms and Conditions,2024-12-07,2024-11-14,2027-11-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.72,No,Synthetic document metadata for Document Intelligence demo
+DOC0117,SUP022,REACH compliance,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0118,SUP022,SDS,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0119,SUP022,Environmental certificate,2024-04-10,2024-02-17,2027-02-17,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.91,No,Synthetic document metadata for Document Intelligence demo
+DOC0120,SUP023,Supplier Code,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0121,SUP023,Code of Ethics,2024-10-09,2024-08-20,2026-08-20,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0122,SUP023,SA8000 questionnaire,2024-10-29,2024-09-08,2026-09-08,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.92,No,Synthetic document metadata for Document Intelligence demo
+DOC0123,SUP023,Terms and Conditions,2024-06-11,2024-04-12,2027-04-12,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.87,No,Synthetic document metadata for Document Intelligence demo
+DOC0124,SUP023,Technical capability evidence,2024-06-26,2024-05-25,2026-05-25,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.86,No,Synthetic document metadata for Document Intelligence demo
+DOC0125,SUP023,Safety documents,2024-05-04,2024-04-26,2027-04-26,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.95,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0126,SUP024,Supplier Code,2024-06-25,2024-04-27,2026-04-27,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0127,SUP024,Code of Ethics,2024-09-17,2024-09-12,2025-09-12,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0128,SUP024,SA8000 questionnaire,2024-04-08,2024-02-27,2027-02-27,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.81,No,Synthetic document metadata for Document Intelligence demo
+DOC0129,SUP024,Terms and Conditions,2024-01-18,2024-01-10,2026-01-10,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.92,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0130,SUP024,Quality certificate,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0131,SUP024,Traceability evidence,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0132,SUP024,ESG certificates,2024-04-25,2024-03-18,2027-03-18,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.86,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0133,SUP024,Recycled/certified fiber certificate,2024-05-23,2024-05-08,2026-05-08,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0134,SUP025,Supplier Code,2024-12-15,2024-11-22,2025-11-22,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.74,No,Synthetic document metadata for Document Intelligence demo
+DOC0135,SUP025,Code of Ethics,2024-10-20,2024-09-26,2027-09-26,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.95,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0136,SUP025,SA8000 questionnaire,2024-02-06,2024-01-21,2026-01-21,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.91,No,Synthetic document metadata for Document Intelligence demo
+DOC0137,SUP025,Terms and Conditions,2024-03-23,2024-02-12,2025-02-12,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.75,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0138,SUP025,Quality certificate,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0139,SUP025,Traceability evidence,2024-08-09,2024-06-18,2026-06-18,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.89,No,Synthetic document metadata for Document Intelligence demo
+DOC0140,SUP025,ESG certificates,2024-12-15,2024-11-15,2027-11-15,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,No,Synthetic document metadata for Document Intelligence demo
+DOC0141,SUP025,Recycled/certified fiber certificate,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0142,SUP026,Supplier Code,2024-05-14,2024-05-02,2027-05-02,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0143,SUP026,Code of Ethics,2024-02-18,2024-01-28,2027-01-28,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0144,SUP026,Insurance,2024-08-10,2024-07-13,2027-07-13,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.95,No,Synthetic document metadata for Document Intelligence demo
+DOC0145,SUP026,Service level agreement,2024-04-16,2024-03-16,2027-03-16,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,No,Synthetic document metadata for Document Intelligence demo
+DOC0146,SUP027,Supplier Code,2024-03-25,2024-03-23,2026-03-23,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.91,No,Synthetic document metadata for Document Intelligence demo
+DOC0147,SUP027,Code of Ethics,2024-12-03,2024-10-14,2026-10-14,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.97,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0148,SUP027,SA8000 questionnaire,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0149,SUP027,Terms and Conditions,2024-11-25,2024-09-26,2027-09-26,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0150,SUP027,Subcontracting Terms,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0151,SUP027,Process capability evidence,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0152,SUP027,Audit report,2024-08-31,2024-07-19,2025-07-19,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0153,SUP028,Supplier Code,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0154,SUP028,Code of Ethics,2024-04-09,2024-03-16,2027-03-16,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0155,SUP029,Supplier Code,2025-01-09,2024-11-28,2026-11-28,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.81,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0156,SUP029,Code of Ethics,2024-11-03,2024-09-10,2026-09-10,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.76,No,Synthetic document metadata for Document Intelligence demo
+DOC0157,SUP029,SA8000 questionnaire,2025-01-22,2024-12-21,2025-12-21,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.78,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0158,SUP029,Terms and Conditions,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0159,SUP029,Quality certificate,2024-08-24,2024-08-01,2026-08-01,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0160,SUP029,Traceability evidence,2024-09-09,2024-09-05,2027-09-05,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.8,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0161,SUP029,ESG certificates,2025-01-26,2024-12-24,2026-12-24,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,No,Synthetic document metadata for Document Intelligence demo
+DOC0162,SUP030,Supplier Code,2024-05-11,2024-03-14,2027-03-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.95,No,Synthetic document metadata for Document Intelligence demo
+DOC0163,SUP030,Code of Ethics,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0164,SUP030,SA8000 questionnaire,2024-08-22,2024-06-23,2025-06-23,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.85,No,Synthetic document metadata for Document Intelligence demo
+DOC0165,SUP030,Terms and Conditions,2024-03-15,2024-02-09,2025-02-09,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0166,SUP030,Subcontracting Terms,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0167,SUP030,Process capability evidence,2024-03-28,2024-03-19,2027-03-19,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.76,No,Synthetic document metadata for Document Intelligence demo
+DOC0168,SUP030,Audit report,2024-10-13,2024-10-11,2027-10-11,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.93,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0169,SUP031,Supplier Code,2024-05-21,2024-04-26,2027-04-26,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.8,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0170,SUP031,Code of Ethics,2024-02-04,2024-01-06,2026-01-06,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.77,No,Synthetic document metadata for Document Intelligence demo
+DOC0171,SUP031,SA8000 questionnaire,2024-07-18,2024-06-28,2027-06-28,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.91,No,Synthetic document metadata for Document Intelligence demo
+DOC0172,SUP031,Terms and Conditions,2024-08-06,2024-07-05,2026-07-05,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.87,No,Synthetic document metadata for Document Intelligence demo
+DOC0173,SUP031,Technical capability evidence,2024-09-01,2024-08-04,2026-08-04,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.78,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0174,SUP031,Safety documents,2024-06-08,2024-05-13,2027-05-13,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.78,No,Synthetic document metadata for Document Intelligence demo
+DOC0175,SUP032,Supplier Code,2024-08-01,2024-07-17,2026-07-17,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.78,No,Synthetic document metadata for Document Intelligence demo
+DOC0176,SUP032,Code of Ethics,2024-03-03,2024-01-10,2026-01-10,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.89,No,Synthetic document metadata for Document Intelligence demo
+DOC0177,SUP032,SA8000 questionnaire,2024-10-27,2024-09-01,2025-09-01,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0178,SUP032,Terms and Conditions,2024-08-17,2024-07-12,2025-07-12,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.87,No,Synthetic document metadata for Document Intelligence demo
+DOC0179,SUP032,Quality certificate,2024-06-20,2024-05-03,2026-05-03,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.86,No,Synthetic document metadata for Document Intelligence demo
+DOC0180,SUP032,Traceability evidence,2024-10-29,2024-10-22,2027-10-22,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.75,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0181,SUP032,ESG certificates,2024-07-31,2024-06-26,2026-06-26,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,No,Synthetic document metadata for Document Intelligence demo
+DOC0182,SUP033,Supplier Code,2024-04-29,2024-03-13,2027-03-13,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.94,No,Synthetic document metadata for Document Intelligence demo
+DOC0183,SUP033,Code of Ethics,2024-10-31,2024-09-27,2027-09-27,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.85,No,Synthetic document metadata for Document Intelligence demo
+DOC0184,SUP033,SA8000 questionnaire,2024-10-09,2024-08-27,2025-08-27,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.75,No,Synthetic document metadata for Document Intelligence demo
+DOC0185,SUP033,Terms and Conditions,2024-07-20,2024-05-26,2027-05-26,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.9,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0186,SUP033,Subcontracting Terms,2024-09-28,2024-08-09,2027-08-09,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.97,No,Synthetic document metadata for Document Intelligence demo
+DOC0187,SUP033,Process capability evidence,2024-05-04,2024-04-24,2025-04-24,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.86,No,Synthetic document metadata for Document Intelligence demo
+DOC0188,SUP033,Audit report,2024-07-20,2024-07-05,2027-07-05,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,No,Synthetic document metadata for Document Intelligence demo
+DOC0189,SUP034,Supplier Code,2024-09-13,2024-07-17,2027-07-17,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0190,SUP034,Code of Ethics,2024-12-10,2024-12-02,2027-12-02,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.85,No,Synthetic document metadata for Document Intelligence demo
+DOC0191,SUP035,Supplier Code,2024-08-26,2024-08-07,2025-08-07,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.78,No,Synthetic document metadata for Document Intelligence demo
+DOC0192,SUP035,Code of Ethics,2024-07-09,2024-05-25,2026-05-25,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.77,No,Synthetic document metadata for Document Intelligence demo
+DOC0193,SUP035,SA8000 questionnaire,2024-07-21,2024-06-16,2026-06-16,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,No,Synthetic document metadata for Document Intelligence demo
+DOC0194,SUP035,Terms and Conditions,2024-06-13,2024-05-10,2025-05-10,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,No,Synthetic document metadata for Document Intelligence demo
+DOC0195,SUP035,Subcontracting Terms,2024-07-13,2024-06-25,2025-06-25,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.97,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0196,SUP035,Process capability evidence,2024-10-07,2024-08-21,2026-08-21,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0197,SUP035,Audit report,2024-10-23,2024-09-09,2027-09-09,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0198,SUP036,Supplier Code,2024-03-11,2024-03-01,2027-03-01,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0199,SUP036,Code of Ethics,2024-08-28,2024-08-16,2027-08-16,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.92,No,Synthetic document metadata for Document Intelligence demo
+DOC0200,SUP036,SA8000 questionnaire,2024-05-26,2024-05-21,2025-05-21,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.89,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0201,SUP036,Terms and Conditions,2024-06-16,2024-04-18,2027-04-18,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0202,SUP036,Quality certificate,2024-03-16,2024-03-14,2025-03-14,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.98,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0203,SUP036,Traceability evidence,2024-08-06,2024-07-26,2026-07-26,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,No,Synthetic document metadata for Document Intelligence demo
+DOC0204,SUP036,ESG certificates,2024-06-09,2024-05-02,2025-05-02,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.75,No,Synthetic document metadata for Document Intelligence demo
+DOC0205,SUP037,Supplier Code,2024-03-22,2024-03-01,2027-03-01,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.93,No,Synthetic document metadata for Document Intelligence demo
+DOC0206,SUP037,Code of Ethics,2024-05-30,2024-04-06,2027-04-06,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.89,No,Synthetic document metadata for Document Intelligence demo
+DOC0207,SUP037,SA8000 questionnaire,2024-07-22,2024-07-17,2026-07-17,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0208,SUP037,Terms and Conditions,2024-03-16,2024-03-16,2026-03-16,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0209,SUP037,Quality certificate,2024-06-16,2024-05-11,2026-05-11,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.72,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0210,SUP037,Traceability evidence,2024-11-27,2024-11-12,2027-11-12,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.74,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0211,SUP037,ESG certificates,2024-07-04,2024-05-06,2026-05-06,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.95,No,Synthetic document metadata for Document Intelligence demo
+DOC0212,SUP038,Supplier Code,2024-05-22,2024-04-05,2026-04-05,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.98,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0213,SUP038,Code of Ethics,2024-07-19,2024-06-14,2027-06-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,No,Synthetic document metadata for Document Intelligence demo
+DOC0214,SUP039,Supplier Code,2024-09-27,2024-09-23,2026-09-23,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0215,SUP039,Code of Ethics,2024-09-26,2024-09-17,2025-09-17,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.76,No,Synthetic document metadata for Document Intelligence demo
+DOC0216,SUP040,Supplier Code,2024-02-13,2024-01-15,2025-01-15,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.87,No,Synthetic document metadata for Document Intelligence demo
+DOC0217,SUP040,Code of Ethics,2025-01-11,2024-11-26,2026-11-26,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,No,Synthetic document metadata for Document Intelligence demo
+DOC0218,SUP041,Supplier Code,2024-08-28,2024-08-02,2026-08-02,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.77,No,Synthetic document metadata for Document Intelligence demo
+DOC0219,SUP041,Code of Ethics,2024-12-20,2024-11-24,2027-11-24,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,No,Synthetic document metadata for Document Intelligence demo
+DOC0220,SUP042,Supplier Code,2024-09-19,2024-09-05,2027-09-05,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.94,No,Synthetic document metadata for Document Intelligence demo
+DOC0221,SUP042,Code of Ethics,2024-06-11,2024-05-15,2027-05-15,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.86,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0222,SUP042,SA8000 questionnaire,2024-04-25,2024-04-08,2026-04-08,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.77,No,Synthetic document metadata for Document Intelligence demo
+DOC0223,SUP042,Terms and Conditions,2024-02-28,2024-02-02,2027-02-02,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,No,Synthetic document metadata for Document Intelligence demo
+DOC0224,SUP042,Subcontracting Terms,2024-02-15,2024-01-08,2025-01-08,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0225,SUP042,Process capability evidence,2024-12-16,2024-10-22,2027-10-22,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,No,Synthetic document metadata for Document Intelligence demo
+DOC0226,SUP042,Audit report,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0227,SUP043,Supplier Code,2024-09-27,2024-09-08,2026-09-08,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0228,SUP043,Code of Ethics,2024-11-20,2024-10-24,2025-10-24,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.86,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0229,SUP043,SA8000 questionnaire,2024-07-15,2024-06-21,2027-06-21,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.92,No,Synthetic document metadata for Document Intelligence demo
+DOC0230,SUP043,Terms and Conditions,2024-07-25,2024-07-14,2025-07-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.92,No,Synthetic document metadata for Document Intelligence demo
+DOC0231,SUP043,Subcontracting Terms,2024-04-19,2024-04-10,2027-04-10,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.93,No,Synthetic document metadata for Document Intelligence demo
+DOC0232,SUP043,Process capability evidence,2024-10-19,2024-09-14,2026-09-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.86,No,Synthetic document metadata for Document Intelligence demo
+DOC0233,SUP043,Audit report,2024-07-05,2024-05-07,2026-05-07,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0234,SUP044,Supplier Code,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0235,SUP044,Code of Ethics,2024-11-28,2024-10-24,2027-10-24,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.78,No,Synthetic document metadata for Document Intelligence demo
+DOC0236,SUP045,Supplier Code,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0237,SUP045,Code of Ethics,2024-10-10,2024-09-21,2026-09-21,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0238,SUP045,SA8000 questionnaire,2024-09-30,2024-08-15,2025-08-15,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0239,SUP045,Terms and Conditions,2024-05-18,2024-04-12,2026-04-12,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.94,No,Synthetic document metadata for Document Intelligence demo
+DOC0240,SUP045,Subcontracting Terms,2024-03-08,2024-01-09,2027-01-09,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.87,No,Synthetic document metadata for Document Intelligence demo
+DOC0241,SUP045,Process capability evidence,2024-05-29,2024-05-05,2025-05-05,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.87,No,Synthetic document metadata for Document Intelligence demo
+DOC0242,SUP045,Audit report,2024-10-12,2024-09-21,2027-09-21,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0243,SUP046,Supplier Code,2024-11-13,2024-09-21,2025-09-21,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.94,No,Synthetic document metadata for Document Intelligence demo
+DOC0244,SUP046,Code of Ethics,2024-12-25,2024-11-02,2025-11-02,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0245,SUP046,REACH compliance,2024-03-24,2024-03-01,2025-03-01,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.74,No,Synthetic document metadata for Document Intelligence demo
+DOC0246,SUP046,SDS,2024-11-16,2024-10-16,2027-10-16,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.72,No,Synthetic document metadata for Document Intelligence demo
+DOC0247,SUP046,Environmental certificate,2024-07-18,2024-07-01,2025-07-01,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.86,No,Synthetic document metadata for Document Intelligence demo
+DOC0248,SUP047,Supplier Code,2024-05-10,2024-04-07,2027-04-07,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0249,SUP047,Code of Ethics,2024-07-28,2024-07-03,2026-07-03,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0250,SUP048,Supplier Code,2025-01-02,2024-12-06,2025-12-06,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.89,No,Synthetic document metadata for Document Intelligence demo
+DOC0251,SUP048,Code of Ethics,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0252,SUP048,SA8000 questionnaire,2025-01-05,2024-12-19,2026-12-19,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0253,SUP048,Terms and Conditions,2024-06-29,2024-05-18,2027-05-18,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,No,Synthetic document metadata for Document Intelligence demo
+DOC0254,SUP048,Quality certificate,2024-07-19,2024-06-01,2025-06-01,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.93,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0255,SUP048,Traceability evidence,2024-07-13,2024-07-03,2026-07-03,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.87,No,Synthetic document metadata for Document Intelligence demo
+DOC0256,SUP048,ESG certificates,2024-08-12,2024-07-22,2027-07-22,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,No,Synthetic document metadata for Document Intelligence demo
+DOC0257,SUP048,Recycled/certified fiber certificate,2025-01-15,2024-12-24,2025-12-24,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,No,Synthetic document metadata for Document Intelligence demo
+DOC0258,SUP049,Supplier Code,2024-12-13,2024-11-19,2027-11-19,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.74,No,Synthetic document metadata for Document Intelligence demo
+DOC0259,SUP049,Code of Ethics,2024-05-02,2024-04-23,2025-04-23,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0260,SUP049,SA8000 questionnaire,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0261,SUP049,Terms and Conditions,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0262,SUP049,Quality certificate,2024-05-21,2024-05-15,2026-05-15,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.75,No,Synthetic document metadata for Document Intelligence demo
+DOC0263,SUP049,Traceability evidence,2024-09-19,2024-08-18,2027-08-18,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0264,SUP049,ESG certificates,2024-08-07,2024-06-18,2025-06-18,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.8,No,Synthetic document metadata for Document Intelligence demo
+DOC0265,SUP049,Recycled/certified fiber certificate,2024-06-29,2024-05-14,2026-05-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.95,No,Synthetic document metadata for Document Intelligence demo
+DOC0266,SUP050,Supplier Code,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0267,SUP050,Code of Ethics,2024-04-13,2024-03-14,2026-03-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.92,No,Synthetic document metadata for Document Intelligence demo
+DOC0268,SUP051,Supplier Code,2024-07-21,2024-06-27,2027-06-27,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.93,No,Synthetic document metadata for Document Intelligence demo
+DOC0269,SUP051,Code of Ethics,2024-07-22,2024-06-14,2027-06-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.76,No,Synthetic document metadata for Document Intelligence demo
+DOC0270,SUP052,Supplier Code,2024-08-01,2024-07-09,2026-07-09,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.75,No,Synthetic document metadata for Document Intelligence demo
+DOC0271,SUP052,Code of Ethics,2024-11-22,2024-10-18,2025-10-18,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,No,Synthetic document metadata for Document Intelligence demo
+DOC0272,SUP052,SA8000 questionnaire,2025-01-27,2024-12-07,2026-12-07,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.8,No,Synthetic document metadata for Document Intelligence demo
+DOC0273,SUP052,Terms and Conditions,2024-07-30,2024-07-22,2026-07-22,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,No,Synthetic document metadata for Document Intelligence demo
+DOC0274,SUP052,Subcontracting Terms,2024-12-02,2024-11-05,2027-11-05,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.93,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0275,SUP052,Process capability evidence,2024-11-10,2024-10-16,2027-10-16,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.86,No,Synthetic document metadata for Document Intelligence demo
+DOC0276,SUP052,Audit report,2024-12-16,2024-12-14,2027-12-14,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.93,No,Synthetic document metadata for Document Intelligence demo
+DOC0277,SUP053,Supplier Code,2024-09-13,2024-07-25,2026-07-25,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.83,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0278,SUP053,Code of Ethics,2024-06-24,2024-05-08,2027-05-08,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.85,No,Synthetic document metadata for Document Intelligence demo
+DOC0279,SUP053,SA8000 questionnaire,2024-10-31,2024-10-08,2026-10-08,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,No,Synthetic document metadata for Document Intelligence demo
+DOC0280,SUP053,Terms and Conditions,2024-11-01,2024-10-23,2027-10-23,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.81,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0281,SUP053,Technical capability evidence,2024-02-15,2024-02-10,2026-02-10,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.75,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0282,SUP053,Safety documents,2024-12-24,2024-12-05,2026-12-05,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.81,No,Synthetic document metadata for Document Intelligence demo
+DOC0283,SUP054,Supplier Code,2024-02-17,2024-02-10,2025-02-10,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.73,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0284,SUP054,Code of Ethics,2024-07-01,2024-06-21,2025-06-21,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,No,Synthetic document metadata for Document Intelligence demo
+DOC0285,SUP055,Supplier Code,2024-04-17,2024-03-21,2027-03-21,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,No,Synthetic document metadata for Document Intelligence demo
+DOC0286,SUP055,Code of Ethics,2024-05-12,2024-04-15,2027-04-15,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,No,Synthetic document metadata for Document Intelligence demo
+DOC0287,SUP056,Supplier Code,2024-06-14,2024-06-07,2026-06-07,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0288,SUP056,Code of Ethics,2024-10-30,2024-09-21,2026-09-21,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.82,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0289,SUP056,Insurance,2024-03-22,2024-02-12,2026-02-12,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.76,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0290,SUP056,Service level agreement,2025-01-20,2024-11-23,2026-11-23,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0291,SUP057,Supplier Code,2024-03-26,2024-03-18,2025-03-18,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.77,No,Synthetic document metadata for Document Intelligence demo
+DOC0292,SUP057,Code of Ethics,2024-12-01,2024-10-02,2026-10-02,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.72,No,Synthetic document metadata for Document Intelligence demo
+DOC0293,SUP057,SA8000 questionnaire,2024-08-28,2024-07-18,2027-07-18,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.85,No,Synthetic document metadata for Document Intelligence demo
+DOC0294,SUP057,Terms and Conditions,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0295,SUP057,Quality certificate,2024-03-04,2024-02-19,2025-02-19,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.8,No,Synthetic document metadata for Document Intelligence demo
+DOC0296,SUP057,Traceability evidence,2024-10-16,2024-09-10,2025-09-10,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.91,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0297,SUP057,ESG certificates,2024-08-25,2024-08-18,2027-08-18,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.87,No,Synthetic document metadata for Document Intelligence demo
+DOC0298,SUP058,Supplier Code,2024-03-07,2024-01-15,2026-01-15,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.74,No,Synthetic document metadata for Document Intelligence demo
+DOC0299,SUP058,Code of Ethics,2024-04-12,2024-02-25,2025-02-25,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.87,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0300,SUP058,SA8000 questionnaire,2024-08-06,2024-06-28,2027-06-28,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.88,No,Synthetic document metadata for Document Intelligence demo
+DOC0301,SUP058,Terms and Conditions,2024-05-16,2024-03-26,2025-03-26,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.74,No,Synthetic document metadata for Document Intelligence demo
+DOC0302,SUP058,Quality certificate,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0303,SUP058,Traceability evidence,2025-01-15,2024-12-10,2026-12-10,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.79,No,Synthetic document metadata for Document Intelligence demo
+DOC0304,SUP058,ESG certificates,2025-01-14,2024-11-27,2025-11-27,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.92,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0305,SUP058,Recycled/certified fiber certificate,2024-01-17,2024-01-09,2027-01-09,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.9,No,Synthetic document metadata for Document Intelligence demo
+DOC0306,SUP059,Supplier Code,2024-11-07,2024-09-24,2026-09-24,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.96,No,Synthetic document metadata for Document Intelligence demo
+DOC0307,SUP059,Code of Ethics,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0308,SUP059,SA8000 questionnaire,2025-01-01,2024-12-03,2027-12-03,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.89,No,Synthetic document metadata for Document Intelligence demo
+DOC0309,SUP059,Terms and Conditions,2024-03-22,2024-02-26,2027-02-26,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.78,No,Synthetic document metadata for Document Intelligence demo
+DOC0310,SUP059,Quality certificate,2024-05-04,2024-04-16,2026-04-16,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.81,No,Synthetic document metadata for Document Intelligence demo
+DOC0311,SUP059,Traceability evidence,2024-12-24,2024-10-28,2026-10-28,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.9,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0312,SUP059,ESG certificates,2024-02-24,2024-01-02,2025-01-02,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.84,No,Synthetic document metadata for Document Intelligence demo
+DOC0313,SUP060,Supplier Code,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0314,SUP060,Code of Ethics,2024-12-31,2024-11-21,2025-11-21,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.8,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0315,SUP060,SA8000 questionnaire,,,,Missing,,,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0316,SUP060,Terms and Conditions,2024-03-24,2024-02-23,2025-02-23,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.74,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0317,SUP060,Subcontracting Terms,2024-10-08,2024-10-08,2027-10-08,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.72,Yes,Synthetic document metadata for Document Intelligence demo
+DOC0318,SUP060,Process capability evidence,2024-07-24,2024-06-27,2025-06-27,Valid,supplier_name; document_type; issue_date; expiry_date; category_scope,0.9,No,Synthetic document metadata for Document Intelligence demo
+DOC0319,SUP060,Audit report,2024-04-19,2024-04-13,2025-04-13,Expired,supplier_name; document_type; issue_date; expiry_date; category_scope,0.75,Yes,Synthetic document metadata for Document Intelligence demo

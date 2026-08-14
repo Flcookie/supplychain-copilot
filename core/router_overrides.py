@@ -37,6 +37,47 @@ def apply_lifecycle_router_overrides(parsed: dict[str, Any], question: str) -> d
     lower = q.lower()
     parsed = _clear_coreference_when_supplier_named(parsed, q)
 
+    # Full supplier assessment task (before narrower rating/KPI overrides)
+    assessment_signal = any(
+        phrase in lower
+        for phrase in [
+            "full assessment",
+            "full supplier assessment",
+            "supplier assessment",
+            "assess supplier",
+            "evaluate supplier",
+            "assessment report",
+            "risk assessment summary",
+            "supplier evaluation report",
+        ]
+    ) or any(
+        phrase in q
+        for phrase in [
+            "完整评估",
+            "供应商评估",
+            "评估报告",
+            "评估供应商",
+            "全面评估",
+            "风险评估摘要",
+        ]
+    )
+    if assessment_signal:
+        if _has_supplier_id(q):
+            return _set_intent(
+                parsed,
+                "supplier_assessment",
+                0.97,
+                "supplier assessment task (rule override)",
+            )
+        out = _set_intent(
+            parsed,
+            "supplier_assessment",
+            0.7,
+            "supplier assessment needs supplier id",
+        )
+        out["ambiguity_type"] = "missing_entity"
+        return out
+
     # Vendor rating explanation (incl. Chinese)
     rating_ask = (
         any(

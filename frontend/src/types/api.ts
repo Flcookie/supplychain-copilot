@@ -8,6 +8,11 @@ export interface RouteInfo {
   reason?: string | null;
   fallback_mode?: string | null;
   kpi_parse?: Record<string, unknown> | null;
+  review_status?: string | null;
+  review_notes?: string | null;
+  task_type?: string | null;
+  task_step?: string | null;
+  supplier_id?: string | null;
 }
 
 export interface ChatResponse {
@@ -18,6 +23,12 @@ export interface ChatResponse {
   citations: Record<string, unknown>[];
   sources: Record<string, unknown>[];
   clarification_required: boolean;
+  thread_id?: string | null;
+  review_status?: string | null;
+  task_plan?: string[] | null;
+  supplier_id?: string | null;
+  trace_id?: string | null;
+  cache_hit?: boolean;
 }
 
 export interface ChatMessage {
@@ -26,10 +37,13 @@ export interface ChatMessage {
   content: string;
   lang: Lang;
   intent?: string;
+  clarificationRequired?: boolean;
   route_info?: RouteInfo;
   evidence?: Record<string, unknown>;
   citations?: Record<string, unknown>[];
   sources?: Record<string, unknown>[];
+  threadId?: string;
+  reviewStatus?: string | null;
 }
 
 export interface ScenarioItem {

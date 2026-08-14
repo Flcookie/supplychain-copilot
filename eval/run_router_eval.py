@@ -12,6 +12,7 @@ if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
 
 from core.qualification_rules import detect_qualification_checklist_intent
+from core.router_overrides import apply_lifecycle_router_overrides
 
 
 DEFAULT_DATASET = os.path.join(ROOT_DIR, "eval", "datasets", "ratti_eval_25.json")
@@ -95,6 +96,25 @@ def optimized_router(question: str) -> RouterOutput:
         confidence=confidence,
         ambiguity_type=ambiguity_type,
         reason="optimized router with Ratti lifecycle intents",
+    )
+
+
+def override_router(question: str) -> RouterOutput:
+    """Heuristic router plus deterministic lifecycle overrides (no LLM)."""
+    base = optimized_router(question)
+    parsed = {
+        "intent": base.intent,
+        "confidence": base.confidence,
+        "ambiguity_type": base.ambiguity_type,
+        "human_approval_required": False,
+        "reason": base.reason,
+    }
+    out = apply_lifecycle_router_overrides(parsed, question)
+    return RouterOutput(
+        intent=out.get("intent", base.intent),
+        confidence=float(out.get("confidence", base.confidence) or 0.0),
+        ambiguity_type=out.get("ambiguity_type"),
+        reason=out.get("reason") or "heuristic + deterministic override",
     )
 
 
@@ -203,9 +223,9 @@ def main():
     )
     parser.add_argument(
         "--mode",
-        choices=["heuristic", "llm"],
+        choices=["heuristic", "override", "llm"],
         default="heuristic",
-        help="heuristic=keyword optimized router; llm=live router_node",
+        help="heuristic=keyword router; override=heuristic+deterministic overrides; llm=live router_node",
     )
     args = parser.parse_args()
 
@@ -213,8 +233,12 @@ def main():
         samples = json.load(f)
 
     baseline = evaluate(baseline_router, samples)
-    router_fn = llm_router if args.mode == "llm" else optimized_router
-    optimized = evaluate(router_fn, samples)
+    routers = {
+        "heuristic": optimized_router,
+        "override": override_router,
+        "llm": llm_router,
+    }
+    optimized = evaluate(routers[args.mode], samples)
     json_path, md_path = write_report(baseline, optimized, args.dataset, label=args.mode)
 
     print("Evaluation complete.")

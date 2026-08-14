@@ -1,0 +1,551 @@
+﻿po_id,supplier_id,category_level_1,category_level_2,order_date,expected_delivery_date,actual_delivery_date,order_quantity,order_amount_eur,payment_terms_days,currency,po_status,data_source_note
+PO00001,SUP024,Goods,Yarns,2025-06-03,2025-06-18,2025-06-18,1140,62904.21,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00002,SUP047,Fixed Assets,Fixed Assets,2025-04-20,2025-05-06,2025-05-06,40,59984,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00003,SUP025,Goods,Yarns,2025-06-29,2025-08-02,2025-08-02,1195,26786.91,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00004,SUP047,Fixed Assets,Fixed Assets,2025-11-08,2025-12-03,2025-12-03,45,5515,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00005,SUP013,Transportation,Passenger Transport,2025-07-20,2025-08-14,2025-08-14,51,33370,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00006,SUP041,Services,General Administrative Services,2025-11-01,2025-11-12,2025-11-12,1,49329,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00007,SUP037,Goods,Leathers,2025-08-04,2025-09-03,2025-09-03,1465,95604.14,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00008,SUP033,Manufacturing,Outsourced Fabric and Yarn Processing,2025-05-27,2025-07-05,2025-07-05,28,54727,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00009,SUP010,Manufacturing,General Processing / Manufacturing,2025-05-23,2025-06-04,2025-06-04,33,28633,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00010,SUP041,Services,General Administrative Services,2025-11-29,2025-12-10,2025-12-10,28,33278,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00011,SUP008,Services,Communication and Marketing,2025-08-21,2025-10-05,2025-10-07,12,17655,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00012,SUP051,Fixed Assets,Fixed Assets,2025-05-13,2025-05-30,2025-05-30,48,37227,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00013,SUP005,Goods,"Garments, Components and Trimmings",2025-05-15,2025-06-27,2025-06-27,4114,163212.48,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00014,SUP044,Fixed Assets,Fixed Assets,2025-03-01,2025-03-22,2025-03-22,1,7772,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00015,SUP025,Goods,Yarns,2025-03-18,2025-04-05,2025-04-05,339,16203.64,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00016,SUP059,Goods,Fabrics,2025-06-13,2025-07-07,2025-07-07,4732,155293.07,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00017,SUP003,Services,General Services,2025-07-25,2025-08-05,2025-08-05,56,39002,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00018,SUP001,Goods,"Garments, Components and Trimmings",2025-07-08,2025-07-27,2025-07-27,2539,160801.78,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00019,SUP032,Goods,Leathers,2025-04-11,2025-05-22,2025-05-22,2058,29485.22,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00020,SUP054,Services,Utilities,2025-12-22,2025-12-29,2025-12-29,1,51319,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00021,SUP004,Goods,Yarns,2025-03-14,2025-04-07,2025-04-08,1946,148780.1,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00022,SUP048,Goods,Yarns,2025-02-13,2025-03-29,2025-04-09,663,33843.32,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00023,SUP017,Goods,Yarns,2025-06-11,2025-07-13,2025-07-13,2722,76930.26,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00024,SUP009,Manufacturing,Outsourced Fabric and Yarn Processing,2025-10-27,2025-11-09,2025-11-20,11,60925,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00025,SUP050,Services,Personnel (Training and HR Services),2025-04-17,2025-05-22,2025-05-22,17,17717,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00026,SUP053,Services,Plant and Machinery Maintenance,2025-12-27,2026-02-10,2026-02-17,6,34534,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00027,SUP017,Goods,Yarns,2025-03-31,2025-04-08,2025-04-08,3754,180399.8,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00028,SUP009,Manufacturing,Outsourced Fabric and Yarn Processing,2025-03-04,2025-03-11,2025-03-13,50,31135,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00029,SUP041,Services,General Administrative Services,2025-11-27,2025-12-09,2025-12-09,17,11828,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00030,SUP058,Goods,Yarns,2025-06-19,2025-07-03,2025-07-05,4751,179771.24,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00031,SUP012,Goods,"Garments, Components and Trimmings",2025-07-01,2025-07-21,2025-07-21,2302,57743.14,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00032,SUP042,Manufacturing,Garment Manufacturing / Confection,2025-06-01,2025-07-09,2025-07-09,36,64787,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00033,SUP027,Manufacturing,Garment Manufacturing / Confection,2025-04-13,2025-05-23,2025-05-23,52,73258,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00034,SUP023,Services,Plant and Machinery Maintenance,2025-09-03,2025-10-14,2025-10-14,23,67849,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00035,SUP058,Goods,Yarns,2025-05-24,2025-06-03,2025-06-03,3914,179452.07,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00036,SUP053,Services,Plant and Machinery Maintenance,2025-01-29,2025-02-19,2025-02-19,52,52911,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00037,SUP012,Goods,"Garments, Components and Trimmings",2025-04-01,2025-04-23,2025-04-23,2989,232673.13,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00038,SUP037,Goods,Leathers,2025-10-16,2025-11-01,2025-11-01,1592,113689.78,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00039,SUP039,Fixed Assets,Fixed Assets,2025-04-23,2025-05-01,2025-05-01,1,45481,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00040,SUP012,Goods,"Garments, Components and Trimmings",2025-06-15,2025-06-25,2025-06-30,4855,293391.22,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00041,SUP024,Goods,Yarns,2025-12-27,2026-01-28,2026-01-28,2807,75527.56,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00042,SUP028,Services,General Administrative Services,2025-11-24,2026-01-01,2026-01-01,12,48769,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00043,SUP025,Goods,Yarns,2025-06-07,2025-07-02,2025-07-07,4742,163035.83,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00044,SUP040,Services,General Administrative Services,2025-04-24,2025-06-06,2025-06-07,32,20434,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00045,SUP021,Transportation,Passenger Transport,2025-03-27,2025-04-08,2025-04-08,43,46007,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00046,SUP005,Goods,"Garments, Components and Trimmings",2025-06-29,2025-07-22,2025-07-22,60,348.35,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00047,SUP057,Goods,Leathers,2025-07-31,2025-09-07,2025-09-07,2927,138239.85,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00048,SUP037,Goods,Leathers,2025-11-30,2025-12-21,2026-01-02,2465,8554.76,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00049,SUP057,Goods,Leathers,2025-07-12,2025-07-29,2025-07-29,4531,363207.68,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00050,SUP058,Goods,Yarns,2025-09-05,2025-09-13,2025-09-13,1401,73312.69,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00051,SUP045,Manufacturing,Outsourcing,2025-10-11,2025-11-21,2025-11-30,19,40980,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00052,SUP019,Manufacturing,General Processing / Manufacturing,2025-12-05,2026-01-19,2026-01-19,7,5373,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00053,SUP006,Goods,Yarns,2025-08-31,2025-09-14,2025-09-17,2220,20829.35,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00054,SUP029,Goods,Fabrics,2025-01-23,2025-02-15,2025-02-15,2207,45515.75,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00055,SUP043,Manufacturing,Garment Manufacturing / Confection,2025-06-26,2025-08-06,2025-08-06,49,31820,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00056,SUP027,Manufacturing,Garment Manufacturing / Confection,2025-10-02,2025-11-08,2025-11-08,16,64424,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00057,SUP058,Goods,Yarns,2025-09-22,2025-11-04,2025-11-04,1257,14841.97,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00058,SUP014,Services,Facilities Management,2025-04-09,2025-04-24,2025-05-01,6,59067,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00059,SUP017,Goods,Yarns,2025-06-13,2025-06-24,2025-06-25,2312,104127.99,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00060,SUP038,Services,Facilities Management,2025-02-21,2025-03-06,2025-03-06,7,39498,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00061,SUP042,Manufacturing,Garment Manufacturing / Confection,2025-09-06,2025-10-19,2025-10-19,3,24570,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00062,SUP044,Fixed Assets,Fixed Assets,2025-12-22,2026-01-23,2026-01-26,57,45449,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00063,SUP002,Goods,Fabrics,2025-06-22,2025-07-18,2025-07-18,4077,298457.33,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00064,SUP020,Fixed Assets,Fixed Assets,2025-08-15,2025-09-11,2025-09-11,27,13703,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00065,SUP027,Manufacturing,Garment Manufacturing / Confection,2025-09-06,2025-10-16,2025-10-16,53,9367,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00066,SUP050,Services,Personnel (Training and HR Services),2025-09-26,2025-11-08,2025-11-15,54,9553,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00067,SUP018,Manufacturing,Garment Manufacturing / Confection,2025-07-08,2025-08-13,2025-08-13,41,18236,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00068,SUP029,Goods,Fabrics,2025-04-01,2025-05-08,2025-05-08,2915,88737.02,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00069,SUP019,Manufacturing,General Processing / Manufacturing,2025-01-15,2025-02-15,2025-02-26,55,30091,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00070,SUP027,Manufacturing,Garment Manufacturing / Confection,2025-09-20,2025-09-28,2025-09-28,50,3166,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00071,SUP039,Fixed Assets,Fixed Assets,2025-01-05,2025-01-26,2025-01-26,52,42037,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00072,SUP023,Services,Plant and Machinery Maintenance,2025-08-24,2025-09-16,2025-09-21,40,54055,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00073,SUP007,Goods,"Garments, Components and Trimmings",2025-09-04,2025-09-15,2025-09-15,2314,127495.58,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00074,SUP058,Goods,Yarns,2025-11-30,2025-12-26,2026-01-04,4287,280744.78,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00075,SUP044,Fixed Assets,Fixed Assets,2025-03-13,2025-03-21,2025-03-21,19,36003,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00076,SUP038,Services,Facilities Management,2025-12-29,2026-02-10,2026-02-10,22,31145,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00077,SUP033,Manufacturing,Outsourced Fabric and Yarn Processing,2025-06-03,2025-06-20,2025-06-20,57,25741,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00078,SUP044,Fixed Assets,Fixed Assets,2025-06-21,2025-07-03,2025-07-09,27,45426,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00079,SUP008,Services,Communication and Marketing,2025-08-29,2025-09-08,2025-09-08,38,11334,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00080,SUP056,Transportation,Freight Transport / Logistics,2025-12-15,2026-01-15,2026-01-15,27,9086,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00081,SUP027,Manufacturing,Garment Manufacturing / Confection,2025-10-19,2025-11-24,2025-12-07,56,25639,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00082,SUP004,Goods,Yarns,2025-01-03,2025-02-07,2025-02-13,1347,57291.7,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00083,SUP026,Transportation,Freight Transport / Logistics,2025-08-08,2025-09-14,2025-09-14,3,71963,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00084,SUP058,Goods,Yarns,2025-06-14,2025-07-24,2025-07-26,83,4477.05,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00085,SUP007,Goods,"Garments, Components and Trimmings",2025-07-16,2025-08-24,2025-08-24,1418,10254.81,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00086,SUP047,Fixed Assets,Fixed Assets,2025-09-24,2025-11-08,2025-11-08,28,19536,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00087,SUP049,Goods,Yarns,2025-04-07,2025-04-24,2025-04-24,3354,11374.01,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00088,SUP011,Goods,Yarns,2025-03-05,2025-04-04,2025-04-04,356,11753.7,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00089,SUP039,Fixed Assets,Fixed Assets,2025-01-25,2025-02-07,2025-02-07,2,8322,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00090,SUP036,Goods,Fabrics,2025-05-10,2025-06-16,2025-06-16,1733,103356.08,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00091,SUP043,Manufacturing,Garment Manufacturing / Confection,2025-09-24,2025-10-18,2025-10-18,45,19978,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00092,SUP008,Services,Communication and Marketing,2025-02-24,2025-04-03,2025-04-09,34,28433,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00093,SUP060,Manufacturing,Outsourced Leather Processing,2025-09-04,2025-10-02,2025-10-10,1,13665,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00094,SUP047,Fixed Assets,Fixed Assets,2025-02-21,2025-03-16,2025-03-16,30,40800,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00095,SUP024,Goods,Yarns,2025-12-13,2026-01-09,2026-01-09,999,9694.17,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00096,SUP011,Goods,Yarns,2025-06-18,2025-07-17,2025-07-17,2247,168275.95,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00097,SUP008,Services,Communication and Marketing,2025-07-25,2025-08-26,2025-08-26,18,52556,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00098,SUP052,Manufacturing,Outsourcing,2025-03-27,2025-04-10,2025-04-13,55,22892,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00099,SUP044,Fixed Assets,Fixed Assets,2025-08-13,2025-08-31,2025-08-31,50,49002,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00100,SUP047,Fixed Assets,Fixed Assets,2025-03-08,2025-04-14,2025-04-14,8,55907,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00101,SUP001,Goods,"Garments, Components and Trimmings",2025-12-27,2026-02-05,2026-02-05,4773,296011.72,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00102,SUP022,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-09-23,2025-11-02,2025-11-02,40,14483,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00103,SUP023,Services,Plant and Machinery Maintenance,2025-12-06,2026-01-06,2026-01-07,53,9152,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00104,SUP031,Services,Plant and Machinery Maintenance,2025-09-11,2025-09-28,2025-09-29,18,8599,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00105,SUP016,Fixed Assets,Fixed Assets,2025-02-10,2025-03-18,2025-03-18,37,60733,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00106,SUP008,Services,Communication and Marketing,2025-09-12,2025-09-20,2025-09-25,27,6696,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00107,SUP036,Goods,Fabrics,2025-04-16,2025-05-22,2025-05-22,3026,213229.74,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00108,SUP050,Services,Personnel (Training and HR Services),2025-11-14,2025-12-29,2025-12-29,43,49617,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00109,SUP015,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-01-02,2025-01-30,2025-01-30,41,40270,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00110,SUP048,Goods,Yarns,2025-07-29,2025-08-11,2025-08-18,3268,64500.67,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00111,SUP003,Services,General Services,2025-11-21,2026-01-04,2026-01-11,58,61048,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00112,SUP001,Goods,"Garments, Components and Trimmings",2025-09-29,2025-10-09,2025-10-09,3595,257364.25,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00113,SUP059,Goods,Fabrics,2025-04-01,2025-05-15,2025-05-20,4969,259543.67,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00114,SUP039,Fixed Assets,Fixed Assets,2025-12-21,2026-01-12,2026-01-12,22,40557,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00115,SUP020,Fixed Assets,Fixed Assets,2025-12-26,2026-02-06,2026-02-06,46,74559,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00116,SUP019,Manufacturing,General Processing / Manufacturing,2025-12-18,2026-01-16,2026-01-16,9,25306,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00117,SUP036,Goods,Fabrics,2025-09-03,2025-10-17,2025-10-17,3469,200844.89,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00118,SUP001,Goods,"Garments, Components and Trimmings",2025-09-25,2025-10-08,2025-10-10,1240,7706.61,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00119,SUP044,Fixed Assets,Fixed Assets,2025-05-09,2025-05-25,2025-05-25,45,40684,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00120,SUP056,Transportation,Freight Transport / Logistics,2025-12-12,2026-01-23,2026-01-23,48,52972,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00121,SUP045,Manufacturing,Outsourcing,2025-05-28,2025-06-07,2025-06-07,25,56600,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00122,SUP056,Transportation,Freight Transport / Logistics,2025-08-15,2025-09-05,2025-09-05,46,50200,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00123,SUP019,Manufacturing,General Processing / Manufacturing,2025-08-18,2025-09-05,2025-09-05,5,26507,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00124,SUP017,Goods,Yarns,2025-03-08,2025-03-25,2025-03-25,2139,4854.84,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00125,SUP004,Goods,Yarns,2025-11-17,2025-12-13,2025-12-13,4741,225545.14,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00126,SUP015,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-04-05,2025-05-15,2025-05-16,35,54876,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00127,SUP022,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-07-04,2025-07-29,2025-08-04,49,71533,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00128,SUP040,Services,General Administrative Services,2025-11-15,2025-12-07,2025-12-07,44,44065,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00129,SUP025,Goods,Yarns,2025-05-12,2025-06-22,2025-06-22,252,19561.03,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00130,SUP032,Goods,Leathers,2025-01-23,2025-02-17,2025-02-17,1627,46288.18,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00131,SUP001,Goods,"Garments, Components and Trimmings",2025-11-17,2025-11-28,2025-11-28,1796,132479.98,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00132,SUP054,Services,Utilities,2025-12-26,2026-01-29,2026-01-29,5,22152,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00133,SUP006,Goods,Yarns,2025-02-07,2025-02-17,2025-02-23,1914,148515.07,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00134,SUP002,Goods,Fabrics,2025-07-19,2025-08-02,2025-08-02,568,36747.28,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00135,SUP051,Fixed Assets,Fixed Assets,2025-12-18,2026-01-13,2026-01-13,19,59367,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00136,SUP031,Services,Plant and Machinery Maintenance,2025-03-22,2025-05-02,2025-05-02,48,53248,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00137,SUP024,Goods,Yarns,2025-01-06,2025-02-17,2025-02-17,1208,14560.22,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00138,SUP036,Goods,Fabrics,2025-02-13,2025-03-11,2025-03-11,2866,55647.73,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00139,SUP054,Services,Utilities,2025-05-10,2025-05-29,2025-06-04,43,9128,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00140,SUP005,Goods,"Garments, Components and Trimmings",2025-05-09,2025-05-22,2025-05-23,2975,37090.81,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00141,SUP029,Goods,Fabrics,2025-06-18,2025-07-14,2025-07-14,1298,63412.4,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00142,SUP011,Goods,Yarns,2025-01-03,2025-01-30,2025-01-31,1864,113806.46,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00143,SUP029,Goods,Fabrics,2025-07-03,2025-07-29,2025-07-29,941,15455.06,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00144,SUP009,Manufacturing,Outsourced Fabric and Yarn Processing,2025-10-03,2025-10-22,2025-10-22,57,12022,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00145,SUP041,Services,General Administrative Services,2025-01-16,2025-03-01,2025-03-01,50,29886,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00146,SUP035,Manufacturing,Outsourcing,2025-08-30,2025-09-15,2025-09-15,15,40141,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00147,SUP026,Transportation,Freight Transport / Logistics,2025-07-06,2025-08-14,2025-08-19,40,23737,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00148,SUP037,Goods,Leathers,2025-12-04,2025-12-20,2025-12-20,4010,320556.92,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00149,SUP005,Goods,"Garments, Components and Trimmings",2025-05-16,2025-06-15,2025-06-30,1743,78239.87,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00150,SUP003,Services,General Services,2025-11-29,2025-12-26,2026-01-05,18,36513,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00151,SUP042,Manufacturing,Garment Manufacturing / Confection,2025-02-09,2025-03-21,2025-03-21,59,31215,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00152,SUP032,Goods,Leathers,2025-09-04,2025-10-19,2025-10-23,1188,45618.69,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00153,SUP012,Goods,"Garments, Components and Trimmings",2025-03-22,2025-04-21,2025-04-21,1019,57883.6,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00154,SUP031,Services,Plant and Machinery Maintenance,2025-12-12,2026-01-18,2026-01-18,38,23134,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00155,SUP033,Manufacturing,Outsourced Fabric and Yarn Processing,2025-01-21,2025-03-05,2025-03-13,34,55143,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00156,SUP014,Services,Facilities Management,2025-08-18,2025-10-02,2025-10-02,56,65133,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00157,SUP010,Manufacturing,General Processing / Manufacturing,2025-10-26,2025-11-13,2025-11-13,33,36671,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00158,SUP030,Manufacturing,Outsourced Leather Processing,2025-11-02,2025-12-16,2025-12-29,25,52523,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00159,SUP039,Fixed Assets,Fixed Assets,2025-02-19,2025-03-09,2025-03-09,40,7116,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00160,SUP035,Manufacturing,Outsourcing,2025-01-01,2025-02-04,2025-02-04,24,7693,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00161,SUP051,Fixed Assets,Fixed Assets,2025-07-15,2025-08-13,2025-08-13,48,14807,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00162,SUP015,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-02-12,2025-03-09,2025-03-09,35,55562,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00163,SUP051,Fixed Assets,Fixed Assets,2025-01-04,2025-02-16,2025-02-16,34,2942,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00164,SUP021,Transportation,Passenger Transport,2025-07-29,2025-08-28,2025-08-29,17,72268,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00165,SUP026,Transportation,Freight Transport / Logistics,2025-04-15,2025-05-18,2025-05-18,36,65238,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00166,SUP017,Goods,Yarns,2025-06-07,2025-07-20,2025-07-20,3311,208649.61,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00167,SUP045,Manufacturing,Outsourcing,2025-03-24,2025-04-06,2025-04-14,26,46359,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00168,SUP053,Services,Plant and Machinery Maintenance,2025-03-16,2025-04-22,2025-04-22,28,13552,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00169,SUP039,Fixed Assets,Fixed Assets,2025-01-20,2025-02-20,2025-02-20,26,70289,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00170,SUP050,Services,Personnel (Training and HR Services),2025-03-31,2025-05-08,2025-05-08,13,69915,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00171,SUP033,Manufacturing,Outsourced Fabric and Yarn Processing,2025-09-22,2025-10-13,2025-10-13,44,6726,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00172,SUP023,Services,Plant and Machinery Maintenance,2025-12-09,2026-01-10,2026-01-10,13,69861,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00173,SUP054,Services,Utilities,2025-10-14,2025-11-27,2025-11-27,53,38242,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00174,SUP060,Manufacturing,Outsourced Leather Processing,2025-07-26,2025-09-07,2025-09-14,36,11487,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00175,SUP017,Goods,Yarns,2025-10-03,2025-11-15,2025-11-15,3677,302160.47,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00176,SUP050,Services,Personnel (Training and HR Services),2025-08-23,2025-09-28,2025-09-28,56,5584,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00177,SUP045,Manufacturing,Outsourcing,2025-04-28,2025-05-25,2025-05-25,23,69699,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00178,SUP019,Manufacturing,General Processing / Manufacturing,2025-02-17,2025-03-21,2025-03-21,53,46825,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00179,SUP021,Transportation,Passenger Transport,2025-07-01,2025-07-21,2025-07-21,18,25957,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00180,SUP048,Goods,Yarns,2025-05-04,2025-05-27,2025-06-06,1711,121937.92,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00181,SUP040,Services,General Administrative Services,2025-01-04,2025-02-14,2025-02-14,55,65214,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00182,SUP057,Goods,Leathers,2025-10-22,2025-11-15,2025-11-15,4237,106425.74,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00183,SUP035,Manufacturing,Outsourcing,2025-01-17,2025-02-25,2025-02-25,56,24911,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00184,SUP030,Manufacturing,Outsourced Leather Processing,2025-06-11,2025-06-18,2025-06-24,21,49395,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00185,SUP031,Services,Plant and Machinery Maintenance,2025-11-10,2025-12-08,2025-12-08,32,57567,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00186,SUP024,Goods,Yarns,2025-07-25,2025-08-18,2025-08-18,4730,60121.98,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00187,SUP052,Manufacturing,Outsourcing,2025-05-01,2025-06-12,2025-06-12,25,27698,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00188,SUP031,Services,Plant and Machinery Maintenance,2025-01-05,2025-01-23,2025-01-23,9,69765,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00189,SUP036,Goods,Fabrics,2025-10-18,2025-10-28,2025-10-28,1388,9431.5,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00190,SUP029,Goods,Fabrics,2025-06-21,2025-07-14,2025-07-14,4640,223570.47,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00191,SUP023,Services,Plant and Machinery Maintenance,2025-12-14,2026-01-28,2026-02-08,37,72574,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00192,SUP044,Fixed Assets,Fixed Assets,2025-09-19,2025-10-27,2025-10-27,29,12277,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00193,SUP010,Manufacturing,General Processing / Manufacturing,2025-03-27,2025-04-24,2025-04-24,40,55054,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00194,SUP021,Transportation,Passenger Transport,2025-12-01,2025-12-26,2025-12-26,39,53833,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00195,SUP024,Goods,Yarns,2025-10-28,2025-12-07,2025-12-07,3441,54095.5,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00196,SUP017,Goods,Yarns,2025-12-25,2026-01-06,2026-01-09,3926,186208.95,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00197,SUP060,Manufacturing,Outsourced Leather Processing,2025-07-19,2025-08-14,2025-08-20,48,39247,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00198,SUP011,Goods,Yarns,2025-01-15,2025-01-24,2025-01-24,2714,200035.0,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00199,SUP018,Manufacturing,Garment Manufacturing / Confection,2025-10-08,2025-11-12,2025-11-21,38,61840,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00200,SUP031,Services,Plant and Machinery Maintenance,2025-10-04,2025-10-25,2025-10-25,29,42352,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00201,SUP001,Goods,"Garments, Components and Trimmings",2025-01-01,2025-02-10,2025-02-10,1166,35459.49,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00202,SUP032,Goods,Leathers,2025-09-02,2025-09-28,2025-10-02,3576,243849.83,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00203,SUP016,Fixed Assets,Fixed Assets,2025-03-25,2025-04-25,2025-04-25,15,36469,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00204,SUP049,Goods,Yarns,2025-11-10,2025-12-04,2025-12-04,4407,304492.32,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00205,SUP030,Manufacturing,Outsourced Leather Processing,2025-11-13,2025-12-18,2025-12-18,40,66486,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00206,SUP007,Goods,"Garments, Components and Trimmings",2025-05-25,2025-06-18,2025-06-22,788,11297.46,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00207,SUP052,Manufacturing,Outsourcing,2025-09-13,2025-10-13,2025-10-13,51,6159,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00208,SUP031,Services,Plant and Machinery Maintenance,2025-04-03,2025-04-22,2025-04-22,17,52014,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00209,SUP016,Fixed Assets,Fixed Assets,2025-07-17,2025-08-21,2025-08-21,3,28106,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00210,SUP025,Goods,Yarns,2025-12-15,2026-01-10,2026-01-10,1349,73043.58,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00211,SUP008,Services,Communication and Marketing,2025-05-10,2025-06-16,2025-06-16,13,49241,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00212,SUP008,Services,Communication and Marketing,2025-05-01,2025-06-04,2025-06-04,11,38188,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00213,SUP003,Services,General Services,2025-10-25,2025-12-01,2025-12-01,10,50679,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00214,SUP044,Fixed Assets,Fixed Assets,2025-11-13,2025-12-11,2025-12-11,49,9871,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00215,SUP032,Goods,Leathers,2025-04-30,2025-05-27,2025-05-27,2895,199233.06,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00216,SUP017,Goods,Yarns,2025-01-21,2025-02-28,2025-02-28,4629,121836.46,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00217,SUP023,Services,Plant and Machinery Maintenance,2025-06-15,2025-07-21,2025-07-27,54,74682,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00218,SUP017,Goods,Yarns,2025-10-05,2025-11-04,2025-11-04,4194,139812.97,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00219,SUP024,Goods,Yarns,2025-11-14,2025-12-06,2025-12-06,568,32131.58,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00220,SUP050,Services,Personnel (Training and HR Services),2025-10-10,2025-10-26,2025-10-26,21,55713,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00221,SUP005,Goods,"Garments, Components and Trimmings",2025-01-23,2025-02-07,2025-02-14,1619,16216.39,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00222,SUP001,Goods,"Garments, Components and Trimmings",2025-04-17,2025-05-25,2025-05-25,705,28723.48,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00223,SUP057,Goods,Leathers,2025-08-01,2025-08-31,2025-08-31,527,37062.38,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00224,SUP054,Services,Utilities,2025-06-05,2025-06-16,2025-06-16,34,14729,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00225,SUP013,Transportation,Passenger Transport,2025-04-09,2025-05-19,2025-05-19,37,25448,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00226,SUP037,Goods,Leathers,2025-07-03,2025-08-08,2025-08-08,3548,266990.4,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00227,SUP033,Manufacturing,Outsourced Fabric and Yarn Processing,2025-06-22,2025-07-09,2025-07-09,39,60066,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00228,SUP021,Transportation,Passenger Transport,2025-07-10,2025-08-12,2025-08-12,28,44395,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00229,SUP050,Services,Personnel (Training and HR Services),2025-10-09,2025-11-01,2025-11-01,29,60654,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00230,SUP039,Fixed Assets,Fixed Assets,2025-01-09,2025-02-18,2025-02-23,57,41562,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00231,SUP021,Transportation,Passenger Transport,2025-01-12,2025-02-05,2025-02-05,33,74918,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00232,SUP009,Manufacturing,Outsourced Fabric and Yarn Processing,2025-05-16,2025-06-15,2025-06-15,16,32539,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00233,SUP005,Goods,"Garments, Components and Trimmings",2025-06-16,2025-07-23,2025-07-31,4770,333822.11,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00234,SUP050,Services,Personnel (Training and HR Services),2025-01-29,2025-02-26,2025-02-26,53,58925,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00235,SUP055,Services,Utilities,2025-11-05,2025-11-12,2025-11-12,41,52133,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00236,SUP033,Manufacturing,Outsourced Fabric and Yarn Processing,2025-12-24,2026-01-14,2026-01-15,44,53495,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00237,SUP019,Manufacturing,General Processing / Manufacturing,2025-07-21,2025-08-06,2025-08-14,4,73847,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00238,SUP050,Services,Personnel (Training and HR Services),2025-12-24,2026-01-08,2026-01-08,31,27966,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00239,SUP036,Goods,Fabrics,2025-11-12,2025-12-22,2025-12-22,636,15233.85,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00240,SUP006,Goods,Yarns,2025-02-27,2025-04-01,2025-04-01,2903,51234.31,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00241,SUP053,Services,Plant and Machinery Maintenance,2025-08-15,2025-08-31,2025-08-31,60,32603,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00242,SUP048,Goods,Yarns,2025-01-28,2025-02-19,2025-02-19,1259,93266.97,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00243,SUP020,Fixed Assets,Fixed Assets,2025-08-19,2025-09-25,2025-10-02,14,72517,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00244,SUP040,Services,General Administrative Services,2025-03-14,2025-03-22,2025-03-22,58,71048,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00245,SUP018,Manufacturing,Garment Manufacturing / Confection,2025-01-28,2025-03-05,2025-03-05,1,10729,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00246,SUP059,Goods,Fabrics,2025-12-04,2026-01-03,2026-01-03,206,5383.94,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00247,SUP046,Goods,Chemical Products,2025-02-20,2025-03-19,2025-03-19,4941,227413.7,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00248,SUP036,Goods,Fabrics,2025-12-31,2026-01-08,2026-01-15,4063,140298.9,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00249,SUP020,Fixed Assets,Fixed Assets,2025-05-01,2025-06-09,2025-06-09,4,35774,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00250,SUP002,Goods,Fabrics,2025-10-12,2025-11-05,2025-11-05,2849,217791.77,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00251,SUP044,Fixed Assets,Fixed Assets,2025-11-10,2025-12-01,2025-12-01,37,22021,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00252,SUP022,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-08-18,2025-09-28,2025-10-02,42,20163,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00253,SUP058,Goods,Yarns,2025-09-26,2025-10-11,2025-10-11,1239,69877.72,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00254,SUP047,Fixed Assets,Fixed Assets,2025-03-02,2025-03-20,2025-03-20,57,21073,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00255,SUP027,Manufacturing,Garment Manufacturing / Confection,2025-07-30,2025-08-25,2025-08-25,60,37887,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00256,SUP018,Manufacturing,Garment Manufacturing / Confection,2025-11-07,2025-12-20,2025-12-20,39,32432,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00257,SUP045,Manufacturing,Outsourcing,2025-09-02,2025-09-17,2025-09-17,39,63441,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00258,SUP031,Services,Plant and Machinery Maintenance,2025-03-12,2025-03-29,2025-03-29,3,55554,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00259,SUP015,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-12-10,2025-12-29,2025-12-29,5,25209,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00260,SUP021,Transportation,Passenger Transport,2025-08-23,2025-09-14,2025-09-14,50,7482,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00261,SUP048,Goods,Yarns,2025-10-20,2025-12-04,2025-12-04,365,16468.07,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00262,SUP057,Goods,Leathers,2025-05-06,2025-06-15,2025-06-15,371,17882.47,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00263,SUP057,Goods,Leathers,2025-06-05,2025-06-30,2025-06-30,3510,92297.98,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00264,SUP030,Manufacturing,Outsourced Leather Processing,2025-11-27,2026-01-01,2026-01-04,38,73618,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00265,SUP012,Goods,"Garments, Components and Trimmings",2025-08-21,2025-10-04,2025-10-04,1704,128188.56,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00266,SUP059,Goods,Fabrics,2025-12-31,2026-01-17,2026-01-17,1062,9969.11,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00267,SUP040,Services,General Administrative Services,2025-03-23,2025-04-23,2025-04-23,3,24398,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00268,SUP010,Manufacturing,General Processing / Manufacturing,2025-03-25,2025-04-10,2025-04-15,46,8725,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00269,SUP012,Goods,"Garments, Components and Trimmings",2025-03-02,2025-03-17,2025-03-17,78,4180.57,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00270,SUP035,Manufacturing,Outsourcing,2025-01-03,2025-02-17,2025-02-17,16,30426,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00271,SUP039,Fixed Assets,Fixed Assets,2025-11-04,2025-11-11,2025-11-11,36,38452,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00272,SUP043,Manufacturing,Garment Manufacturing / Confection,2025-10-23,2025-12-07,2025-12-07,59,13495,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00273,SUP011,Goods,Yarns,2025-12-11,2026-01-05,2026-01-05,4923,243264.69,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00274,SUP024,Goods,Yarns,2025-01-19,2025-01-31,2025-01-31,2694,87460.65,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00275,SUP054,Services,Utilities,2025-10-09,2025-10-20,2025-10-20,9,17993,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00276,SUP014,Services,Facilities Management,2025-12-23,2026-01-12,2026-01-12,7,71330,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00277,SUP060,Manufacturing,Outsourced Leather Processing,2025-12-28,2026-01-22,2026-01-22,55,43482,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00278,SUP023,Services,Plant and Machinery Maintenance,2025-03-08,2025-04-20,2025-04-20,47,67239,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00279,SUP015,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-12-29,2026-01-23,2026-01-23,1,17493,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00280,SUP048,Goods,Yarns,2025-04-17,2025-05-20,2025-05-20,2784,86000.22,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00281,SUP017,Goods,Yarns,2025-02-04,2025-03-02,2025-03-02,4555,130958.36,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00282,SUP026,Transportation,Freight Transport / Logistics,2025-10-19,2025-10-27,2025-10-27,13,45321,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00283,SUP031,Services,Plant and Machinery Maintenance,2025-01-19,2025-02-03,2025-02-03,41,62374,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00284,SUP060,Manufacturing,Outsourced Leather Processing,2025-01-29,2025-03-10,2025-03-10,47,43353,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00285,SUP052,Manufacturing,Outsourcing,2025-07-01,2025-07-12,2025-07-12,18,6085,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00286,SUP054,Services,Utilities,2025-03-26,2025-05-08,2025-05-08,12,17315,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00287,SUP003,Services,General Services,2025-05-20,2025-06-22,2025-06-30,54,41666,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00288,SUP029,Goods,Fabrics,2025-09-17,2025-09-25,2025-09-25,4146,60611.5,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00289,SUP034,Services,General Services,2025-06-08,2025-07-05,2025-07-07,56,14878,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00290,SUP046,Goods,Chemical Products,2025-09-25,2025-10-09,2025-10-18,4918,365604.16,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00291,SUP002,Goods,Fabrics,2025-10-23,2025-11-18,2025-11-18,1769,50411.63,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00292,SUP050,Services,Personnel (Training and HR Services),2025-08-14,2025-08-28,2025-08-28,11,37866,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00293,SUP023,Services,Plant and Machinery Maintenance,2025-10-09,2025-11-05,2025-11-09,46,39128,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00294,SUP022,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-10-04,2025-11-08,2025-11-22,4,15884,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00295,SUP054,Services,Utilities,2025-12-20,2026-01-24,2026-01-24,20,45559,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00296,SUP035,Manufacturing,Outsourcing,2025-02-10,2025-03-18,2025-03-18,6,63377,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00297,SUP046,Goods,Chemical Products,2025-08-27,2025-10-03,2025-10-03,1883,25905.64,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00298,SUP045,Manufacturing,Outsourcing,2025-12-07,2026-01-04,2026-01-04,57,44567,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00299,SUP055,Services,Utilities,2025-03-29,2025-04-23,2025-04-23,39,18697,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00300,SUP007,Goods,"Garments, Components and Trimmings",2025-06-16,2025-07-28,2025-07-28,2524,116418.06,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00301,SUP016,Fixed Assets,Fixed Assets,2025-10-08,2025-10-25,2025-10-25,25,10658,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00302,SUP028,Services,General Administrative Services,2025-08-11,2025-09-23,2025-09-23,35,32953,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00303,SUP008,Services,Communication and Marketing,2025-10-31,2025-12-15,2025-12-15,36,14799,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00304,SUP005,Goods,"Garments, Components and Trimmings",2025-11-03,2025-11-16,2025-11-16,4935,325590.42,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00305,SUP004,Goods,Yarns,2025-02-16,2025-03-08,2025-03-08,4807,369902.97,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00306,SUP029,Goods,Fabrics,2025-09-30,2025-10-25,2025-10-25,4784,186593.67,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00307,SUP037,Goods,Leathers,2025-12-14,2026-01-09,2026-01-09,3611,222149.55,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00308,SUP040,Services,General Administrative Services,2025-09-19,2025-10-21,2025-10-21,55,40559,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00309,SUP004,Goods,Yarns,2025-01-01,2025-02-12,2025-02-12,2992,32693.28,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00310,SUP045,Manufacturing,Outsourcing,2025-10-30,2025-12-01,2025-12-01,46,52173,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00311,SUP043,Manufacturing,Garment Manufacturing / Confection,2025-03-30,2025-05-06,2025-05-12,36,52409,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00312,SUP056,Transportation,Freight Transport / Logistics,2025-12-10,2025-12-25,2025-12-31,47,65792,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00313,SUP058,Goods,Yarns,2025-12-23,2026-02-06,2026-02-06,1522,60279.74,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00314,SUP023,Services,Plant and Machinery Maintenance,2025-04-26,2025-05-14,2025-05-14,1,67294,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00315,SUP060,Manufacturing,Outsourced Leather Processing,2025-10-07,2025-11-19,2025-11-19,3,65342,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00316,SUP006,Goods,Yarns,2025-03-14,2025-04-23,2025-04-23,2339,94689.04,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00317,SUP016,Fixed Assets,Fixed Assets,2025-08-30,2025-09-10,2025-09-10,35,42959,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00318,SUP001,Goods,"Garments, Components and Trimmings",2025-08-29,2025-10-04,2025-10-04,3893,192913.38,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00319,SUP052,Manufacturing,Outsourcing,2025-05-31,2025-06-25,2025-06-30,45,41855,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00320,SUP043,Manufacturing,Garment Manufacturing / Confection,2025-05-30,2025-06-07,2025-06-07,6,18622,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00321,SUP009,Manufacturing,Outsourced Fabric and Yarn Processing,2025-11-12,2025-12-06,2025-12-06,17,3861,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00322,SUP048,Goods,Yarns,2025-03-19,2025-04-23,2025-04-23,1486,34974.82,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00323,SUP056,Transportation,Freight Transport / Logistics,2025-01-17,2025-02-14,2025-02-14,10,22204,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00324,SUP025,Goods,Yarns,2025-05-02,2025-06-06,2025-06-06,1420,27467.46,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00325,SUP008,Services,Communication and Marketing,2025-01-27,2025-02-13,2025-02-13,31,41500,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00326,SUP035,Manufacturing,Outsourcing,2025-04-30,2025-05-31,2025-05-31,25,64205,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00327,SUP001,Goods,"Garments, Components and Trimmings",2025-05-28,2025-07-02,2025-07-02,2636,215673.98,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00328,SUP023,Services,Plant and Machinery Maintenance,2025-08-10,2025-09-03,2025-09-03,18,14881,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00329,SUP050,Services,Personnel (Training and HR Services),2025-12-12,2026-01-03,2026-01-03,38,27549,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00330,SUP021,Transportation,Passenger Transport,2025-10-08,2025-10-15,2025-10-15,54,10906,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00331,SUP044,Fixed Assets,Fixed Assets,2025-08-17,2025-09-15,2025-09-19,2,14050,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00332,SUP041,Services,General Administrative Services,2025-03-04,2025-03-18,2025-03-26,39,19027,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00333,SUP045,Manufacturing,Outsourcing,2025-04-05,2025-04-28,2025-05-03,30,38226,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00334,SUP050,Services,Personnel (Training and HR Services),2025-02-07,2025-03-03,2025-03-03,25,52933,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00335,SUP053,Services,Plant and Machinery Maintenance,2025-05-16,2025-06-03,2025-06-03,32,28302,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00336,SUP010,Manufacturing,General Processing / Manufacturing,2025-10-04,2025-11-07,2025-11-10,42,15926,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00337,SUP050,Services,Personnel (Training and HR Services),2025-08-17,2025-08-25,2025-08-25,10,2113,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00338,SUP045,Manufacturing,Outsourcing,2025-06-18,2025-07-20,2025-07-20,33,66314,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00339,SUP050,Services,Personnel (Training and HR Services),2025-02-05,2025-03-18,2025-03-18,25,65185,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00340,SUP023,Services,Plant and Machinery Maintenance,2025-06-20,2025-07-16,2025-07-16,41,13883,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00341,SUP006,Goods,Yarns,2025-08-24,2025-09-18,2025-09-18,1496,71706.81,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00342,SUP025,Goods,Yarns,2025-02-24,2025-03-25,2025-03-25,3637,229054.52,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00343,SUP038,Services,Facilities Management,2025-05-03,2025-06-10,2025-06-10,51,72851,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00344,SUP052,Manufacturing,Outsourcing,2025-08-19,2025-08-27,2025-09-07,3,55150,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00345,SUP056,Transportation,Freight Transport / Logistics,2025-10-02,2025-10-18,2025-10-18,15,11441,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00346,SUP002,Goods,Fabrics,2025-08-30,2025-09-08,2025-09-08,1119,3351.61,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00347,SUP007,Goods,"Garments, Components and Trimmings",2025-08-22,2025-09-08,2025-09-08,573,40018.88,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00348,SUP040,Services,General Administrative Services,2025-04-23,2025-05-04,2025-05-04,28,46216,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00349,SUP037,Goods,Leathers,2025-10-07,2025-10-22,2025-10-22,1796,117429.23,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00350,SUP045,Manufacturing,Outsourcing,2025-07-09,2025-08-20,2025-08-28,16,7334,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00351,SUP012,Goods,"Garments, Components and Trimmings",2025-02-15,2025-03-31,2025-03-31,3459,205808.75,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00352,SUP041,Services,General Administrative Services,2025-05-19,2025-06-28,2025-06-28,16,24878,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00353,SUP040,Services,General Administrative Services,2025-02-15,2025-03-13,2025-03-13,1,32885,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00354,SUP007,Goods,"Garments, Components and Trimmings",2025-11-13,2025-12-13,2025-12-13,4471,196846.46,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00355,SUP018,Manufacturing,Garment Manufacturing / Confection,2025-01-28,2025-02-16,2025-02-25,59,64182,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00356,SUP017,Goods,Yarns,2025-06-21,2025-07-27,2025-08-07,479,37720.51,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00357,SUP008,Services,Communication and Marketing,2025-02-06,2025-02-28,2025-02-28,38,44725,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00358,SUP021,Transportation,Passenger Transport,2025-04-28,2025-05-12,2025-05-12,7,33079,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00359,SUP015,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-02-07,2025-03-16,2025-03-16,4,59129,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00360,SUP012,Goods,"Garments, Components and Trimmings",2025-07-18,2025-08-17,2025-08-21,2259,42071.49,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00361,SUP008,Services,Communication and Marketing,2025-08-27,2025-10-02,2025-10-02,49,47033,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00362,SUP051,Fixed Assets,Fixed Assets,2025-11-23,2025-12-10,2025-12-10,36,32107,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00363,SUP056,Transportation,Freight Transport / Logistics,2025-04-21,2025-06-04,2025-06-04,30,38591,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00364,SUP016,Fixed Assets,Fixed Assets,2025-05-07,2025-06-03,2025-06-03,15,21525,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00365,SUP003,Services,General Services,2025-08-06,2025-09-15,2025-09-15,52,14844,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00366,SUP027,Manufacturing,Garment Manufacturing / Confection,2025-04-22,2025-05-07,2025-05-07,16,13892,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00367,SUP046,Goods,Chemical Products,2025-08-24,2025-10-06,2025-10-06,249,20676.51,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00368,SUP026,Transportation,Freight Transport / Logistics,2025-04-05,2025-05-05,2025-05-05,46,2178,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00369,SUP034,Services,General Services,2025-01-17,2025-02-11,2025-02-11,18,73098,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00370,SUP033,Manufacturing,Outsourced Fabric and Yarn Processing,2025-12-12,2026-01-11,2026-01-11,8,52194,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00371,SUP046,Goods,Chemical Products,2025-02-04,2025-03-18,2025-03-18,1727,22995.63,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00372,SUP014,Services,Facilities Management,2025-04-26,2025-05-23,2025-05-23,18,68003,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00373,SUP034,Services,General Services,2025-03-04,2025-04-10,2025-04-10,44,71842,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00374,SUP044,Fixed Assets,Fixed Assets,2025-12-21,2026-01-01,2026-01-02,57,62014,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00375,SUP005,Goods,"Garments, Components and Trimmings",2025-02-25,2025-03-14,2025-03-14,1262,54385.32,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00376,SUP019,Manufacturing,General Processing / Manufacturing,2025-08-02,2025-09-12,2025-09-12,31,47442,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00377,SUP019,Manufacturing,General Processing / Manufacturing,2025-04-07,2025-04-18,2025-04-24,34,46024,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00378,SUP043,Manufacturing,Garment Manufacturing / Confection,2025-12-23,2026-02-01,2026-02-01,29,62031,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00379,SUP020,Fixed Assets,Fixed Assets,2025-03-29,2025-04-21,2025-04-21,24,39767,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00380,SUP011,Goods,Yarns,2025-11-13,2025-11-30,2025-11-30,2386,40480.25,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00381,SUP043,Manufacturing,Garment Manufacturing / Confection,2025-03-20,2025-04-06,2025-04-06,3,43500,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00382,SUP014,Services,Facilities Management,2025-10-15,2025-10-24,2025-10-24,23,21391,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00383,SUP035,Manufacturing,Outsourcing,2025-06-04,2025-06-18,2025-06-18,26,67459,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00384,SUP010,Manufacturing,General Processing / Manufacturing,2025-01-03,2025-02-13,2025-02-13,22,40739,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00385,SUP049,Goods,Yarns,2025-10-21,2025-11-06,2025-11-06,3671,110051.24,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00386,SUP009,Manufacturing,Outsourced Fabric and Yarn Processing,2025-12-14,2026-01-25,2026-01-26,2,54642,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00387,SUP039,Fixed Assets,Fixed Assets,2025-11-25,2025-12-14,2025-12-14,15,38428,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00388,SUP006,Goods,Yarns,2025-09-20,2025-10-22,2025-10-26,509,39387.84,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00389,SUP024,Goods,Yarns,2025-01-07,2025-02-01,2025-02-01,2573,213893.4,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00390,SUP048,Goods,Yarns,2025-08-01,2025-09-05,2025-09-16,3522,219843.17,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00391,SUP005,Goods,"Garments, Components and Trimmings",2025-10-30,2025-11-30,2025-12-01,3445,56329.53,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00392,SUP054,Services,Utilities,2025-07-15,2025-08-09,2025-08-09,3,41582,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00393,SUP015,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-01-14,2025-01-21,2025-01-29,20,63936,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00394,SUP032,Goods,Leathers,2025-12-19,2026-01-10,2026-01-16,596,30770.14,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00395,SUP041,Services,General Administrative Services,2025-12-18,2026-01-24,2026-01-24,53,17674,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00396,SUP055,Services,Utilities,2025-05-13,2025-05-30,2025-05-30,10,43901,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00397,SUP027,Manufacturing,Garment Manufacturing / Confection,2025-11-22,2025-12-21,2025-12-22,19,71417,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00398,SUP039,Fixed Assets,Fixed Assets,2025-03-27,2025-05-07,2025-05-07,21,41462,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00399,SUP007,Goods,"Garments, Components and Trimmings",2025-10-01,2025-11-14,2025-11-14,1227,3525.28,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00400,SUP022,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-03-25,2025-04-07,2025-04-08,51,70898,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00401,SUP023,Services,Plant and Machinery Maintenance,2025-06-09,2025-07-09,2025-07-15,29,70566,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00402,SUP055,Services,Utilities,2025-12-22,2026-01-07,2026-01-07,20,18429,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00403,SUP002,Goods,Fabrics,2025-09-05,2025-10-09,2025-10-18,4256,217704.01,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00404,SUP051,Fixed Assets,Fixed Assets,2025-03-05,2025-04-19,2025-04-28,58,28217,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00405,SUP023,Services,Plant and Machinery Maintenance,2025-06-30,2025-07-17,2025-07-17,50,33696,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00406,SUP034,Services,General Services,2025-04-22,2025-05-11,2025-05-11,11,72402,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00407,SUP031,Services,Plant and Machinery Maintenance,2025-07-07,2025-08-20,2025-08-20,44,16067,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00408,SUP028,Services,General Administrative Services,2025-04-20,2025-05-29,2025-06-12,8,63066,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00409,SUP046,Goods,Chemical Products,2025-05-28,2025-07-09,2025-07-09,723,21038.72,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00410,SUP048,Goods,Yarns,2025-06-09,2025-07-14,2025-07-27,3386,87958.23,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00411,SUP052,Manufacturing,Outsourcing,2025-09-01,2025-10-01,2025-10-10,7,53952,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00412,SUP007,Goods,"Garments, Components and Trimmings",2025-03-28,2025-04-08,2025-04-08,1680,50356.58,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00413,SUP047,Fixed Assets,Fixed Assets,2025-09-13,2025-10-07,2025-10-07,50,37779,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00414,SUP026,Transportation,Freight Transport / Logistics,2025-09-06,2025-10-15,2025-10-15,50,61589,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00415,SUP015,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-11-18,2025-12-03,2025-12-07,48,8927,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00416,SUP025,Goods,Yarns,2025-11-06,2025-12-03,2025-12-08,676,38398.09,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00417,SUP032,Goods,Leathers,2025-09-09,2025-10-18,2025-10-22,2864,198042.36,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00418,SUP057,Goods,Leathers,2025-03-02,2025-04-02,2025-04-02,3132,120959.94,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00419,SUP050,Services,Personnel (Training and HR Services),2025-06-05,2025-06-22,2025-06-22,9,42954,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00420,SUP044,Fixed Assets,Fixed Assets,2025-10-04,2025-11-16,2025-11-16,36,22487,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00421,SUP025,Goods,Yarns,2025-11-12,2025-12-11,2025-12-11,2380,67744.72,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00422,SUP002,Goods,Fabrics,2025-11-17,2025-12-15,2025-12-15,3557,108545.06,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00423,SUP020,Fixed Assets,Fixed Assets,2025-10-31,2025-11-12,2025-11-12,5,41965,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00424,SUP056,Transportation,Freight Transport / Logistics,2025-08-05,2025-09-17,2025-09-17,27,36946,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00425,SUP021,Transportation,Passenger Transport,2025-07-13,2025-08-25,2025-08-25,37,14809,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00426,SUP032,Goods,Leathers,2025-09-15,2025-10-13,2025-10-15,1702,73435.14,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00427,SUP004,Goods,Yarns,2025-06-02,2025-07-15,2025-07-15,1900,102152.39,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00428,SUP038,Services,Facilities Management,2025-06-22,2025-07-16,2025-07-31,52,71607,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00429,SUP042,Manufacturing,Garment Manufacturing / Confection,2025-06-04,2025-07-13,2025-07-13,28,72772,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00430,SUP040,Services,General Administrative Services,2025-09-21,2025-10-27,2025-10-27,36,25671,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00431,SUP012,Goods,"Garments, Components and Trimmings",2025-10-23,2025-11-30,2025-12-11,3878,93429.83,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00432,SUP024,Goods,Yarns,2025-08-25,2025-09-10,2025-09-14,2509,180725.65,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00433,SUP055,Services,Utilities,2025-07-31,2025-08-24,2025-08-24,42,23048,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00434,SUP016,Fixed Assets,Fixed Assets,2025-02-28,2025-03-16,2025-03-16,16,42703,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00435,SUP028,Services,General Administrative Services,2025-11-28,2025-12-07,2025-12-12,51,38408,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00436,SUP032,Goods,Leathers,2025-01-11,2025-01-21,2025-01-21,737,20574.74,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00437,SUP027,Manufacturing,Garment Manufacturing / Confection,2025-07-06,2025-07-18,2025-07-18,54,20423,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00438,SUP060,Manufacturing,Outsourced Leather Processing,2025-03-03,2025-04-12,2025-04-12,38,70846,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00439,SUP054,Services,Utilities,2025-10-27,2025-11-27,2025-11-27,48,32924,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00440,SUP027,Manufacturing,Garment Manufacturing / Confection,2025-05-11,2025-06-24,2025-06-30,35,51113,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00441,SUP016,Fixed Assets,Fixed Assets,2025-05-23,2025-06-08,2025-06-08,46,50200,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00442,SUP043,Manufacturing,Garment Manufacturing / Confection,2025-01-28,2025-02-19,2025-02-19,25,42536,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00443,SUP035,Manufacturing,Outsourcing,2025-05-02,2025-06-06,2025-06-06,59,53508,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00444,SUP049,Goods,Yarns,2025-05-01,2025-05-27,2025-06-08,2648,198525.0,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00445,SUP053,Services,Plant and Machinery Maintenance,2025-09-09,2025-10-16,2025-10-16,60,45610,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00446,SUP053,Services,Plant and Machinery Maintenance,2025-03-24,2025-04-16,2025-04-16,23,57164,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00447,SUP041,Services,General Administrative Services,2025-08-16,2025-08-31,2025-09-01,13,42048,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00448,SUP055,Services,Utilities,2025-11-01,2025-12-04,2025-12-04,21,61177,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00449,SUP052,Manufacturing,Outsourcing,2025-05-25,2025-06-13,2025-06-15,25,31423,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00450,SUP030,Manufacturing,Outsourced Leather Processing,2025-04-12,2025-05-05,2025-05-05,11,8525,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00451,SUP010,Manufacturing,General Processing / Manufacturing,2025-02-15,2025-03-17,2025-03-25,37,17381,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00452,SUP060,Manufacturing,Outsourced Leather Processing,2025-08-21,2025-09-28,2025-10-03,56,36891,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00453,SUP053,Services,Plant and Machinery Maintenance,2025-05-25,2025-06-13,2025-06-13,27,21129,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00454,SUP040,Services,General Administrative Services,2025-08-19,2025-09-10,2025-09-10,44,62052,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00455,SUP045,Manufacturing,Outsourcing,2025-07-23,2025-08-12,2025-08-12,46,57481,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00456,SUP039,Fixed Assets,Fixed Assets,2025-12-10,2026-01-24,2026-01-24,52,7965,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00457,SUP020,Fixed Assets,Fixed Assets,2025-07-22,2025-08-21,2025-08-23,58,7390,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00458,SUP057,Goods,Leathers,2025-08-28,2025-09-12,2025-09-16,2183,25150.91,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00459,SUP054,Services,Utilities,2025-05-24,2025-06-23,2025-06-23,19,36500,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00460,SUP011,Goods,Yarns,2025-06-11,2025-07-19,2025-07-19,1289,61913.42,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00461,SUP011,Goods,Yarns,2025-12-28,2026-02-02,2026-02-02,4104,21315.64,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00462,SUP030,Manufacturing,Outsourced Leather Processing,2025-09-10,2025-09-24,2025-09-24,56,21405,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00463,SUP019,Manufacturing,General Processing / Manufacturing,2025-04-03,2025-04-20,2025-04-20,53,37755,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00464,SUP034,Services,General Services,2025-10-20,2025-11-07,2025-11-07,5,34264,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00465,SUP002,Goods,Fabrics,2025-05-26,2025-06-09,2025-06-09,4886,386507.77,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00466,SUP031,Services,Plant and Machinery Maintenance,2025-08-21,2025-09-14,2025-09-14,1,45178,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00467,SUP021,Transportation,Passenger Transport,2025-10-19,2025-11-03,2025-11-04,4,39087,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00468,SUP039,Fixed Assets,Fixed Assets,2025-07-15,2025-07-27,2025-07-27,12,33467,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00469,SUP049,Goods,Yarns,2025-12-01,2025-12-17,2025-12-18,2590,199405.89,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00470,SUP033,Manufacturing,Outsourced Fabric and Yarn Processing,2025-04-13,2025-05-21,2025-05-21,25,64447,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00471,SUP049,Goods,Yarns,2025-08-05,2025-09-04,2025-09-04,3606,195708.79,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00472,SUP044,Fixed Assets,Fixed Assets,2025-04-25,2025-05-11,2025-05-11,34,70770,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00473,SUP059,Goods,Fabrics,2025-09-02,2025-09-28,2025-10-03,1096,64373.47,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00474,SUP004,Goods,Yarns,2025-10-10,2025-10-21,2025-10-21,4255,45762.51,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00475,SUP047,Fixed Assets,Fixed Assets,2025-10-19,2025-11-11,2025-11-11,38,12717,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00476,SUP012,Goods,"Garments, Components and Trimmings",2025-04-04,2025-05-06,2025-05-07,2621,132768.69,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00477,SUP017,Goods,Yarns,2025-06-24,2025-07-12,2025-07-20,690,44127.46,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00478,SUP002,Goods,Fabrics,2025-01-03,2025-02-04,2025-02-10,3368,249509.99,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00479,SUP045,Manufacturing,Outsourcing,2025-12-12,2026-01-13,2026-01-13,6,18395,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00480,SUP045,Manufacturing,Outsourcing,2025-04-07,2025-04-15,2025-04-25,42,21025,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00481,SUP028,Services,General Administrative Services,2025-01-12,2025-01-26,2025-02-03,32,63799,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00482,SUP037,Goods,Leathers,2025-07-20,2025-07-30,2025-07-30,891,48336.84,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00483,SUP048,Goods,Yarns,2025-10-24,2025-12-08,2025-12-08,2432,11867.75,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00484,SUP040,Services,General Administrative Services,2025-12-14,2026-01-21,2026-01-31,4,71246,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00485,SUP018,Manufacturing,Garment Manufacturing / Confection,2025-11-28,2025-12-31,2025-12-31,8,66852,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00486,SUP011,Goods,Yarns,2025-05-28,2025-06-16,2025-06-16,3639,76822.85,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00487,SUP059,Goods,Fabrics,2025-11-05,2025-12-11,2025-12-14,3464,246333.07,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00488,SUP019,Manufacturing,General Processing / Manufacturing,2025-12-20,2026-01-01,2026-01-01,9,24713,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00489,SUP051,Fixed Assets,Fixed Assets,2025-08-01,2025-09-08,2025-09-08,14,74984,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00490,SUP017,Goods,Yarns,2025-07-02,2025-07-19,2025-07-30,4174,18615.64,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00491,SUP008,Services,Communication and Marketing,2025-10-15,2025-11-05,2025-11-05,22,48562,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00492,SUP058,Goods,Yarns,2025-03-19,2025-04-27,2025-04-27,903,54697.32,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00493,SUP049,Goods,Yarns,2025-02-26,2025-03-11,2025-03-11,884,62166.74,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00494,SUP011,Goods,Yarns,2025-05-30,2025-07-04,2025-07-04,4132,259276.05,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00495,SUP053,Services,Plant and Machinery Maintenance,2025-03-12,2025-03-26,2025-03-26,29,56493,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00496,SUP022,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-05-27,2025-07-05,2025-07-10,27,49270,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00497,SUP009,Manufacturing,Outsourced Fabric and Yarn Processing,2025-08-08,2025-09-10,2025-09-10,58,62129,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00498,SUP050,Services,Personnel (Training and HR Services),2025-01-06,2025-02-15,2025-02-15,6,46342,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00499,SUP028,Services,General Administrative Services,2025-02-01,2025-03-05,2025-03-05,43,21785,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00500,SUP052,Manufacturing,Outsourcing,2025-12-05,2026-01-14,2026-01-14,27,54691,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00501,SUP023,Services,Plant and Machinery Maintenance,2025-01-05,2025-01-29,2025-01-29,40,21249,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00502,SUP029,Goods,Fabrics,2025-12-24,2026-01-22,2026-01-22,3363,223011.65,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00503,SUP047,Fixed Assets,Fixed Assets,2025-03-06,2025-04-15,2025-04-15,19,30014,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00504,SUP022,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-11-22,2025-12-09,2025-12-21,57,72770,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00505,SUP033,Manufacturing,Outsourced Fabric and Yarn Processing,2025-02-26,2025-03-08,2025-03-08,17,68518,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00506,SUP008,Services,Communication and Marketing,2025-08-18,2025-09-13,2025-09-13,1,61394,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00507,SUP038,Services,Facilities Management,2025-10-17,2025-11-27,2025-11-27,15,47919,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00508,SUP046,Goods,Chemical Products,2025-10-21,2025-11-05,2025-11-05,4307,272034.54,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00509,SUP053,Services,Plant and Machinery Maintenance,2025-07-04,2025-08-09,2025-08-13,6,14091,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00510,SUP029,Goods,Fabrics,2025-02-09,2025-03-11,2025-03-11,3349,169933.36,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00511,SUP041,Services,General Administrative Services,2025-08-05,2025-09-09,2025-09-09,32,56646,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00512,SUP033,Manufacturing,Outsourced Fabric and Yarn Processing,2025-09-28,2025-10-12,2025-10-12,30,64043,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00513,SUP024,Goods,Yarns,2025-03-02,2025-04-16,2025-04-16,953,11298.85,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00514,SUP019,Manufacturing,General Processing / Manufacturing,2025-09-06,2025-09-14,2025-09-14,10,57280,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00515,SUP019,Manufacturing,General Processing / Manufacturing,2025-04-21,2025-05-09,2025-05-09,32,2273,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00516,SUP020,Fixed Assets,Fixed Assets,2025-10-17,2025-11-21,2025-11-21,51,51454,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00517,SUP009,Manufacturing,Outsourced Fabric and Yarn Processing,2025-03-12,2025-04-20,2025-04-20,49,60973,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00518,SUP006,Goods,Yarns,2025-11-16,2025-12-19,2025-12-19,3289,98685.21,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00519,SUP048,Goods,Yarns,2025-05-23,2025-06-04,2025-06-04,253,12495.66,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00520,SUP035,Manufacturing,Outsourcing,2025-10-23,2025-11-02,2025-11-02,34,26824,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00521,SUP002,Goods,Fabrics,2025-05-21,2025-06-10,2025-06-10,4797,185931.2,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00522,SUP028,Services,General Administrative Services,2025-04-03,2025-05-06,2025-05-07,34,43599,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00523,SUP035,Manufacturing,Outsourcing,2025-03-28,2025-04-22,2025-04-28,20,55382,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00524,SUP021,Transportation,Passenger Transport,2025-03-14,2025-04-16,2025-04-16,17,51219,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00525,SUP038,Services,Facilities Management,2025-05-02,2025-06-09,2025-06-09,33,52469,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00526,SUP036,Goods,Fabrics,2025-07-28,2025-08-08,2025-08-08,3388,184682.03,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00527,SUP044,Fixed Assets,Fixed Assets,2025-02-21,2025-03-15,2025-03-15,42,18458,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00528,SUP055,Services,Utilities,2025-11-22,2025-12-31,2025-12-31,10,50929,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00529,SUP028,Services,General Administrative Services,2025-10-12,2025-11-16,2025-11-23,53,62902,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00530,SUP039,Fixed Assets,Fixed Assets,2025-05-09,2025-06-09,2025-06-09,54,29886,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00531,SUP020,Fixed Assets,Fixed Assets,2025-02-15,2025-03-19,2025-03-19,54,20304,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00532,SUP033,Manufacturing,Outsourced Fabric and Yarn Processing,2025-06-12,2025-07-10,2025-07-10,49,61338,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00533,SUP022,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-04-18,2025-05-24,2025-05-24,22,4080,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00534,SUP012,Goods,"Garments, Components and Trimmings",2025-07-31,2025-09-11,2025-09-11,4055,264536.47,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00535,SUP005,Goods,"Garments, Components and Trimmings",2025-10-03,2025-10-11,2025-10-11,3696,213373.26,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00536,SUP039,Fixed Assets,Fixed Assets,2025-07-03,2025-08-03,2025-08-08,1,18353,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00537,SUP015,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-01-11,2025-02-04,2025-02-04,46,48900,60,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00538,SUP020,Fixed Assets,Fixed Assets,2025-04-24,2025-05-15,2025-05-15,24,6822,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00539,SUP039,Fixed Assets,Fixed Assets,2025-04-18,2025-04-25,2025-04-26,53,53915,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00540,SUP044,Fixed Assets,Fixed Assets,2025-12-16,2026-01-30,2026-01-30,5,18809,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00541,SUP055,Services,Utilities,2025-04-27,2025-06-06,2025-06-06,18,27146,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00542,SUP035,Manufacturing,Outsourcing,2025-11-11,2025-12-04,2025-12-04,57,61497,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00543,SUP042,Manufacturing,Garment Manufacturing / Confection,2025-01-27,2025-02-23,2025-02-23,27,37918,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00544,SUP024,Goods,Yarns,2025-09-22,2025-10-01,2025-10-01,1889,10781.39,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00545,SUP026,Transportation,Freight Transport / Logistics,2025-04-10,2025-05-08,2025-05-12,48,31573,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00546,SUP022,Services,"Analysis and Monitoring (Water, Air, Fumes)",2025-06-09,2025-06-20,2025-06-20,7,5653,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00547,SUP016,Fixed Assets,Fixed Assets,2025-02-25,2025-04-03,2025-04-03,22,9134,90,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00548,SUP005,Goods,"Garments, Components and Trimmings",2025-11-04,2025-12-09,2025-12-09,3707,185228.96,30,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00549,SUP025,Goods,Yarns,2025-06-10,2025-06-21,2025-06-21,557,43596.63,120,EUR,Closed,Synthetic PO records for NL2SQL demo
+PO00550,SUP005,Goods,"Garments, Components and Trimmings",2025-02-22,2025-03-04,2025-03-04,2465,178747.3,120,EUR,Closed,Synthetic PO records for NL2SQL demo

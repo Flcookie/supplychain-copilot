@@ -4,7 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-HTML = ROOT / "SupplyChain_AI产品经理作品集_总览.html"
+HTML = ROOT / "assets" / "portfolio" / "SupplyChain_AI产品经理作品集_总览.html"
 
 DATA_MODEL = r"""
     <section class="section">

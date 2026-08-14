@@ -356,7 +356,23 @@ GROUP BY s.supplier_id, s.supplier_name_anonymized
 
 
 def _defect_rate_by_category(category: str, year: Optional[str]) -> TemplatedSQL:
-    sql = """
+    if year:
+        sql = """
+SELECT s.supplier_id,
+       s.supplier_name_anonymized,
+       ROUND(AVG(q.defect_rate) * 100.0, 2) AS quality_defect_rate_pct,
+       COUNT(q.quality_event_id) AS quality_event_count
+FROM suppliers s
+JOIN quality_events q ON s.supplier_id = q.supplier_id
+WHERE s.category_level_2 = ?
+  AND strftime('%Y', q.event_date) = ?
+GROUP BY s.supplier_id, s.supplier_name_anonymized
+ORDER BY quality_defect_rate_pct DESC
+"""
+        params: tuple = (category, year)
+        desc = f"Quality defect rate for category {category} in {year}"
+    else:
+        sql = """
 SELECT s.supplier_id,
        s.supplier_name_anonymized,
        ROUND(AVG(q.defect_rate) * 100.0, 2) AS quality_defect_rate_pct,
@@ -367,11 +383,13 @@ WHERE s.category_level_2 = ?
 GROUP BY s.supplier_id, s.supplier_name_anonymized
 ORDER BY quality_defect_rate_pct DESC
 """
+        params = (category,)
+        desc = f"Quality defect rate for category {category}"
     return TemplatedSQL(
         template_id="defect_rate_by_category",
         sql=sql.strip(),
-        params=(category,),
-        description=f"Quality defect rate for category {category}",
+        params=params,
+        description=desc,
     )
 
 

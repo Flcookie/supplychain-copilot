@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchDashboard } from "../api/client";
+import { EmbeddedInsight } from "../components/copilot/EmbeddedInsight";
 import { useCopilot } from "../context/CopilotContext";
 import { t } from "../i18n";
-import type { DashboardSummary } from "../types/api";
+import type { ChatMessage, DashboardSummary } from "../types/api";
 import {
   ActionCell,
-  AiPrimaryButton,
   DataTable,
   KpiTableRow,
   ListPanel,
@@ -23,12 +23,29 @@ const EMPTY_KPI = {
   lead_time_target: 0,
 };
 
+function alertSupplierLabel(message: string): string {
+  return message.split("·")[0]?.trim() ?? "";
+}
+
+function buildAlertQuestion(
+  supplierId: string,
+  alertMessage: string,
+  question: string,
+): string {
+  const name = alertSupplierLabel(alertMessage);
+  const who = name ? `${supplierId} (${name})` : supplierId;
+  return `For supplier ${who}, alert: ${alertMessage}\n\n${question}`;
+}
+
 export function HomePage() {
-  const { lang, openWithQuestion } = useCopilot();
+  const { lang, ask, setPageContext } = useCopilot();
   const L = t(lang).home;
   const [data, setData] = useState<DashboardSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [expandedAlertId, setExpandedAlertId] = useState<string | null>(null);
+  const [alertInsights, setAlertInsights] = useState<Record<string, ChatMessage>>({});
+  const [analyzingId, setAnalyzingId] = useState<string | null>(null);
 
   const load = () => {
     setLoading(true);
@@ -43,13 +60,61 @@ export function HomePage() {
     load();
   }, []);
 
+  const analyzeAlert = async (
+    supplierId: string,
+    alertMessage: string,
+    question: string,
+  ) => {
+    const supplierName = alertSupplierLabel(alertMessage);
+    setExpandedAlertId(supplierId);
+    setPageContext((prev) => ({
+      ...prev,
+      page: "home",
+      supplierId,
+      supplierName,
+    }));
+
+    const cached = alertInsights[supplierId];
+    if (cached && !cached.clarificationRequired) return;
+
+    const explicitQuestion = buildAlertQuestion(supplierId, alertMessage, question);
+    setAnalyzingId(supplierId);
+    try {
+      const msg = await ask(explicitQuestion, {
+        fresh: true,
+        contextOverride: { page: "home", supplierId, supplierName },
+      });
+      if (msg) {
+        setAlertInsights((prev) => ({ ...prev, [supplierId]: msg }));
+      }
+    } finally {
+      setAnalyzingId(null);
+    }
+  };
+
+  const replyToAlertClarification = async (supplierId: string, reply: string) => {
+    setAnalyzingId(supplierId);
+    try {
+      const msg = await ask(reply);
+      if (msg) {
+        setAlertInsights((prev) => ({ ...prev, [supplierId]: msg }));
+      }
+    } finally {
+      setAnalyzingId(null);
+    }
+  };
+
   if (loading) return <p className="page-meta">{t(lang).common.loading}</p>;
 
   if (error || !data) {
     return (
       <div>
         <PageHeader title={t(lang).common.error} meta={error ?? undefined} />
-        <ButtonBarRetry onRetry={load} label={t(lang).common.retry} />
+        <div className="btn-bar">
+          <button type="button" className="btn btn-primary" onClick={load}>
+            {t(lang).common.retry}
+          </button>
+        </div>
       </div>
     );
   }
@@ -140,30 +205,61 @@ export function HomePage() {
                 </tr>
               ) : (
                 alerts.map((a) => (
-                  <tr key={a.supplier_id}>
-                    <td className="tabular-nums">{a.supplier_id}</td>
-                    <td style={{ color: "var(--ink-soft)" }}>{a.message}</td>
-                    <td>
-                      <span
-                        className="text-xs font-medium uppercase"
-                        style={severityStyle(a.severity)}
-                      >
-                        {a.severity}
-                      </span>
-                    </td>
-                    <ActionCell>
-                      <Link
-                        to={`/suppliers/${a.supplier_id}`}
-                        className="btn btn-sm btn-ghost"
-                      >
-                        {L.viewDetails}
-                      </Link>
-                      <AiPrimaryButton
-                        label={t(lang).copilot.askAi}
-                        onClick={() => openWithQuestion(a.ask_ai_question)}
-                      />
-                    </ActionCell>
-                  </tr>
+                  <Fragment key={a.supplier_id}>
+                    <tr
+                      className={
+                        expandedAlertId === a.supplier_id ? "row-selected" : undefined
+                      }
+                    >
+                      <td className="tabular-nums">{a.supplier_id}</td>
+                      <td style={{ color: "var(--ink-soft)" }}>{a.message}</td>
+                      <td>
+                        <span
+                          className="text-xs font-medium uppercase"
+                          style={severityStyle(a.severity)}
+                        >
+                          {a.severity}
+                        </span>
+                      </td>
+                      <ActionCell>
+                        <Link
+                          to={`/suppliers/${a.supplier_id}`}
+                          className="btn btn-sm btn-ghost"
+                        >
+                          {L.viewDetails}
+                        </Link>
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-secondary"
+                          disabled={analyzingId === a.supplier_id}
+                          onClick={() => {
+                            void analyzeAlert(a.supplier_id, a.message, a.ask_ai_question);
+                          }}
+                        >
+                          {analyzingId === a.supplier_id
+                            ? t(lang).common.loading
+                            : L.analyze}
+                        </button>
+                      </ActionCell>
+                    </tr>
+                    {expandedAlertId === a.supplier_id ? (
+                      <tr className="row-insight">
+                        <td colSpan={4}>
+                          <EmbeddedInsight
+                            variant="inline"
+                            title={`${a.supplier_id} · ${alertSupplierLabel(a.message)}`}
+                            loading={analyzingId === a.supplier_id}
+                            message={alertInsights[a.supplier_id] ?? null}
+                            lang={lang}
+                            showDebug={false}
+                            onClarifyReply={(reply) => {
+                              void replyToAlertClarification(a.supplier_id, reply);
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    ) : null}
+                  </Fragment>
                 ))
               )}
             </tbody>
@@ -204,16 +300,6 @@ export function HomePage() {
           </DataTable>
         </ListPanel>
       </section>
-    </div>
-  );
-}
-
-function ButtonBarRetry({ onRetry, label }: { onRetry: () => void; label: string }) {
-  return (
-    <div className="btn-bar">
-      <button type="button" className="btn btn-primary" onClick={onRetry}>
-        {label}
-      </button>
     </div>
   );
 }

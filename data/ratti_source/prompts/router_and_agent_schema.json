@@ -1,0 +1,49 @@
+{
+  "router_output_schema": {
+    "intent": [
+      "qualification_checklist",
+      "policy_qa",
+      "kpi_query",
+      "risk_scenario",
+      "vendor_rating_explanation",
+      "supplier_360",
+      "ambiguous",
+      "unsafe_or_overbroad"
+    ],
+    "confidence": "float 0-1",
+    "ambiguity_type": [
+      "missing_supplier_id",
+      "missing_category",
+      "missing_time_range",
+      "missing_metric",
+      "overbroad_data_request",
+      "none"
+    ],
+    "needs_clarification": "boolean",
+    "selected_agent": "string",
+    "required_tools": [
+      "rag_retrieval",
+      "sql_query",
+      "rule_engine"
+    ],
+    "human_approval_required": "boolean"
+  },
+  "tools": [
+    {
+      "tool_name": "rag_retrieval",
+      "purpose": "Retrieve policy chunks from policies_knowledge_base"
+    },
+    {
+      "tool_name": "safe_sql_query",
+      "purpose": "Run read-only SQL on ratti_copilot_demo.db"
+    },
+    {
+      "tool_name": "category_rule_lookup",
+      "purpose": "Retrieve category-specific rules"
+    },
+    {
+      "tool_name": "risk_rule_engine",
+      "purpose": "Map risk signals to recommended actions"
+    }
+  ]
+}

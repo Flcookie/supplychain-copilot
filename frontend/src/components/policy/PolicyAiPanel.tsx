@@ -40,9 +40,9 @@ export function PolicyAiPanel({
                     type="button"
                     disabled={loading}
                     onClick={() => onAsk(q)}
-                    className="btn btn-sm btn-secondary"
-                  >
-                    {t(lang).copilot.askAi}
+              className="btn btn-sm btn-secondary"
+            >
+              {t(lang).policy.askAboutDoc}
                   </button>
                 </ActionCell>
               </tr>
