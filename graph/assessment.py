@@ -10,7 +10,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from core.demo_constants import RATTI_DATA_SNAPSHOT
 from core.evidence import hybrid_evidence
 from core.llm import get_llm
-from core.prompts import SUPPLIER_ASSESSMENT_PROMPT
+from core.prompt_injection import prepare_retrieved_context
 from core.resilience import BM25_ONLY_LIMITATION_EN, BM25_ONLY_LIMITATION_ZH
 from mcp_server.tools import score_supplier_risk_impl
 from rag.retriever import get_retriever
@@ -203,6 +203,8 @@ def assessment_synthesize_node(state: SCState) -> SCState:
     kpi = state.get("assessment_kpi") or {}
     risk = state.get("assessment_risk") or {}
     policy_docs = state.get("assessment_policy_docs") or []
+    prepared_policy = prepare_retrieved_context(policy_docs)
+    policy_docs = prepared_policy["kept"]
 
     citations: list[dict[str, Any]] = []
     for label, block in (
@@ -272,6 +274,10 @@ def assessment_synthesize_node(state: SCState) -> SCState:
         assumptions=["Assessment uses anonymized Ratti demo database."],
         limitations=["Not a formal audit; buyer confirmation required for status changes."],
     )
+    if prepared_policy["limitations"]:
+        extra_lim = list(state["evidence"].get("limitations") or [])
+        extra_lim.extend(prepared_policy["limitations"])
+        state["evidence"]["limitations"] = extra_lim
     if any(d.get("retrieval_degraded") for d in policy_docs):
         extra = BM25_ONLY_LIMITATION_ZH if _zh(state) else BM25_ONLY_LIMITATION_EN
         limitations = list(state["evidence"].get("limitations") or [])

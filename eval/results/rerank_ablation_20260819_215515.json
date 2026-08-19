@@ -1,0 +1,29 @@
+{
+  "mode": "fixture",
+  "samples": 1,
+  "top_k": 5,
+  "noop_recall_at_k": 0.0,
+  "cross_encoder_recall_at_k": 1.0,
+  "details": [
+    {
+      "id": "rrf_pool_esg",
+      "noop_recall_at_k": false,
+      "ce_recall_at_k": true,
+      "noop_top": [
+        "warehouse_sop.txt",
+        "freight_faq.txt",
+        "packaging_spec.txt",
+        "holiday_calendar.txt",
+        "visitor_policy.txt"
+      ],
+      "ce_top": [
+        "esg_scoring_policy.txt",
+        "freight_faq.txt",
+        "warehouse_sop.txt",
+        "packaging_spec.txt",
+        "holiday_calendar.txt"
+      ]
+    }
+  ],
+  "note": "Lexical stand-in for CE on a frozen RRF-shaped pool. Live CE needs --live."
+}

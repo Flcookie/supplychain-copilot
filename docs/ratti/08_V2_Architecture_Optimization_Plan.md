@@ -6,6 +6,8 @@
 
 **本轮已落地（克制版）**：线上指标聚合 + Badcase 导出、Held-out 路由集、KPI Groundedness / HITL Action Safety 规则评测、Pinecone→BM25 部分降级、Assessment Risk 复用 MCP `score_supplier_risk`。Held-out 上生产路径 LLM+override 已跑过：**intent 100% / ambiguity 100%**（`router_eval_20260819_162603.md`），对照纯规则档 70%。**Semantic Router 现在不做**——没有低置信误路由需要第三票。Session Memory、Query Rewrite、`query_supplier_profile` 仍等真实需求。
 
+**续做（仍克制）**：间接注入（检索块 untrusted + 毒 chunk 丢弃）、同池 rerank 夹具、语义 paraphrase 另集 `router_heldout_semantic.json`、KPI 判据接到真实纱线 SQL。真 CE vs embedding 的 live 数字、session_context 仍不做。
+
 ---
 
 ## 一、现状核对表（先纠偏，再规划）

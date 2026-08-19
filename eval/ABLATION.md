@@ -11,7 +11,7 @@ RAG 数字来自已入库的 `eval/results/*.json`。路由 heuristic / override
 | RRF + OpenAI embedding 精排 | 83.33% | 0.761 | 4.15 / 5 | `rag_eval_judged_post_hybrid_20260508_223255.json` |
 | 完整漏斗 + 路由收窄 + 模板 SQL | 100.00% | 0.906 | 4.87 / 5 | `rag_eval_judged_final_20260508_230616.json` |
 
-说明：归档 judged 跑分里的精排是 OpenAI embedding（bi-encoder）。当前默认漏斗是 RRF Top20 → **bge-reranker Cross-Encoder** Top5，由 `tests/test_rerank_funnel.py` 锁住漏斗契约。
+说明：归档 judged 跑分里的精排是 OpenAI embedding（bi-encoder）。当前默认漏斗是 RRF Top20 → **bge-reranker Cross-Encoder** Top5，由 `tests/test_rerank_funnel.py` 锁住漏斗契约。同池 CE vs Noop 夹具见 `eval/run_rerank_ablation.py`（live 对比需 `--live`）。
 
 ## 路由（`ratti_eval_25.json`，25 题）
 
@@ -38,4 +38,14 @@ ambiguity 100%：`overbroad_data_request` / `coreference` 是生产路径上的�
 
 - 检测准确率：**100%**（30 条中英攻防集）
 - 离线复现：`uv run python eval/run_injection_eval.py` 或 `pytest tests/test_prompt_injection.py`
+
+## 间接注入（检索文档，8 条）
+
+- 用户问题保持 benign；chunk 含 ignore-previous / jailbreak 则丢弃，禁止条款（do not export all amounts）不丢。
+- 离线复现：`pytest tests/test_indirect_injection.py`
+
+## Cross-Encoder 同池消融（夹具）
+
+- Noop 在 gold 排在 Top5 之外时 Recall@5=0；CE 式打分把它提到 Top1。
+- 离线复现：`uv run python eval/run_rerank_ablation.py`；真模型对比需 `--live`。
 

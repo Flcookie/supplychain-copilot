@@ -25,10 +25,13 @@ from core.qualification_rules import (
     resolve_response_language,
 )
 from core.prompt_injection import (
+    poisoned_context_refusal,
+    prepare_retrieved_context,
     refusal_message,
     sanitize_answer,
     scan_user_input,
     wrap_question_for_prompt,
+    wrap_retrieved_context,
 )
 from core.prompts import (
     HYBRID_AGGREGATE_PROMPT,
@@ -385,28 +388,44 @@ def clarification_node(state: SCState) -> SCState:
 
 def rag_fallback_node(state: SCState) -> SCState:
     q = state["question"]
+    lang = state.get("response_language") or "en"
     docs = get_retriever().invoke(q)
+    prepared = prepare_retrieved_context(docs)
+    docs = prepared["kept"]
+    if prepared["all_poisoned"]:
+        state["injection_blocked"] = True
+        state["answer"] = poisoned_context_refusal(lang)
+        state["retrieved_docs"] = []
+        state["citations"] = []
+        state["evidence"] = {
+            "type": "hybrid",
+            "limitations": prepared["limitations"] or ["Retrieved context was excluded as indirect injection."],
+        }
+        return state
     state["retrieved_docs"] = [
         {"content": d.page_content, "source": d.metadata.get("source_name") or d.metadata.get("source", "")}
         for d in docs
     ]
     state["citations"] = _build_doc_citations(docs)
+    limitations = [
+        "The answer may be incomplete if the retrieved documents do not cover the requested KPI or scenario.",
+        *prepared["limitations"],
+    ]
     state["evidence"] = document_evidence(
         docs,
         evidence_type="hybrid",
         assumptions=["Router confidence was below threshold, so policy context was used as a cautious fallback."],
-        limitations=["The answer may be incomplete if the retrieved documents do not cover the requested KPI or scenario."],
+        limitations=limitations,
     )
     if _docs_are_degraded(docs):
-        limitations = list(state["evidence"].get("limitations") or [])
-        limitations.append(_retrieval_limitation(state))
-        state["evidence"]["limitations"] = limitations
-    context = "\n\n".join(d.page_content for d in docs)
+        extra = list(state["evidence"].get("limitations") or [])
+        extra.append(_retrieval_limitation(state))
+        state["evidence"]["limitations"] = extra
     prompt = ChatPromptTemplate.from_template(RAG_FALLBACK_PROMPT)
     resp = get_llm().invoke(
         prompt.format(
-            question=q,
-            context=context,
+            question=wrap_question_for_prompt(q),
+            context=prepared["context"],
             response_language_instruction=_response_language_instruction(state),
         )
     )
@@ -457,7 +476,6 @@ def policy_qa_node(state: SCState) -> SCState:
     if not isinstance(payload, dict):
         payload = {}
     documents = payload.get("documents") or []
-    context = payload.get("context") or ""
 
     # Adapt MCP JSON docs into the lightweight Document-like objects evidence helpers expect.
     class _Doc:
@@ -473,12 +491,27 @@ def policy_qa_node(state: SCState) -> SCState:
             }
 
     docs = [_Doc(item) for item in documents if isinstance(item, dict)]
+    prepared = prepare_retrieved_context(docs)
+    docs = prepared["kept"]
+    if prepared["all_poisoned"]:
+        state["injection_blocked"] = True
+        state["answer"] = poisoned_context_refusal(lang)
+        state["retrieved_docs"] = []
+        state["citations"] = []
+        state["evidence"] = {
+            "type": "document",
+            "limitations": prepared["limitations"] or ["Retrieved context was excluded as indirect injection."],
+            "assumptions": [],
+        }
+        return state
+
     state["retrieved_docs"] = [
         {"content": d.page_content, "source": d.metadata.get("source_name") or d.metadata.get("source", "")}
         for d in docs
     ]
     state["citations"] = _build_doc_citations(docs)
     limitations = ["Policy answers are limited to retrieved demo documents (via MCP query_policy)."]
+    limitations.extend(prepared["limitations"])
     degraded = bool(payload.get("retrieval_degraded")) or _docs_are_degraded(docs)
     if degraded:
         limitations.append(_retrieval_limitation(state))
@@ -487,13 +520,11 @@ def policy_qa_node(state: SCState) -> SCState:
         evidence_type="document",
         limitations=limitations,
     )
-    if not context:
-        context = "\n\n".join(d.page_content for d in docs)
     prompt = ChatPromptTemplate.from_template(POLICY_QA_PROMPT)
     resp = get_llm().invoke(
         prompt.format(
             question=wrap_question_for_prompt(q),
-            context=context,
+            context=prepared["context"],
             response_language_instruction=_response_language_instruction(state),
         )
     )
@@ -859,7 +890,24 @@ def hybrid_policy_branch(state: SCState) -> dict:
         return {}
 
     q = state["question"]
+    lang = state.get("response_language") or "en"
     policy_docs = _policy_retriever().invoke(q)
+    prepared = prepare_retrieved_context(policy_docs)
+    if prepared["all_poisoned"]:
+        refusal = poisoned_context_refusal(lang)
+        return {
+            "injection_blocked": True,
+            "policy_partial_answer": refusal,
+            "answer": refusal,
+            "retrieved_docs": [],
+            "citations": [],
+            "evidence": {
+                "type": "hybrid",
+                "limitations": prepared["limitations"]
+                or ["Retrieved context was excluded as indirect injection."],
+            },
+        }
+    policy_docs = prepared["kept"]
     docs_meta = [
         {
             "content": d.page_content,
@@ -867,12 +915,11 @@ def hybrid_policy_branch(state: SCState) -> dict:
         }
         for d in policy_docs
     ]
-    context = "\n\n".join(d.page_content for d in policy_docs)
     prompt = ChatPromptTemplate.from_template(HYBRID_POLICY_PARTIAL_PROMPT)
     resp = get_llm().invoke(
         prompt.format(
             question=wrap_question_for_prompt(q),
-            context=context,
+            context=prepared["context"],
             response_language_instruction=_response_language_instruction(state),
         )
     )
@@ -1103,6 +1150,19 @@ def hybrid_node(state: SCState) -> SCState:
         _push(d)
     for d in policy_docs[4:]:
         _push(d)
+    prepared = prepare_retrieved_context(docs)
+    if prepared["all_poisoned"]:
+        state["injection_blocked"] = True
+        state["answer"] = poisoned_context_refusal(state.get("response_language") or "en")
+        state["retrieved_docs"] = []
+        state["citations"] = []
+        state["evidence"] = {
+            "type": "hybrid",
+            "limitations": prepared["limitations"]
+            or ["Retrieved context was excluded as indirect injection."],
+        }
+        return state
+    docs = prepared["kept"]
     state["retrieved_docs"] = [
         {"content": d.page_content, "source": d.metadata.get("source_name") or d.metadata.get("source", "")}
         for d in docs
@@ -1195,7 +1255,7 @@ def hybrid_node(state: SCState) -> SCState:
         ],
     )
 
-    policy_context = "\n\n".join(d.page_content for d in docs)
+    policy_context = wrap_retrieved_context("\n\n".join(d.page_content for d in docs))
     prompt = ChatPromptTemplate.from_template(HYBRID_QA_PROMPT)
     resp = get_llm().invoke(
         prompt.format(
@@ -1439,17 +1499,29 @@ def vendor_rating_node(state: SCState) -> SCState:
     # Formula-only questions: use policy RAG context via retriever
     if supplier_id is None and ("formula" in q.lower() or "weight" in q.lower()):
         docs = _policy_retriever().invoke(q)
+        prepared = prepare_retrieved_context(docs)
+        docs = prepared["kept"]
+        if prepared["all_poisoned"]:
+            state["injection_blocked"] = True
+            state["answer"] = poisoned_context_refusal(state.get("response_language") or "en")
+            state["retrieved_docs"] = []
+            state["citations"] = []
+            state["evidence"] = {
+                "type": "document",
+                "limitations": prepared["limitations"]
+                or ["Retrieved context was excluded as indirect injection."],
+            }
+            return state
         state["retrieved_docs"] = [
             {"content": d.page_content, "source": d.metadata.get("source_name") or d.metadata.get("source", "")}
             for d in docs
         ]
         state["citations"] = _build_doc_citations(docs)
-        context = "\n\n".join(d.page_content for d in docs)
         prompt = ChatPromptTemplate.from_template(POLICY_QA_PROMPT)
         resp = get_llm().invoke(
             prompt.format(
-                question=q,
-                context=context,
+                question=wrap_question_for_prompt(q),
+                context=prepared["context"],
                 response_language_instruction=_response_language_instruction(state),
             )
         )

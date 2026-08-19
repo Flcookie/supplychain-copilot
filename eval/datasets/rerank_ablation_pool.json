@@ -1,0 +1,21 @@
+{
+  "note": "Same candidate pool, different rankers. Gold doc starts outside Top5 so Noop misses Recall@5.",
+  "top_k": 5,
+  "cases": [
+    {
+      "id": "rrf_pool_esg",
+      "question": "How is ESG score calculated?",
+      "expected_sources": ["esg_scoring_policy.txt"],
+      "pool": [
+        {"source": "warehouse_sop.txt", "content": "Pallet labeling and inbound dock hours."},
+        {"source": "freight_faq.txt", "content": "Standard lead time for ocean freight is 28 days."},
+        {"source": "packaging_spec.txt", "content": "Carton burst strength and tape color codes."},
+        {"source": "holiday_calendar.txt", "content": "Plant shutdowns around Chinese New Year."},
+        {"source": "visitor_policy.txt", "content": "Contractors must sign in at reception."},
+        {"source": "it_password.txt", "content": "Rotate VPN tokens every 90 days."},
+        {"source": "esg_scoring_policy.txt", "content": "ESG score is calculated from environmental, social and governance evidence with a 60-point cap when certificates are missing."},
+        {"source": "cafeteria_menu.txt", "content": "Weekly canteen rotation for the Milan office."}
+      ]
+    }
+  ]
+}

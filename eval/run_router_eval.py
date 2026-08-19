@@ -33,6 +33,7 @@ def _has_keyword(text: str, keyword: str) -> bool:
 
 DEFAULT_DATASET = os.path.join(ROOT_DIR, "eval", "datasets", "ratti_eval_25.json")
 HELDOUT_DATASET = os.path.join(ROOT_DIR, "eval", "datasets", "router_heldout.json")
+HELDOUT_SEMANTIC_DATASET = os.path.join(ROOT_DIR, "eval", "datasets", "router_heldout_semantic.json")
 LEGACY_DATASET = os.path.join(ROOT_DIR, "eval", "datasets", "router_eval.json")
 RESULT_DIR = os.path.join(ROOT_DIR, "eval", "results")
 
@@ -250,6 +251,11 @@ def main():
         help="Shortcut for --dataset eval/datasets/router_heldout.json",
     )
     parser.add_argument(
+        "--heldout-semantic",
+        action="store_true",
+        help="Shortcut for --dataset eval/datasets/router_heldout_semantic.json (004/005/010 paraphrases)",
+    )
+    parser.add_argument(
         "--mode",
         choices=["heuristic", "override", "llm", "llm+override"],
         default="heuristic",
@@ -259,7 +265,12 @@ def main():
         ),
     )
     args = parser.parse_args()
-    dataset_path = HELDOUT_DATASET if args.heldout else args.dataset
+    if args.heldout_semantic:
+        dataset_path = HELDOUT_SEMANTIC_DATASET
+    elif args.heldout:
+        dataset_path = HELDOUT_DATASET
+    else:
+        dataset_path = args.dataset
     mode = "llm" if args.mode == "llm+override" else args.mode
 
     with open(dataset_path, "r", encoding="utf-8") as f:

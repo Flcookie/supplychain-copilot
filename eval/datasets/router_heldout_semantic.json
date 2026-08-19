@@ -1,0 +1,56 @@
+[
+  {
+    "id": "SEM001",
+    "question": "What's behind SUP012's C grade?",
+    "expected_intent": "vendor_rating_explanation",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "SEM002",
+    "question": "Explain SUP012's C-class score.",
+    "expected_intent": "vendor_rating_explanation",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "SEM003",
+    "question": "Why did SUP012 land in the C band?",
+    "expected_intent": "vendor_rating_explanation",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "SEM004",
+    "question": "How do you compute the ESG score?",
+    "expected_intent": "policy_qa",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "SEM005",
+    "question": "What's the ESG scoring method?",
+    "expected_intent": "policy_qa",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "SEM006",
+    "question": "Break down how ESG scores are derived.",
+    "expected_intent": "policy_qa",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "SEM007",
+    "question": "Which certificates expire in the next 60 days?",
+    "expected_intent": "kpi_query",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "SEM008",
+    "question": "Any vendor certs running out within two months?",
+    "expected_intent": "kpi_query",
+    "expected_ambiguity_type": null
+  },
+  {
+    "id": "SEM009",
+    "question": "Which qualifications lapse in 60 days?",
+    "expected_intent": "kpi_query",
+    "expected_ambiguity_type": null
+  }
+]

@@ -3,14 +3,15 @@
 Defense-in-depth:
 1. Input pattern scan (instruction override / role hijack / data exfil)
 2. Hardened system prompt rules (see POLICY_QA_PROMPT)
-3. Output-side sensitive-field filter as last resort
+3. Retrieved-document isolation: wrap as untrusted + drop instruction-hijack chunks
+4. Output-side sensitive-field filter as last resort
 """
 
 from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import Literal
+from typing import Any, Literal
 
 Severity = Literal["high", "medium", "low"]
 AttackType = Literal[
@@ -168,6 +169,23 @@ _REFUSAL_ZH = (
     "请改问具体政策问题（例如准入步骤、ESG 计分规则、或复审周期）。"
 )
 
+_POISONED_CONTEXT_EN = (
+    "Retrieved policy documents contained instruction-like content and were excluded. "
+    "I cannot answer from poisoned context. Re-ask a specific policy question, "
+    "or verify the document corpus."
+)
+
+_POISONED_CONTEXT_ZH = (
+    "检索到的政策文档含有指令式内容，已全部排除，无法基于被污染的上下文作答。"
+    "请改问具体政策问题，或检查文档语料是否被篡改。"
+)
+
+# Indirect injection = instruction hijack hidden in retrieved text.
+# Do NOT drop data_exfil-only language: real policies often say "do not export all amounts".
+_INDIRECT_ATTACK_TYPES = frozenset(
+    {"instruction_override", "role_hijack", "jailbreak", "system_prompt_leak"}
+)
+
 
 def scan_user_input(text: str) -> InjectionScanResult:
     """Scan user text for common prompt-injection / jailbreak patterns."""
@@ -241,3 +259,63 @@ def wrap_question_for_prompt(question: str) -> str:
         f"{question}\n"
         "<<<END_USER_QUESTION_UNTRUSTED>>>"
     )
+
+
+def wrap_retrieved_context(context: str) -> str:
+    """Mark retrieved chunks as untrusted data, never as executable instructions."""
+    body = (context or "").strip() or "(no retrieved documents)"
+    return (
+        "<<<RETRIEVED_DOCUMENT_UNTRUSTED>>>\n"
+        f"{body}\n"
+        "<<<END_RETRIEVED_DOCUMENT_UNTRUSTED>>>"
+    )
+
+
+def doc_text(doc: Any) -> str:
+    if hasattr(doc, "page_content"):
+        return getattr(doc, "page_content") or ""
+    if isinstance(doc, dict):
+        return doc.get("content") or doc.get("page_content") or ""
+    return str(doc or "")
+
+
+def is_indirect_injection(text: str) -> bool:
+    """True when retrieved text tries to hijack the model (not ordinary dump wording)."""
+    scan = scan_user_input(text)
+    return any(
+        hit.severity == "high" and hit.attack_type in _INDIRECT_ATTACK_TYPES for hit in scan.hits
+    )
+
+
+def split_poisoned_docs(docs: list[Any]) -> tuple[list[Any], list[Any]]:
+    """Keep evidence chunks; drop those that look like instruction hijacks."""
+    kept: list[Any] = []
+    dropped: list[Any] = []
+    for doc in docs or []:
+        if is_indirect_injection(doc_text(doc)):
+            dropped.append(doc)
+        else:
+            kept.append(doc)
+    return kept, dropped
+
+
+def prepare_retrieved_context(docs: list[Any]) -> dict[str, Any]:
+    """Filter poisoned chunks and wrap the remainder for the generator prompt."""
+    kept, dropped = split_poisoned_docs(docs)
+    joined = "\n\n".join(doc_text(doc) for doc in kept)
+    limitations: list[str] = []
+    if dropped:
+        limitations.append(
+            f"Dropped {len(dropped)} retrieved chunk(s) that contained instruction-like injection."
+        )
+    return {
+        "kept": kept,
+        "dropped": dropped,
+        "context": wrap_retrieved_context(joined),
+        "all_poisoned": bool(docs) and not kept,
+        "limitations": limitations,
+    }
+
+
+def poisoned_context_refusal(lang: str | None = "en") -> str:
+    return _POISONED_CONTEXT_ZH if (lang or "en").lower().startswith("zh") else _POISONED_CONTEXT_EN

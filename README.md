@@ -209,7 +209,7 @@ scripts/                作品集 HTML 一次性生成脚本
 | RAG Recall@5 | 33.3% → 56.7% → 83.3% → **100%** | 冻结产物 `eval/results/rag_eval_*.json` |
 | RAG MRR | 0.32 → 0.54 → 0.76 → **0.91** | 同上 |
 | 路由 intent | keyword **24%** → heuristic **60%** → override **76%** → LLM+override **100%** | `uv run python -m eval.run_router_eval --mode override`；25 题 LLM 档见归档 JSON。Held-out：override intent 70% / ambiguity **100%**；LLM+override 100%（`--heldout --mode llm+override`） |
-| 注入检测 | **30/30 = 100%** | `pytest tests/test_prompt_injection.py` |
+| 注入检测 | **30/30 直接 + 8 条间接 chunk drop** | `pytest tests/test_prompt_injection.py tests/test_indirect_injection.py` |
 
 完整表与产物路径：[`eval/ABLATION.md`](eval/ABLATION.md)（`uv run python eval/ablation.py` 重生成）。
 
@@ -224,6 +224,8 @@ uv run python eval/run_injection_eval.py
 uv run python -m eval.run_router_eval --mode override
 uv run python -m eval.run_router_eval --heldout --mode override
 uv run python -m eval.run_e2e_eval
+uv run python eval/run_rerank_ablation.py
+uv run python -m eval.run_router_eval --heldout-semantic --mode override
 
 # 需要 LLM / Pinecone
 uv run python -m eval.run_router_eval --mode llm

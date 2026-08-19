@@ -10,7 +10,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 from core.evidence import document_evidence, hybrid_evidence
 from core.llm import get_llm
-from core.prompts import POLICY_QA_PROMPT, REVIEW_PROMPT
+from core.prompt_injection import prepare_retrieved_context, wrap_question_for_prompt
 from rag.retriever import get_retriever
 
 from .state import SCState
@@ -291,7 +291,8 @@ def evidence_boost_node(state: SCState) -> SCState:
     state["citations"] = prior + citations
 
     if intent in {"policy_qa", "hybrid_query", "supplier_assessment"} and docs:
-        context = "\n\n".join(d.page_content for d in docs[:6])
+        prepared = prepare_retrieved_context(docs)
+        docs = prepared["kept"] or docs
         lang_instruction = (
             "请用中文回答。" if zh else "Answer in English."
         )
@@ -304,8 +305,8 @@ def evidence_boost_node(state: SCState) -> SCState:
         )
         resp = get_llm().invoke(
             prompt.format(
-                question=boosted_q,
-                context=context,
+                question=wrap_question_for_prompt(boosted_q),
+                context=prepared["context"],
                 response_language_instruction=lang_instruction,
             )
         )

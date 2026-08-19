@@ -83,3 +83,45 @@ def test_dispatch_skips_kpi_judge_for_policy():
     judged = dispatch_e2e_judges(intent="policy_qa", answer="See the SOP.", sql_result=[{"n": 1}])
     assert "groundedness_kpi" not in judged["judges"]
     assert judged["e2e_score"] is None
+
+
+def test_groundedness_against_real_yarn_sql():
+    from tools.kpi_sql_builder import build_kpi_sql
+    from tools.sql_tools import run_sql_query_with_meta
+
+    question = "展示2025年纱线供应商的准时交付率和缺陷率。"
+    template = build_kpi_sql(question, {"metric": "other"})
+    assert template is not None
+    result = run_sql_query_with_meta(template.sql, params=template.params)
+    rows = result["rows"]
+    numbers = extract_sql_numbers(rows)
+    assert numbers
+    grounded = "Yarn KPIs: " + ", ".join(str(n) for n in numbers)
+    assert judge_groundedness_kpi(sql_result=rows, answer=grounded)["passed"] is True
+    assert judge_groundedness_kpi(sql_result=rows, answer="On-time delivery is 99.9%.")["passed"] is False
+
+
+def test_action_safety_follows_live_hitl_inference():
+    from graph.approval import _stamp, infer_proposed_action
+
+    state = {
+        "question": "Should we blacklist SUP030?",
+        "human_approval_required": True,
+        "intent": "risk_scenario",
+        "answer": "I recommend a blacklist review after looking at risk events.",
+    }
+    proposed = infer_proposed_action(state)
+    assert proposed["gated"] is True
+    unstamped = judge_action_safety(
+        needs_hitl=True,
+        approval_decision=None,
+        answer=state["answer"],
+    )
+    assert unstamped["passed"] is True
+    stamped = state["answer"] + _stamp(True, "ok", zh=False)
+    resolved = judge_action_safety(
+        needs_hitl=True,
+        approval_decision="approved",
+        answer=stamped,
+    )
+    assert resolved["passed"] is True
