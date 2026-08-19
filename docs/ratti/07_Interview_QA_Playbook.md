@@ -91,7 +91,8 @@ router_node（LLM 结构化输出 + 确定性 override）
 | RAG Recall@5：单路向量 → +BM25/RRF → +精排(OpenAI embedding) → 完整漏斗(路由收窄+模板SQL) | 33.33% → 56.67% → 83.33% → **100%** | **高**——冻结产物 `eval/results/rag_eval_*.json`，`eval/ABLATION.md` 可离线复现（`uv run python eval/ablation.py`） |
 | RAG MRR（同一消融序列） | 0.317 → 0.539 → 0.761 → **0.906** | 同上，同一产物文件 |
 | RAG Faithfulness（LLM judge，仅后两档有记录） | 4.15/5 → **4.87/5** | **中**——依赖 LLM judge 主观打分，非人工标注；产物 `rag_eval_judged_*.json` |
-| 路由 Intent Accuracy（25 题评测集 `ratti_eval_25.json`） | keyword baseline 24% → heuristic 48% → heuristic+确定性override 64% → LLM+override **100%** | **高**（前三档）——`uv run python -m eval.run_router_eval --mode override` 离线复现，不需要 API Key；**中**（LLM+override 100%）——归档快照 `router_eval_20260524_111249.json`，重跑该档需要真实 LLM 调用，结果可能因模型版本漂移 |
+| 路由 Intent Accuracy（25 题评测集 `ratti_eval_25.json`） | keyword baseline 24% → heuristic **60%** → heuristic+确定性override **76%** → LLM+override **100%** | **高**（前三档）——`uv run python -m eval.run_router_eval --mode override` 离线复现；产物 `router_eval_20260819_162636.md`（override 76%）、`router_eval_20260819_162716.md`（heuristic 60%）。旧口径 48%/64% 是 `if` 子串误命中 `certificate`/`qualification` 修掉之前的数。**中**（LLM+override 100%）——归档 `router_eval_20260524_111249.json` |
+| 路由 Held-out（10 条 paraphrase，`router_heldout.json`） | override-only **intent 70% / ambiguity 100%**；LLM+override **intent 100% / ambiguity 100%** | **高**（override）离线可复现 `router_eval_20260819_165517.md`；**中**（LLM 档）快照 `router_eval_20260819_162603.md`，10 次 API 调用，模型版本可能漂移。这组数字用来回答「要不要上 Semantic Router」——生产路径已经接住规则层的语义 miss；007/009 的 gate 已在规则档补上 |
 | Prompt Injection 检测准确率 | **30/30 = 100%**（中英文攻防集） | **高**——`pytest tests/test_prompt_injection.py`，规则化正则匹配，确定性可复现 |
 | 检索融合参数 | RRF_K=60；向量/BM25 各召回 Top30；RRF 后 Top20 精排；精排后 Top5 进生成 | **高**——直接读自 `rag/hybrid_retriever.py` / `core/config.py` 默认值 |
 | 语义缓存参数 | 相似度阈值 0.92；TTL 3600s；最多 256 条；按 `response_language` 分桶 | **高**——`core/semantic_cache.py` 源码 |
@@ -102,8 +103,8 @@ router_node（LLM 结构化输出 + 确定性 override）
 
 ### 遇到的技术挑战及解决方案
 
-1. **挑战：路由准确率天花板**——纯关键词匹配只有 24%，纯 heuristic 生命周期规则也只有 48%，天花板明显。
-   解决：LLM 输出结构化 JSON（intent/confidence/ambiguity/human_approval_required/reason）打上限，再叠加**确定性 override**（`core/router_overrides.py`）兜底常见的中文/英文高信号短语（比如"完整评估"→`supplier_assessment`，"黑名单"→`risk_scenario`+`human_approval_required`）——64%→100% 的跃升主要来自 LLM 结构化输出，override 负责把"规则能确定"的问题锁死，避免 LLM 偶发抖动。
+1. **挑战：路由准确率天花板**——纯关键词匹配只有 24%，heuristic 生命周期规则现在是 60%（修掉 `if`⊂`certificate` 误命中之前是 48%），天花板仍明显。
+   解决：LLM 输出结构化 JSON（intent/confidence/ambiguity/human_approval_required/reason）打上限，再叠加**确定性 override**（`core/router_overrides.py`）兜底常见的中文/英文高信号短语（比如"完整评估"→`supplier_assessment`，"黑名单"→`risk_scenario`+`human_approval_required`）——离线 override 76%→LLM+override 100% 的跃升主要来自 LLM 结构化输出，override 负责把"规则能确定"的问题锁死，避免 LLM 偶发抖动。
 
 2. **挑战：复合问题（政策+KPI 混在一起问）被单一意图路由吞掉**——比如"战略纱线供应商的监控政策是什么？2025 平均准时率如何？"曾经被 KPI override 直接抢走，答案只回答了 KPI 部分，政策部分被静默丢弃。
    解决：在 `router_overrides.py` 里把 `hybrid_query` 的判定**提到 yarn-KPI override 之前**，用 `policy_signal and kpi_signal` 双信号触发，确保复合意图先于单一 KPI 规则命中；再在图里做 `hybrid_dispatch → (hybrid_policy ∥ hybrid_kpi) → hybrid_aggregate` 真正的 fan-out/join，而不是顺序拼接两次调用。
@@ -160,7 +161,7 @@ router_node（LLM 结构化输出 + 确定性 override）
 **要点提示**：语气转为总结陈述，语速放慢，每个要点之间用手指数一样的停顿感，帮面试官在脑子里建立"这几个点是并列的"这个结构。这一段是给面试官"抓重点"用的，信息密度要高，但不要展开。
 
 **具体话术**：
-> "如果要归纳成几个关键点：第一，路由不是单跳分类，是 LLM 结构化输出加确定性规则 override 的组合，在 25 题评测集上从 24% 做到了 100%；第二，检索是双路召回加 RRF 加 Cross-Encoder 的工业漏斗，Recall@5 从 33% 做到了 100%；第三，高风险动作走 interrupt 加 checkpoint 的一次性人工审批，不是无限自主循环的 AutoGPT 模式；第四，Prompt Injection 防御在 30 条中英攻防集上做到了 100% 拦截。V2 我没有继续堆 Agent，而是补了线上指标、Held-out 回归、KPI/HITL 规则评测，以及 Pinecone 故障时的 BM25 降级。"
+> "如果要归纳成几个关键点：第一，路由不是单跳分类，是 LLM 结构化输出加确定性规则 override 的组合，在 25 题评测集上从 24% 做到了 100%，Held-out 10 条 paraphrase 上生产路径（LLM+override）也是 100%、纯规则档只有 70%；第二，检索是双路召回加 RRF 加 Cross-Encoder 的工业漏斗，Recall@5 从 33% 做到了 100%；第三，高风险动作走 interrupt 加 checkpoint 的一次性人工审批，不是无限自主循环的 AutoGPT 模式；第四，Prompt Injection 防御在 30 条中英攻防集上做到了 100% 拦截。V2 我没有继续堆 Agent，而是补了线上指标、Held-out 回归、KPI/HITL 规则评测，以及 Pinecone 故障时的 BM25 降级——看过 LLM 档数字之后，Semantic Router 现在没有必要。"
 
 ### 第四段：价值兜售（约 20 秒）
 
@@ -268,26 +269,36 @@ router_node（LLM 结构化输出 + 确定性 override）
 
 ---
 
-#### Q5. 路由准确率 24%→48%→64%→100% 这组量化收益怎么算的？
+#### Q5. 路由准确率 24%→60%→76%→100% 这组量化收益怎么算的？
 
 **对比分析**（这里的"对比"是四个消融档位之间的对比，而不是外部方案）：
 
 | 档位 | 做法 | 数字 | 为什么比上一档好 |
 |---|---|---|---|
 | Keyword baseline | 纯关键词匹配分类 | 24% | 基线，几乎不理解语义和上下文 |
-| Heuristic lifecycle | 加了生命周期规则（比如识别"准入""KPI"等关键词模式，但不是 LLM） | 48% | 覆盖了更多显式模式，但碰到中文口语化表达、复合意图就不行了 |
-| Heuristic + 确定性 override | 在 heuristic 基础上叠加 `router_overrides.py` 里的规则（中文关键词、供应商ID存在性判断） | 64% | 规则更精细，但**没有 LLM 参与，天花板就是规则能覆盖的范围** |
-| **LLM 结构化输出 + override（当前默认）** | Router 先用 LLM 输出 JSON（intent/confidence/ambiguity_type/human_approval_required/reason），再叠加同一套确定性 override 兜底 | **100%** | LLM 把语义理解的上限打满，override 负责把"规则能 100% 确定"的情况锁死，避免 LLM 在少数样本上的抖动 |
+| Heuristic lifecycle | 加了生命周期规则（比如识别"准入""KPI"等关键词模式，但不是 LLM） | **60%** | 覆盖了更多显式模式；`if` 改为词边界匹配后，不再把 `certificate`/`qualification` 误判成 what-if。旧口径 48% 是修 bug 之前的数 |
+| Heuristic + 确定性 override | 在 heuristic 基础上叠加 `router_overrides.py` 里的规则（中文关键词、供应商ID存在性判断） | **76%** | 规则更精细，但**没有 LLM 参与，天花板就是规则能覆盖的范围**。旧口径 64%，同样是子串 bug 修掉后抬上来的，不是新加 override 规则 |
+| **LLM 结构化输出 + override（当前默认 / 生产路径）** | Router 先用 LLM 输出 JSON，再叠加同一套确定性 override | **100%**（25 题归档） | LLM 把语义理解的上限打满，override 负责把"规则能 100% 确定"的情况锁死 |
+
+**Held-out（独立 10 条 paraphrase，不进原来 25 题）**：
+
+| 档位 | Intent | Ambiguity | 产物 |
+|---|---|---|---|
+| override-only | 70% | **100%** | `router_eval_20260819_165517.md` |
+| **LLM+override（生产路径）** | **100%** | **100%** | `router_eval_20260819_162603.md` |
+
+规则档 intent 70% 的 miss 只剩语义 paraphrase（`rated C` vs `C rating`、ESG methodology、certificates/lapse）——没有为这三条加 override。007 的 `overbroad_data_request` 和 009 的 `them` coreference 是安全/澄清 gate 缺口，已经补进 `core/router_overrides.py` 的生产路径（LLM 漏标时规则仍拦），held-out 规则档 ambiguity 从 80% 到 100%。`certificates` 里的 `if` 子串误命中已经当 **matcher bug** 修掉（词边界），没有为此加 override。修完后 010 在 override 档从错误的 `risk_scenario` 变成 `policy_qa`（规则仍不懂 "lapse"=expire），LLM 档正确到 `kpi_query`。
 
 **决定性原因**：
-1. **规则兜底负责抬下限，LLM 结构化输出负责打上限**——这是回答"为什么不只用 LLM"或"为什么不只用规则"的核心逻辑：纯 LLM 路由在语义模糊或者中文口语化表达上偶尔会抖动，纯规则又覆盖不了语义泛化，两者叠加互补。
-2. **评测集是固定的 25 题**（`eval/datasets/ratti_eval_25.json`），四档跑的是同一批题，保证对比公平，不是"挑软柿子捏"。
-3. **前三档可以完全离线复现**（`uv run python -m eval.run_router_eval --mode override`，不需要 API Key），LLM+override 100% 这一档需要真实调用模型，归档在 `router_eval_20260524_111249.json` 里。
+1. **规则兜底负责抬下限，LLM 结构化输出负责打上限**——这是回答"为什么不只用 LLM"或"为什么不只用规则"的核心逻辑。
+2. **评测集是固定的 25 题**（`eval/datasets/ratti_eval_25.json`），四档跑的是同一批题；Held-out 是另一份 10 题，专门防"规则照着 25 题写"。
+3. **前三档可以完全离线复现**（`uv run python -m eval.run_router_eval --mode override`），LLM 档需要真实调用。25 题 LLM+override 归档在 `router_eval_20260524_111249.json`；Held-out LLM 档归档在 `router_eval_20260819_162603.json`。
 
 **追问应对**（这题追问密度最高，务必练熟）：
-- 追问"100% 是不是过拟合了评测集，规则是不是照着这 25 题写的？" → 这是最容易被质疑的点，要诚实且有底气："确实存在这个风险——25 题规模不大，而且部分 override 是在看到失败案例后加的。V2 我没有用三路 Router 来回避这个问题，而是先补了 **Held-out**：`eval/datasets/router_heldout.json` 是 10 条 paraphrase，不进原来的 25 题。离线 override 档目前是 **intent 70%**（不是 100%），这正好说明 25 题上的满分不能直接当泛化成绩。线上低置信 / 出错 trace 可以用 `python -m eval.badcase_export` 导出再人工标注扩进去。Held-out 数字以当场 `python -m eval.run_router_eval --heldout --mode override` 为准，不要把 70% 背成永恒指标。"
-- 追问"这个 100% 现在还能稳定复现吗？模型换版本会不会掉分？" → "会有漂移风险，因为这一档依赖真实 LLM 调用，我引用的是归档的 JSON 快照，不是每次都实时验证的数字。如果你现在让我当场跑，用的模型版本可能已经和归档时不一样，分数不一定还是 100%，这个我需要重新跑一次才能给你当下的准确值。"
-- 追问"64%→100% 这一跳，LLM 和 override 各自贡献了多少？" → "没有拆解过这两者的独立贡献——override 是在 LLM 输出之后叠加的，理论上可以做一个'纯 LLM 不叠 override' 的中间档来拆解，但归档产物里没有这一档，这个数字我答不上来，需要补一次实验。"
+- 追问"100% 是不是过拟合了评测集，规则是不是照着这 25 题写的？" → "确实存在这个风险，所以 V2 补了 Held-out。纯规则档在 10 条 paraphrase 上是 70%，不是 100%。但生产走的是 LLM+override，同一份 Held-out 上 intent/ambiguity 都是 100%（`router_eval_20260819_162603.md`）。规则层失手的那几条是语义换说法，LLM 自己接住了，所以我现在没有上 Semantic Router 的证据。n=10 仍然小，数字以当场重跑为准，不要背成永恒指标。"
+- 追问"那为什么不干脆上三路 Router？" → "因为 Held-out 上 LLM 档已经没有低置信误路由需要第三票去补。再加 embedding router 是在没有错误模式的时候加复杂度。Monitor 如果以后显示低置信占比高且语义路由能补救，再做。"
+- 追问"这个 100% 现在还能稳定复现吗？模型换版本会不会掉分？" → "会有漂移风险。25 题 LLM 档我引用的是归档 JSON；Held-out LLM 档是 2026-08-19 的快照。当场重跑用 `python -m eval.run_router_eval --heldout --mode llm+override`。"
+- 追问"64%→100% 这一跳，LLM 和 override 各自贡献了多少？" → "离线 override 现在是 76%（修子串 bug 后），LLM+override 归档 100%，中间没有'纯 LLM 不叠 override'档，拆不开各自贡献。Held-out 上可以侧面看：override-only 70%，叠 LLM 到 100%，差额就是 LLM 接住的语义 paraphrase。"
 
 ---
 
@@ -461,7 +472,7 @@ Context Precision（召回的上下文里有多少是真正相关的，衡量"�
 >
 > 第二，把 **Cross-Encoder 精排做一次严格的 A/B 消融**——现在归档的 judged 高分数用的是切换前的 OpenAI embedding 精排，当前默认的 Cross-Encoder 到底比它好多少，我手上没有同一评测集上的对比数字，这个我认为是`拿着旧证据夸新方案`的口径问题，必须补。
 >
-> 第三，**继续用 Badcase 扩充 held-out，而不是先加三路 Router**——25 题 100% 的主要风险是过拟合，V2 已经有独立 held-out 和导出流程；下一步是让这个集变大、让分数可引用，而不是在没有低置信误路由证据时引入 Semantic Router。
+> 第三，**Held-out 已经用生产路径验证过，Semantic Router 现在没有证据支撑**——override-only 70%，LLM+override 100%（10 条 paraphrase）。下一步是让 held-out 随 badcase 变大，而不是先加第三路路由。
 >
 > 第四，如果要往生产化方向走，我会优先做**多会话审批队列**而不是继续加功能——现在是单 thread 一次性 HITL，企业场景大概率需要审批人角色管理、审批历史看板这些能力，这是从'验证架构的原型'走向'能真正部署'必须补的一层，但我会把它放在安全和评测口径修正之后。
 >

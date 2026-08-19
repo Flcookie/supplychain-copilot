@@ -18,9 +18,21 @@ RAG 数字来自已入库的 `eval/results/*.json`。路由 heuristic / override
 | 模式 | Intent accuracy | 如何复现 |
 |------|-----------------|----------|
 | Keyword baseline | 24.00% | `uv run python -m eval.run_router_eval --mode heuristic` 中的 baseline |
-| Heuristic lifecycle | 48.00% | `--mode heuristic` |
-| Heuristic + deterministic override | 64.00% | `--mode override` |
+| Heuristic lifecycle | 60.00% | `--mode heuristic` |
+| Heuristic + deterministic override | 76.00% | `--mode override` |
 | LLM + override（归档） | 100.00% | `eval/results/router_eval_20260524_111249.json`；重跑需 `--mode llm` |
+
+## 路由 Held-out（`router_heldout.json`，10 条 paraphrase，不进 25 题）
+
+| 模式 | Intent | Ambiguity | 产物 |
+|------|--------|-----------|------|
+| Heuristic + override | 70.00% | 100.00% | 离线重算 |
+| LLM + override | 100.00% | 100.00% | `router_eval_20260819_162603.md` |
+
+规则档 intent 仍是 70%（004/005/010 语义 paraphrase，不加 override）。
+ambiguity 100%：`overbroad_data_request` / `coreference` 是生产路径上的确定性 gate，不是按 miss 写的 intent 规则。
+
+`if` 子串误命中 `certificates` 已改为词边界匹配（`eval/run_router_eval.py::_has_keyword`），由 `tests/test_router_keyword_boundaries.py` 锁住。
 
 ## Prompt injection
 

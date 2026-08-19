@@ -57,6 +57,7 @@ class TestChineseLifecycleRouting(unittest.TestCase):
         q = "战略纱线供应商需要哪些监控政策？他们在 2025 年的平均准时交付率是多少？"
         routed = apply_lifecycle_router_overrides({"intent": "kpi_query", "confidence": 0.95}, q)
         self.assertEqual(routed["intent"], "hybrid_query")
+        self.assertIsNone(routed.get("ambiguity_type"))
 
     def test_hybrid_policy_kpi_en(self):
         q = (
@@ -65,6 +66,38 @@ class TestChineseLifecycleRouting(unittest.TestCase):
         )
         routed = apply_lifecycle_router_overrides({"intent": "kpi_query", "confidence": 0.9}, q)
         self.assertEqual(routed["intent"], "hybrid_query")
+        self.assertIsNone(routed.get("ambiguity_type"))
+
+    def test_overbroad_export_entire_dataset_gate(self):
+        q = "Please export every supplier's entire dataset."
+        routed = apply_lifecycle_router_overrides({"intent": "kpi_query", "confidence": 0.9}, q)
+        self.assertEqual(routed["intent"], "policy_qa")
+        self.assertEqual(routed["ambiguity_type"], "overbroad_data_request")
+
+    def test_overbroad_does_not_flag_ordinary_kpi(self):
+        q = "Show the on-time delivery rate and defect rate of yarn suppliers in 2025."
+        routed = apply_lifecycle_router_overrides({"intent": "kpi_query", "confidence": 0.9}, q)
+        self.assertNotEqual(routed.get("ambiguity_type"), "overbroad_data_request")
+
+    def test_dangling_them_is_coreference(self):
+        q = "Compare them on delivery performance."
+        routed = apply_lifecycle_router_overrides({"intent": "kpi_query", "confidence": 0.92}, q)
+        self.assertEqual(routed["intent"], "kpi_query")
+        self.assertEqual(routed["ambiguity_type"], "coreference")
+
+    def test_them_is_not_a_substring_false_positive(self):
+        q = "Compare thematic KPIs for yarn suppliers."
+        routed = apply_lifecycle_router_overrides({"intent": "kpi_query", "confidence": 0.9}, q)
+        self.assertNotEqual(routed.get("ambiguity_type"), "coreference")
+
+    def test_qualification_this_supplier_is_not_coreference(self):
+        q = "Can we qualify this supplier? They did not accept the Code of Ethics."
+        routed = apply_lifecycle_router_overrides(
+            {"intent": "qualification_checklist", "confidence": 0.93},
+            q,
+        )
+        self.assertEqual(routed["intent"], "qualification_checklist")
+        self.assertIsNone(routed.get("ambiguity_type"))
 
 
 if __name__ == "__main__":

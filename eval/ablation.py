@@ -73,12 +73,14 @@ def router_ablation(dataset_path: Path | None = None) -> dict:
 
     path = dataset_path or (DATASETS / "ratti_eval_25.json")
     samples = _load_json(path)
+    heldout = _load_json(DATASETS / "router_heldout.json")
     return {
         "dataset": str(path.relative_to(ROOT)).replace("\\", "/"),
         "samples": len(samples),
         "keyword_baseline": evaluate(baseline_router, samples),
         "heuristic": evaluate(optimized_router, samples),
         "heuristic_plus_override": evaluate(override_router, samples),
+        "heldout_override": evaluate(override_router, heldout),
         "llm_plus_override_archived": {
             "source": "eval/results/router_eval_20260524_111249.json",
             "intent_accuracy": _load_json(RESULTS / "router_eval_20260524_111249.json")[
@@ -136,6 +138,18 @@ def build_report() -> str:
         f"| Heuristic lifecycle | {router['heuristic']['intent_accuracy']:.2%} | `--mode heuristic` |",
         f"| Heuristic + deterministic override | {router['heuristic_plus_override']['intent_accuracy']:.2%} | `--mode override` |",
         f"| LLM + override（归档） | {router['llm_plus_override_archived']['intent_accuracy']:.2%} | `{router['llm_plus_override_archived']['source']}`；重跑需 `--mode llm` |",
+        "",
+        "## 路由 Held-out（`router_heldout.json`，10 条 paraphrase，不进 25 题）",
+        "",
+        "| 模式 | Intent | Ambiguity | 产物 |",
+        "|------|--------|-----------|------|",
+        f"| Heuristic + override | {router['heldout_override']['intent_accuracy']:.2%} | {router['heldout_override']['ambiguity_accuracy']:.2%} | 离线重算 |",
+        "| LLM + override | 100.00% | 100.00% | `router_eval_20260819_162603.md` |",
+        "",
+        "规则档 intent 仍是 70%（004/005/010 语义 paraphrase，不加 override）。",
+        "ambiguity 100%：`overbroad_data_request` / `coreference` 是生产路径上的确定性 gate，不是按 miss 写的 intent 规则。",
+        "",
+        "`if` 子串误命中 `certificates` 已改为词边界匹配（`eval/run_router_eval.py::_has_keyword`），由 `tests/test_router_keyword_boundaries.py` 锁住。",
         "",
         "## Prompt injection",
         "",

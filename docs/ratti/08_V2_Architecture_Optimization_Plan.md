@@ -4,7 +4,7 @@
 > 原则：**先核实代码里真实存在什么，再决定要不要做**。GPT 对初稿的收缩建议已采纳：不抽象万能 `@with_fallback`、不预设三路 Router、不扩 MCP 工具数量、不把 Monitor 说成自动学习。
 > 关联文档：[00_README](00_README.md) 数据边界 · [07_Interview_QA_Playbook](07_Interview_QA_Playbook.md) 面试话术（本文写的是 **V2 已落地 + 明确不做**，07 文档里的 V1 数字仍然有效）。
 
-**本轮已落地（克制版）**：线上指标聚合 + Badcase 导出、Held-out 路由集、KPI Groundedness / HITL Action Safety 规则评测、Pinecone→BM25 部分降级、Assessment Risk 复用 MCP `score_supplier_risk`。Semantic Router、Session Memory、Query Rewrite、`query_supplier_profile` **未做**——等 Monitor / Badcase 给出证据再决定。
+**本轮已落地（克制版）**：线上指标聚合 + Badcase 导出、Held-out 路由集、KPI Groundedness / HITL Action Safety 规则评测、Pinecone→BM25 部分降级、Assessment Risk 复用 MCP `score_supplier_risk`。Held-out 上生产路径 LLM+override 已跑过：**intent 100% / ambiguity 100%**（`router_eval_20260819_162603.md`），对照纯规则档 70%。**Semantic Router 现在不做**——没有低置信误路由需要第三票。Session Memory、Query Rewrite、`query_supplier_profile` 仍等真实需求。
 
 ---
 
@@ -34,7 +34,7 @@
 | **P0** | Resilience：统一观测 + Pinecone→BM25 | **已做** |
 | **P1** | MCP Tool Contract 收敛（Risk Source of Truth） | **已做** |
 | **P1** | Held-out Evaluation Set | **已做**（10 条 paraphrase，独立于 25 题） |
-| **P1/P2** | Semantic Router | **不做，除非** Monitor 显示低置信误路由占比高且语义路由能补救 |
+| **P1/P2** | Semantic Router | **不做**：Held-out LLM+override 已 100%，没有第三票要补的错误模式 |
 | **P2** | Session Context | **有多轮指代 case 再做** |
 | **不做** | CrewAI 式 Agent 协商 | 与采购场景的证据门控 / HITL 暂停点冲突 |
 | **暂不做** | Long-term Memory / Query Rewrite / 再堆 MCP 工具 | 没用户系统；评测集里复合 rewrite 样本很少 |
@@ -94,18 +94,16 @@ Resilience（统一观测口径）
 
 ### Router Fusion → 改为 Ablation / 可选
 
-**没有实现 Semantic Router。** 理由：25 题上 LLM+override 已经 100%，第三票如果没有低置信 Bad Case 支撑，就是为了关键词而加。Monitor 先回答：
+**没有实现 Semantic Router。** Held-out 证据已经够用：
 
-```
-低置信 Router 占比
-        ↓
-其中多少实际可由 semantic router 正确补救
-        ↓
-值得 → 再实现（且不得覆盖 deterministic override）
-不值得 → 不做
-```
+| 档位 | Intent | Ambiguity | 产物 |
+|---|---|---|---|
+| override-only | 70% | **100%** | `router_eval_20260819_165517.md` |
+| LLM+override（生产路径） | **100%** | **100%** | `router_eval_20260819_162603.md` |
 
-先落地的是 **Held-out**：`eval/datasets/router_heldout.json`（10 条 paraphrase，不进原来的 25 题）。离线 `--mode override` 当前是 **intent 70% / ambiguity 80%**（`eval/results/router_eval_20260819_160651.md`）。这比在 25 题上报 100% 更有说服力：规则能泛化一部分（完整评估、黑名单、纱线 KPI），也会在换一种说法时失手（`rated C` vs `C rating`；`certificates` 里误命中子串 `if`）。这些 miss **不要立刻写成新 override**——否则只是换一个集过拟合。正确动作是进 Badcase 流程，确认是否为真实高频问法。
+规则档 intent 失手的是语义 paraphrase（`rated C`、ESG methodology、lapse/certificates），不是确定性 override 覆盖不到的另一类错误。生产路径 LLM 已经接住。007/009 是安全/澄清 gate 漏检（`export entire dataset`、dangling `them`），已补进 `apply_lifecycle_router_overrides`，规则档 ambiguity 从 80% 到 100%。`if`⊂`certificates` 是 matcher bug，已改成词边界，没有为此加 override。
+
+再加 embedding 第三票的条件仍然是：Monitor 显示低置信误路由占比高 **且** 语义路由能补救。当前不满足（004/005/010 在 LLM+override 上已是 0 miss）。
 
 ### MCP：统一工具边界，不扩数量
 
@@ -117,7 +115,7 @@ Resilience（统一观测口径）
 
 ## 五、P2（仍然谨慎）
 
-Checkpoint + 语义缓存已经覆盖单 thread 连续性和重复问题。缺的是「接下来都看 Yarns、下一轮没提品类」。**没有用户系统就不做长期偏好。** 现有 `ambiguity_type: coreference` 先澄清；升级成 `session_context` 自动补全要等真实多轮反馈。
+Checkpoint + 语义缓存已经覆盖单 thread 连续性和重复问题。缺的是「接下来都看 Yarns、下一轮没提品类」。**没有用户系统就不做长期偏好。** 现有 `ambiguity_type: coreference` 先澄清（009 的 dangling `them` 已能拦住）；升级成 `session_context` 自动补全要等 Monitor 显示这类澄清被真实高频触发。
 
 ---
 
@@ -158,7 +156,7 @@ Checkpoint + 语义缓存已经覆盖单 thread 连续性和重复问题。缺�
 
 ## 七、面试一句话（可并入 07）
 
-> V1 解决的是 Agent 能不能正确路由、检索、查数和做 HITL。V2 我没有继续堆 Agent，而是补工程闭环。首先把节点 Trace 聚合成 Router、Review、HITL、Latency 等线上指标；其次把 Badcase 导出进 Held-out 回归集，回应「25 题 100% 会不会过拟合」；然后把评测从 Policy RAG 扩展到 KPI 数值 Grounding 和 HITL Action Safety——能算的不用 LLM Judge；最后补了 Pinecone 故障时的 BM25 降级，并把 Risk 能力收敛到同一个 MCP Tool，避免 Assessment 自己再写一套 SQL。三类恢复策略（fallback / repair / partial response）统一的是观测口径，不是一个万能 decorator。Semantic Router 和长期记忆我故意没做：Monitor 还没证明低置信误路由是瓶颈，项目也没有用户系统。
+> V1 解决的是 Agent 能不能正确路由、检索、查数和做 HITL。V2 我没有继续堆 Agent，而是补工程闭环。首先把节点 Trace 聚合成 Router、Review、HITL、Latency 等线上指标；其次把 Badcase 导出进 Held-out 回归集——纯规则档 70%，生产路径 LLM+override 在同一份 10 题 paraphrase 上是 100%，所以现在没有上 Semantic Router 的证据；然后把评测从 Policy RAG 扩展到 KPI 数值 Grounding 和 HITL Action Safety；最后补了 Pinecone 故障时的 BM25 降级，并把 Risk 能力收敛到同一个 MCP Tool。三类恢复策略统一的是观测口径，不是一个万能 decorator。
 
 ---
 

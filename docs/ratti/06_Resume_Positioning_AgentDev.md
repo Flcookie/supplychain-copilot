@@ -4,7 +4,7 @@
 
 ## 一句话定位
 
-独立完成企业采购场景的 LangGraph Agent：多意图路由 + 并行 Policy/KPI 分支聚合 + Hybrid RAG（双路召回→RRF→Cross-Encoder 精排）+ NL2SQL/MCP + Prompt Injection 防御 + RAGAS 式评测与语义缓存。路由（25 题）keyword 24% → heuristic+override 64% → LLM+override 100%；注入检测 100%（30 条攻防集，pytest 锁住）。
+独立完成企业采购场景的 LangGraph Agent：多意图路由 + 并行 Policy/KPI 分支聚合 + Hybrid RAG（双路召回→RRF→Cross-Encoder 精排）+ NL2SQL/MCP + Prompt Injection 防御 + RAGAS 式评测与语义缓存。路由（25 题）keyword 24% → heuristic+override 76% → LLM+override 100%；Held-out 10 题 paraphrase 上 LLM+override 100%（规则档 70%）；注入检测 100%（30 条攻防集，pytest 锁住）。
 
 ## 建议岗位关键词
 
@@ -17,7 +17,7 @@ Agent 开发 · LLM Application Engineer · AI Engineer · LangGraph / LangChain
 ## 推荐 Bullet（可直接贴简历）
 
 - 基于 LangGraph 实现 Router + Qualification / Policy QA / KPI / Risk / Vendor Rating / **Supplier Assessment** 多节点 Agent；复合问题 **Policy ∥ KPI 并行**；评估任务 **五路并行采集** 后 Review，黑名单/改状态走 **`interrupt` + SqliteSaver**，一次 HITL 恢复，而不是无限 ReAct 循环。
-- 设计 ambiguity-first 的澄清与低置信兜底策略；在 25 条生命周期评测集上做可复现消融：keyword **24%** → heuristic 48% → 确定性 override 64% → LLM+override **100%**（归档 `router_eval_20260524_111249.json`）。离线档由 `pytest tests/test_offline_ablation.py` 锁住。
+- 设计 ambiguity-first 的澄清与低置信兜底策略；在 25 条生命周期评测集上做可复现消融：keyword **24%** → heuristic 60% → 确定性 override 76% → LLM+override **100%**（归档 `router_eval_20260524_111249.json`）。Held-out 10 条 paraphrase：override intent 70% / ambiguity 100%；生产路径 LLM+override 100%。离线档由 `pytest tests/test_offline_ablation.py` 锁住下限。
 - 落地 **Hybrid RAG 工业漏斗**：Pinecone 向量 + BM25 → RRF Top20 → **bge-reranker CE Top5**；KPI 走 NL2SQL 模板 + **sqlglot AST 只读校验**；Policy QA **Prompt Injection** 30 条攻防集检测 **100%**（pytest 锁住）。
 - 构建 **RAGAS 式** Policy QA 评测（Context Precision/Recall、Faithfulness、Answer Relevance），补齐相对 Router 的量化证据；并实现高频问题 **语义缓存** 降低重复 LLM 成本。
 - 实现 MCP Server（policy / KPI 等工具），使 Agent 以 list_tools → call_tool 调用能力，解耦硬编码依赖；交付 Streamlit Demo、FastAPI 接口与可观测录制链路。
@@ -95,7 +95,7 @@ A: ambiguity-first：有歧义先澄清；否则 confidence<0.75 走 RAG fallbac
 ### 2. Router
 
 **Q8. Router 怎么设计的？准确率怎么来的？**  
-A: LLM 输出结构化 JSON（intent/confidence/ambiguity/HITL/reason），再叠加确定性 override。25 题消融（可离线复现）：keyword 24% → heuristic 48% → override 64% → LLM+override 100%（归档）。面试说「规则兜底把下限抬起来，LLM 结构化输出把上限打满」，不要笼统说 65%→90%。
+A: LLM 输出结构化 JSON（intent/confidence/ambiguity/HITL/reason），再叠加确定性 override。25 题消融（可离线复现）：keyword 24% → heuristic 60% → override 76% → LLM+override 100%（归档）。Held-out 10 题：规则 70%，生产路径 LLM+override 100%。面试说「规则兜底把下限抬起来，LLM 结构化输出把上限打满」，不要笼统说 65%→90%。
 
 **Q9. 意图冲突或复合意图怎么办？**  
 A: 清晰复合 → `hybrid_query` 并行；说不清先问「先看政策还是 KPI」；过宽「导出全部数据」标 `overbroad_data_request` 拒绝或澄清。

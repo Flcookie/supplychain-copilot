@@ -23,8 +23,8 @@ Rules:
 
 3) human_approval_required=true when question asks to blacklist, approve/reject qualification, change status, or replace supplier.
 
-4) ambiguity_type — DEFAULT null. Use overbroad_data_request for "show all data" / dump entire database requests.
-Use coreference for unresolved "they/this supplier". Use missing_entity only when truly unanswerable.
+4) ambiguity_type — DEFAULT null. Use overbroad_data_request for "show all data" / "export entire dataset" / dump requests.
+Use coreference for unresolved "they/them/this supplier". Use missing_entity only when truly unanswerable.
 
 5) Output strict JSON only.
 

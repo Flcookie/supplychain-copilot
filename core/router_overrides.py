@@ -13,6 +13,35 @@ import re
 from typing import Any
 
 _SUPPLIER_ID = re.compile(r"(SUP\d{3})", re.IGNORECASE)
+_PRONOUN_RE = re.compile(r"\b(they|their|them|those)\b", re.IGNORECASE)
+
+# Dump / exfil-adjacent phrasing. Safety gate — not an intent-override for misses.
+_OVERBROAD_PHRASES_EN = (
+    "show me all data",
+    "all data about",
+    "entire dataset",
+    "entire database",
+    "dump the database",
+    "dump all data",
+    "dump all",
+    "export all",
+    "export every",
+    "export the entire",
+    "all records",
+    "every record",
+)
+_OVERBROAD_PHRASES_ZH = (
+    "全部数据",
+    "所有数据",
+    "导出所有",
+    "导出全部",
+    "全部供应商",
+    "所有供应商的数据",
+)
+
+# Category / group NPs that can bind they/them/他们 in the same question.
+_ANTECEDENT_ZH = ("纱线", "面料", "拉链", "包装", "化工", "外发", "战略")
+_ANTECEDENT_EN = ("yarn", "fabric", "chemical", "packaging", "zipper", "outsourced")
 
 
 def _has_supplier_id(question: str) -> bool:
@@ -38,11 +67,88 @@ def _clear_coreference_when_supplier_named(parsed: dict[str, Any], question: str
     return out
 
 
+def is_overbroad_data_request(question: str) -> bool:
+    """True when the user asks to dump the full supplier dataset (clarification/refuse)."""
+    q = question or ""
+    lower = q.lower()
+    if any(phrase in lower for phrase in _OVERBROAD_PHRASES_EN):
+        return True
+    return any(phrase in q for phrase in _OVERBROAD_PHRASES_ZH)
+
+
+def _has_named_group_antecedent(question: str) -> bool:
+    """Pronouns are bound if the same question already names a category or supplier group."""
+    q = question or ""
+    lower = q.lower()
+    if any(token in q for token in _ANTECEDENT_ZH):
+        return True
+    if any(re.search(rf"\b{re.escape(token)}\b", lower) for token in _ANTECEDENT_EN):
+        return True
+    return re.search(r"\bsuppliers\b", lower) is not None
+
+
+def is_unresolved_coreference(question: str) -> bool:
+    """True when they/them/这家 have no supplier id and no in-sentence group antecedent."""
+    q = question or ""
+    if _has_supplier_id(q):
+        return False
+    lower = q.lower()
+    if any(
+        phrase in lower
+        for phrase in ("this supplier", "those vendors", "supplier a and supplier b")
+    ):
+        return True
+    if "这家" in q or "那个供应商" in q:
+        return True
+    if "他们" in q:
+        return not _has_named_group_antecedent(q)
+    if _PRONOUN_RE.search(lower):
+        return not _has_named_group_antecedent(q)
+    return False
+
+
+def _apply_overbroad_gate(parsed: dict[str, Any], question: str) -> dict[str, Any] | None:
+    if not is_overbroad_data_request(question):
+        return None
+    out = dict(parsed)
+    out["intent"] = "policy_qa"
+    out["ambiguity_type"] = "overbroad_data_request"
+    out["confidence"] = min(float(out.get("confidence") or 0.7), 0.7)
+    out["reason"] = "overbroad data request (safety gate)"
+    return out
+
+
+def _apply_coreference_gate(parsed: dict[str, Any], question: str) -> dict[str, Any]:
+    if parsed.get("ambiguity_type") in {
+        "overbroad_data_request",
+        "missing_entity",
+        "composite_intent",
+    }:
+        return parsed
+    if parsed.get("intent") == "qualification_checklist":
+        return parsed
+    from core.qualification_rules import detect_qualification_checklist_intent
+
+    if detect_qualification_checklist_intent(question):
+        return parsed
+    if not is_unresolved_coreference(question):
+        return parsed
+    out = dict(parsed)
+    out["ambiguity_type"] = "coreference"
+    out["confidence"] = min(float(out.get("confidence") or 0.8), 0.8)
+    out["reason"] = f"{out.get('reason', '')} (coreference gate)".strip()
+    return out
+
+
 def apply_lifecycle_router_overrides(parsed: dict[str, Any], question: str) -> dict[str, Any]:
     """Override LLM routing when lifecycle intent is unambiguous (esp. Chinese queries)."""
     q = question or ""
     lower = q.lower()
     parsed = _clear_coreference_when_supplier_named(parsed, q)
+
+    overbroad = _apply_overbroad_gate(parsed, q)
+    if overbroad is not None:
+        return overbroad
 
     # Full supplier assessment task (before narrower rating/KPI overrides)
     assessment_signal = any(
@@ -196,7 +302,7 @@ def apply_lifecycle_router_overrides(parsed: dict[str, Any], question: str) -> d
     if ("纱线" in q or "yarn" in lower) and kpi_signal:
         return _set_intent(parsed, "kpi_query", 0.94, "yarn KPI query (rule override)")
 
-    return parsed
+    return _apply_coreference_gate(parsed, q)
 
 
 def _set_intent(

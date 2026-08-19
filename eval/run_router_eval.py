@@ -12,7 +12,23 @@ if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
 
 from core.qualification_rules import detect_qualification_checklist_intent
-from core.router_overrides import apply_lifecycle_router_overrides
+from core.router_overrides import (
+    apply_lifecycle_router_overrides,
+    is_overbroad_data_request,
+    is_unresolved_coreference,
+)
+
+
+def _has_keyword(text: str, keyword: str) -> bool:
+    """Match CJK/phrases by substring; ASCII tokens by word boundary.
+
+    Prevents ``if`` from firing inside ``certificates`` / ``certificate``.
+    """
+    if not keyword:
+        return False
+    if any("\u4e00" <= ch <= "\u9fff" for ch in keyword) or " " in keyword:
+        return keyword in text
+    return re.search(rf"\b{re.escape(keyword)}\b", text, flags=re.IGNORECASE) is not None
 
 
 DEFAULT_DATASET = os.path.join(ROOT_DIR, "eval", "datasets", "ratti_eval_25.json")
@@ -34,7 +50,10 @@ def baseline_router(question: str) -> RouterOutput:
     intent = "policy_qa"
     if any(k in q for k in ["otd", "otif", "kpi", "performance", "compare", "vs", "准时交", "绩效", "比较"]):
         intent = "kpi_query"
-    if (any(k in q for k in ["delay", "risk", "impact", "延迟", "晚到", "中断", "风险"]) and "if" in q) or "如果" in q:
+    if (
+        any(k in q for k in ["delay", "risk", "impact", "延迟", "晚到", "中断", "风险"])
+        and _has_keyword(q, "if")
+    ) or "如果" in q:
         intent = "scenario_analysis"
     return RouterOutput(intent=intent, confidence=0.0, ambiguity_type=None, reason="baseline keyword routing")
 
@@ -69,7 +88,7 @@ def optimized_router(question: str) -> RouterOutput:
             ambiguity_type=None,
             reason="rating formula question",
         )
-    if "show me all data" in q or "all data about suppliers" in q:
+    if is_overbroad_data_request(question):
         return RouterOutput(
             intent="policy_qa",
             confidence=0.7,
@@ -77,12 +96,15 @@ def optimized_router(question: str) -> RouterOutput:
             reason="overbroad data request",
         )
     ambiguity_type = None
-    if any(k in q for k in ["they", "their", "this supplier", "those vendors", "supplier a and supplier b", "他们", "这家"]):
+    if is_unresolved_coreference(question):
         ambiguity_type = "coreference"
     elif ("policy" in q or "标准" in q) and any(k in q for k in ["performance", "kpi", "交货率", "表现"]):
         ambiguity_type = "composite_intent"
 
-    if any(k in q for k in ["if", "如果", "risk", "disruption", "impact", "延迟", "single sourcing", "quality issues"]):
+    if any(
+        _has_keyword(q, k)
+        for k in ["if", "如果", "risk", "disruption", "impact", "延迟", "single sourcing", "quality issues"]
+    ):
         intent = "risk_scenario"
         confidence = 0.9 if ambiguity_type is None else 0.78
     elif any(k in q for k in ["otd", "otif", "kpi", "performance", "compare", "vs", "准时", "交货率", "defect", "spend", "esg", "sup0", "next step", "expire", "rank"]):
@@ -229,12 +251,16 @@ def main():
     )
     parser.add_argument(
         "--mode",
-        choices=["heuristic", "override", "llm"],
+        choices=["heuristic", "override", "llm", "llm+override"],
         default="heuristic",
-        help="heuristic=keyword router; override=heuristic+deterministic overrides; llm=live router_node",
+        help=(
+            "heuristic=keyword router; override=heuristic+deterministic overrides; "
+            "llm / llm+override=live router_node (LLM structured output + the same overrides)"
+        ),
     )
     args = parser.parse_args()
     dataset_path = HELDOUT_DATASET if args.heldout else args.dataset
+    mode = "llm" if args.mode == "llm+override" else args.mode
 
     with open(dataset_path, "r", encoding="utf-8") as f:
         samples = json.load(f)
@@ -245,7 +271,7 @@ def main():
         "override": override_router,
         "llm": llm_router,
     }
-    optimized = evaluate(routers[args.mode], samples)
+    optimized = evaluate(routers[mode], samples)
     json_path, md_path = write_report(baseline, optimized, dataset_path, label=args.mode)
 
     print("Evaluation complete.")
