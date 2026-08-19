@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from mcp_server.tools import ToolValidationError, query_kpi_impl
+from mcp_server.tools import ToolValidationError, query_kpi_impl, score_supplier_risk_impl
 
 
 def test_query_kpi_rejects_empty_args():
@@ -44,3 +44,34 @@ def test_query_kpi_allowlisted_sql():
     assert result["ok"] is True
     assert result["sql_source"] == "llm"
     assert len(result["rows"]) <= 3
+
+
+def test_score_supplier_risk_rejects_bad_id():
+    with pytest.raises(ToolValidationError, match="Invalid supplier_id"):
+        score_supplier_risk_impl(supplier_id="ABC")
+
+
+def test_score_supplier_risk_returns_score_and_events():
+    result = score_supplier_risk_impl(supplier_id="SUP012")
+    assert result["supplier_id"] == "SUP012"
+    assert result["source"] == "mcp:score_supplier_risk"
+    assert result["band"] in {"low", "medium", "high"}
+    assert isinstance(result["risk_score"], float)
+    assert "risk_events" in result["components"]
+    assert isinstance(result["events"], list)
+    assert isinstance(result["quality_events"], list)
+
+
+def test_assessment_risk_branch_reuses_score_supplier_risk():
+    from graph.assessment import assessment_risk_branch
+
+    scored = score_supplier_risk_impl(supplier_id="SUP012")
+    branch = assessment_risk_branch(
+        {"supplier_id": "SUP012", "question": "Full assessment for SUP012"}
+    )
+    risk = branch["assessment_risk"]
+    assert risk["source"] == "mcp:score_supplier_risk"
+    assert risk["risk_score"] == scored["risk_score"]
+    assert risk["band"] == scored["band"]
+    assert risk["rows"] == scored["events"]
+    assert risk["quality_rows"] == scored["quality_events"]

@@ -25,7 +25,10 @@ CREATE TABLE IF NOT EXISTS traces (
     total_prompt_tokens INTEGER DEFAULT 0,
     total_completion_tokens INTEGER DEFAULT 0,
     error TEXT,
-    agent_config_id TEXT
+    agent_config_id TEXT,
+    ambiguity_type TEXT,
+    review_status TEXT,
+    human_approval_required INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS trace_steps (
@@ -76,6 +79,14 @@ class TraceStore:
             }
             if "agent_config_id" not in cols:
                 conn.execute("ALTER TABLE traces ADD COLUMN agent_config_id TEXT")
+            if "ambiguity_type" not in cols:
+                conn.execute("ALTER TABLE traces ADD COLUMN ambiguity_type TEXT")
+            if "review_status" not in cols:
+                conn.execute("ALTER TABLE traces ADD COLUMN review_status TEXT")
+            if "human_approval_required" not in cols:
+                conn.execute(
+                    "ALTER TABLE traces ADD COLUMN human_approval_required INTEGER"
+                )
             conn.execute(
                 "CREATE INDEX IF NOT EXISTS idx_traces_agent_config_id ON traces(agent_config_id)"
             )
@@ -135,7 +146,15 @@ class TraceStore:
         intent: str | None = None,
         total_latency_ms: float | None = None,
         error: str | None = None,
+        ambiguity_type: str | None = None,
+        review_status: str | None = None,
+        human_approval_required: bool | int | None = None,
     ) -> None:
+        hitl: int | None
+        if human_approval_required is None:
+            hitl = None
+        else:
+            hitl = 1 if human_approval_required in {True, 1, "1", "true", "True"} else 0
         with self._connect() as conn:
             totals = conn.execute(
                 """
@@ -156,7 +175,10 @@ class TraceStore:
                     total_latency_ms = ?,
                     total_prompt_tokens = ?,
                     total_completion_tokens = ?,
-                    error = ?
+                    error = ?,
+                    ambiguity_type = ?,
+                    review_status = ?,
+                    human_approval_required = ?
                 WHERE id = ?
                 """,
                 (
@@ -167,6 +189,9 @@ class TraceStore:
                     int(totals["prompt_tokens"] or 0),
                     int(totals["completion_tokens"] or 0),
                     error,
+                    ambiguity_type,
+                    review_status,
+                    hitl,
                     trace_id,
                 ),
             )

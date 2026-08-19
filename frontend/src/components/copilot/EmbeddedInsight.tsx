@@ -2,6 +2,7 @@ import { useState } from "react";
 import { t } from "../../i18n";
 import type { ChatMessage, Lang } from "../../types/api";
 import { EvidencePanel } from "./EvidencePanel";
+import { HitlBar } from "./HitlBar";
 
 export function EmbeddedInsight({
   title,
@@ -63,7 +64,8 @@ export function EmbeddedInsight({
               </button>
             </form>
           ) : null}
-          {message.route_info?.human_approval_required ? (
+          {message.paused ? <HitlBar message={message} /> : null}
+          {message.route_info?.human_approval_required && !message.paused && !message.approvalDecision ? (
             <p
               className="mt-3 border px-2 py-1 text-xs"
               style={{

@@ -6,6 +6,7 @@ import type {
   ReviewQueueItem,
   ScenarioItem,
   Supplier,
+  ThreadState,
 } from "../types/api";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
@@ -83,5 +84,26 @@ export function runSupplierAssessment(body: {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
+  });
+}
+
+export function fetchThreadState(threadId: string): Promise<ThreadState> {
+  return request(`/api/threads/${encodeURIComponent(threadId)}`);
+}
+
+export function resumeThread(body: {
+  thread_id: string;
+  approved: boolean;
+  note?: string | null;
+  language: Lang;
+}): Promise<ChatResponse> {
+  return request(`/api/threads/${encodeURIComponent(body.thread_id)}/resume`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      approved: body.approved,
+      note: body.note ?? null,
+      language: body.language,
+    }),
   });
 }

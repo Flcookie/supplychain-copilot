@@ -14,14 +14,15 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 import pandas as pd
 import streamlit as st
 
+from observability.metrics import summarize_metrics
 from observability.store import get_store
 
 st.set_page_config(page_title="Copilot Observability", page_icon="📡", layout="wide")
 
 st.title("Copilot Observability")
 st.caption(
-    "Local trace panel — tool steps, latency, token usage, router confidence. "
-    "Not a production APM; shows what you’d watch in production."
+    "Local observability — trace steps, latency, tokens, router / HITL rates. "
+    "This is a human-in-the-loop iteration loop (metrics → badcase → config), not auto-tuning."
 )
 
 store = get_store()
@@ -58,6 +59,20 @@ if traces:
 else:
     c3.metric("Avg E2E latency (ms)", "—")
     c4.metric("Avg confidence", "—")
+
+metrics = summarize_metrics(store, hours=None)
+m5, m6, m7, m8 = st.columns(4)
+m5.metric("Clarification rate", f"{metrics['clarification_rate']:.0%}")
+m6.metric("HITL trigger rate", f"{metrics['hitl_trigger_rate']:.0%}")
+m7.metric("Review boost rate", f"{metrics['review_evidence_boost_rate']:.0%}")
+m8.metric(
+    "P50 / P95 latency (ms)",
+    (
+        f"{metrics['p50_latency_ms']:.0f} / {metrics['p95_latency_ms']:.0f}"
+        if metrics.get("p50_latency_ms") is not None and metrics.get("p95_latency_ms") is not None
+        else "—"
+    ),
+)
 
 st.markdown("---")
 

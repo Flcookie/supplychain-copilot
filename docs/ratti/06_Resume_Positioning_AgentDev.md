@@ -16,7 +16,7 @@ Agent 开发 · LLM Application Engineer · AI Engineer · LangGraph / LangChain
 
 ## 推荐 Bullet（可直接贴简历）
 
-- 基于 LangGraph 实现 Router + Qualification / Policy QA / KPI / Risk / Vendor Rating 多节点 Agent；对复合问题采用 **Policy ∥ KPI 并行分支 + Aggregate 聚合**，从线性单跳路由升级为可并行编排的工作流。
+- 基于 LangGraph 实现 Router + Qualification / Policy QA / KPI / Risk / Vendor Rating / **Supplier Assessment** 多节点 Agent；复合问题 **Policy ∥ KPI 并行**；评估任务 **五路并行采集** 后 Review，黑名单/改状态走 **`interrupt` + SqliteSaver**，一次 HITL 恢复，而不是无限 ReAct 循环。
 - 设计 ambiguity-first 的澄清与低置信兜底策略；在 25 条生命周期评测集上做可复现消融：keyword **24%** → heuristic 48% → 确定性 override 64% → LLM+override **100%**（归档 `router_eval_20260524_111249.json`）。离线档由 `pytest tests/test_offline_ablation.py` 锁住。
 - 落地 **Hybrid RAG 工业漏斗**：Pinecone 向量 + BM25 → RRF Top20 → **bge-reranker CE Top5**；KPI 走 NL2SQL 模板 + **sqlglot AST 只读校验**；Policy QA **Prompt Injection** 30 条攻防集检测 **100%**（pytest 锁住）。
 - 构建 **RAGAS 式** Policy QA 评测（Context Precision/Recall、Faithfulness、Answer Relevance），补齐相对 Router 的量化证据；并实现高频问题 **语义缓存** 降低重复 LLM 成本。
@@ -37,7 +37,7 @@ Agent 开发 · LLM Application Engineer · AI Engineer · LangGraph / LangChain
 |------|------------|
 | 推理框架 | Router 多意图 + Hybrid 并行分支后聚合（非纯单跳） |
 | 工具使用 | MCP query_policy / query_kpi + NL2SQL 白名单；RAG 漏斗含 CE 精排 |
-| 记忆/状态 | SCState 结构化字段；语义缓存复用高频答案 |
+| 记忆/状态 | SCState + SqliteSaver checkpoint；HITL interrupt 后同一 thread_id 可恢复 |
 | 安全与评估 | SQL 只读 + Injection 防御 + RAGAS/Router 评测集 |
 | Agent 架构 | 条件边 + 并行 fan-out/join，而非单 Prompt |
 
@@ -82,13 +82,13 @@ A: 端到端独立完成：需求抽象、数据字典与评测集、LangGraph �
 A: 采购问题是多意图、多工具、要分支的。单 Prompt 无法稳定区分「查政策 / 查 KPI / 要黑名单」且难单测。LangGraph 用 StateGraph + 条件边，把 Router、澄清、各任务节点、并行 Hybrid、Answer 拆开：状态显式（intent/confidence/ambiguity）、节点可替换可观测、失败可落在具体边。比黑盒 ReAct 更适合企业可控编排。
 
 **Q5. 你的图长什么样？状态里有哪些关键字段？**  
-A: `START→router→(clarification | rag_fallback | policy_qa | kpi | risk | vendor_rating | hybrid_dispatch)`；hybrid 是 `dispatch→(policy∥kpi)→aggregate→answer→END`。状态含 question、intent、confidence、ambiguity_type、retrieved_docs/citations/evidence、sql_*、policy/kpi_partial_answer、injection_scan 等。
+A: `START→router→` 各专家节点；hybrid 是 `dispatch→(policy∥kpi)→aggregate→review`；评估是 `dispatch→gather 五路并行→synthesize→review→(evidence_boost?)→(approval interrupt?)→answer`。状态含 question、intent、confidence、ambiguity_type、retrieved_docs/citations/evidence、sql_*、assessment_*、review_status、thread_id、proposed_action、approval_decision。Checkpoint 用 SqliteSaver，刷新页面用同一 `thread_id` 接着跑。
 
 **Q6. 和多 Agent 协作的关系？你做了并行吗？**  
-A: 主路径仍是 Router 选一个专家节点；对「政策+KPI」复合问，升级为 Policy 与 KPI 两分支并行执行，再 Aggregate 合并——这是面经里常考的 fan-out/join，而不只是线性单跳。
+A: 主路径仍是 Router 选一个专家节点；对「政策+KPI」复合问，升级为 Policy 与 KPI 两分支并行执行，再 Aggregate 合并——这是面经里常考的 fan-out/join，而不只是线性单跳。供应商评估再升一档：profile/orders/kpi/policy/risk 五路并行，再综合。
 
-**Q7. 低置信和歧义怎么处理？**  
-A: ambiguity-first：有歧义先澄清；否则 confidence<0.75 走 RAG fallback，避免瞎生成 SQL。黑名单/改状态等要求 `human_approval_required`，AI 只给建议不自动落库。
+**Q7. 低置信和歧义怎么处理？和 ReAct / Tool-calling Loop 有什么区别？**  
+A: ambiguity-first：有歧义先澄清；否则 confidence<0.75 走 RAG fallback。黑名单/改状态不是提示词里写一句「需要审批」，而是 Review 之后进入 `approval` 节点调用 LangGraph `interrupt()`，图停住；采购点批准后 `Command(resume=…)` 从 checkpoint 恢复，答案盖章「已批准 / 已驳回」，**不写库**。这和 ReAct 的区别：ReAct 是模型自己决定下一步工具、可以循环 N 次；我们是**可控工作流 + 一次 HITL 恢复**，不是 AutoGPT。证据不足最多补检索一轮（`MAX_REVIEW_ATTEMPTS = 1`），不会自己开飞。
 
 ---
 
@@ -160,10 +160,10 @@ A: 规范化问句精确命中 + embedding 相似度阈值；注入与澄清不�
 ### 7. 产品边界与取舍
 
 **Q23. AI 能不能直接拉黑供应商？**  
-A: 不能。系统设计是决策支持：可给风险理由与建议，黑名单/改状态/准入审批必须人工确认（HITL）。
+A: 不能。评估若命中「Qualified with Reserve」、C/D、风险事件 `human_review_required` 或黑名单意图，图在 `approval` 节点 `interrupt`，等采购点批准/驳回。恢复只改 checkpoint 里的 `approval_decision` 并在答案盖章，演示库始终只读。
 
 **Q24. 如果重做，你会优先改什么？**  
-A: ① SQL 用 AST 解析加固白名单；② 间接 Prompt Injection；③ 多步 Tool-calling Agent Loop 做探索式分析；④ 精排做 A/B（CE on/off）量化 Recall@K / Faithfulness 提升。体现「知边界、有迭代 backlog」。
+A: ① 间接 Prompt Injection（文档里藏指令）；② 精排做 A/B（CE on/off）量化 Recall@K / Faithfulness；③ 多会话审批队列（现在是单 thread 一次 HITL，不是审批中心）。不要把「做成 AutoGPT」当迭代方向——企业要的是可审计边界。
 
 **Q25. 这个项目体现你对 Agent 岗位的理解？**  
 A: Agent 不只是调 API，而是编排、工具契约、失败兜底、安全与评测。我用五维度对齐：推理（路由+并行聚合）、工具（MCP/RAG/SQL）、状态（SCState+缓存）、安全评估（注入+白名单+RAGAS）、架构（StateGraph 而非单 Prompt）。
@@ -179,7 +179,7 @@ A: Agent 不只是调 API，而是编排、工具契约、失败兜底、安全�
 | 中英怎么支持？ | 路由 few-shot 双语 + override；回答按 response_language。 |
 | 并行会不会重复计费？ | Hybrid 两分支各一次检索/生成，再用聚合；可用缓存与更小 partial prompt 控成本。 |
 | Reranker 太重？ | 懒加载+单例；可 fallback openai/none；只对 Top20 跑 CE。 |
-| 和 AutoGPT 类 Agent 比？ | 我们偏可控工作流，企业要审计与边界，不是无限自主循环。 |
+| 和 AutoGPT / ReAct 比？ | 可控工作流 + 一次 HITL 恢复；证据不足只补检索一轮，不无限自主循环。 |
 
 ### 9. 反问面试官（可选）
 

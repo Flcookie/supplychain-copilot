@@ -16,6 +16,7 @@ from core.router_overrides import apply_lifecycle_router_overrides
 
 
 DEFAULT_DATASET = os.path.join(ROOT_DIR, "eval", "datasets", "ratti_eval_25.json")
+HELDOUT_DATASET = os.path.join(ROOT_DIR, "eval", "datasets", "router_heldout.json")
 LEGACY_DATASET = os.path.join(ROOT_DIR, "eval", "datasets", "router_eval.json")
 RESULT_DIR = os.path.join(ROOT_DIR, "eval", "results")
 
@@ -219,7 +220,12 @@ def main():
     parser.add_argument(
         "--dataset",
         default=DEFAULT_DATASET,
-        help="Path to eval JSON (default: ratti_eval_25.json)",
+        help="Path to eval JSON (default: ratti_eval_25.json). Use router_heldout.json for unseen paraphrases.",
+    )
+    parser.add_argument(
+        "--heldout",
+        action="store_true",
+        help="Shortcut for --dataset eval/datasets/router_heldout.json",
     )
     parser.add_argument(
         "--mode",
@@ -228,8 +234,9 @@ def main():
         help="heuristic=keyword router; override=heuristic+deterministic overrides; llm=live router_node",
     )
     args = parser.parse_args()
+    dataset_path = HELDOUT_DATASET if args.heldout else args.dataset
 
-    with open(args.dataset, "r", encoding="utf-8") as f:
+    with open(dataset_path, "r", encoding="utf-8") as f:
         samples = json.load(f)
 
     baseline = evaluate(baseline_router, samples)
@@ -239,7 +246,7 @@ def main():
         "llm": llm_router,
     }
     optimized = evaluate(routers[args.mode], samples)
-    json_path, md_path = write_report(baseline, optimized, args.dataset, label=args.mode)
+    json_path, md_path = write_report(baseline, optimized, dataset_path, label=args.mode)
 
     print("Evaluation complete.")
     print(f"JSON: {json_path}")

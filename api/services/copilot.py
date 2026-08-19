@@ -6,7 +6,7 @@ import uuid
 from functools import lru_cache
 from typing import Any, Literal
 
-GRAPH_BUILD_VERSION = "ratti-lifecycle-v5-checkpoint-review-assessment"
+GRAPH_BUILD_VERSION = "ratti-lifecycle-v6-hitl-approval"
 
 
 def _project_root() -> str:
@@ -20,6 +20,7 @@ def graph_cache_key() -> str:
         os.path.join(root, "graph", "graph.py"),
         os.path.join(root, "graph", "review.py"),
         os.path.join(root, "graph", "assessment.py"),
+        os.path.join(root, "graph", "approval.py"),
         os.path.join(root, "graph", "checkpoint.py"),
         os.path.join(root, "core", "qualification_rules.py"),
         os.path.join(root, "core", "prompts.py"),
@@ -53,6 +54,73 @@ def _thread_config(thread_id: str) -> dict[str, Any]:
     return {"configurable": {"thread_id": thread_id}}
 
 
+def _interrupt_value(item: Any) -> Any:
+    if item is None:
+        return None
+    if isinstance(item, dict):
+        return item
+    return getattr(item, "value", item)
+
+
+def extract_interrupt_payload(result: dict[str, Any] | None = None, snap: Any = None) -> dict[str, Any] | None:
+    raw = None
+    if isinstance(result, dict):
+        items = result.get("__interrupt__") or []
+        if items:
+            raw = _interrupt_value(items[0])
+    if raw is None and snap is not None:
+        interrupts = getattr(snap, "interrupts", None) or ()
+        if not interrupts:
+            for task in getattr(snap, "tasks", None) or ():
+                interrupts = getattr(task, "interrupts", None) or ()
+                if interrupts:
+                    break
+        if interrupts:
+            raw = _interrupt_value(interrupts[0])
+    if raw is None:
+        return None
+    return raw if isinstance(raw, dict) else {"value": raw}
+
+
+def snapshot_is_paused(snap: Any) -> bool:
+    if snap is None:
+        return False
+    if "approval" in list(snap.next or []):
+        return True
+    return extract_interrupt_payload(snap=snap) is not None
+
+
+def _thread_is_paused(graph: Any, thread_id: str) -> bool:
+    try:
+        snap = graph.get_state(_thread_config(thread_id))
+    except Exception:
+        return False
+    return snapshot_is_paused(snap)
+
+
+def _enrich_paused_result(result: dict[str, Any], *, graph: Any, thread_id: str) -> dict[str, Any]:
+    """Merge checkpoint values + interrupt payload when invoke stops at HITL."""
+    snap = graph.get_state(_thread_config(thread_id))
+    values = dict(snap.values or {})
+    merged = dict(values)
+    merged.update({k: v for k, v in result.items() if k != "__interrupt__" and v is not None})
+    payload = extract_interrupt_payload(result, snap)
+    merged["paused"] = True
+    merged["interrupt"] = payload
+    merged["human_approval_required"] = True
+    merged["task_step"] = values.get("task_step") or "awaiting_approval"
+    if payload:
+        merged["proposed_action"] = payload.get("proposed_action") or merged.get("proposed_action")
+        preview = payload.get("draft_preview")
+        if not (merged.get("answer") or "").strip() and preview:
+            merged["answer"] = preview
+        if not (merged.get("answer") or "").strip():
+            merged["answer"] = payload.get("message") or "Waiting for buyer approval."
+    if not (merged.get("answer") or "").strip():
+        merged["answer"] = "Assessment paused pending buyer approval."
+    return merged
+
+
 def _payload_from_result(
     result: dict[str, Any],
     *,
@@ -77,7 +145,11 @@ def _payload_from_result(
         "task_step": result.get("task_step"),
         "supplier_id": result.get("supplier_id"),
         "review_attempts": result.get("review_attempts"),
+        "paused": bool(result.get("paused")),
+        "proposed_action": result.get("proposed_action"),
+        "approval_decision": result.get("approval_decision"),
     }
+    interrupt_payload = result.get("interrupt")
     return {
         "answer": result.get("answer", "No answer generated."),
         "intent": result.get("intent", "policy_qa"),
@@ -94,6 +166,10 @@ def _payload_from_result(
         "review_status": result.get("review_status"),
         "task_plan": result.get("task_plan"),
         "supplier_id": result.get("supplier_id"),
+        "paused": bool(result.get("paused")),
+        "interrupt": interrupt_payload if isinstance(interrupt_payload, dict) else None,
+        "approval_decision": result.get("approval_decision"),
+        "proposed_action": result.get("proposed_action"),
     }
 
 
@@ -170,6 +246,11 @@ def run_copilot(
         initial["reason"] = f"api forced_intent={effective_intent}"
         initial["baseline_mode"] = True
 
+    # A paused HITL thread cannot accept a new invoke; fork so Approve stays on the old id.
+    if _thread_is_paused(active_graph, thread_id):
+        thread_id = str(uuid.uuid4())
+        initial["thread_id"] = thread_id
+
     config = _thread_config(thread_id)
     try:
         result = active_graph.invoke(initial, config)
@@ -181,6 +262,9 @@ def run_copilot(
         )
         raise
 
+    if extract_interrupt_payload(result) or _thread_is_paused(active_graph, thread_id):
+        result = _enrich_paused_result(result, graph=active_graph, thread_id=thread_id)
+
     answer = result.get("answer", "No answer generated.")
     finish_trace(
         trace_id,
@@ -188,10 +272,13 @@ def run_copilot(
         confidence=result.get("confidence"),
         intent=result.get("intent"),
         total_latency_ms=round((time.perf_counter() - started) * 1000, 2),
+        ambiguity_type=result.get("ambiguity_type"),
+        review_status=result.get("review_status"),
+        human_approval_required=result.get("human_approval_required"),
     )
 
     payload = _payload_from_result(result, thread_id=thread_id, trace_id=trace_id)
-    if use_cache and not payload["clarification_required"]:
+    if use_cache and not payload["clarification_required"] and not payload.get("paused"):
         cache.put(question, response_language, payload)
     return payload
 
@@ -252,24 +339,94 @@ def get_thread_state(thread_id: str) -> dict[str, Any]:
     snap = active_graph.get_state(_thread_config(thread_id))
     values = snap.values or {}
     cfg = snap.config.get("configurable", {}) if isinstance(snap.config, dict) else {}
+    interrupt_payload = extract_interrupt_payload(snap=snap)
+    paused = snapshot_is_paused(snap)
     return {
         "thread_id": thread_id,
         "checkpoint_id": cfg.get("checkpoint_id"),
         "next": list(snap.next or []),
+        "paused": paused,
+        "interrupt": interrupt_payload,
         "values": {
             "question": values.get("question"),
             "intent": values.get("intent"),
             "supplier_id": values.get("supplier_id"),
             "task_type": values.get("task_type"),
-            "task_step": values.get("task_step"),
+            "task_step": "awaiting_approval" if paused else values.get("task_step"),
             "task_plan": values.get("task_plan"),
             "review_status": values.get("review_status"),
             "review_notes": values.get("review_notes"),
             "answer": values.get("answer"),
             "citations": values.get("citations"),
             "evidence": values.get("evidence"),
+            "human_approval_required": values.get("human_approval_required"),
+            "proposed_action": (interrupt_payload or {}).get("proposed_action")
+            if interrupt_payload
+            else values.get("proposed_action"),
+            "proposed_action_reasons": values.get("proposed_action_reasons")
+            or (interrupt_payload or {}).get("reasons"),
+            "approval_decision": values.get("approval_decision"),
+            "approval_note": values.get("approval_note"),
         },
     }
+
+
+def resume_thread(
+    thread_id: str,
+    *,
+    approved: bool,
+    note: str | None = None,
+    response_language: str | None = None,
+) -> dict[str, Any]:
+    """Resume a graph paused at the approval interrupt. Does not write supplier data."""
+    from langgraph.types import Command
+    from observability.recorder import finish_trace, start_trace
+
+    active_graph = get_graph(graph_cache_key())
+    if not _thread_is_paused(active_graph, thread_id):
+        snap = get_thread_state(thread_id)
+        values = snap.get("values") or {}
+        if values.get("approval_decision"):
+            return _payload_from_result(
+                {
+                    **values,
+                    "intent": values.get("intent") or "supplier_assessment",
+                    "retrieved_docs": values.get("citations") or [],
+                },
+                thread_id=thread_id,
+                trace_id=None,
+            )
+        raise ValueError(f"Thread {thread_id} is not waiting for approval.")
+
+    trace_id = start_trace(f"resume:{thread_id}", response_language or "en")
+    started = time.perf_counter()
+    try:
+        result = active_graph.invoke(
+            Command(resume={"approved": approved, "note": note or ""}),
+            _thread_config(thread_id),
+        )
+    except Exception as exc:
+        finish_trace(
+            trace_id,
+            total_latency_ms=round((time.perf_counter() - started) * 1000, 2),
+            error=str(exc),
+        )
+        raise
+
+    if extract_interrupt_payload(result) or _thread_is_paused(active_graph, thread_id):
+        result = _enrich_paused_result(result, graph=active_graph, thread_id=thread_id)
+
+    finish_trace(
+        trace_id,
+        final_answer=result.get("answer"),
+        confidence=result.get("confidence"),
+        intent=result.get("intent"),
+        total_latency_ms=round((time.perf_counter() - started) * 1000, 2),
+        ambiguity_type=result.get("ambiguity_type"),
+        review_status=result.get("review_status"),
+        human_approval_required=result.get("human_approval_required"),
+    )
+    return _payload_from_result(result, thread_id=thread_id, trace_id=trace_id)
 
 
 def _has_sup_id(text: str) -> bool:

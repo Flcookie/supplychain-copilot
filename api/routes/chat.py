@@ -2,13 +2,14 @@ from __future__ import annotations
 
 from typing import Literal
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 from api.scenarios import DEMO_SCENARIOS
 from api.schemas.chat import (
     AssessmentRequest,
     ChatRequest,
     ChatResponse,
+    ResumeRequest,
     RouteInfo,
     ScenarioItem,
     ScenariosResponse,
@@ -20,6 +21,7 @@ from api.services.copilot import (
     get_thread_history,
     get_thread_state,
     merge_clarification_reply,
+    resume_thread,
     run_copilot,
     run_supplier_assessment,
 )
@@ -43,6 +45,10 @@ def _to_chat_response(result: dict) -> ChatResponse:
         supplier_id=result.get("supplier_id"),
         trace_id=result.get("trace_id"),
         cache_hit=bool(result.get("cache_hit")),
+        paused=bool(result.get("paused")),
+        interrupt=result.get("interrupt"),
+        approval_decision=result.get("approval_decision"),
+        proposed_action=result.get("proposed_action"),
     )
 
 
@@ -85,6 +91,20 @@ def thread_history(thread_id: str, limit: int = 20) -> ThreadHistoryResponse:
 def thread_state(thread_id: str) -> ThreadStateResponse:
     snap = get_thread_state(thread_id)
     return ThreadStateResponse(**snap)
+
+
+@router.post("/threads/{thread_id}/resume", response_model=ChatResponse)
+def thread_resume(thread_id: str, body: ResumeRequest) -> ChatResponse:
+    try:
+        result = resume_thread(
+            thread_id,
+            approved=body.approved,
+            note=body.note,
+            response_language=body.language,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    return _to_chat_response(result)
 
 
 @router.get("/scenarios", response_model=ScenariosResponse)

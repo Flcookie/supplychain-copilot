@@ -37,6 +37,9 @@ class RouteInfo(BaseModel):
     task_step: str | None = None
     supplier_id: str | None = None
     review_attempts: int | None = None
+    paused: bool | None = None
+    proposed_action: str | None = None
+    approval_decision: str | None = None
 
 
 class ChatResponse(BaseModel):
@@ -53,6 +56,16 @@ class ChatResponse(BaseModel):
     supplier_id: str | None = None
     trace_id: str | None = None
     cache_hit: bool = False
+    paused: bool = False
+    interrupt: dict[str, Any] | None = None
+    approval_decision: str | None = None
+    proposed_action: str | None = None
+
+
+class ResumeRequest(BaseModel):
+    approved: bool
+    note: str | None = None
+    language: Literal["en", "zh"] = "en"
 
 
 class ScenarioItem(BaseModel):
@@ -87,4 +100,6 @@ class ThreadStateResponse(BaseModel):
     thread_id: str
     checkpoint_id: str | None = None
     next: list[str] = Field(default_factory=list)
+    paused: bool = False
+    interrupt: dict[str, Any] | None = None
     values: dict[str, Any] = Field(default_factory=dict)

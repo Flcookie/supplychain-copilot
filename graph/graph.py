@@ -27,6 +27,7 @@ from .nodes import (
     scenario_node,
     vendor_rating_node,
 )
+from .approval import approval_node, needs_hitl
 from .review import evidence_boost_node, review_node
 from .state import SCState
 
@@ -69,6 +70,7 @@ def build_graph(*, checkpointer=None, use_checkpointer: bool = True):
 
     workflow.add_node("review", review_node)
     workflow.add_node("evidence_boost", evidence_boost_node)
+    workflow.add_node("approval", approval_node)
     workflow.add_node("answer", answer_node)
 
     workflow.add_edge(START, "router")
@@ -174,14 +176,21 @@ def build_graph(*, checkpointer=None, use_checkpointer: bool = True):
     def after_review(state: SCState):
         if state.get("review_status") == "needs_more_evidence":
             return "evidence_boost"
+        if needs_hitl(state):
+            return "approval"
         return "answer"
 
     workflow.add_conditional_edges(
         "review",
         after_review,
-        {"evidence_boost": "evidence_boost", "answer": "answer"},
+        {
+            "evidence_boost": "evidence_boost",
+            "approval": "approval",
+            "answer": "answer",
+        },
     )
     workflow.add_edge("evidence_boost", "review")
+    workflow.add_edge("approval", "answer")
     workflow.add_edge("answer", END)
 
     if not use_checkpointer:

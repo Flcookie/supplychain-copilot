@@ -52,6 +52,7 @@ def main() -> None:
 
     print(f"SQL smoke: {ok}/{len(SQL_CASES)} templates executed successfully")
     print(f"Report: {out_path}")
+    print("Rule-based E2E judges (KPI groundedness + HITL safety): python -m eval.run_e2e_eval")
     for r in results:
         status = "OK" if r.get("ok") else "FAIL"
         print(f"  [{status}] {r['id']} template={r.get('template_id')} rows={r.get('row_count', 'n/a')}")

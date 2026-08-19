@@ -13,6 +13,9 @@ export interface RouteInfo {
   task_type?: string | null;
   task_step?: string | null;
   supplier_id?: string | null;
+  paused?: boolean | null;
+  proposed_action?: string | null;
+  approval_decision?: string | null;
 }
 
 export interface ChatResponse {
@@ -29,6 +32,10 @@ export interface ChatResponse {
   supplier_id?: string | null;
   trace_id?: string | null;
   cache_hit?: boolean;
+  paused?: boolean;
+  interrupt?: Record<string, unknown> | null;
+  approval_decision?: string | null;
+  proposed_action?: string | null;
 }
 
 export interface ChatMessage {
@@ -44,6 +51,21 @@ export interface ChatMessage {
   sources?: Record<string, unknown>[];
   threadId?: string;
   reviewStatus?: string | null;
+  paused?: boolean;
+  interrupt?: Record<string, unknown> | null;
+  approvalDecision?: string | null;
+  proposedAction?: string | null;
+  taskPlan?: string[] | null;
+  supplierId?: string | null;
+}
+
+export interface ThreadState {
+  thread_id: string;
+  checkpoint_id?: string | null;
+  next: string[];
+  paused?: boolean;
+  interrupt?: Record<string, unknown> | null;
+  values: Record<string, unknown>;
 }
 
 export interface ScenarioItem {

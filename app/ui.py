@@ -7,7 +7,13 @@ import time
 import streamlit as st
 
 from api.scenarios import DEMO_SCENARIOS
-from api.services.copilot import graph_cache_key, merge_clarification_reply, run_copilot
+from api.services.copilot import (
+    graph_cache_key,
+    merge_clarification_reply,
+    run_copilot,
+    resume_thread,
+    get_thread_state,
+)
 from core.demo_constants import RATTI_DATA_SNAPSHOT
 
 st.markdown(
@@ -50,6 +56,10 @@ I18N = {
         """,
         "scenario_templates": "Scenario templates",
         "human_approval_warning": "Human approval required — AI recommends only; buyer/manager must confirm status or blacklist decisions.",
+        "paused_hitl": "Graph paused — approve keeps the recommendation; reject parks it. No database write.",
+        "approve": "Approve",
+        "reject": "Reject",
+        "hitl_note": "Optional approval note",
         "title_tagline": "AI decision-support system for Ratti-style supplier management",
         "source_expander": "Referenced documents",
         "debug_expander": "Debug (router & trace)",
@@ -97,6 +107,10 @@ I18N = {
         """,
         "scenario_templates": "场景模板",
         "human_approval_warning": "需人工确认 — AI 仅可建议，状态变更或黑名单须采购经理审批。",
+        "paused_hitl": "工作流已暂停 — 批准仅保留建议，驳回则搁置。不会写库。",
+        "approve": "批准",
+        "reject": "驳回",
+        "hitl_note": "可选审批备注",
         "title_tagline": "面向 Ratti 供应商管理场景的 AI 决策辅助系统",
         "source_expander": "引用文档",
         "debug_expander": "调试信息（路由与追踪）",
@@ -182,6 +196,54 @@ if "pending_demo_question" not in st.session_state:
 if "last_demo_label" not in st.session_state:
 
     st.session_state.last_demo_label = None
+
+if "thread_id" not in st.session_state:
+    import uuid as _uuid
+
+    q_thread = st.query_params.get("thread")
+    st.session_state.thread_id = q_thread or str(_uuid.uuid4())
+    if q_thread:
+        try:
+            snap = get_thread_state(q_thread)
+            if snap.get("paused") or "approval" in (snap.get("next") or []):
+                values = snap.get("values") or {}
+                interrupt = snap.get("interrupt") or {}
+                st.session_state.paused = True
+                if not st.session_state.messages:
+                    st.session_state.messages.append(
+                        {
+                            "role": "assistant",
+                            "content": values.get("answer")
+                            or interrupt.get("draft_preview")
+                            or interrupt.get("message")
+                            or "Waiting for buyer approval.",
+                            "intent": values.get("intent"),
+                            "route_info": {
+                                "intent": values.get("intent"),
+                                "human_approval_required": True,
+                                "paused": True,
+                                "proposed_action": values.get("proposed_action")
+                                or interrupt.get("proposed_action"),
+                                "task_step": "awaiting_approval",
+                                "supplier_id": values.get("supplier_id"),
+                            },
+                            "sources": [],
+                            "citations": values.get("citations") or [],
+                            "evidence": values.get("evidence") or {},
+                            "paused": True,
+                            "interrupt": interrupt,
+                            "lang": lang,
+                        }
+                    )
+        except Exception:
+            pass
+
+if "paused" not in st.session_state:
+
+    st.session_state.paused = False
+
+if st.session_state.thread_id:
+    st.query_params["thread"] = st.session_state.thread_id
 
 # ---------------- Title ----------------
 # Use native widgets — indented HTML inside st.markdown() is parsed as a code block.
@@ -412,31 +474,76 @@ for msg in st.session_state.messages:
 
             st.markdown(content)
 
-            if route_info and route_info.get("human_approval_required"):
+            if msg.get("paused") or (route_info and route_info.get("paused")):
+
+                st.warning(msg_t.get("paused_hitl", msg_t["human_approval_warning"]))
+
+            elif route_info and route_info.get("human_approval_required"):
 
                 st.warning(msg_t["human_approval_warning"])
 
             render_structured_evidence(evidence, msg_t, route_info, citations, sources)
 
+if st.session_state.get("paused"):
+    st.info(t.get("paused_hitl", t["human_approval_warning"]))
+    hitl_note = st.text_input(t.get("hitl_note", "Note"), key="hitl_note")
+    col_ok, col_no = st.columns(2)
+    resume_choice = None
+    if col_ok.button(t.get("approve", "Approve"), type="primary"):
+        resume_choice = True
+    if col_no.button(t.get("reject", "Reject")):
+        resume_choice = False
+    if resume_choice is not None:
+        result = resume_thread(
+            st.session_state.thread_id,
+            approved=resume_choice,
+            note=hitl_note,
+            response_language=lang,
+        )
+        if result.get("thread_id"):
+            st.session_state.thread_id = result["thread_id"]
+            st.query_params["thread"] = result["thread_id"]
+        st.session_state.paused = bool(result.get("paused"))
+        st.session_state.messages.append(
+            {
+                "role": "assistant",
+                "content": result.get("answer"),
+                "intent": result.get("intent"),
+                "sources": result.get("sources") or [],
+                "route_info": result.get("route_info") or {},
+                "citations": result.get("citations") or [],
+                "evidence": result.get("evidence") or {},
+                "paused": bool(result.get("paused")),
+                "interrupt": result.get("interrupt"),
+                "lang": lang,
+            }
+        )
+        st.rerun()
+
 # ---------------- User Input ----------------
 
 user_input = st.chat_input(t["chat_input"])
 
-if not user_input and st.session_state.get("pending_demo_question"):
+if st.session_state.get("paused") and user_input:
+
+    user_input = None
+
+if not user_input and st.session_state.get("pending_demo_question") and not st.session_state.get("paused"):
 
     user_input = st.session_state.pop("pending_demo_question")
 
 
 def _run_copilot_ui(question: str, response_language: str):
-    result = run_copilot(question, response_language)
-    return (
-        result["answer"],
-        result["intent"],
-        result["sources"],
-        result["route_info"],
-        result["citations"],
-        result["evidence"],
+    result = run_copilot(
+        question,
+        response_language,
+        thread_id=st.session_state.get("thread_id"),
     )
+    if result.get("thread_id"):
+        st.session_state.thread_id = result["thread_id"]
+        st.query_params["thread"] = result["thread_id"]
+    st.session_state.paused = bool(result.get("paused"))
+    return result
 
 
 def _merge_clarification_reply(base_question: str, reply: str, lang_code: str) -> str:
@@ -465,9 +572,17 @@ if user_input:
 
         placeholder.markdown(t["analyzing"])
 
-        answer, intent, sources, route_info, citations, evidence = _run_copilot_ui(
+        result = _run_copilot_ui(
             question_for_graph, lang
         )
+
+        answer = result["answer"]
+        intent = result["intent"]
+        sources = result["sources"]
+        route_info = result["route_info"]
+        citations = result["citations"]
+        evidence = result["evidence"]
+        paused = bool(result.get("paused"))
 
         time.sleep(0.2)
 
@@ -490,6 +605,8 @@ if user_input:
             "route_info": route_info,
             "citations": citations,
             "evidence": evidence,
+            "paused": paused,
+            "interrupt": result.get("interrupt"),
             "lang": lang,
         }
     )

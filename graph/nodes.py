@@ -45,11 +45,32 @@ from core.prompts import (
     SCENARIO_ANALYSIS_PROMPT,
     VENDOR_RATING_PROMPT,
 )
+from core.resilience import (
+    BM25_ONLY_LIMITATION_EN,
+    BM25_ONLY_LIMITATION_ZH,
+    record_resilience_event,
+)
 from app.services.mcp_client import McpToolError, call_tool, format_tools_for_router, list_tools
 from rag.retriever import get_retriever
 from tools.kpi_sql_builder import build_kpi_sql
 from tools.sql_tools import run_sql_query_with_meta
 from .state import SCState
+
+
+def _retrieval_limitation(state: SCState) -> str:
+    return BM25_ONLY_LIMITATION_ZH if state.get("response_language") == "zh" else BM25_ONLY_LIMITATION_EN
+
+
+def _docs_are_degraded(docs: list) -> bool:
+    for doc in docs or []:
+        metadata = getattr(doc, "metadata", None)
+        if isinstance(metadata, dict) and metadata.get("retrieval_degraded"):
+            return True
+        if isinstance(doc, dict) and (
+            doc.get("retrieval_degraded") or (doc.get("metadata") or {}).get("retrieval_degraded")
+        ):
+            return True
+    return False
 
 
 def _policy_retriever():
@@ -314,6 +335,32 @@ def router_node(state: SCState) -> SCState:
         "reason": state["reason"],
         "supplier_id": state.get("supplier_id"),
     }
+    try:
+        from observability.recorder import record_step
+
+        record_step(
+            "router_decision",
+            detail={
+                "kind": "router",
+                "intent": state["intent"],
+                "confidence": state["confidence"],
+                "ambiguity_type": state.get("ambiguity_type"),
+                "human_approval_required": state.get("human_approval_required"),
+            },
+        )
+    except Exception:  # noqa: BLE001
+        pass
+    if (
+        not state.get("ambiguity_type")
+        and float(state.get("confidence") or 0) < 0.75
+        and not state.get("baseline_mode")
+    ):
+        record_resilience_event(
+            "fallback",
+            from_backend="specialist_route",
+            to_backend="rag_fallback",
+            reason=f"router_confidence={state.get('confidence')}<0.75",
+        )
     return state
 
 def clarification_node(state: SCState) -> SCState:
@@ -350,6 +397,10 @@ def rag_fallback_node(state: SCState) -> SCState:
         assumptions=["Router confidence was below threshold, so policy context was used as a cautious fallback."],
         limitations=["The answer may be incomplete if the retrieved documents do not cover the requested KPI or scenario."],
     )
+    if _docs_are_degraded(docs):
+        limitations = list(state["evidence"].get("limitations") or [])
+        limitations.append(_retrieval_limitation(state))
+        state["evidence"]["limitations"] = limitations
     context = "\n\n".join(d.page_content for d in docs)
     prompt = ChatPromptTemplate.from_template(RAG_FALLBACK_PROMPT)
     resp = get_llm().invoke(
@@ -417,6 +468,8 @@ def policy_qa_node(state: SCState) -> SCState:
                 "source": item.get("source", ""),
                 "doc_type": item.get("doc_type", ""),
                 "retrieval_score": item.get("retrieval_score"),
+                "retrieval_degraded": item.get("retrieval_degraded"),
+                "retrieval_mode": item.get("retrieval_mode"),
             }
 
     docs = [_Doc(item) for item in documents if isinstance(item, dict)]
@@ -425,10 +478,14 @@ def policy_qa_node(state: SCState) -> SCState:
         for d in docs
     ]
     state["citations"] = _build_doc_citations(docs)
+    limitations = ["Policy answers are limited to retrieved demo documents (via MCP query_policy)."]
+    degraded = bool(payload.get("retrieval_degraded")) or _docs_are_degraded(docs)
+    if degraded:
+        limitations.append(_retrieval_limitation(state))
     state["evidence"] = document_evidence(
         docs,
         evidence_type="document",
-        limitations=["Policy answers are limited to retrieved demo documents (via MCP query_policy)."],
+        limitations=limitations,
     )
     if not context:
         context = "\n\n".join(d.page_content for d in docs)
@@ -442,6 +499,10 @@ def policy_qa_node(state: SCState) -> SCState:
     )
     cleaned, redactions = sanitize_answer(resp.content if isinstance(resp.content, str) else str(resp.content))
     state["answer"] = cleaned
+    if degraded:
+        note = _retrieval_limitation(state)
+        if note not in state["answer"]:
+            state["answer"] = state["answer"].rstrip() + "\n\n_" + note + "_"
     if redactions and isinstance(state.get("evidence"), dict):
         limitations = list(state["evidence"].get("limitations") or [])
         limitations.append(f"Output sanitizer redacted {len(redactions)} sensitive field pattern(s).")
@@ -629,6 +690,12 @@ def kpi_node(state: SCState) -> SCState:
                     }
                 )
                 if attempt == 0:
+                    record_resilience_event(
+                        "retry_repair",
+                        from_backend="nl2sql",
+                        to_backend="nl2sql_repair_once",
+                        reason=last_error,
+                    )
                     repair_prompt = ChatPromptTemplate.from_template(KPI_SQL_REPAIR_PROMPT)
                     final_sql = _strip_sql_fences(
                         get_llm().invoke(
@@ -951,6 +1018,10 @@ def hybrid_aggregate_node(state: SCState) -> dict:
             "If no KPI template matches, the KPI branch may return empty numeric evidence.",
         ],
     )
+    if _docs_are_degraded(docs):
+        limitations = list(evidence.get("limitations") or [])
+        limitations.append(_retrieval_limitation(state))
+        evidence["limitations"] = limitations
 
     prompt = ChatPromptTemplate.from_template(HYBRID_AGGREGATE_PROMPT)
     resp = get_llm().invoke(

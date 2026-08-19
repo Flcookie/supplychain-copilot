@@ -11,9 +11,12 @@ from core.demo_constants import RATTI_DATA_SNAPSHOT
 from core.evidence import hybrid_evidence
 from core.llm import get_llm
 from core.prompts import SUPPLIER_ASSESSMENT_PROMPT
+from core.resilience import BM25_ONLY_LIMITATION_EN, BM25_ONLY_LIMITATION_ZH
+from mcp_server.tools import score_supplier_risk_impl
 from rag.retriever import get_retriever
 from tools.sql_tools import run_sql_query_with_meta
 
+from .approval import infer_proposed_action
 from .state import SCState
 
 
@@ -60,6 +63,7 @@ def assessment_dispatch_node(state: SCState) -> SCState:
         "risk",
         "synthesize",
         "review",
+        "approval",
     ]
     state["task_step"] = "dispatch"
     return state
@@ -161,6 +165,8 @@ def assessment_policy_branch(state: SCState) -> SCState:
                 "source": d.metadata.get("source_name") or d.metadata.get("source", ""),
                 "chunk_id": d.metadata.get("chunk_id"),
                 "doc_type": d.metadata.get("doc_type"),
+                "retrieval_degraded": bool(d.metadata.get("retrieval_degraded")),
+                "retrieval_mode": d.metadata.get("retrieval_mode"),
             }
             for d in docs
         ]
@@ -171,37 +177,18 @@ def assessment_risk_branch(state: SCState) -> SCState:
     if state.get("ambiguity_type"):
         return {}
     sid = state.get("supplier_id") or _supplier_id(state)
-    sql = """
-SELECT risk_event_id,
-       risk_type,
-       risk_score_1_25,
-       recommended_action,
-       human_review_required,
-       event_date
-FROM risk_events
-WHERE supplier_id = ?
-ORDER BY risk_score_1_25 DESC, event_date DESC
-LIMIT 10
-"""
-    meta = run_sql_query_with_meta(sql, params=(sid,))
-    quality_sql = """
-SELECT quality_event_id, event_date, non_conformity_type, severity, defect_rate
-FROM quality_events
-WHERE supplier_id = ?
-ORDER BY event_date DESC
-LIMIT 5
-"""
-    try:
-        qmeta = run_sql_query_with_meta(quality_sql, params=(sid,))
-        quality_rows = qmeta.get("rows") or []
-    except Exception:
-        quality_rows = []
+    scored = score_supplier_risk_impl(supplier_id=str(sid or ""))
     return {
         "assessment_risk": {
-            "sql": sql.strip(),
-            "rows": meta.get("rows") or [],
-            "quality_rows": quality_rows,
-            "latency_ms": meta.get("latency_ms"),
+            "sql": scored.get("events_sql") or "score_supplier_risk",
+            "rows": scored.get("events") or [],
+            "quality_rows": scored.get("quality_events") or [],
+            "risk_score": scored.get("risk_score"),
+            "band": scored.get("band"),
+            "drivers": scored.get("drivers") or [],
+            "components": scored.get("components") or {},
+            "source": scored.get("source") or "mcp:score_supplier_risk",
+            "as_of_date": scored.get("as_of_date"),
         }
     }
 
@@ -285,6 +272,11 @@ def assessment_synthesize_node(state: SCState) -> SCState:
         assumptions=["Assessment uses anonymized Ratti demo database."],
         limitations=["Not a formal audit; buyer confirmation required for status changes."],
     )
+    if any(d.get("retrieval_degraded") for d in policy_docs):
+        extra = BM25_ONLY_LIMITATION_ZH if _zh(state) else BM25_ONLY_LIMITATION_EN
+        limitations = list(state["evidence"].get("limitations") or [])
+        limitations.append(extra)
+        state["evidence"]["limitations"] = limitations
 
     lang_instruction = "请用中文撰写结构化评估摘要。" if _zh(state) else "Write the assessment summary in English."
     prompt = ChatPromptTemplate.from_template(SUPPLIER_ASSESSMENT_PROMPT)
@@ -297,6 +289,11 @@ def assessment_synthesize_node(state: SCState) -> SCState:
             kpi_json=json.dumps(kpi.get("rows") or [], ensure_ascii=False),
             risk_json=json.dumps(
                 {
+                    "risk_score": risk.get("risk_score"),
+                    "band": risk.get("band"),
+                    "drivers": risk.get("drivers") or [],
+                    "components": risk.get("components") or {},
+                    "source": risk.get("source") or "mcp:score_supplier_risk",
                     "risk_events": risk.get("rows") or [],
                     "quality_events": risk.get("quality_rows") or [],
                 },
@@ -316,4 +313,9 @@ def assessment_synthesize_node(state: SCState) -> SCState:
     state["task_step"] = "synthesize"
     state["confidence"] = max(float(state.get("confidence") or 0.9), 0.9)
     state["reason"] = state.get("reason") or "supplier assessment task"
+    proposed = infer_proposed_action(state)
+    if proposed["gated"]:
+        state["human_approval_required"] = True
+        state["proposed_action"] = proposed["action"]
+        state["proposed_action_reasons"] = proposed["reasons"]
     return state

@@ -1,4 +1,11 @@
-"""Deterministic router overrides for Chinese and high-signal English lifecycle queries."""
+"""Deterministic router overrides for Chinese and high-signal English lifecycle queries.
+
+Monitor feedback loop (not auto-tuning):
+  When observability/metrics.py shows an intent's mean confidence dropping or
+  clarification/HITL rates spiking, export traces with
+  `python -m eval.badcase_export`, label them, then add or tighten a rule below.
+  Tag the change with `# tuned from badcase batch YYYY-MM-DD`.
+"""
 
 from __future__ import annotations
 

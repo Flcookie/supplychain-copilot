@@ -2,11 +2,18 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from "react";
-import { sendChat, fetchScenarios, runSupplierAssessment } from "../api/client";
+import {
+  sendChat,
+  fetchScenarios,
+  fetchThreadState,
+  resumeThread,
+  runSupplierAssessment,
+} from "../api/client";
 import type {
   ChatMessage,
   ChatResponse,
@@ -39,16 +46,36 @@ interface CopilotContextValue {
   setPageContext: (ctx: PageContext | ((prev: PageContext) => PageContext)) => void;
   scenarios: ScenarioItem[];
   threadId: string | null;
+  paused: boolean;
   loadScenarios: () => Promise<void>;
   /** Ask AI; results stay on page unless openDrawer is true. */
   ask: (question: string, options?: AskOptions) => Promise<ChatMessage | null>;
   /** @deprecated Prefer ask() — opens drawer automatically. */
   openWithQuestion: (question: string, prefix?: string) => void;
   sendMessage: (question: string, options?: AskOptions) => Promise<ChatMessage | null>;
+  resumeApproval: (approved: boolean, note?: string) => Promise<ChatMessage | null>;
   clearClarification: () => void;
 }
 
 const CopilotContext = createContext<CopilotContextValue | null>(null);
+const THREAD_STORAGE_KEY = "scc.copilot.thread_id";
+
+function readStoredThreadId(): string | null {
+  try {
+    return localStorage.getItem(THREAD_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function writeStoredThreadId(id: string | null) {
+  try {
+    if (id) localStorage.setItem(THREAD_STORAGE_KEY, id);
+    else localStorage.removeItem(THREAD_STORAGE_KEY);
+  } catch {
+    /* ignore quota / private mode */
+  }
+}
 
 function buildContextPrefix(ctx: PageContext): string {
   const parts: string[] = [];
@@ -88,6 +115,64 @@ function toAssistantMessage(res: ChatResponse, lang: Lang): ChatMessage {
     sources: res.sources,
     threadId: res.thread_id ?? undefined,
     reviewStatus: res.review_status,
+    paused: Boolean(res.paused),
+    interrupt: res.interrupt ?? undefined,
+    approvalDecision: res.approval_decision ?? undefined,
+    proposedAction: res.proposed_action ?? undefined,
+    taskPlan: res.task_plan ?? undefined,
+    supplierId: res.supplier_id ?? undefined,
+  };
+}
+
+function pausedMessageFromThread(
+  threadId: string,
+  snap: Awaited<ReturnType<typeof fetchThreadState>>,
+  lang: Lang,
+): ChatMessage {
+  const values = snap.values || {};
+  const interrupt = snap.interrupt || undefined;
+  const answer =
+    (typeof values.answer === "string" && values.answer) ||
+    (typeof interrupt?.draft_preview === "string" && interrupt.draft_preview) ||
+    (typeof interrupt?.message === "string" && interrupt.message) ||
+    "";
+  const supplierId =
+    (typeof values.supplier_id === "string" && values.supplier_id) ||
+    (typeof interrupt?.supplier_id === "string" && interrupt.supplier_id) ||
+    undefined;
+  return {
+    id: nextId(),
+    role: "assistant",
+    content: answer,
+    lang,
+    intent: typeof values.intent === "string" ? values.intent : "supplier_assessment",
+    route_info: {
+      intent: typeof values.intent === "string" ? values.intent : "supplier_assessment",
+      human_approval_required: true,
+      paused: true,
+      task_step: "awaiting_approval",
+      supplier_id: supplierId,
+      proposed_action:
+        typeof values.proposed_action === "string"
+          ? values.proposed_action
+          : typeof interrupt?.proposed_action === "string"
+            ? interrupt.proposed_action
+            : null,
+      review_status: typeof values.review_status === "string" ? values.review_status : null,
+    },
+    evidence: (values.evidence as Record<string, unknown>) || {},
+    citations: (values.citations as Record<string, unknown>[]) || [],
+    threadId,
+    reviewStatus: typeof values.review_status === "string" ? values.review_status : null,
+    paused: true,
+    interrupt,
+    proposedAction:
+      typeof values.proposed_action === "string"
+        ? values.proposed_action
+        : typeof interrupt?.proposed_action === "string"
+          ? interrupt.proposed_action
+          : undefined,
+    supplierId,
   };
 }
 
@@ -101,7 +186,43 @@ export function CopilotProvider({ children }: { children: ReactNode }) {
   );
   const [pageContext, setPageContext] = useState<PageContext>({ page: "home" });
   const [scenarios, setScenarios] = useState<ScenarioItem[]>([]);
-  const [threadId, setThreadId] = useState<string | null>(null);
+  const [threadId, setThreadId] = useState<string | null>(() => readStoredThreadId());
+  const [restored, setRestored] = useState(false);
+
+  const paused = messages.some((m) => m.role === "assistant" && m.paused);
+
+  useEffect(() => {
+    writeStoredThreadId(threadId);
+  }, [threadId]);
+
+  useEffect(() => {
+    if (restored) return;
+    const saved = threadId || readStoredThreadId();
+    if (!saved) {
+      setRestored(true);
+      return;
+    }
+    let cancelled = false;
+    void fetchThreadState(saved)
+      .then((snap) => {
+        if (cancelled) return;
+        setThreadId(saved);
+        if (snap.paused || snap.next?.includes("approval")) {
+          setMessages([pausedMessageFromThread(saved, snap, lang)]);
+          setOpen(true);
+        }
+      })
+      .catch(() => {
+        writeStoredThreadId(null);
+        if (!cancelled) setThreadId(null);
+      })
+      .finally(() => {
+        if (!cancelled) setRestored(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [lang, restored, threadId]);
 
   const loadScenarios = useCallback(async () => {
     const data = await fetchScenarios(lang);
@@ -176,6 +297,36 @@ export function CopilotProvider({ children }: { children: ReactNode }) {
     [clarificationBase, lang, loading, pageContext, threadId],
   );
 
+  const resumeApproval = useCallback(
+    async (approved: boolean, note?: string): Promise<ChatMessage | null> => {
+      if (!threadId || loading) return null;
+      setLoading(true);
+      try {
+        const res = await resumeThread({
+          thread_id: threadId,
+          approved,
+          note: note?.trim() || null,
+          language: lang,
+        });
+        const assistant = toAssistantMessage(res, lang);
+        setMessages((prev) => {
+          const next = [...prev];
+          for (let i = next.length - 1; i >= 0; i -= 1) {
+            if (next[i].role === "assistant" && next[i].paused) {
+              next[i] = assistant;
+              return next;
+            }
+          }
+          return [...next, assistant];
+        });
+        return assistant;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [lang, loading, threadId],
+  );
+
   const ask = sendMessage;
 
   const openWithQuestion = useCallback(
@@ -201,10 +352,12 @@ export function CopilotProvider({ children }: { children: ReactNode }) {
       setPageContext,
       scenarios,
       threadId,
+      paused,
       loadScenarios,
       ask,
       openWithQuestion,
       sendMessage,
+      resumeApproval,
       clearClarification: () => setClarificationBase(null),
     }),
     [
@@ -216,10 +369,12 @@ export function CopilotProvider({ children }: { children: ReactNode }) {
       pageContext,
       scenarios,
       threadId,
+      paused,
       loadScenarios,
       ask,
       openWithQuestion,
       sendMessage,
+      resumeApproval,
     ],
   );
 

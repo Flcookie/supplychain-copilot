@@ -46,7 +46,9 @@ mcp = FastMCP(
     instructions=(
         "Tools for the Ratti Supplier Lifecycle Copilot. "
         "Use query_policy for policy/process/document questions; "
-        "use query_kpi for numeric supplier performance metrics."
+        "Use query_kpi for numeric supplier performance metrics; "
+        "use score_supplier_risk as the single risk-scoring contract "
+        "(assessment, chat, and MCP all share this implementation)."
     ),
 )
 
@@ -115,8 +117,8 @@ def query_kpi(
     name="score_supplier_risk",
     description=(
         "Score supplier risk 0–100 from risk_events, quality_events, and document expiry. "
-        "Use when the user asks for risk score / band / drivers for a SUP### id. "
-        "Returns risk_score, band (low|medium|high), drivers, and component breakdown."
+        "Canonical risk contract: assessment, chat, and MCP must reuse this tool so scores stay consistent. "
+        "Returns risk_score, band (low|medium|high), drivers, component breakdown, and event rows."
     ),
 )
 def score_supplier_risk(supplier_id: str, as_of_date: str = "") -> str:

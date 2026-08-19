@@ -83,22 +83,31 @@ uv run python -m ingestion.build_vectorstore --reindex
    ├─ KPI 查询 kpi_query
    ├─ 风险场景 risk_scenario
    ├─ 评级解释 vendor_rating_explanation
-   └─ 混合 hybrid_query
-          │
+   ├─ 混合 hybrid_query（Policy ∥ KPI）
+   └─ 供应商评估 supplier_assessment
+          │  五路并行：profile / orders / kpi / policy / risk
           ▼
-       Answer（摘要 / 要点 / 证据 / 局限）
+       Review（证据不足则补检索一次）
+          │
+          ├─ 普通结论 → Answer → END
+          └─ 黑名单 / 改状态 → interrupt 暂停
+                │  采购批准 / 驳回（不写库）
+                ▼
+              Answer → END
 ```
 
 | 层级 | 说明 |
 |------|------|
 | UI | Streamlit 对话 · React 工作台 |
-| 编排 | LangGraph：Router → 业务节点 → Answer |
+| 编排 | LangGraph：Router → 业务节点 → Review →（可选 HITL interrupt）→ Answer |
 | RAG | Pinecone + BM25 → RRF → Cross-Encoder 重排 |
 | SQL | 只读白名单 NL2SQL（`ratti_copilot_demo.db`） |
 | 工具 | MCP / 本地实现（政策检索、KPI、风险评分等） |
-| 观测 | LangSmith · 本地 Trace Store |
+| 观测 | LangSmith · 本地 Trace · `observability/metrics.py` 聚合 |
 
-路由策略简述：输入不完整时先澄清；置信度不足时走 RAG 兜底；否则进入对应生命周期意图。
+路由策略简述：输入不完整时先澄清；置信度不足时走 RAG 兜底；否则进入对应生命周期意图。供应商评估是**有状态、可暂停**的工作流：SqliteSaver checkpoint + 一次人工批准，不是无限 ReAct 循环。
+
+演示这条故事：工作台打开 **SUP012** →「完整评估」→ 五路并行采集 → Review → 因「Qualified with Reserve」+ 需人工复核的风险事件而 `interrupt` → 刷新页面后点 **批准 / 驳回** 从同一 `thread_id` 恢复。Agent **不会**写供应商主数据。
 
 ---
 
@@ -112,6 +121,7 @@ uv run python -m ingestion.build_vectorstore --reindex
 | 4 | 评级 | 为什么 SUP012 是 C 级？ | `vendor_rating_explanation` |
 | 5 | 政策 | 纱线供应商按 Ratti 资格政策需要哪些 ESG 文件？ | `policy_qa` |
 | 6 | 混合 | 战略纱线供应商的监控政策是什么？2025 平均准时率如何？ | `hybrid_query` |
+| 7 | 评估 + HITL | 对 SUP012 做完整评估（工作台「完整评估」） | `supplier_assessment` → 暂停在批准关口 |
 
 ---
 
@@ -152,7 +162,7 @@ core/                   配置、提示词、路由 override、注入防护、�
 rag/                    Hybrid RAG：向量 + BM25 → RRF → Cross-Encoder
 tools/                  Agent SQL：AST 只读校验、KPI 模板
 mcp_server/             MCP 工具：query_policy / query_kpi / score_supplier_risk
-observability/          本地 Trace 录制（SQLite）
+observability/          本地 Trace + 指标聚合 + Badcase 导出
 frontend/               React 采购工作台（Vite + TypeScript）
 ingestion/              政策导出、分场景 chunker、向量索引构建
 
@@ -212,11 +222,14 @@ uv run pytest tests -q
 uv run python eval/ablation.py
 uv run python eval/run_injection_eval.py
 uv run python -m eval.run_router_eval --mode override
+uv run python -m eval.run_router_eval --heldout --mode override
+uv run python -m eval.run_e2e_eval
 
 # 需要 LLM / Pinecone
 uv run python -m eval.run_router_eval --mode llm
 uv run python -m eval.run_ratti_e2e_smoke
 uv run python -m eval.run_rag_eval --label judged_final
+uv run python -m observability.metrics --all-time
 ```
 
 NL2SQL 走 **sqlglot AST**：只允许单条 SELECT/WITH、表白名单、自动 LIMIT；解析失败则拒绝执行。

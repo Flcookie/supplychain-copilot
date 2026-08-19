@@ -14,9 +14,9 @@ from typing import Any
 from langchain_core.documents import Document
 
 from core.config import ENABLE_HYDE, RERANK_POOL
+from core.resilience import BM25_ONLY_LIMITATION_EN, record_resilience_event
 from rag.bm25_index import load_bm25_index, tokenize
 from rag.query_expansion import build_hyde_query, build_keyword_query
-from rag.retriever import get_vectorstore
 
 
 # Reciprocal Rank Fusion constant. Lower => earlier ranks dominate more.
@@ -33,6 +33,8 @@ class HybridRetriever:
         rerank_pool: int | None = None,
         doc_types: list[str] | None = None,
         reranker: Any | None = None,
+        bm25: Any | None = None,
+        vectorstore: Any | None = None,
     ):
         self.k = k
         self.vector_k = vector_k
@@ -40,29 +42,72 @@ class HybridRetriever:
         self.rerank_pool = rerank_pool if rerank_pool is not None else RERANK_POOL
         self.doc_types = doc_types
         self.reranker = reranker
-        self.vectorstore = get_vectorstore()
-        self.bm25 = load_bm25_index()
+        self._vectorstore = vectorstore
+        self._vector_failed = False
+        self.bm25 = bm25 if bm25 is not None else load_bm25_index()
+        self.last_degraded = False
+        self.last_degrade_reason: str | None = None
+
+    def _mark_degraded(self, reason: str) -> None:
+        if self.last_degraded:
+            return
+        self.last_degraded = True
+        self.last_degrade_reason = reason
+        record_resilience_event(
+            "partial_degradation",
+            from_backend="pinecone",
+            to_backend="bm25_only",
+            reason=reason,
+        )
+
+    def _get_vectorstore(self) -> Any | None:
+        if self._vector_failed:
+            return None
+        if self._vectorstore is not None:
+            return self._vectorstore
+        try:
+            from rag.retriever import get_vectorstore
+
+            self._vectorstore = get_vectorstore()
+            return self._vectorstore
+        except Exception as exc:  # noqa: BLE001 — degrade instead of failing the turn
+            self._vector_failed = True
+            self._mark_degraded(f"pinecone_init: {exc}")
+            return None
 
     def invoke(self, query: str) -> list[Document]:
         candidates: dict[str, dict[str, Any]] = {}
+        self.last_degraded = False
+        self.last_degrade_reason = None
 
-        for route, vector_query, route_k in self._vector_queries(query):
-            results = self._vector_search(vector_query, route_k)
-            for rank, (doc, score) in enumerate(results, start=1):
-                key = self._doc_key(doc)
-                item = candidates.setdefault(
-                    key,
-                    {
-                        "doc": doc,
-                        "vector_score": 0.0,
-                        "keyword_score": 0.0,
-                        "rrf_score": 0.0,
-                        "routes": [],
-                    },
-                )
-                item["vector_score"] = max(item["vector_score"], self._normalize_vector_score(score))
-                item["rrf_score"] += 1.0 / (RRF_K + rank)
-                item["routes"].append(route)
+        vectorstore = self._get_vectorstore()
+        if vectorstore is not None:
+            try:
+                for route, vector_query, route_k in self._vector_queries(query):
+                    results = self._vector_search(vector_query, route_k)
+                    for rank, (doc, score) in enumerate(results, start=1):
+                        key = self._doc_key(doc)
+                        item = candidates.setdefault(
+                            key,
+                            {
+                                "doc": doc,
+                                "vector_score": 0.0,
+                                "keyword_score": 0.0,
+                                "rrf_score": 0.0,
+                                "routes": [],
+                            },
+                        )
+                        item["vector_score"] = max(
+                            item["vector_score"], self._normalize_vector_score(score)
+                        )
+                        item["rrf_score"] += 1.0 / (RRF_K + rank)
+                        item["routes"].append(route)
+            except Exception as exc:  # noqa: BLE001
+                self._vector_failed = True
+                self._mark_degraded(f"pinecone_search: {exc}")
+                candidates = {}
+        elif not self.last_degraded:
+            self._mark_degraded("vectorstore_unavailable")
 
         if self.bm25:
             keyword_query = build_keyword_query(query)
@@ -105,18 +150,35 @@ class HybridRetriever:
         for idx, doc in enumerate(rerank_input, start=1):
             doc.metadata["rrf_rank"] = idx
             doc.metadata["rerank_pool_size"] = pool_size
+            if self.last_degraded:
+                doc.metadata["retrieval_degraded"] = True
+                doc.metadata["retrieval_mode"] = "bm25_only"
+                doc.metadata["retrieval_limitation"] = BM25_ONLY_LIMITATION_EN
 
         if self.reranker:
             reranked = self.reranker.rerank(query, rerank_input, top_k=self.k)
             for doc in reranked:
-                doc.metadata["retrieval_funnel"] = (
-                    f"dual_recall→RRF_top{pool_size}→{getattr(self.reranker, 'name', 'rerank')}_top{self.k}"
+                funnel = (
+                    f"bm25_only→top{self.k}"
+                    if self.last_degraded
+                    else (
+                        f"dual_recall→RRF_top{pool_size}→"
+                        f"{getattr(self.reranker, 'name', 'rerank')}_top{self.k}"
+                    )
                 )
+                doc.metadata["retrieval_funnel"] = funnel
+                if self.last_degraded:
+                    doc.metadata["retrieval_degraded"] = True
+                    doc.metadata["retrieval_mode"] = "bm25_only"
+                    doc.metadata["retrieval_limitation"] = BM25_ONLY_LIMITATION_EN
             return reranked
 
-        for doc in rerank_input[: self.k]:
-            doc.metadata["retrieval_funnel"] = f"dual_recall→RRF_top{self.k}"
-        return rerank_input[: self.k]
+        out = rerank_input[: self.k]
+        for doc in out:
+            doc.metadata["retrieval_funnel"] = (
+                f"bm25_only→top{self.k}" if self.last_degraded else f"dual_recall→RRF_top{self.k}"
+            )
+        return out
 
     def _vector_queries(self, query: str) -> list[tuple[str, str, int]]:
         queries = [("vector", query, self.vector_k)]
@@ -128,10 +190,13 @@ class HybridRetriever:
         return queries
 
     def _vector_search(self, query: str, k: int) -> list[tuple[Document, float]]:
+        vectorstore = self._get_vectorstore()
+        if vectorstore is None:
+            return []
         metadata_filter = self._doc_type_filter()
         if metadata_filter:
-            return self.vectorstore.similarity_search_with_score(query, k=k, filter=metadata_filter)
-        return self.vectorstore.similarity_search_with_score(query, k=k)
+            return vectorstore.similarity_search_with_score(query, k=k, filter=metadata_filter)
+        return vectorstore.similarity_search_with_score(query, k=k)
 
     def _doc_type_filter(self) -> dict | None:
         if not self.doc_types:

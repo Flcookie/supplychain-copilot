@@ -77,6 +77,7 @@ def test_graph_contains_review_and_assessment_nodes():
         "assessment_policy",
         "assessment_risk",
         "assessment_synthesize",
+        "approval",
     ):
         assert name in node_names
 

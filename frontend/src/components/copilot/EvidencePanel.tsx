@@ -1,5 +1,6 @@
 import { t } from "../../i18n";
 import type { ChatMessage, Lang } from "../../types/api";
+import { HitlBar } from "./HitlBar";
 
 function SqlBlock({ sql }: { sql: Record<string, unknown> }) {
   return (
@@ -114,7 +115,8 @@ export function MessageBubble({
   return (
     <div className="panel p-3 text-sm">
       <div className="whitespace-pre-wrap leading-relaxed">{message.content}</div>
-      {message.route_info?.human_approval_required ? (
+      {message.paused ? <HitlBar message={message} /> : null}
+      {message.route_info?.human_approval_required && !message.paused && !message.approvalDecision ? (
         <p
           className="mt-2 border px-2 py-1 text-xs"
           style={{ borderColor: "var(--warn)", color: "var(--warn)", background: "#f5efe3" }}

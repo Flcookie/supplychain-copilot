@@ -39,20 +39,32 @@ def query_policy_impl(query: str, k: int = 5) -> dict[str, Any]:
 
     retriever = get_retriever(k=k, doc_types=["policy", "contract", "sop", "faq"])
     docs = retriever.invoke(query.strip())
+    degraded = bool(getattr(retriever, "last_degraded", False)) or any(
+        bool(d.metadata.get("retrieval_degraded")) for d in docs
+    )
     documents = [
         {
             "content": d.page_content,
             "source": d.metadata.get("source_name") or d.metadata.get("source", ""),
             "doc_type": d.metadata.get("doc_type", ""),
             "retrieval_score": d.metadata.get("retrieval_score"),
+            "retrieval_mode": d.metadata.get("retrieval_mode"),
+            "retrieval_degraded": bool(d.metadata.get("retrieval_degraded")),
         }
         for d in docs
     ]
-    return {
+    payload: dict[str, Any] = {
         "documents": documents,
         "context": "\n\n".join(d.page_content for d in docs),
         "count": len(documents),
+        "retrieval_mode": "bm25_only" if degraded else "hybrid",
+        "retrieval_degraded": degraded,
     }
+    if degraded:
+        from core.resilience import BM25_ONLY_LIMITATION_EN
+
+        payload["retrieval_limitation"] = BM25_ONLY_LIMITATION_EN
+    return payload
 
 
 def query_kpi_impl(
@@ -235,6 +247,28 @@ WHERE supplier_id = ?
     if not drivers:
         drivers.append("baseline")
 
+    events_sql = """
+SELECT risk_event_id,
+       risk_type,
+       risk_score_1_25,
+       recommended_action,
+       human_review_required,
+       event_date
+FROM risk_events
+WHERE supplier_id = ?
+ORDER BY risk_score_1_25 DESC, event_date DESC
+LIMIT 10
+"""
+    quality_events_sql = """
+SELECT quality_event_id, event_date, non_conformity_type, severity, defect_rate
+FROM quality_events
+WHERE supplier_id = ?
+ORDER BY event_date DESC
+LIMIT 5
+"""
+    events = run_sql_query_with_meta(events_sql, params=(supplier_id,))
+    quality_events = run_sql_query_with_meta(quality_events_sql, params=(supplier_id,))
+
     return {
         "supplier_id": supplier_id,
         "as_of_date": as_of,
@@ -258,6 +292,10 @@ WHERE supplier_id = ?
                 "contribution": round(cert_component, 1),
             },
         },
+        "events": events.get("rows") or [],
+        "quality_events": quality_events.get("rows") or [],
+        "events_sql": events_sql.strip(),
+        "source": "mcp:score_supplier_risk",
     }
 
 

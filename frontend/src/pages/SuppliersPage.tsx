@@ -139,7 +139,7 @@ export function SuppliersPage() {
 }
 
 export function SupplierDetailPage({ supplierId }: { supplierId: string }) {
-  const { lang, setPageContext, ask, setOpen } = useCopilot();
+  const { lang, setPageContext, ask, setOpen, messages } = useCopilot();
   const L = t(lang).suppliers;
   const [supplier, setSupplier] = useState<Supplier | null>(null);
   const [insight, setInsight] = useState<ChatMessage | null>(null);
@@ -158,6 +158,15 @@ export function SupplierDetailPage({ supplierId }: { supplierId: string }) {
       supplierName: supplier.name,
     }));
   }, [supplier, setPageContext]);
+
+  useEffect(() => {
+    const last = [...messages].reverse().find((m) => m.role === "assistant");
+    if (!last) return;
+    if (last.supplierId && last.supplierId !== supplierId) return;
+    if (last.paused || last.approvalDecision) {
+      setInsight(last);
+    }
+  }, [messages, supplierId]);
 
   const runInsight = async (question: string) => {
     if (!supplier) return;

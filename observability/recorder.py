@@ -45,6 +45,9 @@ def finish_trace(
     intent: str | None = None,
     total_latency_ms: float | None = None,
     error: str | None = None,
+    ambiguity_type: str | None = None,
+    review_status: str | None = None,
+    human_approval_required: bool | int | None = None,
 ) -> None:
     tid = trace_id or _active_trace_id.get()
     if not tid:
@@ -56,6 +59,9 @@ def finish_trace(
         intent=intent,
         total_latency_ms=total_latency_ms,
         error=error,
+        ambiguity_type=ambiguity_type,
+        review_status=review_status,
+        human_approval_required=human_approval_required,
     )
     if _active_trace_id.get() == tid:
         _active_trace_id.set(None)

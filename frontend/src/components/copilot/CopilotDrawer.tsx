@@ -14,6 +14,7 @@ export function CopilotDrawer() {
     scenarios,
     loadScenarios,
     sendMessage,
+    paused,
   } = useCopilot();
   const L = t(lang).copilot;
   const [input, setInput] = useState("");
@@ -77,7 +78,7 @@ export function CopilotDrawer() {
           <div>
             <h2 className="font-serif text-xl font-normal">{L.title}</h2>
             <p className="text-xs" style={{ color: "var(--muted)" }}>
-              {L.drawerHint}
+              {paused ? L.pausedBanner : L.drawerHint}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -144,13 +145,14 @@ export function CopilotDrawer() {
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={L.placeholder}
+            placeholder={paused ? L.pausedHitl : L.placeholder}
             rows={2}
             className="field resize-none"
+            disabled={paused || loading}
           />
           <button
             type="submit"
-            disabled={loading || !input.trim()}
+            disabled={loading || paused || !input.trim()}
             className="btn btn-primary btn-block mt-2"
           >
             {L.send}

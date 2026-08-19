@@ -169,11 +169,19 @@ def get_reranker(*, force_reload: bool = False) -> Reranker:
             _RERANKER_SINGLETON = reranker
             _RERANKER_BACKEND_IN_USE = getattr(reranker, "name", backend)
             if backend != preferred:
+                from core.resilience import record_resilience_event
+
                 print(
                     f"[rerank] preferred backend={preferred!r} unavailable; "
                     f"using fallback={_RERANKER_BACKEND_IN_USE!r}. "
                     f"Details: {'; '.join(errors) or 'n/a'}",
                     file=sys.stderr,
+                )
+                record_resilience_event(
+                    "fallback",
+                    from_backend=preferred,
+                    to_backend=_RERANKER_BACKEND_IN_USE or backend,
+                    reason="; ".join(errors) or "preferred reranker unavailable",
                 )
             return reranker
         except Exception as exc:  # noqa: BLE001 — fall through to next backend
